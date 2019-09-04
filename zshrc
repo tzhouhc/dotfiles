@@ -5,10 +5,16 @@ if [ -z "$TMUX" ]; then
   tmux attach
 fi
 
+# am I in google land
+if [ -d '/google' ]; then
+  is_google=true
+fi
+
+# read convenient short hands
 source ~/.zsh_aliases
 
 # Path to your oh-my-zsh installation.
-export ZSH="/usr/local/google/home/tingzhou/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -56,7 +62,7 @@ google3_prompt_info() {
 r_prompt_info() {
   # shows last command success or failure (and exit code)
   if [[ $? -eq 0 ]]; then
-    print -rn -- "%F{green}▪"
+    print -rn -- "%F{cyan}▪"
   else
     print -rn -- "%F{red}$? ▪"
   fi
@@ -108,7 +114,7 @@ RPROMPT='$(r_prompt_info)'
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -116,7 +122,7 @@ RPROMPT='$(r_prompt_info)'
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.

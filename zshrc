@@ -1,14 +1,18 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-if [ -z "$TMUX" ]; then
-  export PATH=$HOME/go/bin/:$HOME/.local/bin:$PATH
-  tmux attach
-fi
 
 # am I in google land
 if [ -d '/google' ]; then
   is_google=true
+else
+  is_google=false
 fi
+
+if [ -z "$TMUX" ]; then
+  export PATH=$HOME/.rbenv/versions/2.5.1/bin:$HOME/local/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:$HOME/.fzf/bin:/usr/local/Cellar/node/12.9.0/bin:$PATH
+  export PATH=$HOME/go/bin/:$HOME/.local/bin:$PATH
+  tmux attach
+fi
+
 
 # read convenient short hands
 source ~/.zsh_aliases
@@ -33,28 +37,28 @@ google3_prompt_info() {
     else
       depth=$(echo ${match[2]} | awk -F"/" '{print NF-1}')
       if [[ $depth == 0 ]]; then
-        print -r -- "%F{blue}($match[1])%F{yellow}/%F{green}$(basename ${match[2]#/})"
+        print -r -- "%F{blue}($match[1])%F{yellow}/%F{green}%B$(basename ${match[2]#/})%b"
       else
-        print -r -- "%F{blue}($match[1])%F{yellow}/+$depth/%F{green}$(basename ${match[2]#/})"
+        print -r -- "%F{blue}($match[1])%F{yellow}/+$depth/%F{green}%B$(basename ${match[2]#/})%b"
       fi
     fi
   elif [[ $PWD =~ "$HOME(.*)" ]]; then
     depth=$(echo ${match[1]} | awk -F"/" '{print NF-1}')
     if [[ $depth == -1 ]]; then
-      print -r -- "%F{cyan}~"
+      print -r -- "%F{cyan}%B~%b"
     elif [[ $depth == 1 ]]; then
-      print -r -- "%F{cyan}~/%F{green}$(basename ${match[1]})"
+      print -r -- "%F{cyan}~/%F{green}%B$(basename ${match[1]})%b"
     else
       depth=$((depth - 1))
-      print -r -- "%F{cyan}~%F{yellow}/+$depth/%F{green}$(basename ${match[1]})"
+      print -r -- "%F{cyan}~%F{yellow}/+$depth/%F{green}%B$(basename ${match[1]})%b"
     fi
   else
     depth=$(echo $PWD | awk -F"/" '{print NF-1}')
     if [[ $depth == 1 ]]; then
-      print -r -- "%F{red}$PWD"
+      print -r -- "%F{red}%B$PWD%b"
     else
       depth=$((depth - 1))
-      print -r -- "%F{red}/%F{yellow}+$depth/%F{green}$(basename $PWD)"
+      print -r -- "%F{red}/%F{yellow}+$depth/%F{green}%B$(basename $PWD)%b"
     fi
   fi
 }
@@ -171,15 +175,21 @@ source $ZSH/oh-my-zsh.sh
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
-export TERM=tmux-256color
+export TERM=xterm-256color
 export MYVIMRC='~/.vim/vimrc'
 export EDITOR=nvim
 export G4MULTIDIFF=1
 export P4DIFF='p4diff'
+export TEXMFHOME=/Users/tingzhou/.texmf
+export PYTHONSTARTUP=/Users/tingzhou/.pythonrc
+export LESS=-R
+export HOMEBREW_NO_AUTO_UPDATE=1
 bindkey -e
 
 bindkey '[A' history-beginning-search-backward
 bindkey '[B' history-beginning-search-forward
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source /etc/bash_completion.d/g4d
+if $is_google; then
+  source /etc/bash_completion.d/g4d
+fi

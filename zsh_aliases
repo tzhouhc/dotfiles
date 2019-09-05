@@ -29,3 +29,16 @@ function bbs() {
     exit 1
   fi
 }
+
+function open_and_switch {
+  open $1
+  hide_iterm_window
+}
+alias open=open_and_switch
+
+function o {
+  pushd $(showmarks $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
+  open .
+  popd > /dev/null
+  hide_iterm_window
+}

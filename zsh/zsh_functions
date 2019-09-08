@@ -63,6 +63,27 @@ google3_prompt_info() {
   fi
 }
 
+g_inside_repo() {
+  print "$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+}
+
+g_branch() {
+  print -rn -- "%F{cyan}$(git branch | grep \* | cut -d ' ' -f2)%{$reset_color%}"
+}
+
+g_dirty() {
+  if [[ $(git diff --stat) != '' ]]; then
+    print -rn -- "*"
+  else
+  fi
+}
+
+g_prompt() {
+  if [ "$(g_inside_repo)" ]; then
+    print -rn -- "%{$reset_color%}($(g_branch)$(g_dirty))"
+  fi
+}
+
 r_prompt_info() {
   # shows last command success or failure (and exit code)
   if [[ $? -eq 0 ]]; then

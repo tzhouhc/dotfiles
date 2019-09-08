@@ -24,7 +24,7 @@ source ~/.zsh/zsh_functions
 export ZSH="$HOME/.oh-my-zsh"
 
 setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
-PROMPT='$(google3_prompt_info)%f %# '  # %f for stopping the foreground color
+PROMPT='$(google3_prompt_info)$(g_prompt)%f %# '  # %f for stopping the foreground color
 RPROMPT='$(r_prompt_info)'
 
 # ========= Optional... options ============

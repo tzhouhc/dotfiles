@@ -7,91 +7,27 @@ else
   is_google=false
 fi
 
+# tmux settings
 if [ -z "$TMUX" ]; then
   export PATH=$HOME/.rbenv/versions/2.5.1/bin:$HOME/local/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:$HOME/.fzf/bin:/usr/local/Cellar/node/12.9.0/bin:$PATH
   export PATH=$HOME/go/bin/:$HOME/.local/bin:$PATH
   tmux attach
 fi
 
-
 # read convenient short hands
-source ~/.zsh_aliases
+source ~/.zsh/zsh_aliases
+
+# read slightly longer 'shorthands'
+source ~/.zsh/zsh_functions
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME=""
-
-google3_prompt_info() {
-  # shows current dir name;
-  # if in citc, shows citc client name plus current folder depth
-  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
-    # Use CitC client names as window titles in screen/tmux
-    # print -n "\ek${match[1]}\e\\"  # not sure what this is for anymore
-    if [[ -z ${match[2]} ]]; then
-      print -r -- "%F{blue}($match[1])%F{yellow}/"
-    else
-      depth=$(echo ${match[2]} | awk -F"/" '{print NF-1}')
-      if [[ $depth == 0 ]]; then
-        print -r -- "%F{blue}($match[1])%F{yellow}/%F{green}%B$(basename ${match[2]#/})%b"
-      else
-        print -r -- "%F{blue}($match[1])%F{yellow}/+$depth/%F{green}%B$(basename ${match[2]#/})%b"
-      fi
-    fi
-  elif [[ $PWD =~ "$HOME(.*)" ]]; then
-    depth=$(echo ${match[1]} | awk -F"/" '{print NF-1}')
-    if [[ $depth == -1 ]]; then
-      print -r -- "%F{cyan}%B~%b"
-    elif [[ $depth == 1 ]]; then
-      print -r -- "%F{cyan}~/%F{green}%B$(basename ${match[1]})%b"
-    else
-      depth=$((depth - 1))
-      print -r -- "%F{cyan}~%F{yellow}/+$depth/%F{green}%B$(basename ${match[1]})%b"
-    fi
-  else
-    depth=$(echo $PWD | awk -F"/" '{print NF-1}')
-    if [[ $depth == 1 ]]; then
-      print -r -- "%F{red}%B$PWD%b"
-    else
-      depth=$((depth - 1))
-      print -r -- "%F{red}/%F{yellow}+$depth/%F{green}%B$(basename $PWD)%b"
-    fi
-  fi
-}
-
-r_prompt_info() {
-  # shows last command success or failure (and exit code)
-  if [[ $? -eq 0 ]]; then
-    print -rn -- "%F{cyan}▪"
-  else
-    print -rn -- "%F{red}$? ▪"
-  fi
-}
-
-
-hg_branch() {
-  branch=$(hg branch 2>&1)
-  if [[ $? -eq 0 ]]; then
-    print -rn -- "[%F{magenta}$(hg prompt '{branch}{status}')%f] "
-  else
-    print -rn -- " "
-  fi
-}
 
 setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
 PROMPT='$(google3_prompt_info)%f %# '  # %f for stopping the foreground color
 RPROMPT='$(r_prompt_info)'
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
+# ========= Optional... options ============
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -106,7 +42,7 @@ RPROMPT='$(r_prompt_info)'
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS=true
@@ -118,7 +54,7 @@ RPROMPT='$(r_prompt_info)'
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -136,42 +72,42 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=$ZSH/custom
+# installing plugins if not present
+if ! [ -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting 2>&1 > /dev/null
+fi
+if ! [ -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions 2>&1 > /dev/null
+fi
+if ! [ -d "$ZSH_CUSTOM/plugins/zshmarks" ]; then
+  git clone https://github.com/jocelynmallon/zshmarks.git $ZSH_CUSTOM/plugins/zshmarks 2>&1 > /dev/null
+fi
+if ! [ -d "$ZSH_CUSTOM/plugins/colored-man-pages" ]; then
+  git clone https://github.com/ael-code/zsh-colored-man-pages.git $ZSH_CUSTOM/plugins/colored-man-pages 2>&1 > /dev/null
+fi
 
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zshmarks zsh-autosuggestions compleat mercurial)
+plugins=(git zsh-syntax-highlighting zshmarks zsh-autosuggestions colored-man-pages)
+
+if type "hg" > /dev/null; then
+  plugins+=(mercurial)
+fi
+if type "brew" > /dev/null; then
+  plugins+=(brew)
+fi
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
+export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export LANG=en_US.UTF-8
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# exported vars
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
@@ -184,12 +120,16 @@ export TEXMFHOME=/Users/tingzhou/.texmf
 export PYTHONSTARTUP=/Users/tingzhou/.pythonrc
 export LESS=-R
 export HOMEBREW_NO_AUTO_UPDATE=1
-bindkey -e
 
+# up/down key for history search
+bindkey -e
 bindkey '[A' history-beginning-search-backward
 bindkey '[B' history-beginning-search-forward
 
+# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# some google stuff
 if $is_google; then
   source /etc/bash_completion.d/g4d
 fi

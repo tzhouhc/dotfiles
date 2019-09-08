@@ -1,0 +1,27 @@
+# editor
+alias vim=nvim
+alias vi=vim
+alias v=vim
+alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"
+
+# dev
+alias p4d=g4d
+alias p=p4
+alias g=git
+alias h=hg
+alias mdformat=/google/data/ro/teams/g3doc/mdformat
+alias bb="blaze build"
+alias br="blaze run"
+alias bt="blaze test"
+alias wiki="g4d ting-wiki@"
+
+# convenience
+alias j=jump
+alias open=open_and_switch
+
+# typo
+alias claer=clear
+alias cl=clear
+
+# customize calling
+alias gtop="TERM='xterm' gtop"

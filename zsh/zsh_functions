@@ -1,0 +1,83 @@
+function bbs() {
+  # build, then go to the blaze-out directory
+  [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
+  citc_path=$match[1]
+  blaze_path="$(blaze build $@ 2>&1 | grep blaze-out)"
+  blaze_path=${blaze_path// /}
+  if [[ ! -z $blaze_path ]]; then
+    print -P "%F{green}Target built; cd-ing now"
+    cd "$citc_path/google3/$(dirname $blaze_path)"
+  else
+    print -P "%F{red}Target not found; fix something maybe?"
+    exit 1
+  fi
+}
+
+function open_and_switch {
+  open $1
+  hide_iterm_window
+}
+
+function o {
+  pushd $(showmarks $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
+  open .
+  popd > /dev/null
+  hide_iterm_window
+}
+
+# customized prompt
+google3_prompt_info() {
+  # shows current dir name;
+  # if in citc, shows citc client name plus current folder depth
+  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
+    # Use CitC client names as window titles in screen/tmux
+    # print -n "\ek${match[1]}\e\\"  # not sure what this is for anymore
+    if [[ -z ${match[2]} ]]; then
+      print -r -- "%F{blue}($match[1])%F{yellow}/"
+    else
+      depth=$(echo ${match[2]} | awk -F"/" '{print NF-1}')
+      if [[ $depth == 0 ]]; then
+        print -r -- "%F{blue}($match[1])%F{yellow}/%F{green}%B$(basename ${match[2]#/})%b"
+      else
+        print -r -- "%F{blue}($match[1])%F{yellow}/+$depth/%F{green}%B$(basename ${match[2]#/})%b"
+      fi
+    fi
+  elif [[ $PWD =~ "$HOME(.*)" ]]; then
+    depth=$(echo ${match[1]} | awk -F"/" '{print NF-1}')
+    if [[ $depth == -1 ]]; then
+      print -r -- "%F{cyan}%B~%b"
+    elif [[ $depth == 1 ]]; then
+      print -r -- "%F{cyan}~/%F{green}%B$(basename ${match[1]})%b"
+    else
+      depth=$((depth - 1))
+      print -r -- "%F{cyan}~%F{yellow}/+$depth/%F{green}%B$(basename ${match[1]})%b"
+    fi
+  else
+    depth=$(echo $PWD | awk -F"/" '{print NF-1}')
+    if [[ $depth == 1 ]]; then
+      print -r -- "%F{red}%B$PWD%b"
+    else
+      depth=$((depth - 1))
+      print -r -- "%F{red}/%F{yellow}+$depth/%F{green}%B$(basename $PWD)%b"
+    fi
+  fi
+}
+
+r_prompt_info() {
+  # shows last command success or failure (and exit code)
+  if [[ $? -eq 0 ]]; then
+    print -rn -- "%F{cyan}▪"
+  else
+    print -rn -- "%F{red}$? ▪"
+  fi
+}
+
+hg_branch() {
+  branch=$(hg branch 2>&1)
+  if [[ $? -eq 0 ]]; then
+    print -rn -- "[%F{magenta}$(hg prompt '{branch}{status}')%f] "
+  else
+    print -rn -- " "
+  fi
+}
+

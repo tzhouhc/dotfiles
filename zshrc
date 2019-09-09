@@ -72,31 +72,26 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-ZSH_CUSTOM=$ZSH/custom
-# installing plugins if not present
-if ! [ -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting 2>&1 > /dev/null
-fi
-if ! [ -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
-  git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions 2>&1 > /dev/null
-fi
-if ! [ -d "$ZSH_CUSTOM/plugins/zshmarks" ]; then
-  git clone https://github.com/jocelynmallon/zshmarks.git $ZSH_CUSTOM/plugins/zshmarks 2>&1 > /dev/null
-fi
-if ! [ -d "$ZSH_CUSTOM/plugins/colored-man-pages" ]; then
-  git clone https://github.com/ael-code/zsh-colored-man-pages.git $ZSH_CUSTOM/plugins/colored-man-pages 2>&1 > /dev/null
-fi
+# ====================
+# Zgen plugin management
+# ====================
+source "${HOME}/.zgen/zgen.zsh"
+if ! zgen saved; then
+  zgen oh-my-zsh
 
-plugins=(git pip zsh-syntax-highlighting zshmarks zsh-autosuggestions colored-man-pages)
-
-if type "hg" > /dev/null; then
-  plugins+=(mercurial)
+  # plugins
+  zgen load zsh-users/zsh-syntax-highlighting
+  zgen load zsh-users/zsh-autosuggestions
+  zgen load jocelynmallon/zshmarks
+  zgen load ael-code/zsh-colored-man-pages
+  zgen oh-my-zsh plugins/git
+  zgen oh-my-zsh plugins/pip
+  if type "hg" > /dev/null; then
+    zgen oh-my-zsh plugins/mercurial
+  fi
+  # save all to init script
+  zgen save
 fi
-if type "brew" > /dev/null; then
-  plugins+=(brew)
-fi
-
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export MANPATH="/usr/local/man:$MANPATH"

@@ -24,8 +24,8 @@ source ~/.zsh/zsh_functions
 export ZSH="$HOME/.oh-my-zsh"
 
 setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
-PROMPT='$(google3_prompt_info)$(g_prompt)%f %# '  # %f for stopping the foreground color
-RPROMPT='$(r_prompt_info)'
+PROMPT='$(google3_prompt_info)$(git_prompt)%f '  # %f for stopping the foreground color
+RPROMPT='$(last_exitcode)'
 
 # ========= Optional... options ============
 # Uncomment the following line to use case-sensitive completion.
@@ -87,7 +87,7 @@ if ! [ -d "$ZSH_CUSTOM/plugins/colored-man-pages" ]; then
   git clone https://github.com/ael-code/zsh-colored-man-pages.git $ZSH_CUSTOM/plugins/colored-man-pages 2>&1 > /dev/null
 fi
 
-plugins=(git zsh-syntax-highlighting zshmarks zsh-autosuggestions colored-man-pages)
+plugins=(git pip zsh-syntax-highlighting zshmarks zsh-autosuggestions colored-man-pages)
 
 if type "hg" > /dev/null; then
   plugins+=(mercurial)

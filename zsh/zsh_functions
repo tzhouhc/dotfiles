@@ -14,14 +14,14 @@ function bbs() {
 }
 
 function open_and_switch {
-  open $1
+  /usr/bin/open $1
   hide_iterm_window
 }
 
 function o {
   pushd $(showmarks $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
-  open .
-  popd > /dev/null
+  /usr/bin/open .
+  popd 2>&1 > /dev/null
   hide_iterm_window
 }
 
@@ -63,28 +63,28 @@ google3_prompt_info() {
   fi
 }
 
-g_inside_repo() {
+git_inside_repo() {
   print "$(git rev-parse --is-inside-work-tree 2>/dev/null)"
 }
 
-g_branch() {
-  print -rn -- "%F{cyan}$(git branch | grep \* | cut -d ' ' -f2)%{$reset_color%}"
+git_branch() {
+  print -rn -- "%F{cyan}$(git branch | grep \* | cut -d ' ' -f2)%f"
 }
 
-g_dirty() {
+git_dirty() {
   if [[ $(git diff --stat) != '' ]]; then
-    print -rn -- "*"
+    print -rn -- "%F{red}≠%f"
   else
   fi
 }
 
-g_prompt() {
-  if [ "$(g_inside_repo)" ]; then
-    print -rn -- "%{$reset_color%}($(g_branch)$(g_dirty))"
+git_prompt() {
+  if [ "$(git_inside_repo)" ]; then
+    print -rn -- "%f($(git_branch)$(git_dirty))"
   fi
 }
 
-r_prompt_info() {
+last_exitcode() {
   # shows last command success or failure (and exit code)
   if [[ $? -eq 0 ]]; then
     print -rn -- "%F{cyan}▪"

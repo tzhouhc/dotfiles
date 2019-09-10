@@ -87,9 +87,9 @@ git_prompt() {
 last_exitcode() {
   # shows last command success or failure (and exit code)
   if [[ $? -eq 0 ]]; then
-    print -rn -- "%F{cyan}▪"
+    print -rn -- "%F{cyan} 0"
   else
-    print -rn -- "%F{red}$? ▪"
+    print -rn -- "%F{red}$? $?"
   fi
 }
 

@@ -1,6 +1,13 @@
 #!/bin/bash
 # the script is ideally completely idempotent
 
+set -e
+
+# fzf
+if ! [ -d "$HOME/.fzf" ]; then
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install
+fi
 # oh-my-zsh
 if ! [ -d "$HOME/.oh-my-zsh" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"

@@ -1,3 +1,7 @@
+function zsh_reload() {
+  source ~/.zshrc
+}
+
 function bbs() {
   # build, then go to the blaze-out directory
   [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
@@ -87,9 +91,9 @@ git_prompt() {
 last_exitcode() {
   # shows last command success or failure (and exit code)
   if [[ $? -eq 0 ]]; then
-    print -rn -- "%F{cyan} 0"
+    print -rn -- "%F{cyan} ="
   else
-    print -rn -- "%F{red}$? $?"
+    print -rn -- "%F{red}$? +"
   fi
 }
 

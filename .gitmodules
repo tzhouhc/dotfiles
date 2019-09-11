@@ -1,3 +1,4 @@
 [submodule "vim"]
-	path = vim
-	url = ../vim
+  path = vim
+  url = ../vim
+  ignore = all

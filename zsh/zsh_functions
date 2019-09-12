@@ -71,6 +71,15 @@ git_inside_repo() {
   print "$(git rev-parse --is-inside-work-tree 2>/dev/null)"
 }
 
+git_position() {
+  if [[ -n $(git status | grep ahead) ]]; then
+    print -rn -- "%F{red}>%f"
+  elif [[ -n $(git status | grep behind) ]]; then
+    print -rn -- "%F{red}<%f"
+  else
+  fi
+}
+
 git_branch() {
   print -rn -- "%F{cyan}$(git branch | grep \* | cut -d ' ' -f2)%f"
 }
@@ -84,7 +93,7 @@ git_dirty() {
 
 git_prompt() {
   if [ "$(git_inside_repo)" ]; then
-    print -rn -- "%f($(git_branch)$(git_dirty))"
+    print -rn -- "%f($(git_branch)$(git_dirty)$(git_position))"
   fi
 }
 

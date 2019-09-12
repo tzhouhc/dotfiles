@@ -1,0 +1,9 @@
+# customized vim completion
+_fzf_complete_vim() {
+  _fzf_complete '+m' "$@" < <(
+    # all files under current dir, no recursive
+    ls -ap | grep -v /
+    # all historically visited files
+    cat ~/.vim/vim_history
+  )
+}

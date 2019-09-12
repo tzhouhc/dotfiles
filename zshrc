@@ -20,6 +20,9 @@ source ~/.zsh/zsh_aliases
 # read slightly longer 'shorthands'
 source ~/.zsh/zsh_functions
 
+# read custom completions
+source ~/.zsh/zsh_completions
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 

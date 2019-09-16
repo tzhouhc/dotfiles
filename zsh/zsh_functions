@@ -44,7 +44,7 @@ prompt_relative_root() {
   if [[ $root == "/" ]]; then
     p10k segment -b red -f black -t $root
   elif [[ $root == "~" ]]; then
-    p10k segment -b green -f black -t $root
+    p10k segment -b springgreen4 -f black -t $root
   else
     p10k segment -b orange -f black -t $root
   fi
@@ -73,7 +73,7 @@ relative_depth() {
 prompt_relative_depth() {
   rel_depth=$(relative_depth)
   if [[ -n $rel_depth ]]; then
-    p10k segment -b yellow -f black -t $rel_depth
+    p10k segment -b khaki1 -f black -t $rel_depth
   fi
 }
 
@@ -84,7 +84,7 @@ current_dir() {
 }
 
 prompt_current_dir() {
-  p10k segment -b cyan -f black -t "$(current_dir)"
+  p10k segment -b skyblue1 -f black -t "$(current_dir)"
 }
 
 # customized prompt
@@ -171,4 +171,20 @@ hg_branch() {
   else
     print -rn -- " "
   fi
+}
+
+check_true_color() {
+  awk 'BEGIN{
+      s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
+      for (colnum = 0; colnum<77; colnum++) {
+          r = 255-(colnum*255/76);
+          g = (colnum*510/76);
+          b = (colnum*255/76);
+          if (g>255) g = 510-g;
+          printf "\033[48;2;%d;%d;%dm", r,g,b;
+          printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+          printf "%s\033[0m", substr(s,colnum+1,1);
+      }
+      printf "\n";
+  }'
 }

@@ -27,8 +27,21 @@ source ~/.zsh/zsh_completions
 export ZSH="$HOME/.oh-my-zsh"
 
 setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
-PROMPT='$(google3_prompt_info)$(git_prompt)%f '  # %f for stopping the foreground color
-RPROMPT='$(last_exitcode)'
+POWERLINE_PROMPT=1
+
+if [ POWERLINE_PROMPT ]; then
+  POWERLEVEL9K_CUSTOM_RELATIVE_ROOT=relative_root
+  POWERLEVEL9K_CUSTOM_RELATIVE_ROOT_BACKGROUND="red"
+  POWERLEVEL9K_CUSTOM_RELATIVE_DEPTH=relative_depth
+  POWERLEVEL9K_CUSTOM_RELATIVE_DEPTH_BACKGROUND="yellow"
+  POWERLEVEL9K_CUSTOM_CURRENT_DIR=current_dir
+  POWERLEVEL9K_CUSTOM_CURRENT_DIR_BACKGROUND="green"
+  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(custom_relative_root custom_relative_depth custom_current_dir dir_writable vcs)
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
+else
+  PROMPT='$(google3_prompt_info)$(git_prompt)%f '  # %f for stopping the foreground color
+  RPROMPT='$(last_exitcode)'
+fi
 
 # ========= Optional... options ============
 # Uncomment the following line to use case-sensitive completion.
@@ -83,6 +96,7 @@ if ! zgen saved; then
   zgen oh-my-zsh
 
   # plugins
+  zgen load bhilburn/powerlevel9k powerlevel9k
   zgen load zsh-users/zsh-syntax-highlighting
   zgen load zsh-users/zsh-autosuggestions
   zgen load jocelynmallon/zshmarks

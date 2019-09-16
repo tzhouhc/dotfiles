@@ -29,6 +29,52 @@ function o {
   hide_iterm_window
 }
 
+relative_root() {
+  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
+    print -r -- $match[1]
+  elif [[ $PWD =~ "$HOME(.*)" ]]; then
+    print -r -- "~"
+  else
+    print -r -- "/"
+  fi
+}
+
+relative_root_color() {
+  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
+    print -r -- "blue"
+  elif [[ $PWD =~ "$HOME(.*)" ]]; then
+    print -r -- "cyan"
+  else
+    print -r -- "red"
+  fi
+}
+
+relative_depth_with_zero() {
+  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
+    depth=$(echo ${match[2]} | awk -F"/" '{print NF-2}')
+  elif [[ $PWD =~ "$HOME(.*)" ]]; then
+    depth=$(echo ${match[1]} | awk -F"/" '{print NF-2}')
+  elif [[ $PWD == '/' ]]; then
+    depth=-1
+  else
+    depth=$(echo $PWD | awk -F"/" '{print NF-2}')
+  fi
+  print -r -- $depth
+}
+
+relative_depth() {
+  depth=$(relative_depth_with_zero)
+  if [[ $depth -ge 1 ]]; then
+    print -r -- $depth
+  fi
+}
+
+current_dir() {
+  if [[ $(relative_depth_with_zero) -ge 0 ]]; then
+    print -r -- $(basename $(pwd))
+  fi
+}
+
 # customized prompt
 google3_prompt_info() {
   # shows current dir name;
@@ -73,27 +119,27 @@ git_inside_repo() {
 
 git_position() {
   if [[ -n $(git status | grep ahead) ]]; then
-    print -rn -- "%F{red}>%f"
+    print -rn -- ">"
   elif [[ -n $(git status | grep behind) ]]; then
-    print -rn -- "%F{red}<%f"
+    print -rn -- "<"
   else
   fi
 }
 
 git_branch() {
-  print -rn -- "%F{cyan}$(git branch | grep \* | cut -d ' ' -f2)%f"
+  print -rn -- "$(git branch | grep \* | cut -d ' ' -f2)"
 }
 
 git_dirty() {
   if [[ $(git diff --stat) != '' ]]; then
-    print -rn -- "%F{red}≠%f"
+    print -rn -- "≠"
   else
   fi
 }
 
 git_prompt() {
   if [ "$(git_inside_repo)" ]; then
-    print -rn -- "%f($(git_branch)$(git_dirty)$(git_position))"
+    print -rn -- "%F{cyan}($(git_branch)%F{red}$(git_dirty)$(git_position)%f)"
   fi
 }
 
@@ -114,4 +160,3 @@ hg_branch() {
     print -rn -- " "
   fi
 }
-

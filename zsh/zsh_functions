@@ -115,3 +115,10 @@ hg_branch() {
   fi
 }
 
+function jt() {
+    if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
+        cd "${match[1]}/java${match[2]}"
+    else
+        cd "${PWD/\/google3\/java//google3/javatests}"
+    fi
+}

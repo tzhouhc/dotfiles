@@ -30,6 +30,7 @@ setopt prompt_subst  # enable command substitution (and otheR expansions) in PRO
 POWERLINE_PROMPT=1
 
 if [ POWERLINE_PROMPT ]; then
+  POWERLEVEL9K_IGNORE_TERM_COLORS=true
   POWERLEVEL9K_CUSTOM_RELATIVE_ROOT=relative_root
   POWERLEVEL9K_CUSTOM_RELATIVE_ROOT_BACKGROUND="red"
   POWERLEVEL9K_CUSTOM_RELATIVE_DEPTH=relative_depth

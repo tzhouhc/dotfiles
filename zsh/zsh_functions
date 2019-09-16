@@ -39,13 +39,14 @@ relative_root() {
   fi
 }
 
-relative_root_color() {
-  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
-    print -r -- "blue"
-  elif [[ $PWD =~ "$HOME(.*)" ]]; then
-    print -r -- "cyan"
+prompt_relative_root() {
+  root=$(relative_root)
+  if [[ $root == "/" ]]; then
+    p10k segment -b red -f black -t $root
+  elif [[ $root == "~" ]]; then
+    p10k segment -b green -f black -t $root
   else
-    print -r -- "red"
+    p10k segment -b orange -f black -t $root
   fi
 }
 
@@ -69,10 +70,21 @@ relative_depth() {
   fi
 }
 
+prompt_relative_depth() {
+  rel_depth=$(relative_depth)
+  if [[ -n $rel_depth ]]; then
+    p10k segment -b yellow -f black -t $rel_depth
+  fi
+}
+
 current_dir() {
   if [[ $(relative_depth_with_zero) -ge 0 ]]; then
     print -r -- $(basename $(pwd))
   fi
+}
+
+prompt_current_dir() {
+  p10k segment -b cyan -f black -t "$(current_dir)"
 }
 
 # customized prompt

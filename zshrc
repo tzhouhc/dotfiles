@@ -27,6 +27,8 @@ source ~/.zsh/zsh_completions
 export ZSH="$HOME/.oh-my-zsh"
 
 setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
+
+# legacy setting in case of no powerline
 PROMPT='$(google3_prompt_info)$(git_prompt)%f '  # %f for stopping the foreground color
 RPROMPT='$(last_exitcode)'
 
@@ -83,6 +85,7 @@ if ! zgen saved; then
   zgen oh-my-zsh
 
   # plugins
+  zgen load romkatv/powerlevel10k powerlevel10k
   zgen load zsh-users/zsh-syntax-highlighting
   zgen load zsh-users/zsh-autosuggestions
   zgen load jocelynmallon/zshmarks
@@ -133,3 +136,14 @@ bindkey '[B' history-beginning-search-forward
 if $is_google; then
   source /etc/bash_completion.d/g4d
 fi
+
+POWERLEVEL9K_IGNORE_TERM_COLORS=true
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+  relative_root
+  relative_depth
+  current_dir
+  dir_writable
+  vcs
+)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
+

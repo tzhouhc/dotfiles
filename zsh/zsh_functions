@@ -29,6 +29,64 @@ function o {
   hide_iterm_window
 }
 
+relative_root() {
+  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
+    print -r -- $match[1]
+  elif [[ $PWD =~ "$HOME(.*)" ]]; then
+    print -r -- "~"
+  else
+    print -r -- "/"
+  fi
+}
+
+prompt_relative_root() {
+  root=$(relative_root)
+  if [[ $root == "/" ]]; then
+    p10k segment -b red -f black -t $root
+  elif [[ $root == "~" ]]; then
+    p10k segment -b springgreen4 -f black -t $root
+  else
+    p10k segment -b orange -f black -t $root
+  fi
+}
+
+relative_depth_with_zero() {
+  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
+    depth=$(echo ${match[2]} | awk -F"/" '{print NF-2}')
+  elif [[ $PWD =~ "$HOME(.*)" ]]; then
+    depth=$(echo ${match[1]} | awk -F"/" '{print NF-2}')
+  elif [[ $PWD == '/' ]]; then
+    depth=-1
+  else
+    depth=$(echo $PWD | awk -F"/" '{print NF-2}')
+  fi
+  print -r -- $depth
+}
+
+relative_depth() {
+  depth=$(relative_depth_with_zero)
+  if [[ $depth -ge 1 ]]; then
+    print -r -- $depth
+  fi
+}
+
+prompt_relative_depth() {
+  rel_depth=$(relative_depth)
+  if [[ -n $rel_depth ]]; then
+    p10k segment -b khaki1 -f black -t $rel_depth
+  fi
+}
+
+current_dir() {
+  if [[ $(relative_depth_with_zero) -ge 0 ]]; then
+    print -r -- $(basename $(pwd))
+  fi
+}
+
+prompt_current_dir() {
+  p10k segment -b skyblue1 -f black -t "$(current_dir)"
+}
+
 # customized prompt
 google3_prompt_info() {
   # shows current dir name;
@@ -73,27 +131,27 @@ git_inside_repo() {
 
 git_position() {
   if [[ -n $(git status | grep ahead) ]]; then
-    print -rn -- "%F{red}>%f"
+    print -rn -- ">"
   elif [[ -n $(git status | grep behind) ]]; then
-    print -rn -- "%F{red}<%f"
+    print -rn -- "<"
   else
   fi
 }
 
 git_branch() {
-  print -rn -- "%F{cyan}$(git branch | grep \* | cut -d ' ' -f2)%f"
+  print -rn -- "$(git branch | grep \* | cut -d ' ' -f2)"
 }
 
 git_dirty() {
   if [[ $(git diff --stat) != '' ]]; then
-    print -rn -- "%F{red}≠%f"
+    print -rn -- "≠"
   else
   fi
 }
 
 git_prompt() {
   if [ "$(git_inside_repo)" ]; then
-    print -rn -- "%f($(git_branch)$(git_dirty)$(git_position))"
+    print -rn -- "%F{cyan}($(git_branch)%F{red}$(git_dirty)$(git_position)%f)"
   fi
 }
 
@@ -116,9 +174,25 @@ hg_branch() {
 }
 
 function jt() {
-    if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
-        cd "${match[1]}/java${match[2]}"
-    else
-        cd "${PWD/\/google3\/java//google3/javatests}"
-    fi
+  if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
+      cd "${match[1]}/java${match[2]}"
+  else
+      cd "${PWD/\/google3\/java//google3/javatests}"
+  fi
+}
+
+check_true_color() {
+  awk 'BEGIN{
+      s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
+      for (colnum = 0; colnum<77; colnum++) {
+          r = 255-(colnum*255/76);
+          g = (colnum*510/76);
+          b = (colnum*255/76);
+          if (g>255) g = 510-g;
+          printf "\033[48;2;%d;%d;%dm", r,g,b;
+          printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+          printf "%s\033[0m", substr(s,colnum+1,1);
+      }
+      printf "\n";
+  }'
 }

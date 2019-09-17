@@ -46,13 +46,13 @@ prompt_relative_root() {
   elif [[ $root == "~" ]]; then
     p10k segment -b springgreen4 -f black -t $root
   else
-    p10k segment -b orange -f black -t $root
+    p10k segment -b grey23 -f orangered1 -t $root
   fi
 }
 
 relative_depth_with_zero() {
   if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
-    depth=$(echo ${match[2]} | awk -F"/" '{print NF-2}')
+    depth=$(echo ${match[2]} | awk -F"/" '{print NF-1}')
   elif [[ $PWD =~ "$HOME(.*)" ]]; then
     depth=$(echo ${match[1]} | awk -F"/" '{print NF-2}')
   elif [[ $PWD == '/' ]]; then
@@ -85,6 +85,15 @@ current_dir() {
 
 prompt_current_dir() {
   p10k segment -b skyblue1 -f black -t "$(current_dir)"
+}
+
+prompt_small_status() {
+  # shows last command success or failure (and exit code)
+  if [[ $_p9k_status -eq 0 ]]; then
+    p10k segment -b grey23 -f green -t "="
+  else
+    p10k segment -b grey23 -f red -t "$_p9k_status"
+  fi
 }
 
 # customized prompt

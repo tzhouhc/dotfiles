@@ -11,7 +11,16 @@ fi
 if [ -z "$TMUX" ]; then
   export PATH=$HOME/.rbenv/versions/2.5.1/bin:$HOME/local/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:$HOME/.fzf/bin:/usr/local/Cellar/node/12.9.0/bin:$PATH
   export PATH=$HOME/go/bin/:$HOME/.local/bin:$PATH
-  tmux attach
+  if [[ -e ~/.notmux ]]; then
+    # skip tmux
+  else
+    if [[ $is_google ]]; then
+      # google's tmux variant that allows gnub auth
+      tmx2 attach
+    else
+      tmux attach
+    fi
+  fi
 fi
 
 # read convenient short hands
@@ -119,8 +128,8 @@ export MYVIMRC='~/.vim/vimrc'
 export EDITOR=nvim
 export G4MULTIDIFF=1
 export P4DIFF='p4diff'
-export TEXMFHOME=/Users/tingzhou/.texmf
-export PYTHONSTARTUP=/Users/tingzhou/.pythonrc
+export TEXMFHOME=$HOME/.texmf
+export PYTHONSTARTUP=$HOME/.pythonrc
 export LESS=-R
 export HOMEBREW_NO_AUTO_UPDATE=1
 
@@ -133,7 +142,7 @@ bindkey '[B' history-beginning-search-forward
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # some google stuff
-if $is_google; then
+if [[ -e '/etc/bash_completion.d/g4d' ]]; then
   source /etc/bash_completion.d/g4d
 fi
 

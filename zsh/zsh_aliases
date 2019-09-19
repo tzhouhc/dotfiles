@@ -17,6 +17,7 @@ alias wiki="g4d ting-wiki@"
 
 # convenience
 alias j=jump
+alias fd=fdfind
 alias open=open_and_switch
 
 # typo

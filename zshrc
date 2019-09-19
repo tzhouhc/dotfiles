@@ -7,6 +7,7 @@ else
   is_google=false
 fi
 
+
 # tmux settings
 if [ -z "$TMUX" ]; then
   export PATH=$HOME/.rbenv/versions/2.5.1/bin:$HOME/local/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:$HOME/.fzf/bin:/usr/local/Cellar/node/12.9.0/bin:$PATH

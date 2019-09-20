@@ -1,8 +1,8 @@
-function zsh_reload() {
+zsh_reload() {
   source ~/.zshrc
 }
 
-function bbs() {
+bbs() {
   # build, then go to the blaze-out directory
   [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
   citc_path=$match[1]
@@ -17,12 +17,12 @@ function bbs() {
   fi
 }
 
-function open_and_switch {
+open_and_switch() {
   /usr/bin/open $1
   hide_iterm_window
 }
 
-function o {
+o() {
   pushd $(showmarks $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
   /usr/bin/open .
   popd 2>&1 > /dev/null
@@ -164,6 +164,19 @@ git_prompt() {
   fi
 }
 
+prompt_git_simple() {
+  if [[ "$(git_inside_repo)" ]]; then
+    branch_status="$(git_branch) $(git_dirty)"
+    if [[ $(git_position) == ">" ]]; then
+      p10k segment -b wheat1 -f black -t $branch_status
+    elif [[ $(git_position) == "<" ]]; then
+      p10k segment -b orange4 -f black -t $branch_status
+    else
+      p10k segment -b green -f black -t $branch_status
+    fi
+  fi
+}
+
 last_exitcode() {
   # shows last command success or failure (and exit code)
   if [[ $? -eq 0 ]]; then
@@ -182,7 +195,7 @@ hg_branch() {
   fi
 }
 
-function jt() {
+jt() {
   if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
       cd "${match[1]}/java${match[2]}"
   else

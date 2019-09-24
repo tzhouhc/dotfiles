@@ -4,26 +4,31 @@
 set -e
 
 # fzf
-if ! [ -d "~/.fzf" ]; then
+if ! [ -d "$HOME/.fzf" ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install
 fi
 # oh-my-zsh
-if ! [ -d "~/.oh-my-zsh" ]; then
+if ! [ -d "$HOME/.oh-my-zsh" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 # zgen
-if ! [ -e "~/.zgen" ]; then
+if ! [ -e "$HOME/.zgen" ]; then
   git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 fi
 # tpm
-if ! [ -d "~/.tmux/plugins/tpm"]; then
+if ! [ -d "$HOME/.tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
 # current script location
 cwd="$(dirname "$0")"
 cwd="$(cd $cwd; pwd)"
+
+# potentially the one introduced by oh-my-zsh
+if [ -e "$HOME/.zshrc" ]; then
+  rm ~/.zshrc
+fi
 
 # link config files
 ln -sf "$cwd/zshrc" "$HOME/.zshrc"
@@ -49,4 +54,7 @@ EOF
 fi
 
 # install plugs for nvim
-nvim +'PlugInstall --sync' +qa 2> /dev/null
+# headless for that quiet installation
+nvim --headless +'PlugInstall --sync' +qa 2> /dev/null
+
+echo "successfully deployed dotfiles."

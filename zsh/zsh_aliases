@@ -4,6 +4,11 @@ alias vi=vim
 alias v=vim
 alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"
 
+# kek
+alias :w="echo 'you are not in vim'"
+alias :q="echo 'you are not in vim'"
+alias :wq="echo 'you are not in vim'"
+
 # dev
 alias p4d=g4d
 alias p=p4
@@ -14,6 +19,7 @@ alias bb="blaze build"
 alias br="blaze run"
 alias bt="blaze test"
 alias wiki="g4d ting-wiki@"
+alias pastebin="/google/src/head/depot/eng/tools/pastebin"
 
 # convenience
 alias j=jump

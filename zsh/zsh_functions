@@ -205,3 +205,7 @@ check_true_color() {
       printf "\n";
   }'
 }
+
+cshere() {
+  cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
+}

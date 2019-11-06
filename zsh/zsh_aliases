@@ -10,6 +10,7 @@ alias :q="echo 'you are not in vim'"
 alias :wq="echo 'you are not in vim'"
 
 # dev
+alias g4cd="g4d; cd"  # cd to a path relative to g4d
 alias p4d=g4d
 alias p=p4
 alias g=git

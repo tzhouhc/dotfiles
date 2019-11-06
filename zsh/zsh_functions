@@ -148,7 +148,7 @@ git_position() {
 }
 
 git_branch() {
-  print -rn -- "$(git branch | grep \* | cut -d ' ' -f2)"
+  print -rn -- "$(git rev-parse --abbrev-ref HEAD)"
 }
 
 git_dirty() {

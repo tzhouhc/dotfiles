@@ -131,6 +131,7 @@ export G4MULTIDIFF=1
 export P4DIFF='p4diff'
 export TEXMFHOME=$HOME/.texmf
 export PYTHONSTARTUP=$HOME/.pythonrc
+export RUBYLIB=$HOME/local/lib/ruby
 export LESS=-R
 export HOMEBREW_NO_AUTO_UPDATE=1
 

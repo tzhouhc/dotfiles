@@ -10,3 +10,5 @@
   branch = false
 [core]
   pager = /usr/bin/less
+[diff]
+  algorithm = patience

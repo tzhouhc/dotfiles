@@ -15,7 +15,7 @@ if [ -z "$TMUX" ]; then
   if [[ -e ~/.notmux ]]; then
     # skip tmux
   else
-    if [[ $"is_google" == true ]]; then
+    if [[ "$is_google" == true ]]; then
       # google's tmux variant that allows gnub auth
       tmx2 attach
     else
@@ -134,6 +134,11 @@ export PYTHONSTARTUP=$HOME/.pythonrc
 export RUBYLIB=$HOME/local/lib/ruby
 export LESS=-R
 export HOMEBREW_NO_AUTO_UPDATE=1
+if [[ -e '/usr/share/nvim/runtime/macros/less.sh' ]]; then
+  export PAGER="/usr/share/nvim/runtime/macros/less.sh"
+end
+# vim-less doesn't handle colored outputs very well
+export MANPAGER="/usr/bin/less"
 
 # up/down key for history search
 bindkey -e

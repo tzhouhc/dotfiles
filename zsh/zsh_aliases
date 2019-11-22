@@ -3,6 +3,7 @@ alias vim=nvim
 alias vi=vim
 alias v=vim
 alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"
+alias bless=/usr/bin/less
 
 # kek
 alias :w="echo 'you are not in vim'"
@@ -16,11 +17,13 @@ alias p=p4
 alias g=git
 alias h=hg
 alias mdformat=/google/data/ro/teams/g3doc/mdformat
-alias bb="blaze build"
-alias br="blaze run"
-alias bt="blaze test"
+alias bb="blaze build -c opt"
+alias br="blaze run -c opt"
+alias bt="blaze test -c opt"
 alias wiki="g4d ting-wiki@"
 alias pastebin="/google/src/head/depot/eng/tools/pastebin"
+alias buildfix='/google/data/ro/teams/ads-integrity/buildfix'
+alias mkredirect='/google/src/head/depot/google3/corp/g3doc_contrib/tools/mkredirect/mkredirect.sh'
 
 # convenience
 alias j=jump

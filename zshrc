@@ -1,167 +1,39 @@
+ZSH_SETUP="$HOME/.zsh"
+
 # If you come from bash you might have to change your $PATH.
-
-# am I in google land
-if [ -d '/google' ]; then
-  is_google=true
-else
-  is_google=false
-fi
-
+source "$ZSH_SETUP/path.sh"
 
 # tmux settings
-if [ -z "$TMUX" ]; then
-  export PATH=$HOME/.rbenv/versions/2.5.1/bin:$HOME/local/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:$HOME/.fzf/bin:/usr/local/Cellar/node/12.9.0/bin:$PATH
-  export PATH=$HOME/go/bin/:$HOME/.local/bin:$PATH
-  if [[ -e ~/.notmux ]]; then
-    # skip tmux
-  else
-    if [[ "$is_google" == true ]]; then
-      # google's tmux variant that allows gnub auth
-      tmx2 attach
-    else
-      tmux attach
-    fi
-  fi
-fi
+source "$ZSH_SETUP/tmux.sh"
+
+# stuff for googleland
+source "$ZSH_SETUP/google.sh"
 
 # read convenient short hands
-source ~/.zsh/zsh_aliases
+source "$ZSH_SETUP/zsh_aliases"
 
 # read slightly longer 'shorthands'
-source ~/.zsh/zsh_functions
+source "$ZSH_SETUP/zsh_functions"
 
 # read custom completions
-source ~/.zsh/zsh_completions
+source "$ZSH_SETUP/zsh_completions"
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# env vars
+source "$ZSH_SETUP/env.sh"
 
-setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
+source "$ZSH_SETUP/zsh_settings"
 
-# legacy setting in case of no powerline
-PROMPT='$(google3_prompt_info)$(git_prompt)%f '  # %f for stopping the foreground color
-RPROMPT='$(last_exitcode)'
+# zgen plugins
+source "$HOME/.zgen/zgen.zsh"
+source "$ZSH_SETUP/zgen.sh"
 
-# ========= Optional... options ============
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+source "$ZSH_SETUP/keys.sh"
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+source "$ZSH_SETUP/misc.sh"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# ====================
-# Zgen plugin management
-# ====================
-source "${HOME}/.zgen/zgen.zsh"
-if ! zgen saved; then
-  zgen oh-my-zsh
-
-  # plugins
-  zgen load romkatv/powerlevel10k powerlevel10k
-  zgen load zsh-users/zsh-syntax-highlighting
-  zgen load zsh-users/zsh-autosuggestions
-  zgen load jocelynmallon/zshmarks
-  zgen load ael-code/zsh-colored-man-pages
-  zgen load rupa/z
-  zgen load changyuheng/fz
-  zgen oh-my-zsh plugins/git
-  zgen oh-my-zsh plugins/pip
-  if type "hg" > /dev/null; then
-    zgen oh-my-zsh plugins/mercurial
-  fi
-  # save all to init script
-  zgen save
-fi
-
-# User configuration
-export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# exported vars
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
-export TERM=xterm-256color
-export MYVIMRC='~/.vim/vimrc'
-export EDITOR=nvim
-export G4MULTIDIFF=1
-export P4DIFF='p4diff'
-export TEXMFHOME=$HOME/.texmf
-export PYTHONSTARTUP=$HOME/.pythonrc
-export RUBYLIB=$HOME/local/lib/ruby
-export LESS=-R
-export HOMEBREW_NO_AUTO_UPDATE=1
-if [[ -e '/usr/share/nvim/runtime/macros/less.sh' ]]; then
-  export PAGER="/usr/share/nvim/runtime/macros/less.sh"
-end
-# vim-less doesn't handle colored outputs very well
-export MANPAGER="/usr/bin/less"
-
-# up/down key for history search
-bindkey -e
-bindkey '[A' history-beginning-search-backward
-bindkey '[B' history-beginning-search-forward
-
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# some google stuff
-if [[ -e '/etc/bash_completion.d/g4d' ]]; then
-  source /etc/bash_completion.d/g4d
-fi
-
-POWERLEVEL9K_IGNORE_TERM_COLORS=true
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-  relative_root
-  relative_depth
-  current_dir
-  dir_writable
-  # git_simple
-  vcs
-)
-# weird symbol issue on gnome-terminal on right edge
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(small_status)
-
+# DEPENDENCY LIST
+# zsh
+# tmux
+# neovim
+# fzf (handled)
+# git

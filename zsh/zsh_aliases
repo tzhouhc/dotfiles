@@ -29,6 +29,7 @@ alias mkredirect='/google/src/head/depot/google3/corp/g3doc_contrib/tools/mkredi
 alias j=jump
 alias fd=fdfind
 alias open=open_and_switch
+alias ls='ls --color -h'
 
 # typo
 alias claer=clear

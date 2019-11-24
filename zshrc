@@ -15,11 +15,11 @@ source "$ZSH_SETUP/zsh_aliases"
 # read slightly longer 'shorthands'
 source "$ZSH_SETUP/zsh_functions"
 
-# read custom completions
-source "$ZSH_SETUP/zsh_completions"
-
 # env vars
 source "$ZSH_SETUP/env.sh"
+
+# read custom completions
+source "$ZSH_SETUP/zsh_completions"
 
 source "$ZSH_SETUP/zsh_settings"
 
@@ -37,3 +37,4 @@ source "$ZSH_SETUP/misc.sh"
 # neovim
 # fzf (handled)
 # git
+# bat -- for colorized preview of syntaxed files

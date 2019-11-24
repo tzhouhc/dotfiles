@@ -27,3 +27,5 @@ export PATH=/Library/TeX/texbin:$PATH
 export PATH=/Library/Frameworks/Mono.framework/Versions/Current/Commands:$PATH
 # node
 export PATH=/usr/local/Cellar/node/12.9.0/bin:$PATH
+# llvm
+# export PATH="/usr/local/opt/llvm/bin:$PATH

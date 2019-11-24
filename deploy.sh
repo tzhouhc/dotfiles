@@ -33,6 +33,7 @@ fi
 # link config files
 ln -sf "$cwd/zshrc" "$HOME/.zshrc"
 ln -sf "$cwd/gitconfig" "$HOME/.gitconfig"
+ln -sf "$cwd/fdignore" "$HOME/.ignore"
 ln -sf "$cwd/pythonrc" "$HOME/.pythonrc"
 ln -sf "$cwd/tmux.conf" "$HOME/.tmux.conf"
 # TODO: fix tpm install

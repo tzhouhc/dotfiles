@@ -25,9 +25,11 @@ alias pastebin="/google/src/head/depot/eng/tools/pastebin"
 alias buildfix='/google/data/ro/teams/ads-integrity/buildfix'
 alias mkredirect='/google/src/head/depot/google3/corp/g3doc_contrib/tools/mkredirect/mkredirect.sh'
 
+# pseudo alfred =========
+alias app='open $(fd . /Applications -d 1 | fzf)'
+
 # convenience
 alias j=jump
-alias fd=fdfind
 alias open=open_and_switch
 alias ls='ls --color -h'
 

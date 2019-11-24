@@ -222,3 +222,16 @@ check_true_color() {
 cshere() {
   cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
 }
+
+music() {
+  open "$(cat ~/.fdindex/music | fzf | sed s/^/'/;s/$/'/)"
+}
+
+if type fd > /dev/null; then
+  _fzf_compgen_path() {
+    fd --hidden --follow --exclude ".git" . "$1"
+  }
+  _fzf_compgen_dir() {
+    fd --type d --hidden --follow --exclude ".git" . "$1"
+  }
+fi

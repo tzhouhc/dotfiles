@@ -31,7 +31,12 @@ alias app='open $(fd . /Applications -d 1 | fzf)'
 # convenience
 alias j=jump
 alias open=open_and_switch
-alias ls='ls --color -h'
+# BSD or GNU?
+if [[ $COREUTILS_VER == GNU ]]; then
+  alias ls='ls -N --color -h'
+else
+  alias ls='ls -G'
+fi
 
 # typo
 alias claer=clear

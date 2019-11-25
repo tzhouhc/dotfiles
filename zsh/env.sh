@@ -3,6 +3,7 @@
 # ====================
 # User configuration
 export MANPATH="/usr/local/man:$MANPATH"
+export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
@@ -25,5 +26,5 @@ export MANPAGER="/usr/bin/less"
 # export LDFLAGS="-L/usr/local/opt/llvm/lib"
 # export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden'
 export FZF_DEFAULT_OPTS="--height 40% --reverse"

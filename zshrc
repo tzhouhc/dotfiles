@@ -1,5 +1,7 @@
 ZSH_SETUP="$HOME/.zsh"
 
+# PROMPT_STYLE='lean'
+
 # If you come from bash you might have to change your $PATH.
 source "$ZSH_SETUP/path.sh"
 
@@ -37,7 +39,11 @@ source "$ZSH_SETUP/zgen.sh"
 
 source "$ZSH_SETUP/keys.sh"
 
-source "$ZSH_SETUP/misc.sh"
+if [[ $PROMPT_STYLE == 'lean' ]]; then
+  source "$ZSH_SETUP/alt_p10k.sh"
+else
+  source "$ZSH_SETUP/misc.sh"
+fi
 
 # DEPENDENCY LIST
 # zsh

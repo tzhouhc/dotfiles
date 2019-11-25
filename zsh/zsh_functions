@@ -22,6 +22,10 @@ open_and_switch() {
   hide_iterm_window
 }
 
+run() {
+  /usr/bin/open $1
+}
+
 o() {
   pushd $(showmarks $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
   /usr/bin/open .
@@ -41,12 +45,22 @@ relative_root() {
 
 prompt_relative_root() {
   root=$(relative_root)
-  if [[ $root == "/" ]]; then
-    p10k segment -b red -f black -t $root
-  elif [[ $root == "~" ]]; then
-    p10k segment -b springgreen4 -f black -t $root
+  if [[ $PROMPT_STYLE == 'lean' ]]; then
+    if [[ $root == "/" ]]; then
+      p10k segment -f red -t $root
+    elif [[ $root == "~" ]]; then
+      p10k segment -f springgreen4 -t $root
+    else
+      p10k segment -f orangered1 -t $root
+    fi
   else
-    p10k segment -b grey23 -f orangered1 -t $root
+    if [[ $root == "/" ]]; then
+      p10k segment -b red -f black -t $root
+    elif [[ $root == "~" ]]; then
+      p10k segment -b springgreen4 -f black -t $root
+    else
+      p10k segment -b grey23 -f orangered1 -t $root
+    fi
   fi
 }
 
@@ -73,7 +87,11 @@ relative_depth() {
 prompt_relative_depth() {
   rel_depth=$(relative_depth)
   if [[ -n $rel_depth ]]; then
-    p10k segment -b khaki1 -f black -t $rel_depth
+    if [[ $PROMPT_STYLE == 'lean' ]]; then
+      p10k segment -f khaki1 -t $rel_depth
+    else
+      p10k segment -b khaki1 -f black -t $rel_depth
+    fi
   fi
 }
 
@@ -84,7 +102,11 @@ current_dir() {
 }
 
 prompt_current_dir() {
-  p10k segment -b skyblue1 -f black -t "$(current_dir)"
+  if [[ $PROMPT_STYLE == 'lean' ]]; then
+    p10k segment -f skyblue1 -t "$(current_dir)"
+  else
+    p10k segment -b skyblue1 -f black -t "$(current_dir)"
+  fi
 }
 
 prompt_small_status() {

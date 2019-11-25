@@ -14,4 +14,3 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
 )
 # weird symbol issue on gnome-terminal on right edge
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(small_status)
-

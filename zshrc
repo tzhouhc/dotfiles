@@ -5,13 +5,8 @@ ZSH_SETUP="$HOME/.zsh"
 # If you come from bash you might have to change your $PATH.
 source "$ZSH_SETUP/path.sh"
 
-# Now that PATH is set, check whether the coreutils on top of the list
-# is BSD or GNU
-if [[ -z $(ls --version 2>/dev/null | grep gnu) ]]; then
-  export COREUTILS_VER=BSD
-else
-  export COREUTILS_VER=GNU
-fi
+# Account for variable software options
+source "$ZSH_SETUP/variations.sh"
 
 # tmux settings
 source "$ZSH_SETUP/tmux.sh"
@@ -44,11 +39,3 @@ if [[ $PROMPT_STYLE == 'lean' ]]; then
 else
   source "$ZSH_SETUP/misc.sh"
 fi
-
-# DEPENDENCY LIST
-# zsh
-# tmux
-# neovim
-# fzf (handled)
-# git
-# bat -- for colorized preview of syntaxed files

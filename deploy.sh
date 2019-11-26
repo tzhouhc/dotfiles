@@ -57,6 +57,11 @@ source ~/.vim/vimrc
 EOF
 fi
 
+# setting up variation software
+if type fdfind >/dev/null; then
+  ln -sf $(which fdfind) "$HOME/.local/bin/fd"
+fi
+
 # install plugs for nvim
 # headless for that quiet installation
 nvim --headless +'PlugInstall --sync' +qa 2> /dev/null

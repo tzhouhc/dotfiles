@@ -5,4 +5,4 @@ if ! type "pip3" > /dev/null; then
   exit 1
 fi
 
-pip3 install ranger-fm flake8 black isort neovim jedi
+pip3 install ranger-fm flake8 black isort neovim jedi mypy

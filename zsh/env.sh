@@ -10,19 +10,17 @@ export LANG=en_US.UTF-8
 export TERM=xterm-256color
 export MYVIMRC='~/.vim/vimrc'
 export EDITOR=nvim
+export BAT_CONFIG_PATH="$HOME/.bat_config"
 
-export TEXMFHOME=$HOME/.texmf
-export PYTHONSTARTUP=$HOME/.pythonrc
-export RUBYLIB=$HOME/local/lib/ruby
-export LESS=-R
+export TEXMFHOME="$HOME/.texmf"
+export PYTHONSTARTUP="$HOME/.pythonrc"
+export RUBYLIB="$HOME/local/lib/ruby"
+export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=2 --no-init --window=-4'
 export HOMEBREW_NO_AUTO_UPDATE=1
-if type bat >/dev/null; then
-  export BAT_CONFIG_PATH="$HOME/.bat_config"
-  export PAGER="bat"
-elif [[ -e '/usr/share/nvim/runtime/macros/less.sh' ]]; then
-  export PAGER="/usr/share/nvim/runtime/macros/less.sh"
-fi
-export MANPAGER="/usr/bin/less"
+
+# /usr/local/share/nvim/runtime/macros/less.sh
+export PAGER="less"
+export MANPAGER="less"
 
 # export QUOTING_STYLE=literal
 

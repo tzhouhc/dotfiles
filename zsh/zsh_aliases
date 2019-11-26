@@ -2,8 +2,8 @@
 alias vim=nvim
 alias vi=vim
 alias v=vim
+alias b=bat
 alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"
-alias bless=/usr/bin/less
 
 # kek
 alias :w="echo 'you are not in vim'"

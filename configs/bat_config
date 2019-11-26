@@ -1,5 +1,7 @@
---theme=OneHalfDark
+--theme=base16
 
 --style=changes
 
 --italic-text=always
+
+--pager "/usr/bin/less -RF"

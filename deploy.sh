@@ -58,7 +58,7 @@ EOF
 fi
 
 # setting up variation software
-if type fdfind >/dev/null; then
+if type fdfind 2>/dev/null; then
   ln -sf $(which fdfind) "$HOME/.local/bin/fd"
 fi
 

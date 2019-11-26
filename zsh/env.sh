@@ -16,7 +16,10 @@ export PYTHONSTARTUP=$HOME/.pythonrc
 export RUBYLIB=$HOME/local/lib/ruby
 export LESS=-R
 export HOMEBREW_NO_AUTO_UPDATE=1
-if [[ -e '/usr/share/nvim/runtime/macros/less.sh' ]]; then
+if type bat >/dev/null; then
+  export BAT_CONFIG_PATH="$HOME/.bat_config"
+  export PAGER="bat"
+elif [[ -e '/usr/share/nvim/runtime/macros/less.sh' ]]; then
   export PAGER="/usr/share/nvim/runtime/macros/less.sh"
 fi
 export MANPAGER="/usr/bin/less"

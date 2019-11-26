@@ -25,6 +25,8 @@ fi
 cwd="$(dirname "$0")"
 cwd="$(cd $cwd; pwd)"
 
+config_dir="$cwd/configs/"
+
 # potentially the one introduced by oh-my-zsh
 if [ -e "$HOME/.zshrc" ]; then
   rm ~/.zshrc
@@ -32,12 +34,13 @@ fi
 
 # link config files
 ln -sf "$cwd/zshrc" "$HOME/.zshrc"
-ln -sf "$cwd/gitconfig" "$HOME/.gitconfig"
-ln -sf "$cwd/fdignore" "$HOME/.ignore"
-ln -sf "$cwd/pythonrc" "$HOME/.pythonrc"
-ln -sf "$cwd/tmux.conf" "$HOME/.tmux.conf"
+ln -sf "$config_dir/gitconfig" "$HOME/.gitconfig"
+ln -sf "$config_dir/bat_config" "$HOME/.bat_config"
+ln -sf "$config_dir/fdignore" "$HOME/.ignore"
+ln -sf "$config_dir/pythonrc" "$HOME/.pythonrc"
+ln -sf "$config_dir/tmux.conf" "$HOME/.tmux.conf"
 # TODO: fix tpm install
-ln -sf "$cwd/ctags" "$HOME/.ctags"
+ln -sf "$config_dir/ctags" "$HOME/.ctags"
 # folders
 ln -sf "$cwd/zsh" "$HOME/.zsh"
 ln -sf "$cwd/vim" "$HOME/.vim"

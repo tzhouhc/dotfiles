@@ -10,7 +10,8 @@ export LANG=en_US.UTF-8
 export TERM=xterm-256color
 export MYVIMRC='~/.vim/vimrc'
 export EDITOR=nvim
-export BAT_CONFIG_PATH="$HOME/.bat_config"
+export BAT_CONFIG_PATH="$HOME/.batrc"
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 export TEXMFHOME="$HOME/.texmf"
 export PYTHONSTARTUP="$HOME/.pythonrc"

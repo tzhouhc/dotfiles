@@ -8,4 +8,4 @@ fi
 
 brew update
 
-brew install bat neovim fd tmux zsh ctags the_silver_searcher
+brew install wget bat neovim fd tmux zsh ctags the_silver_searcher ripgrep

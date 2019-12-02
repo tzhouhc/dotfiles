@@ -1,5 +1,7 @@
 ZSH_SETUP="$HOME/.zsh"
 
+source "$ZSH_SETUP/vars.sh"
+
 # PROMPT_STYLE='lean'
 
 # If you come from bash you might have to change your $PATH.

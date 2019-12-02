@@ -2,36 +2,10 @@ zsh_reload() {
   source ~/.zshrc
 }
 
-bbs() {
-  # build, then go to the blaze-out directory
-  [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
-  citc_path=$match[1]
-  blaze_path="$(blaze build $@ 2>&1 | grep blaze-out)"
-  blaze_path=${blaze_path// /}
-  if [[ ! -z $blaze_path ]]; then
-    print -P "%F{green}Target built; cd-ing now"
-    cd "$citc_path/google3/$(dirname $blaze_path)"
-  else
-    print -P "%F{red}Target not found; fix something maybe?"
-    exit 1
-  fi
-}
-
-open_and_switch() {
-  /usr/bin/open $1
-  hide_iterm_window
-}
-
 run() {
   /usr/bin/open $1
 }
 
-o() {
-  pushd $(showmarks $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
-  /usr/bin/open .
-  popd 2>&1 > /dev/null
-  hide_iterm_window
-}
 
 relative_root() {
   if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
@@ -217,14 +191,6 @@ hg_branch() {
   fi
 }
 
-jt() {
-  if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
-      cd "${match[1]}/java${match[2]}"
-  else
-      cd "${PWD/\/google3\/java//google3/javatests}"
-  fi
-}
-
 check_true_color() {
   awk 'BEGIN{
       s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
@@ -241,19 +207,69 @@ check_true_color() {
   }'
 }
 
-cshere() {
-  cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
-}
-
-music() {
-  open "$(cat ~/.fdindex/music | fzf | sed s/^/'/;s/$/'/)"
-}
-
 if type fd > /dev/null; then
   _fzf_compgen_path() {
     fd --hidden --follow --exclude ".git" . "$1"
   }
   _fzf_compgen_dir() {
     fd --type d --hidden --follow --exclude ".git" . "$1"
+  }
+fi
+
+
+if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
+  mount_music() {
+    sshfs nookie:/media/synia/music $HOME/Music/Synia
+  }
+
+  cmus() {
+    if ls $HOME/Music/Synia | grep albums >/dev/null; then
+      /usr/local/bin/cmus
+    else
+      mount_music
+      /usr/local/bin/cmus
+    fi
+  }
+
+  o() {
+    pushd $(showmarks $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
+    /usr/bin/open .
+    popd 2>&1 > /dev/null
+    hide_iterm_window
+  }
+
+  open_and_switch() {
+    /usr/bin/open $1
+    hide_iterm_window
+  }
+fi
+
+if [[ $IS_GOOGLE == 'true' ]]; then
+  jt() {
+    if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
+        cd "${match[1]}/java${match[2]}"
+    else
+        cd "${PWD/\/google3\/java//google3/javatests}"
+    fi
+  }
+
+
+  cshere() {
+    cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
+  }
+
+  bbs() {
+    # build, then go to the blaze-out directory
+    [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
+    citc_path=$match[1]
+    blaze_path="$(blaze build $@ 2>&1 | grep blaze-out)"
+    blaze_path=${blaze_path// /}
+    if [[ ! -z $blaze_path ]]; then
+      print -P "%F{green}Target built; cd-ing now"
+      cd "$citc_path/google3/$(dirname $blaze_path)"
+    else
+      print -P "%F{red}Target not found; fix something maybe?"
+      exit 1
+    fi
   }
 fi

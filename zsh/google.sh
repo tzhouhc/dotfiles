@@ -1,5 +1,5 @@
 # some google stuff
-if [ -d '/google' ]; then
+if [[ $IS_GOOGLE == "true" ]]; then
   if [[ -e '/etc/bash_completion.d/g4d' ]]; then
     source /etc/bash_completion.d/g4d
   fi

@@ -35,6 +35,7 @@ fi
 # link config files
 ln -sf "$cwd/zshrc" "$HOME/.zshrc"
 ln -sf "$config_dir/gitconfig" "$HOME/.gitconfig"
+ln -sf "$config_dir/gitignore" "$HOME/.gitignore"
 ln -sf "$config_dir/batrc" "$HOME/.batrc"
 ln -sf "$config_dir/ripgreprc" "$HOME/.ripgreprc"
 ln -sf "$config_dir/fdignore" "$HOME/.ignore"

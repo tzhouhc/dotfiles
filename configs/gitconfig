@@ -10,5 +10,6 @@
   branch = false
 [core]
   pager = /usr/bin/less
+  excludesfile = ~/.gitignore
 [diff]
   algorithm = patience

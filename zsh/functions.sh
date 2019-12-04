@@ -1,13 +1,13 @@
-zsh_reload() {
+function zsh_reload() {
   source ~/.zshrc
 }
 
-run() {
+function run() {
   /usr/bin/open $1
 }
 
 
-relative_root() {
+function relative_root() {
   if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
     print -r -- $match[1]
   elif [[ $PWD =~ "$HOME(.*)" ]]; then
@@ -17,7 +17,7 @@ relative_root() {
   fi
 }
 
-prompt_relative_root() {
+function prompt_relative_root() {
   root=$(relative_root)
   if [[ $PROMPT_STYLE == 'lean' ]]; then
     if [[ $root == "/" ]]; then
@@ -38,7 +38,7 @@ prompt_relative_root() {
   fi
 }
 
-relative_depth_with_zero() {
+function relative_depth_with_zero() {
   if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
     depth=$(echo ${match[2]} | awk -F"/" '{print NF-1}')
   elif [[ $PWD =~ "$HOME(.*)" ]]; then
@@ -51,14 +51,14 @@ relative_depth_with_zero() {
   print -r -- $depth
 }
 
-relative_depth() {
+function relative_depth() {
   depth=$(relative_depth_with_zero)
   if [[ $depth -ge 1 ]]; then
     print -r -- $depth
   fi
 }
 
-prompt_relative_depth() {
+function prompt_relative_depth() {
   rel_depth=$(relative_depth)
   if [[ -n $rel_depth ]]; then
     if [[ $PROMPT_STYLE == 'lean' ]]; then
@@ -69,13 +69,13 @@ prompt_relative_depth() {
   fi
 }
 
-current_dir() {
+function current_dir() {
   if [[ $(relative_depth_with_zero) -ge 0 ]]; then
     print -r -- $(basename $(pwd))
   fi
 }
 
-prompt_current_dir() {
+function prompt_current_dir() {
   if [[ $PROMPT_STYLE == 'lean' ]]; then
     p10k segment -f skyblue1 -t "$(current_dir)"
   else
@@ -83,7 +83,7 @@ prompt_current_dir() {
   fi
 }
 
-prompt_small_status() {
+function prompt_small_status() {
   # shows last command success or failure (and exit code)
   if [[ $_p9k_status -eq 0 ]]; then
     p10k segment -b grey23 -f green -t "="
@@ -93,7 +93,7 @@ prompt_small_status() {
 }
 
 # customized prompt
-google3_prompt_info() {
+function google3_prompt_info() {
   # shows current dir name;
   # if in citc, shows citc client name plus current folder depth
   if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
@@ -130,11 +130,11 @@ google3_prompt_info() {
   fi
 }
 
-git_inside_repo() {
+function git_inside_repo() {
   print "$(git rev-parse --is-inside-work-tree 2>/dev/null)"
 }
 
-git_position() {
+function git_position() {
   if [[ -n $(git status | grep ahead) ]]; then
     print -rn -- ">"
   elif [[ -n $(git status | grep behind) ]]; then
@@ -143,24 +143,24 @@ git_position() {
   fi
 }
 
-git_branch() {
+function git_branch() {
   print -rn -- "$(git rev-parse --abbrev-ref HEAD)"
 }
 
-git_dirty() {
+function git_dirty() {
   if [[ $(git diff --stat) != '' ]]; then
     print -rn -- "≠"
   else
   fi
 }
 
-git_prompt() {
+function git_prompt() {
   if [ "$(git_inside_repo)" ]; then
     print -rn -- "%F{cyan}($(git_branch)%F{red}$(git_dirty)$(git_position)%f)"
   fi
 }
 
-prompt_git_simple() {
+function prompt_git_simple() {
   if [[ "$(git_inside_repo)" ]]; then
     branch_status="$(git_branch) $(git_dirty)"
     if [[ $(git_position) == ">" ]]; then
@@ -173,7 +173,7 @@ prompt_git_simple() {
   fi
 }
 
-last_exitcode() {
+function last_exitcode() {
   # shows last command success or failure (and exit code)
   if [[ $? -eq 0 ]]; then
     print -rn -- "%F{cyan} ="
@@ -182,7 +182,7 @@ last_exitcode() {
   fi
 }
 
-hg_branch() {
+function hg_branch() {
   branch=$(hg branch 2>&1)
   if [[ $? -eq 0 ]]; then
     print -rn -- "[%F{magenta}$(hg prompt '{branch}{status}')%f] "
@@ -191,7 +191,7 @@ hg_branch() {
   fi
 }
 
-check_true_color() {
+function check_true_color() {
   awk 'BEGIN{
       s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
       for (colnum = 0; colnum<77; colnum++) {
@@ -218,11 +218,11 @@ fi
 
 
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
-  mount_music() {
+  function mount_music() {
     sshfs nookie:/media/synia/music $HOME/Music/Synia
   }
 
-  cmus() {
+  function cmus() {
     if ls $HOME/Music/Synia | grep albums >/dev/null; then
       /usr/local/bin/cmus
     else
@@ -231,21 +231,21 @@ if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
     fi
   }
 
-  o() {
+  function o() {
     pushd $(showmarks $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
     /usr/bin/open .
     popd 2>&1 > /dev/null
     hide_iterm_window
   }
 
-  open_and_switch() {
+  function open_and_switch() {
     /usr/bin/open $1
     hide_iterm_window
   }
 fi
 
 if [[ $IS_GOOGLE == 'true' ]]; then
-  jt() {
+  function jt() {
     if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
         cd "${match[1]}/java${match[2]}"
     else
@@ -254,11 +254,11 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   }
 
 
-  cshere() {
+  function cshere() {
     cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
   }
 
-  bbs() {
+  function bbs() {
     # build, then go to the blaze-out directory
     [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
     citc_path=$match[1]

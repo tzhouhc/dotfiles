@@ -17,16 +17,16 @@ source "$ZSH_SETUP/tmux.sh"
 source "$ZSH_SETUP/google.sh"
 
 # read convenient short hands
-source "$ZSH_SETUP/zsh_aliases"
+source "$ZSH_SETUP/aliases.sh"
 
 # read slightly longer 'shorthands'
-source "$ZSH_SETUP/zsh_functions"
+source "$ZSH_SETUP/functions.sh"
 
 # env vars
 source "$ZSH_SETUP/env.sh"
 
 # read custom completions
-source "$ZSH_SETUP/zsh_completions"
+source "$ZSH_SETUP/completions.sh"
 
 source "$ZSH_SETUP/zsh_settings"
 

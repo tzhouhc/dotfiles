@@ -1,7 +1,2 @@
---theme=base16
-
---style=plain
-
+--style=changes
 --italic-text=always
-
---pager "/usr/bin/less -RF"

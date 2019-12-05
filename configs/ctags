@@ -1,7 +1,23 @@
 --langdef=markdown
 --langmap=markdown:.md
 --regex-markdown=/^#+[ \t](.*$)/\1/h,heading,headings/
---langmap=sh:+.zsh
+
 --langdef=gcl
 --langmap=gcl:.gcl.borg.dream
---regex-gcl=/^([a-zA-Z0-9_-]+\s+)?([a-zA-Z0-9_-]+)\s+\=/\2/d,def,definition)/
+--regex-gcl=/^([a-zA-Z0-9_-]+\s+)?([a-zA-Z0-9_-]+)\s+\=/\2/d,def,definition/
+
+--langdef=ini
+--langmap=ini:.ini
+--regex-ini=/^\[(.*)\]$/\1/s,sec,section/
+
+--langmap=sh:+.zsh
+--langmap=sh:+(zshrc).
+--regex-sh=/^([ \t]+)?(export[ \t]+)?([A-Z_]+)\=/\3/e,env,envvars/
+
+--langmap=vim:+(vimrc).
+
+--regex-sh=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
+--regex-java=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
+--regex-c++=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
+--regex-c=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
+--regex-python=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/

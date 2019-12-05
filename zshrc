@@ -28,7 +28,7 @@ source "$ZSH_SETUP/env.sh"
 # read custom completions
 source "$ZSH_SETUP/completions.sh"
 
-source "$ZSH_SETUP/zsh_settings"
+source "$ZSH_SETUP/settings.sh"
 
 # zgen plugins
 source "$HOME/.zgen/zgen.zsh"

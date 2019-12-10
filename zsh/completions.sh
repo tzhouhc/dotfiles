@@ -17,3 +17,10 @@ _fzf_complete_v() {
   FZF_DEFAULT_OPTS="--height 40% --reverse"
 }
 
+_fzf_complete_g4d() {
+  _fzf_complete '+m' "$@" < <(
+    # all files under current dir
+    ls --color=none /google/src/cloud/$USER/
+  )
+  FZF_DEFAULT_OPTS="--height 40% --reverse"
+}

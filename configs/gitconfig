@@ -3,6 +3,7 @@
   whereami = rev-parse --abbrev-ref HEAD
   ck = checkout
   amend = commit -a --amend
+  s = status
 
 [user]
   name = Ting Zhou

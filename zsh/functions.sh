@@ -291,4 +291,11 @@ if [[ $IS_GOOGLE == 'true' ]]; then
       echo "Not in a google3 folder, simply use 'bookmark' instead."
     fi
   }
+
+  function cslink() {
+    if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
+      remainder=$match[3]
+      echo "https://source.corp.google.com/piper///depot/google3/$remainder"
+    fi
+  }
 fi

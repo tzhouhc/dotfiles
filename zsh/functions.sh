@@ -258,6 +258,12 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
   }
 
+  function g4pwd() {
+    if [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)' ]]; then
+      echo $match[1]
+    fi
+  }
+
   function bbs() {
     # build, then go to the blaze-out directory
     [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
@@ -270,6 +276,19 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     else
       print -P "%F{red}Target not found; fix something maybe?"
       exit 1
+    fi
+  }
+
+  function mark() {
+    # mark for google3 -- disregard the workspace and go
+    if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
+      remainder=$match[3]
+      echo "$1\t$remainder" >> ~/.g3marks
+      sort ~/.g3marks | uniq > ~/.g3marks.bk
+      cp ~/.g3marks.bk ~/.g3marks
+      rm ~/.g3marks.bk
+    else
+      echo "Not in a google3 folder, simply use 'bookmark' instead."
     fi
   }
 fi

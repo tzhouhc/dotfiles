@@ -21,3 +21,5 @@
 --regex-c++=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
 --regex-c=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
 --regex-python=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
+
+--fields=+n

@@ -1,3 +1,8 @@
 --color=always
+--theme=base16
 --italic-text=always
 -p
+-m .zshrc:zsh
+-m .vimrc:vim
+-m zshrc:zsh
+-m vimrc:vim

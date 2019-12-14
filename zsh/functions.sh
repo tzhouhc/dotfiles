@@ -292,6 +292,10 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     fi
   }
 
+  function editmarks() {
+    $EDITOR ~/.g3marks
+  }
+
   function cslink() {
     if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
       remainder=$match[3]

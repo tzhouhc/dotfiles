@@ -11,10 +11,15 @@
 --regex-ini=/^\[(.*)\]$/\1/s,sec,section/
 
 --langmap=sh:+.zsh
---langmap=sh:+(zshrc).
+--langmap=sh:+(zshrc)
 --regex-sh=/^([ \t]+)?(export[ \t]+)?([A-Z_]+)\=/\3/e,env,envvars/
 
---langmap=vim:+(vimrc).
+--langdef=bzl
+--langmap=bzl:(BUILD)
+--langmap=bzl:+.bzl
+--regex-bzl=/^[ \t]+name[ \t]*=[ \t]*\"([\/:a-zA-Z_]+)\"/\1/t,target,buildtarget/
+
+--langmap=vim:+(vimrc)
 
 --regex-sh=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
 --regex-java=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
@@ -23,3 +28,4 @@
 --regex-python=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/
 
 --fields=+n
+

@@ -19,6 +19,12 @@
 --langmap=bzl:+.bzl
 --regex-bzl=/^[ \t]+name[ \t]*=[ \t]*\"([\/:a-zA-Z_]+)\"/\1/t,target,buildtarget/
 
+--langdef=proto
+--langmap=proto:.proto
+--regex-proto=/^enum[ \t]*([a-zA-Z_]+)/\1/e,enum,enum/
+--regex-proto=/^message[ \t]*([a-zA-Z_]+)/\1/e,enum,enum/
+--regex-proto=/([a-zA-Z_]+)[ \t]*\=[ \t]*[0-9]+;/\1/f,field,field/
+
 --langmap=vim:+(vimrc)
 
 --regex-sh=/TODO(\(.[^)]*\))?:?[ \t]*(.{15})/TODO - \2/t,todo,todo/

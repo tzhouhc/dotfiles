@@ -32,7 +32,6 @@ fi
 
 if [[ $IS_GOOGLE == "true" ]]; then
   # dev
-  alias g4cd="g4d; cd"  # cd to a path relative to g4d
   alias p4d=g4d
   alias p=p4
   alias g=git

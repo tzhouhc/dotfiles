@@ -245,6 +245,7 @@ if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
 fi
 
 if [[ $IS_GOOGLE == 'true' ]]; then
+  # jump to java test folder of the same package
   function jt() {
     if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
         cd "${match[1]}/java${match[2]}"
@@ -258,14 +259,15 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
   }
 
+  # show current citc client full path
   function g4pwd() {
     if [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)' ]]; then
       echo $match[1]
     fi
   }
 
+  # build, then go to the blaze-out directory
   function bbs() {
-    # build, then go to the blaze-out directory
     [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
     citc_path=$match[1]
     blaze_path="$(blaze build $@ 2>&1 | grep blaze-out)"
@@ -279,8 +281,9 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     fi
   }
 
+  # mark for google3 -- disregard the workspace and go to short-path
+  # this is needed over normal z since z no longer works if we change client
   function mark() {
-    # mark for google3 -- disregard the workspace and go
     if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
       remainder=$match[3]
       echo "$1\t$remainder" >> ~/.g3marks
@@ -296,10 +299,25 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     $EDITOR ~/.g3marks
   }
 
+  # generate a link to CS for current directory
   function cslink() {
     if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
       remainder=$match[3]
       echo "https://source.corp.google.com/piper///depot/google3/$remainder"
+    fi
+  }
+
+  # cd to specified short-path under the piper client
+  function g4cd() {
+    cd "$(g4pwd)/google3/$1"
+  }
+
+  # edit files that are open in the client
+  function p4e() {
+    set -o pipefail
+    target="$(g4pwd)/google3/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f5-10 | fzf | sed 's/ .*//')"
+    if [ $? -eq 0 ]; then
+      $EDITOR $target
     fi
   }
 fi

@@ -16,7 +16,7 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 export TEXMFHOME="$HOME/.texmf"
 export PYTHONSTARTUP="$HOME/.pythonrc"
 export RUBYLIB="$HOME/local/lib/ruby"
-export LESS='--quit-if-one-screen --ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=2 --no-init --window=-4'
+export LESS='--ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=2 --no-init --window=-4'
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # /usr/local/share/nvim/runtime/macros/less.sh

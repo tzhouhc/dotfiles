@@ -9,6 +9,7 @@ export PATH=/usr/sbin:$PATH
 # HOME paths
 export PATH=$HOME/local/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.dotfiles/bin:$PATH
 # fzf
 export PATH=$HOME/.fzf/bin:$PATH
 # Software Specific

@@ -2,16 +2,6 @@ function zsh_reload() {
   source ~/.zshrc
 }
 
-function os_logo() {
-  if uname -a | grep -i darwin > /dev/null; then
-    print -rn -- ""
-  elif uname -a | grep -i ubuntu > /dev/null; then
-    print -rn -- ""
-  elif uname -a | grep -i linux > /dev/null; then
-    print -rn -- ""
-  fi
-}
-
 function run() {
   /usr/bin/open $1
 }

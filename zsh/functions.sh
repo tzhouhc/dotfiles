@@ -2,10 +2,19 @@ function zsh_reload() {
   source ~/.zshrc
 }
 
+function os_logo() {
+  if uname -a | grep -i darwin > /dev/null; then
+    print -rn -- ""
+  elif uname -a | grep -i ubuntu > /dev/null; then
+    print -rn -- ""
+  elif uname -a | grep -i linux > /dev/null; then
+    print -rn -- ""
+  fi
+}
+
 function run() {
   /usr/bin/open $1
 }
-
 
 function relative_root() {
   if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
@@ -29,9 +38,9 @@ function prompt_relative_root() {
     fi
   else
     if [[ $root == "/" ]]; then
-      p10k segment -b red -f black -t $root
+      p10k segment -b red -f black -t ﮈ
     elif [[ $root == "~" ]]; then
-      p10k segment -b springgreen4 -f black -t $root
+      p10k segment -b springgreen4 -f black -t ﳐ
     else
       p10k segment -b grey23 -f orangered1 -t $root
     fi
@@ -86,9 +95,9 @@ function prompt_current_dir() {
 function prompt_small_status() {
   # shows last command success or failure (and exit code)
   if [[ $_p9k_status -eq 0 ]]; then
-    p10k segment -b grey23 -f green -t "="
+    p10k segment -b grey23 -f green -t ""
   else
-    p10k segment -b grey23 -f red -t "$_p9k_status"
+    p10k segment -b grey23 -f red -t "$_p9k_status "
   fi
 }
 
@@ -207,6 +216,7 @@ function check_true_color() {
   }'
 }
 
+# this makes it so fzf won't go searching for files in gitignore paths
 if type fd > /dev/null; then
   _fzf_compgen_path() {
     fd --hidden --follow --exclude ".git" . "$1"
@@ -216,6 +226,29 @@ if type fd > /dev/null; then
   }
 fi
 
+function red() {
+  print -nP "%F{red}$1%f"
+}
+
+function green() {
+  print -nP "%F{green}$1%f"
+}
+
+function blue() {
+  print -nP "%F{blue}$1%f"
+}
+
+function yellow() {
+  print -nP "%F{yellow}$1%f"
+}
+
+function magenta() {
+  print -nP "%F{magenta}$1%f"
+}
+
+function cyan() {
+  print -nP "%F{cyan}$1%f"
+}
 
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
   function mount_music() {

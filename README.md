@@ -16,3 +16,7 @@ git submodule update --init --recursive
 # Install tools
 
 If additional tooling is required, run the `install.sh` script.
+
+# Requirements
+
+Latest zsh configurations require `Nerdfont` support.

@@ -12,7 +12,8 @@ export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.dotfiles/bin:$PATH
 # fzf
 export PATH=$HOME/.fzf/bin:$PATH
-# Software Specific
+# gnubin -- ls without color AND with stupid ass quotes
+export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
 if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
   # ruby
@@ -28,8 +29,6 @@ if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
   export PATH=/Library/Frameworks/Mono.framework/Versions/Current/Commands:$PATH
   # node
   export PATH=/usr/local/Cellar/node/12.9.0/bin:$PATH
-  # gnubin -- ls without color AND with stupid ass quotes
-  export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
   # llvm
   # export PATH="/usr/local/opt/llvm/bin:$PATH
 fi

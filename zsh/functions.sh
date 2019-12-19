@@ -6,6 +6,10 @@ function run() {
   /usr/bin/open $1
 }
 
+function unicode() {
+  echo -e "\u$1"
+}
+
 function relative_root() {
   if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
     print -r -- $match[1]
@@ -289,6 +293,13 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     fi
   }
 
+  # show current rel path under google3
+  function g4pwd2() {
+    if [[ $PWD =~ '/google/src/cloud/[^/]+/[^/]+/google3/(.+)' ]]; then
+      echo $match[1]
+    fi
+  }
+
   # build, then go to the blaze-out directory
   function bbs() {
     [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
@@ -333,6 +344,14 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   # cd to specified short-path under the piper client
   function g4cd() {
     cd "$(g4pwd)/google3/$1"
+  }
+
+  # cd to current path but under blaze-bin instead
+  function g4bin() {
+    if g4pwd2 | grep blaze-bin > /dev/null; then
+    else
+      cd "$(g4pwd)/google3/blaze-bin/$(g4pwd2)"
+    fi
   }
 
   # edit files that are open in the client

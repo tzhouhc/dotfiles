@@ -40,6 +40,9 @@ function git_ahead_and_behind() {
   if [[ $behind > 0 ]]; then
     print -rn -- "$behind"
   fi
+  if [[ $ahead > 0 ]] || [[ $behind > 0 ]]; then
+    print -rn -- " "
+  fi
 }
 
 function git_clean_status() {
@@ -57,5 +60,5 @@ function git_clean_status() {
 }
 
 if is_git; then
-  echo "$(git_branch) $(git_ahead_and_behind) $(git_clean_status)"
+  echo "$(git_branch) $(git_ahead_and_behind)$(git_clean_status)"
 fi

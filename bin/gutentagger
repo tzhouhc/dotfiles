@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)' ]]; then
+  fd . --type f -d 1
+else
+  fd . --type f
+fi

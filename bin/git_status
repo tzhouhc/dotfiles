@@ -7,7 +7,7 @@ function is_git() {
 
 # is the current git repo dirty
 function git_dirty() {
-  git status -s | grep 'M' > /dev/null
+  git status | egrep "(deleted|added|modified|new file)" > /dev/null
 }
 
 function git_unstaged() {

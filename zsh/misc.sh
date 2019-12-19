@@ -9,8 +9,9 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   relative_depth
   current_dir
   dir_writable
+  git_simple
   # git_simple
-  vcs
+  # vcs
 )
 # weird symbol issue on gnome-terminal on right edge
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(small_status)

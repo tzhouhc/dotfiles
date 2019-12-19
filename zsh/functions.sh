@@ -86,6 +86,24 @@ function prompt_current_dir() {
   fi
 }
 
+function git_dirty() {
+  git status -s | grep 'M' > /dev/null
+}
+
+function is_git() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1
+}
+
+function prompt_git_simple() {
+  if is_git; then
+    if git_dirty; then
+      p10k segment -b yellow -f black -t "$(git_status)"
+    else
+      p10k segment -b green -f black -t "$(git_status)"
+    fi
+  fi
+}
+
 function prompt_small_status() {
   # shows last command success or failure (and exit code)
   if [[ $_p9k_status -eq 0 ]]; then
@@ -129,38 +147,6 @@ function google3_prompt_info() {
     else
       depth=$((depth - 1))
       print -r -- "%F{red}/%F{yellow}+$depth/%F{green}%B$(basename $PWD)%b"
-    fi
-  fi
-}
-
-function git_position() {
-  if [[ -n $(git status | grep ahead) ]]; then
-    print -rn -- ">"
-  elif [[ -n $(git status | grep behind) ]]; then
-    print -rn -- "<"
-  else
-  fi
-}
-
-function git_branch() {
-  print -rn -- "$(git rev-parse --abbrev-ref HEAD)"
-}
-
-function git_prompt() {
-  if [ "$(git_inside_repo)" ]; then
-    print -rn -- "%F{cyan}($(git_branch)%F{red}$(git_dirty)$(git_position)%f)"
-  fi
-}
-
-function prompt_git_simple() {
-  if [[ "$(git_inside_repo)" ]]; then
-    branch_status="$(git_branch) $(git_dirty)"
-    if [[ $(git_position) == ">" ]]; then
-      p10k segment -b wheat1 -f black -t $branch_status
-    elif [[ $(git_position) == "<" ]]; then
-      p10k segment -b orange4 -f black -t $branch_status
-    else
-      p10k segment -b green -f black -t $branch_status
     fi
   fi
 }

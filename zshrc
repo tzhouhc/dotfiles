@@ -1,43 +1,39 @@
 ZSH_SETUP="$HOME/.zsh"
 
-source "$ZSH_SETUP/vars.sh"
+source "$ZSH_SETUP/vars.zsh"
 
 # PROMPT_STYLE='lean'
 
 # If you come from bash you might have to change your $PATH.
-source "$ZSH_SETUP/path.sh"
+source "$ZSH_SETUP/path.zsh"
 
 # Account for variable software options
-source "$ZSH_SETUP/variations.sh"
+source "$ZSH_SETUP/variations.zsh"
 
 # tmux settings
-source "$ZSH_SETUP/tmux.sh"
+source "$ZSH_SETUP/tmux.zsh"
 
 # stuff for googleland
-source "$ZSH_SETUP/google.sh"
+source "$ZSH_SETUP/google.zsh"
 
 # read convenient short hands
-source "$ZSH_SETUP/aliases.sh"
+source "$ZSH_SETUP/aliases.zsh"
 
 # read slightly longer 'shorthands'
-source "$ZSH_SETUP/functions.sh"
+source "$ZSH_SETUP/functions.zsh"
 
 # env vars
-source "$ZSH_SETUP/env.sh"
+source "$ZSH_SETUP/env.zsh"
 
 # read custom completions
-source "$ZSH_SETUP/completions.sh"
+source "$ZSH_SETUP/completions.zsh"
 
-source "$ZSH_SETUP/settings.sh"
+source "$ZSH_SETUP/settings.zsh"
 
 # zgen plugins
 source "$HOME/.zgen/zgen.zsh"
-source "$ZSH_SETUP/zgen.sh"
+source "$ZSH_SETUP/zgen.zsh"
 
-source "$ZSH_SETUP/keys.sh"
+source "$ZSH_SETUP/keys.zsh"
 
-if [[ $PROMPT_STYLE == 'lean' ]]; then
-  source "$ZSH_SETUP/alt_p10k.sh"
-else
-  source "$ZSH_SETUP/misc.sh"
-fi
+source "$ZSH_SETUP/misc.zsh"

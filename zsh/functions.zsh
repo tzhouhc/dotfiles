@@ -10,79 +10,27 @@ function unicode() {
   echo -e "\u$1"
 }
 
-function relative_root() {
-  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
-    print -r -- $match[1]
-  elif [[ $PWD =~ "$HOME(.*)" ]]; then
-    print -r -- "~"
-  else
-    print -r -- "/"
-  fi
-}
+function prompt_short_pwd() {
+  res=$(short_pwd)
+  root=$(echo $res | cut -d$'\n' -f 1)
+  branch=$(echo $res | cut -d$'\n' -f 2)
+  depth=$(echo $res | cut -d$'\n' -f 3)
+  base=$(echo $res | cut -d$'\n' -f 4)
 
-function prompt_relative_root() {
-  root=$(relative_root)
-  if [[ $PROMPT_STYLE == 'lean' ]]; then
-    if [[ $root == "/" ]]; then
-      p10k segment -f red -t $root
-    elif [[ $root == "~" ]]; then
-      p10k segment -f springgreen4 -t $root
-    else
-      p10k segment -f orangered1 -t $root
-    fi
+  if [[ $root == "/" ]]; then
+    p10k segment -b red -f black -t ﮈ
+  elif [[ $root == "~" ]]; then
+    p10k segment -b springgreen4 -f black -t ﳐ
   else
-    if [[ $root == "/" ]]; then
-      p10k segment -b red -f black -t ﮈ
-    elif [[ $root == "~" ]]; then
-      p10k segment -b springgreen4 -f black -t ﳐ
-    else
-      p10k segment -b grey23 -f orangered1 -t $root
-    fi
+    p10k segment -b grey23 -f orangered1 -t $root
   fi
-}
 
-function relative_depth_with_zero() {
-  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
-    depth=$(echo ${match[2]} | awk -F"/" '{print NF-1}')
-  elif [[ $PWD =~ "$HOME(.*)" ]]; then
-    depth=$(echo ${match[1]} | awk -F"/" '{print NF-2}')
-  elif [[ $PWD == '/' ]]; then
-    depth=-1
-  else
-    depth=$(echo $PWD | awk -F"/" '{print NF-2}')
-  fi
-  print -r -- $depth
-}
-
-function relative_depth() {
-  depth=$(relative_depth_with_zero)
   if [[ $depth -ge 1 ]]; then
-    print -r -- $depth
+    p10k segment -b khaki1 -f black -t $depth
   fi
-}
 
-function prompt_relative_depth() {
-  rel_depth=$(relative_depth)
-  if [[ -n $rel_depth ]]; then
-    if [[ $PROMPT_STYLE == 'lean' ]]; then
-      p10k segment -f khaki1 -t $rel_depth
-    else
-      p10k segment -b khaki1 -f black -t $rel_depth
-    fi
-  fi
-}
-
-function current_dir() {
-  if [[ $(relative_depth_with_zero) -ge 0 ]]; then
-    print -r -- $(basename $(pwd))
-  fi
-}
-
-function prompt_current_dir() {
-  if [[ $PROMPT_STYLE == 'lean' ]]; then
-    p10k segment -f skyblue1 -t "$(current_dir)"
-  else
-    p10k segment -b skyblue1 -f black -t "$(current_dir)"
+  if [[ $depth -ge 0 ]]; then
+    p10k segment -b skyblue1 -f black -t $base
   fi
 }
 
@@ -114,6 +62,7 @@ function prompt_small_status() {
 }
 
 # customized prompt
+# LEGACY -- use in case of no powerline support
 function google3_prompt_info() {
   # shows current dir name;
   # if in citc, shows citc client name plus current folder depth
@@ -338,3 +287,21 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     fi
   }
 fi
+
+    # if [[ $dirname == "Documents" ]]; then
+      # print -rn -- " "
+    # elif [[ $dirname == "Downloads" ]]; then
+      # print -rn -- " "
+    # elif [[ $dirname == "Desktop" ]]; then
+      # print -rn -- " "
+    # elif [[ $dirname == "Movies" ]]; then
+      # print -rn -- "辶"
+    # elif [[ $dirname == "Pictures" ]]; then
+      # print -rn -- "辶"
+    # elif [[ $dirname == "Library" ]]; then
+      # print -rn -- " "
+    # elif [[ $dirname == "Music" ]]; then
+      # print -rn -- " "
+    # else
+      # print -rn -- " "
+    # fi

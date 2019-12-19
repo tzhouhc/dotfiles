@@ -5,12 +5,9 @@
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 POWERLEVEL9K_IGNORE_TERM_COLORS=true
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-  relative_root
-  relative_depth
-  current_dir
+  short_pwd
   dir_writable
   git_simple
-  # git_simple
   # vcs
 )
 # weird symbol issue on gnome-terminal on right edge

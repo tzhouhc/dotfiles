@@ -25,8 +25,32 @@ function prompt_short_pwd() {
     p10k segment -b grey23 -f orangered1 -t $root
   fi
 
+  # this is to provide a little reminder of the overall
+  # branch that we are currently in
+  if [[ $branch != "" ]] && [[ $depth -ge 1 ]]; then
+    if [[ $branch == "Documents" ]]; then
+      branch_icon=" "
+    elif [[ $branch == "Downloads" ]]; then
+      branch_icon=" "
+    elif [[ $branch == "Desktop" ]]; then
+      branch_icon=" "
+    elif [[ $branch == "Movies" ]]; then
+      branch_icon="辶"
+    elif [[ $branch == "Pictures" ]]; then
+      branch_icon="辶"
+    elif [[ $branch == "Library" ]]; then
+      branch_icon=" "
+    elif [[ $branch == "Music" ]]; then
+      branch_icon=" "
+    fi
+  fi
+
   if [[ $depth -ge 1 ]]; then
-    p10k segment -b khaki1 -f black -t $depth
+    if [[ $branch_icon != "" ]]; then
+      p10k segment -b khaki1 -f black -t "$branch_icon$depth"
+    else
+      p10k segment -b khaki1 -f black -t $depth
+    fi
   fi
 
   if [[ $depth -ge 0 ]]; then
@@ -288,20 +312,3 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   }
 fi
 
-    # if [[ $dirname == "Documents" ]]; then
-      # print -rn -- " "
-    # elif [[ $dirname == "Downloads" ]]; then
-      # print -rn -- " "
-    # elif [[ $dirname == "Desktop" ]]; then
-      # print -rn -- " "
-    # elif [[ $dirname == "Movies" ]]; then
-      # print -rn -- "辶"
-    # elif [[ $dirname == "Pictures" ]]; then
-      # print -rn -- "辶"
-    # elif [[ $dirname == "Library" ]]; then
-      # print -rn -- " "
-    # elif [[ $dirname == "Music" ]]; then
-      # print -rn -- " "
-    # else
-      # print -rn -- " "
-    # fi

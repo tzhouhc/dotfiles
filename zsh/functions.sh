@@ -133,10 +133,6 @@ function google3_prompt_info() {
   fi
 }
 
-function git_inside_repo() {
-  print "$(git rev-parse --is-inside-work-tree 2>/dev/null)"
-}
-
 function git_position() {
   if [[ -n $(git status | grep ahead) ]]; then
     print -rn -- ">"
@@ -148,13 +144,6 @@ function git_position() {
 
 function git_branch() {
   print -rn -- "$(git rev-parse --abbrev-ref HEAD)"
-}
-
-function git_dirty() {
-  if [[ $(git diff --stat) != '' ]]; then
-    print -rn -- "≠"
-  else
-  fi
 }
 
 function git_prompt() {

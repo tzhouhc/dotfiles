@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+# is the current folder part of a git repo
+function is_git() {
+  print "$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+}
+
+# is the current git repo dirty
+function git_dirty() {
+  git status -s | grep 'M' > /dev/null
+}
+
+function git_unstaged() {
+  git status -s | grep '??' > /dev/null
+}
+
+function git_behind() {}
+
+function git_clean_status() {
+  dirty=git_dirty
+  unstaged=git_unstaged
+  if $dirty && $unstaged; then
+    print -rn -- ""
+  elif $dirty; then
+    print -rn -- ""
+  elif $unstaged; then
+    print -rn -- ""
+  else
+    print -rn -- ""
+  fi
+}
+
+git_clean_status

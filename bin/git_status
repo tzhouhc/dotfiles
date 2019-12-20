@@ -5,37 +5,12 @@ function is_git() {
   git rev-parse --is-inside-work-tree >/dev/null 2>&1
 }
 
-# is the current git repo dirty
-function git_dirty() {
-  if git diff --quiet; then
-    return 1
-  else
-    return 0
-  fi
-}
-
-function git_unstaged() {
-  git status -s | grep '??' > /dev/null
-}
-
 function git_branch() {
   print -rn -- $(git rev-parse --abbrev-ref HEAD)
 }
 
-function git_in_master() {
-  git_branch | grep master > /dev/null
-}
-
-function git_branch_mark() {
-  if git_in_master; then
-    print -rn -- " "
-  else
-    print -rn -- " "
-  fi
-}
-
 function git_ahead_and_behind() {
-  nums=$(git rev-list --left-right --count $(git_branch)...origin/master)
+  nums=$(git rev-list --left-right --count HEAD...origin/master)
   ahead=$(echo $nums | cut -f 1)
   behind=$(echo $nums | cut -f 2)
   if [[ $ahead > 0 ]]; then
@@ -50,13 +25,14 @@ function git_ahead_and_behind() {
 }
 
 function git_clean_status() {
-  dirty=git_dirty
-  unstaged=git_unstaged
-  if $dirty && $unstaged; then
+  gstatus=$(git status --porcelain | sed "s/^ //" | cut -d' ' -f 1)
+  echo $gstatus | egrep "[MD]" > /dev/null; dirty=$?
+  echo $gstatus | grep "??" > /dev/null; unstaged=$?
+  if [[ $dirty == 0 ]] && [[ $unstaged == 0 ]]; then
     print -rn -- " "
-  elif $dirty; then
+  elif [[ $dirty == 0 ]]; then
     print -rn -- ""
-  elif $unstaged; then
+  elif [[ $unstaged == 0 ]]; then
     print -rn -- ""
   else
     print -rn -- ""

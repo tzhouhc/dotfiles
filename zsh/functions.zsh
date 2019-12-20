@@ -1,3 +1,20 @@
+typeset -gA branch_icon_map
+branch_icon_map[Documents]=" "
+branch_icon_map[Downloads]=" "
+branch_icon_map[Desktop]=" "
+branch_icon_map[Movies]="辶"
+branch_icon_map[Pictures]=" "
+branch_icon_map[Library]=" "
+branch_icon_map[Music]=" "
+branch_icon_map[search]=" "
+branch_icon_map[evaluation]=" "
+branch_icon_map[wireless]="ﲎ "
+branch_icon_map[logs]=" "
+branch_icon_map[blaze-out]=" "
+branch_icon_map[blaze-bin]=" "
+branch_icon_map[production]="ﲳ "
+branch_icon_map[configs]=" "
+
 function zsh_reload() {
   source ~/.zshrc
 }
@@ -28,21 +45,7 @@ function prompt_short_pwd() {
   # this is to provide a little reminder of the overall
   # branch that we are currently in
   if [[ $branch != "" ]] && [[ $depth -ge 1 ]]; then
-    if [[ $branch == "Documents" ]]; then
-      branch_icon=" "
-    elif [[ $branch == "Downloads" ]]; then
-      branch_icon=" "
-    elif [[ $branch == "Desktop" ]]; then
-      branch_icon=" "
-    elif [[ $branch == "Movies" ]]; then
-      branch_icon="辶"
-    elif [[ $branch == "Pictures" ]]; then
-      branch_icon="辶"
-    elif [[ $branch == "Library" ]]; then
-      branch_icon=" "
-    elif [[ $branch == "Music" ]]; then
-      branch_icon=" "
-    fi
+    branch_icon=${branch_icon_map[$branch]}
   fi
 
   if [[ $depth -ge 1 ]]; then

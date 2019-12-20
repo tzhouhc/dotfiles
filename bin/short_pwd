@@ -9,12 +9,17 @@
 #   positive means we are inside $branch
 # base -- the name of the current dir
 function cut_pwd() {
-  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?(.*)' ]]; then
-    root=$match[1]
+  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?([^/]*)/?(.*)' ]]; then
     # this is the citc client name
-    branch=$(echo $match[2] | cut -d'/' -f 1)
-    # top level package
-    depth=$(echo $match[2] | awk -F"/" '{print NF - 1}')
+    root=$match[1]
+    # top level package; skipping 'google3'
+    branch=$(echo $match[3] | cut -d'/' -f 1)
+    # we might be on the google3 level
+    if [[ $match[2] != "" ]]; then
+      depth=$(echo $match[3] | awk -F"/" '{print NF}')
+    else
+      depth=-1
+    fi
   elif [[ $PWD =~ "$HOME/?(.*)" ]]; then
     root="~"
     branch=$(echo $match[1] | cut -d'/' -f 1)

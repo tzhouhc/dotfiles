@@ -59,7 +59,11 @@ function prompt_short_pwd() {
 }
 
 function git_dirty() {
-  git status -s | grep 'M' > /dev/null
+  if git diff --quiet; then
+    return 1
+  else
+    return 0
+  fi
 }
 
 function is_git() {

@@ -2,3 +2,7 @@
   path = vim
   url = ../vim
   ignore = all
+[submodule "zsh/lib/gitstatus"]
+  path = zsh/lib/gitstatus
+  url = https://github.com/romkatv/gitstatus
+  ignore = all

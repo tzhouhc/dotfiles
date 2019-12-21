@@ -1,3 +1,6 @@
+# REFERENCE
+# ZSH COLORS: https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png
+
 typeset -gA branch_icon_map
 branch_icon_map[Documents]=" "
 branch_icon_map[Downloads]=" "
@@ -14,6 +17,9 @@ branch_icon_map[blaze-out]=" "
 branch_icon_map[blaze-bin]=" "
 branch_icon_map[production]="ﲳ "
 branch_icon_map[configs]=" "
+
+source ~/.zsh/lib/gitstatus/gitstatus.plugin.zsh
+gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
 
 function zsh_reload() {
   source ~/.zshrc
@@ -80,6 +86,21 @@ function prompt_git_simple() {
     else
       p10k segment -b green -f black -t "$(git_status)"
     fi
+  fi
+}
+
+function prompt_gitstatus() {
+  if gitstatus_query MY && [[ $VCS_STATUS_RESULT == ok-sync ]]; then
+    message=${${VCS_STATUS_LOCAL_BRANCH:-@${VCS_STATUS_COMMIT}}//\%/%%}  # escape %
+    message+=' '
+    color=green
+    (( $VCS_STATUS_NUM_STAGED    )) && message+=' ' && color=yellow
+    (( $VCS_STATUS_NUM_UNSTAGED  )) && message+=' ' && color=yellow
+    (( $VCS_STATUS_NUM_UNTRACKED )) && message+=' '
+    (( $VCS_STATUS_COMMITS_AHEAD )) && message+="$VCS_STATUS_COMMITS_AHEAD"
+    (( $VCS_STATUS_COMMITS_BEHIND )) && message+="$VCS_STATUS_COMMITS_BEHIND"
+    message=$(echo $message | sed 's/ $//')
+    p10k segment -b $color -f black -t $message
   fi
 }
 

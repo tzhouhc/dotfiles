@@ -79,27 +79,18 @@ function is_git() {
   git rev-parse --is-inside-work-tree >/dev/null 2>&1
 }
 
-function prompt_git_simple() {
-  if is_git; then
-    if git_dirty; then
-      p10k segment -b yellow -f black -t "$(git_status)"
-    else
-      p10k segment -b green -f black -t "$(git_status)"
-    fi
-  fi
-}
-
 function prompt_gitstatus() {
   if gitstatus_query MY && [[ $VCS_STATUS_RESULT == ok-sync ]]; then
     message=${${VCS_STATUS_LOCAL_BRANCH:-@${VCS_STATUS_COMMIT}}//\%/%%}  # escape %
     message+=' '
     color=green
+    (( $VCS_STATUS_COMMITS_AHEAD )) && message+="$VCS_STATUS_COMMITS_AHEAD "
+    (( $VCS_STATUS_COMMITS_BEHIND )) && message+="$VCS_STATUS_COMMITS_BEHIND "
     (( $VCS_STATUS_NUM_STAGED    )) && message+=' ' && color=yellow
     (( $VCS_STATUS_NUM_UNSTAGED  )) && message+=' ' && color=yellow
     (( $VCS_STATUS_NUM_UNTRACKED )) && message+=' '
-    (( $VCS_STATUS_COMMITS_AHEAD )) && message+="$VCS_STATUS_COMMITS_AHEAD"
-    (( $VCS_STATUS_COMMITS_BEHIND )) && message+="$VCS_STATUS_COMMITS_BEHIND"
-    message=$(echo $message | sed 's/ $//')
+    [[ $color == green ]] && message+=''
+    message=$(echo $message | sed 's/ +/ /g' | sed 's/ $//')
     p10k segment -b $color -f black -t $message
   fi
 }

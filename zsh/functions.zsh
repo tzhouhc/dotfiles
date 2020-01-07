@@ -21,6 +21,37 @@ branch_icon_map[configs]=" "
 source ~/.zsh/lib/gitstatus/gitstatus.plugin.zsh
 gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
 
+function supervim() {
+  # start neovim as a server with a fixed socket
+  #   * create new server if none exist
+  #   * one server for each tmux window
+  if type nvr >/dev/null 2>&1; then
+    if [[ $TMUX != '' ]]; then
+      window=$(tmux display-message -p '#I')
+      expect_name="/tmp/nvimsocket_$window"
+    else
+      expect_name="/tmp/nvimsocket"
+    fi
+    if [[ -a $expect_name ]]; then
+      NVIM_LISTEN_ADDRESS=$expect_name nvr $@ && gotovim
+    else
+      NVIM_LISTEN_ADDRESS=$expect_name nvim $@
+    fi
+  else
+    nvim $@
+  fi
+}
+
+function gotovim() {
+  # if tmux is running, then try to find running vim panel
+  # will probably fail if no nvim is running
+  # though this really should only be called from the above supervim cmd
+  if [[ $TMUX != '' ]]; then
+    vim_pane=$(tmux list-panes -F '#I:#P #{pane_current_command}' | grep nvim | cut -d' ' -f1  | cut -d':' -f2)
+    tmux select-pane -t $vim_pane
+  fi
+}
+
 function zsh_reload() {
   source ~/.zshrc
 }
@@ -330,4 +361,3 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     fi
   }
 fi
-

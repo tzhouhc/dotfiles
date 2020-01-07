@@ -1,7 +1,7 @@
 # editor
-alias vim=nvim
-alias vi=vim
-alias v=vim
+alias vim=supervim
+alias vi=nvim  # in case multiple open vim windows are needed
+alias v=supervim
 alias b=bat
 alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"
 

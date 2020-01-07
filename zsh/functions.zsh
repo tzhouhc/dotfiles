@@ -355,7 +355,7 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   # edit files that are open in the client
   function p4e() {
     set -o pipefail
-    target="$(g4pwd)/google3/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f5-10 | fzf | sed 's/ .*//')"
+    target="$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4-10 | fzf | sed 's/ .*//')"
     if [ $? -eq 0 ]; then
       $EDITOR $target
     fi

@@ -41,7 +41,6 @@ _fzf_complete_bb() {
     # all files under current dir
     cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//"
   )
-  FZF_DEFAULT_OPTS="--height 40% --reverse"
 }
 
 _fzf_complete_bt() {

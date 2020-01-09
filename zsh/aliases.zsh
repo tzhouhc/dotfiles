@@ -32,7 +32,6 @@ fi
 
 if [[ $IS_GOOGLE == "true" ]]; then
   # dev
-  alias p4d=g4d
   alias p=p4
   alias g=git
   alias h=hg

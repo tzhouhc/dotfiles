@@ -32,9 +32,12 @@ function supervim() {
     else
       expect_name="/tmp/nvimsocket"
     fi
-    if [[ -a $expect_name ]]; then
+    if [[ $(vimpane) != '' ]]; then
       NVIM_LISTEN_ADDRESS=$expect_name nvr $@ && gotovim
     else
+      # if we are creating a new server, make sure there's no leftover sockets
+      # that might lock us out
+      rm -f $expect_name
       NVIM_LISTEN_ADDRESS=$expect_name nvim $@
     fi
   else
@@ -42,13 +45,22 @@ function supervim() {
   fi
 }
 
+function vimpane() {
+  tmux list-panes -F '#I:#P #{pane_current_command}' | grep nvim | cut -d' ' -f1  | cut -d':' -f2
+}
+
 function gotovim() {
   # if tmux is running, then try to find running vim panel
   # will probably fail if no nvim is running
   # though this really should only be called from the above supervim cmd
   if [[ $TMUX != '' ]]; then
-    vim_pane=$(tmux list-panes -F '#I:#P #{pane_current_command}' | grep nvim | cut -d' ' -f1  | cut -d':' -f2)
-    tmux select-pane -t $vim_pane
+    vim_pane=$(vimpane)
+    if [[ $vim_pane != '' ]]; then
+      tmux select-pane -t $vim_pane
+    else
+      echo "Vim is not running in the current window."
+      return 1
+    fi
   fi
 }
 
@@ -328,7 +340,7 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   }
 
   function editmarks() {
-    $EDITOR ~/.g3marks
+    $EDITOR2 ~/.g3marks
   }
 
   # generate a link to CS for current directory
@@ -353,11 +365,19 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   }
 
   # edit files that are open in the client
+  function p4d() {
+    set -o pipefail
+    target="$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4-10 | fzf | sed 's/ .*//')"
+    if [ $? -eq 0 ]; then
+      p4 diff $target
+    fi
+  }
+  # edit files that are open in the client
   function p4e() {
     set -o pipefail
     target="$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4-10 | fzf | sed 's/ .*//')"
     if [ $? -eq 0 ]; then
-      $EDITOR $target
+      $EDITOR2 $target
     fi
   }
 fi

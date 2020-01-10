@@ -356,6 +356,12 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     cd "$(g4pwd)/google3/$1"
   }
 
+  function g4do() {
+    pushd "$(g4pwd)/google3" >/dev/null
+    "$@"
+    popd >/dev/null
+  }
+
   # cd to current path but under blaze-bin instead
   function g4bin() {
     if g4pwd2 | grep blaze-bin > /dev/null; then

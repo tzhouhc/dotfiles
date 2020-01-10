@@ -25,6 +25,17 @@ _fzf_complete_g4d() {
   FZF_DEFAULT_OPTS="--height 40% --reverse"
 }
 
+_fzf_complete_g4do() {
+  _fzf_complete "+m" "$@" < <(
+    p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f5-11 | cut -d' ' -f1
+  )
+}
+
+_fzf_complete_g4cd_post() {
+  # remove the marker name bits
+  cut -f2 -d$'\t'
+}
+
 _fzf_complete_g4cd() {
   _fzf_complete "+m" "$@" < <(
     cat ~/.g3marks

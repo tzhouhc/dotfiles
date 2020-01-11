@@ -51,6 +51,14 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
 
+setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_NO_STORE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
+
 # legacy setting in case of no powerline
 PROMPT='$(google3_prompt_info)$(git_prompt)%f '  # %f for stopping the foreground color
 RPROMPT='$(last_exitcode)'

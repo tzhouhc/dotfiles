@@ -50,20 +50,26 @@ _fzf_complete_g4cd_post() {
 _fzf_complete_bb() {
   _fzf_complete '+m' "$@" < <(
     # all files under current dir
-    cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//"
+    if [[ -a BUILD ]]; then
+      cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//"
+    fi
   )
 }
 
 _fzf_complete_bt() {
   _fzf_complete '+m' "$@" < <(
     # all files under current dir
-    cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//"
+    if [[ -a BUILD ]]; then
+      cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//"
+    fi
   )
 }
 
 _fzf_complete_br() {
   _fzf_complete '+m' "$@" < <(
     # all files under current dir
-    cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//"
+    if [[ -a BUILD ]]; then
+      cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//"
+    fi
   )
 }

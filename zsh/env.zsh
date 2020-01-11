@@ -20,6 +20,10 @@ export RUBYLIB="$HOME/local/lib/ruby"
 export LESS='--ignore-case --quit-if-one-screen --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=2 --no-init --window=-4'
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+if [[ -a $HOME/.dotfiles/visuals/lscolors ]]; then
+  export LS_COLORS="$(cat $HOME/.dotfiles/visuals/lscolors)"
+fi
+
 # /usr/local/share/nvim/runtime/macros/less.sh
 export PAGER="less"
 export MANPAGER="less"

@@ -3,8 +3,6 @@ ZSH_SETUP="$HOME/.zsh"
 # variables
 source "$ZSH_SETUP/vars.zsh"
 
-# PROMPT_STYLE='lean'
-
 # If you come from bash you might have to change your $PATH.
 source "$ZSH_SETUP/path.zsh"
 

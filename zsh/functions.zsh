@@ -21,6 +21,12 @@ branch_icon_map[configs]=" "
 source ~/.zsh/lib/gitstatus/gitstatus.plugin.zsh
 gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
 
+function zsh_fallback() {
+  export NERDFONT=false
+  export POWERLINE=false
+  zsh_reload
+}
+
 function supervim() {
   # start neovim as a server with a fixed socket
   #   * create new server if none exist
@@ -46,7 +52,9 @@ function supervim() {
 }
 
 function vimpane() {
-  tmux list-panes -F '#I:#P #{pane_current_command}' | grep nvim | cut -d' ' -f1  | cut -d':' -f2
+  if [[ $TMUX != '' ]]; then
+    tmux list-panes -F '#I:#P #{pane_current_command}' | grep nvim | cut -d' ' -f1  | cut -d':' -f2
+  fi
 }
 
 function gotovim() {

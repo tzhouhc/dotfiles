@@ -1,5 +1,6 @@
 ZSH_SETUP="$HOME/.zsh"
 
+# variables
 source "$ZSH_SETUP/vars.zsh"
 
 # PROMPT_STYLE='lean'
@@ -11,7 +12,10 @@ source "$ZSH_SETUP/path.zsh"
 source "$ZSH_SETUP/variations.zsh"
 
 # tmux settings
-source "$ZSH_SETUP/tmux.zsh"
+if [[ "$NOTMUX" == 'true' ]]; then
+else
+  source "$ZSH_SETUP/tmux.zsh"
+fi
 
 # stuff for googleland
 source "$ZSH_SETUP/google.zsh"
@@ -28,12 +32,25 @@ source "$ZSH_SETUP/env.zsh"
 # read custom completions
 source "$ZSH_SETUP/completions.zsh"
 
+# various basic zsh settings
 source "$ZSH_SETUP/settings.zsh"
 
 # zgen plugins
 source "$HOME/.zgen/zgen.zsh"
 source "$ZSH_SETUP/zgen.zsh"
 
+# key mappings
 source "$ZSH_SETUP/keys.zsh"
 
-source "$ZSH_SETUP/misc.zsh"
+# fzf
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+if [[ $NERDFONT == 'false' ]]; then
+  if [[ $POWERLINE == 'false' ]]; then
+    [[ -f ~/.zsh/p10k_base.zsh ]] && source ~/.zsh/p10k_base.zsh
+  else
+    [[ -f ~/.zsh/p10k_pl.zsh ]] && source ~/.zsh/p10k_pl.zsh
+  fi
+else
+  source "$ZSH_SETUP/misc.zsh"
+fi

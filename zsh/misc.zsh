@@ -1,6 +1,3 @@
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # to prevent p10k from trying to rerun the wizard
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 POWERLEVEL9K_IGNORE_TERM_COLORS=true

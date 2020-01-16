@@ -304,12 +304,32 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   }
 
   function csfind() {
-    cs --nostats --local -n --max_num_results=30 $1 2>/dev/null | cut -d':' -f1-2 | sed 's/\:/ /' | fzf --preview "ln={2}; bat -H \$ln -r \$[\$[\$ln - 3] < 0 ? 0 : \$[\$ln - 3]]:\$[\$ln + 20] --theme zenburn {1}"
+    # empty query to csfind gets data from the last query
+    # so that one query can be reused multiple times
+    if [[ $@ != '' ]]; then
+      echo "Querying CS..."
+      cs --nostats --local -n $@ 2>/dev/null | cut -d':' -f1-2 | cut -d'/' -f7- | sed 's/\:/ /' > ~/.last_cs
+    else
+      touch ~/.last_cs
+    fi
+    cat ~/.last_cs | fzf --preview "ln={2}; bat -H \$ln -r \$[\$[\$ln - 3] < 0 ? 0 : \$[\$ln - 3]]:\$[\$ln + 40] --theme zenburn /google/src/files/head/depot/{1}"
   }
 
   function csedit() {
-    read -r file num <<< $(csfind $1)
-    $EDITOR $file +$num
+    output=$(csfind $@)
+    # allow ^c early escape
+    if [[ $? == 0 ]]; then
+      read -r file num <<< $(echo $output)
+      if [[ $(g4pwd) != '' ]]; then
+        # open local citc version so that we can start editing
+        vim $(g4pwd)/$file +$num
+      else
+        # Read-only view into latest source
+        vim /google/src/files/head/depot/$file +$num
+      fi
+    else
+      exit $?
+    fi
   }
 
   function cshere() {
@@ -376,7 +396,7 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   function cslink() {
     if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
       remainder=$match[3]
-      echo "https://source.corp.google.com/piper///depot/google3/$remainder"
+      echo "https://source.corp.google.com/piper///depot/google3/$remainder/$1"
     fi
   }
 

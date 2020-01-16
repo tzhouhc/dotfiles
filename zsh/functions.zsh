@@ -299,6 +299,18 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     fi
   }
 
+  function batrange() {
+    print $[$[$1 - 3] < 0 ? 0 : $[$1 - 3]]:$[$ln + 20]
+  }
+
+  function csfind() {
+    cs --nostats --local -n --max_num_results=30 $1 2>/dev/null | cut -d':' -f1-2 | sed 's/\:/ /' | fzf --preview "ln={2}; bat -H \$ln -r \$[\$[\$ln - 3] < 0 ? 0 : \$[\$ln - 3]]:\$[\$ln + 20] --theme zenburn {1}"
+  }
+
+  function csedit() {
+    read -r file num <<< $(csfind $1)
+    $EDITOR2 $file +$num
+  }
 
   function cshere() {
     cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
@@ -330,6 +342,15 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     else
       print -P "%F{red}Target not found; fix something maybe?"
       exit 1
+    fi
+  }
+
+  # open test log in $EDITOR if test result is no good
+  # TODO: investigate why $() removes color from stderr
+  function btlog() {
+    output=$(bt $@)
+    if [[ $? != 0 ]]; then
+      $EDITOR $(echo $output | grep "test.log")
     fi
   }
 
@@ -392,6 +413,20 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     target="$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf | sed 's/ .*//')"
     if [ $? -eq 0 ]; then
       $EDITOR2 $target
+    fi
+  }
+
+  function fileutile() {
+    tmpname=$(mktemp)
+    if fileutil test -f $1; then
+      fileutil cat $1 > $tmpname
+      $EDITOR $tmpname
+      fileutil cp -f $tmpname $1
+      rm $tmpname
+    else
+      $EDITOR $tmpname
+      fileutil cp -f $tmpname $1
+      rm $tmpname
     fi
   }
 fi

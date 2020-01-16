@@ -14,7 +14,7 @@ alias :wq="echo 'you are not in vim'"
 alias j=jump
 # BSD or GNU?
 if [[ $COREUTILS_VER == GNU ]]; then
-  alias ls='ls -N --color -h --sort=extension'
+  alias ls='ls -N --color -h --sort=extension --group-directories-first -v'
 else
   alias ls='ls -G'
 fi

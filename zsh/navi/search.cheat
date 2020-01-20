@@ -1,0 +1,10 @@
+% search, fd
+
+# Find all files under current directory recursively
+fd . --type f
+
+# Find all directories under current directory recursively
+fd . --type d
+
+# Find all files of a certain extension
+fd . --type f -e <type>

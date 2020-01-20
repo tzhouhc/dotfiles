@@ -1,22 +1,4 @@
-# customized vim completion
-_fzf_complete_vim() {
-  FZF_DEFAULT_OPTS="--preview 'bat {}' $FZF_DEFAULT_OPTS"
-  _fzf_complete '+m' "$@" < <(
-    # all files under current dir
-    fd . -t f
-  )
-  FZF_DEFAULT_OPTS="--height 40% --reverse"
-}
-
-_fzf_complete_v() {
-  FZF_DEFAULT_OPTS="--preview 'bat {}' $FZF_DEFAULT_OPTS"
-  _fzf_complete '+m' "$@" < <(
-    # all files under current dir
-    fd . -t f
-  )
-  FZF_DEFAULT_OPTS="--height 40% --reverse"
-}
-
+# completion for piper
 _fzf_complete_g4d() {
   _fzf_complete '+m' "$@" < <(
     # all files under current dir

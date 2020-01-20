@@ -1,0 +1,4 @@
+% utils
+
+# Cut portions of line by separator
+cut -d'<separator>' -f<range>

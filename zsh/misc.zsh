@@ -10,3 +10,8 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
 )
 # weird symbol issue on gnome-terminal on right edge
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(small_status)
+
+# run if 'navi' exists on path
+if type navi >/dev/null 2>&1; then
+  source "$(navi widget zsh)"
+fi

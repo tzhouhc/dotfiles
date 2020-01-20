@@ -73,7 +73,7 @@ function gotovim() {
 }
 
 function zsh_reload() {
-  source ~/.zshrc
+  exec zsh
 }
 
 function run() {
@@ -309,7 +309,7 @@ if [[ $IS_GOOGLE == 'true' ]]; then
 
   function csedit() {
     read -r file num <<< $(csfind $1)
-    $EDITOR2 $file +$num
+    $EDITOR $file +$num
   }
 
   function cshere() {
@@ -369,7 +369,7 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   }
 
   function editmarks() {
-    $EDITOR2 ~/.g3marks
+    $EDITOR ~/.g3marks
   }
 
   # generate a link to CS for current directory
@@ -412,7 +412,7 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     set -o pipefail
     target="$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf | sed 's/ .*//')"
     if [ $? -eq 0 ]; then
-      $EDITOR2 $target
+      $EDITOR $target
     fi
   }
 

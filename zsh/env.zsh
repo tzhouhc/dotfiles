@@ -11,6 +11,7 @@ export TERM=xterm-256color
 export MYVIMRC='~/.vim/vimrc'
 export EDITOR=supervim
 export GIT_EDITOR=nvim
+export P4EDITOR=nvim
 if type bat >/dev/null 2>&1; then
   PREVIEWER=bat
 else

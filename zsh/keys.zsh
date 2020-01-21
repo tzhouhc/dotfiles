@@ -8,7 +8,7 @@ bindkey '[B' history-beginning-search-forward
 function my-fzf-file-widget() {
   # clear redundant space
   # allow multiple selection
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $(fd . --type f | fzf -m --preview 'bat {1}' | paste -sd ' ')"
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $(fd . --type f | fzf -m --preview 'bat {}' | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt
@@ -21,7 +21,8 @@ bindkey '^o' my-fzf-file-widget
 function my-fzf-folder-widget() {
   # clear redundant space
   # allow multiple selection
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $(fd . -L -H --type d | fzf -m )"
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') \"$(fd . -L -H --type d | fzf -m )\""
+  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt
   return $ret

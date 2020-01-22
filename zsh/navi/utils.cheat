@@ -2,3 +2,9 @@
 
 # Cut portions of line by separator
 cut -d'<separator>' -f<range>
+
+# List disk usage
+df -h
+
+# List subfolders sorted by readable size
+du -h --max-depth=1 | sort -rh

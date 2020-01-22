@@ -72,3 +72,19 @@ function edit-line-in-vim() {
 }
 zle     -N   edit-line-in-vim
 bindkey '^v' edit-line-in-vim
+
+# 'navi' backwards
+# Utilities to quickly insert snippets into current line
+# Snippets use the same format as navi(denisidoro/navi)'s cheat files
+function ivan() {
+  snip=$(cat ~/.dotfiles/zsh/navi/* | egrep -v '^(%.*)?$' \
+    | sed '$!N;s/\n/ # /' | sed 's/^#//' \
+    | fzf -d'#' --with-nth=1 --preview 'echo {2}' --nth=2 \
+    | cut -d'#' -f2 | sed 's/^ *//')
+  LBUFFER="$LBUFFER$snip"
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   ivan
+bindkey '^g' ivan

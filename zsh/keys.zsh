@@ -34,10 +34,10 @@ bindkey '^p' my-fzf-folder-widget
 # ALSO FMI: `fc` opens the last command in $EDITOR
 function edit-line-in-vim() {
   tmpf=$(mktemp)
-  echo $LBUFFER > $tmpf
+  echo $BUFFER > $tmpf
   # jump to end of file and insert at end of line
   lvim -s <(printf 'GA') +'set ft=sh' $tmpf
-  LBUFFER=$(cat $tmpf)
+  BUFFER=$(cat $tmpf)
   rm -f $tmpf
   local ret=$?
   zle reset-prompt

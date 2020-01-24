@@ -15,3 +15,6 @@
   excludesfile = ~/.gitignore
 [diff]
   algorithm = patience
+[url "https://github.com/"]
+	insteadOf = git://github.com/
+	insteadOf = http://github.com/

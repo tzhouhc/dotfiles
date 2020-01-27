@@ -3,12 +3,15 @@ bindkey -e
 bindkey '[A' history-beginning-search-backward
 bindkey '[B' history-beginning-search-forward
 
+
+
 # Ctrl-o to write local files to the zle
 # customized version adds a space and removes unwanted files with fd
 function my-fzf-file-widget() {
   # clear redundant space
   # allow multiple selection
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $(fd . --type f | fzf -m --preview 'bat {}' | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  insert="$(fd . --type f | fzf -m --preview 'bat {}' | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt
@@ -16,6 +19,30 @@ function my-fzf-file-widget() {
 }
 zle     -N   my-fzf-file-widget
 bindkey '^o' my-fzf-file-widget
+
+# Ctrl-F to run ag non-fuzzily and open selected file by content
+function my-fzf-ag-exact-widget() {
+  insert="$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
+  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   my-fzf-ag-exact-widget
+bindkey '^h' my-fzf-ag-exact-widget
+
+# Ctrl-f to run ag and open selected file by content
+function my-fzf-ag-widget() {
+  insert="$(ag --nobreak --noheading . | fzf -m -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
+  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   my-fzf-ag-widget
+bindkey '^f' my-fzf-ag-widget
 
 # Ctrl-i to write local folders to the zle
 function my-fzf-folder-widget() {

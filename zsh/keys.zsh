@@ -13,6 +13,8 @@ function my-BUILD-widget() {
     return $ret
   else
     echo "No BUILD file found."
+    zle reset-prompt
+    return
   fi
 }
 zle     -N   my-BUILD-widget
@@ -85,6 +87,18 @@ function edit-line-in-vim() {
 }
 zle     -N   edit-line-in-vim
 bindkey '^v' edit-line-in-vim
+
+# use z's history for recently-accessed directories
+function my-mru-dir() {
+  choice=$(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf)
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
+  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   my-mru-dir
+bindkey '^k' my-mru-dir
 
 # 'navi' backwards
 # Utilities to quickly insert snippets into current line

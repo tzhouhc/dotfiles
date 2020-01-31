@@ -419,10 +419,22 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     fi
   }
 
+  # get a list of pending files in the citc client and select one.
+  function _p4list() {
+    print "$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf | sed 's/ .*//')"
+  }
+
+  function p4cd() {
+    set -o pipefail
+    target=$(_p4list)
+    if [ $? -eq 0 ]; then
+      cd $(echo $target | sed 's/[^\/]*$//')
+    fi
+  }
   # edit files that are open in the client
   function p4d() {
     set -o pipefail
-    target="$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf | sed 's/ .*//')"
+    target=$(_p4list)
     if [ $? -eq 0 ]; then
       p4 diff $target
     fi
@@ -431,7 +443,7 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   function p4e() {
     set -o pipefail
     if [[ $@ == '' ]]; then
-      target="$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf | sed 's/ .*//')"
+      target=$(_p4list)
     else
       target="$(g4pwd)/$@"
     fi

@@ -3,14 +3,27 @@ bindkey -e
 bindkey '[A' history-beginning-search-backward
 bindkey '[B' history-beginning-search-forward
 
-
+function my-BUILD-widget() {
+  if [[ -f BUILD ]]; then
+    insert=$(cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//" | fzf)
+    LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
+    LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
+    local ret=$?
+    zle reset-prompt
+    return $ret
+  else
+    echo "No BUILD file found."
+  fi
+}
+zle     -N   my-BUILD-widget
+bindkey '^n' my-BUILD-widget
 
 # Ctrl-o to write local files to the zle
 # customized version adds a space and removes unwanted files with fd
 function my-fzf-file-widget() {
   # clear redundant space
   # allow multiple selection
-  insert="$(fd . --type f | fzf -m --preview 'bat {}' | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  insert="$(fd . -H --type f | fzf -m --preview 'bat {}' | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
@@ -48,7 +61,7 @@ bindkey '^f' my-fzf-ag-widget
 function my-fzf-folder-widget() {
   # clear redundant space
   # allow multiple selection
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') \"$(fd . -L -H --type d | fzf -m )\""
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $(fd . -L -H --type d | fzf -m | sed 's/\(.*\)/\"\1\"/g')"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt

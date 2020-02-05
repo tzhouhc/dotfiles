@@ -262,6 +262,16 @@ function cyan() {
   print -nP "%F{cyan}$1%f"
 }
 
+# custom 'd' for local recent dirs -- since it's near 'z'
+function x() {
+  if [[ -n $1 ]]
+  then
+    dirs "$@"
+  else
+    cd "$(dirs -v | cut -f2 | fzf | sed s:~:$HOME:)"
+  fi
+}
+
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
   function mount_music() {
     sshfs nookie:/media/synia/music $HOME/Music/Synia

@@ -262,16 +262,6 @@ function cyan() {
   print -nP "%F{cyan}$1%f"
 }
 
-# custom 'd' for local recent dirs -- since it's near 'z'
-function x() {
-  if [[ -n $1 ]]
-  then
-    dirs "$@"
-  else
-    cd "$(dirs -v | cut -f2 | fzf | sed s:~:$HOME:)"
-  fi
-}
-
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
   function mount_music() {
     sshfs nookie:/media/synia/music $HOME/Music/Synia
@@ -429,14 +419,9 @@ if [[ $IS_GOOGLE == 'true' ]]; then
     fi
   }
 
-  # get a list of pending files in the citc client and select one.
-  function _p4list() {
-    print "$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf | sed 's/ .*//')"
-  }
-
   function p4cd() {
     set -o pipefail
-    target=$(_p4list)
+    target=$(p4-change-list)
     if [ $? -eq 0 ]; then
       cd $(echo $target | sed 's/[^\/]*$//')
     fi
@@ -444,7 +429,7 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   # edit files that are open in the client
   function p4d() {
     set -o pipefail
-    target=$(_p4list)
+    target=$(p4-change-list)
     if [ $? -eq 0 ]; then
       p4 diff $target
     fi
@@ -453,7 +438,7 @@ if [[ $IS_GOOGLE == 'true' ]]; then
   function p4e() {
     set -o pipefail
     if [[ $@ == '' ]]; then
-      target=$(_p4list)
+      target=$(p4-change-list)
     else
       target="$(g4pwd)/$@"
     fi

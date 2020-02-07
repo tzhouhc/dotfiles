@@ -12,7 +12,7 @@
 
 --langmap=sh:+.zsh
 --langmap=sh:+(zshrc)
---regex-sh=/^([ \t]+)?(export[ \t]+)?([A-Z_]+)\=/\3/e,env,envvars/
+--regex-sh=/^([ \t]+)?(export[ \t]+)?([A-Z_-]+)\=/\3/e,env,envvars/
 
 --langdef=bzl
 --langmap=bzl:(BUILD)

@@ -7,3 +7,8 @@ if [[ -z $(ls --version 2>/dev/null | grep gnu) ]]; then
 else
   export COREUTILS_VER=GNU
 fi
+
+# run if 'ggrep' exists on path
+if type ggrep >/dev/null 2>&1; then
+  alias grep=$(which ggrep)
+fi

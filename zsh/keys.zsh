@@ -5,7 +5,7 @@ bindkey '[B' history-beginning-search-forward
 
 function my-BUILD-widget() {
   if [[ -f BUILD ]]; then
-    insert=$(cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//" | fzf)
+    insert=$(build-target-list)
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
     LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
     local ret=$?
@@ -25,7 +25,7 @@ bindkey '^n' my-BUILD-widget
 function my-fzf-file-widget() {
   # clear redundant space
   # allow multiple selection
-  insert="$(fd . -H --type f | fzf -m --preview 'bat {}' | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  insert=$(local-file-list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
@@ -35,9 +35,9 @@ function my-fzf-file-widget() {
 zle     -N   my-fzf-file-widget
 bindkey '^o' my-fzf-file-widget
 
-# Ctrl-F to run ag non-fuzzily and open selected file by content
+# Ctrl-h to run ag non-fuzzily and open selected file by content
 function my-fzf-ag-exact-widget() {
-  insert="$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  insert=$(local-lines-exact-list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
@@ -45,25 +45,13 @@ function my-fzf-ag-exact-widget() {
   return $ret
 }
 zle     -N   my-fzf-ag-exact-widget
-bindkey '^h' my-fzf-ag-exact-widget
-
-# Ctrl-f to run ag and open selected file by content
-function my-fzf-ag-widget() {
-  insert="$(ag --nobreak --noheading . | fzf -m -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
-  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
-  local ret=$?
-  zle reset-prompt
-  return $ret
-}
-zle     -N   my-fzf-ag-widget
-bindkey '^f' my-fzf-ag-widget
+bindkey '^f' my-fzf-ag-exact-widget
 
 # Ctrl-i to write local folders to the zle
 function my-fzf-folder-widget() {
   # clear redundant space
   # allow multiple selection
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $(fd . -L -H --type d | fzf -m | sed 's/\(.*\)/\"\1\"/g')"
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $(local-dir-list)"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt
@@ -90,28 +78,37 @@ bindkey '^v' edit-line-in-vim
 
 # use z's history for recently-accessed directories
 function my-mru-dir() {
-  choice=$(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf)
+  choice=$(mru-dir-list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt
   return $ret
 }
-zle     -N   my-mru-dir
-bindkey '^k' my-mru-dir
+# zle     -N   my-mru-dir
+# bindkey '^k' my-mru-dir
 
 # 'navi' backwards
 # Utilities to quickly insert snippets into current line
 # Snippets use the same format as navi(denisidoro/navi)'s cheat files
 function ivan() {
-  snip=$(cat ~/.dotfiles/zsh/navi/* | egrep -v '^(%.*)?$' \
-    | sed '$!N;s/\n/ # /' | sed 's/^#//' \
-    | fzf -d'#' --with-nth=1 --preview 'echo {2}' --nth=2 \
-    | cut -d'#' -f2 | sed 's/^ *//')
+  snip=$(ivan-list)
   LBUFFER="$LBUFFER$snip"
   local ret=$?
   zle reset-prompt
   return $ret
 }
-zle     -N   ivan
-bindkey '^g' ivan
+# zle     -N   ivan
+# bindkey '^g' ivan
+
+# One function that provides all available fzf lists
+function superfzf() {
+  choice=$(all-fzf-list)
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
+  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   superfzf
+bindkey '^k' superfzf

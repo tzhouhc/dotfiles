@@ -78,7 +78,7 @@ bindkey '^v' edit-line-in-vim
 
 # use z's history for recently-accessed directories
 function my-mru-dir() {
-  choice=$(mru-dir-list)
+  choice=$(z-mru-dir-list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
@@ -92,14 +92,14 @@ function my-mru-dir() {
 # Utilities to quickly insert snippets into current line
 # Snippets use the same format as navi(denisidoro/navi)'s cheat files
 function ivan() {
-  snip=$(ivan-list)
+  snip=$(ivan-snippet-list)
   LBUFFER="$LBUFFER$snip"
   local ret=$?
   zle reset-prompt
   return $ret
 }
-# zle     -N   ivan
-# bindkey '^g' ivan
+zle     -N   ivan
+bindkey '^g' ivan
 
 # One function that provides all available fzf lists
 function superfzf() {

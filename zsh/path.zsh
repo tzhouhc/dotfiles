@@ -17,7 +17,7 @@ export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
 if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
   # ruby
-  export PATH=$HOME/.rbenv/versions/2.5.1/bin:$PATH
+  export PATH=/usr/local/opt/ruby/bin:$PATH
   # go
   export PATH=$HOME/go/bin/:$PATH
   # rust
@@ -28,7 +28,7 @@ if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
   # mono
   export PATH=/Library/Frameworks/Mono.framework/Versions/Current/Commands:$PATH
   # node
-  export PATH=/usr/local/Cellar/node/12.9.0/bin:$PATH
+  export PATH=/usr/local/Cellar/node/12.12.0/bin:$PATH
   # llvm
   # export PATH="/usr/local/opt/llvm/bin:$PATH
 fi

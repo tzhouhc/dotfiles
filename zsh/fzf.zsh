@@ -56,14 +56,19 @@ function process-name-list() {
   print $(ps -aeo uid,pid,command | fzf --header-lines=1 | cut -d' ' -f4)
 }
 
+# Current Git repo commit history
+function git-commit-list() {
+  print $(git log --pretty=oneline --abbrev-commit | fzf --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " ")
+}
+
 # Function that collect all above method names and help messages for fzf
 function all-fzf-list() {
   funcs=("${(f)$(cat ~/.zsh/fzf.zsh | grep 'function' -B 1 | head -n -7 | grep -v '^\-\-' | paste -d'#' - -)}")
-  res=()
+  res=("Method                           Details")
   for line in $funcs; do
     comment=$(echo $line | grep -oP "(?<=# )[\w\s]+")
     func=$(echo $line | grep -oP "(?<=function )[\w-]+")
-    res+=("$func: $comment")
+    res+=("$(printf "%-30s %s\n" $func): $comment")
   done
-  print $($(print -l $res | fzf | cut -d':' -f1))
+  print $($(print -l $res | fzf --header-lines=1 | cut -d':' -f1))
 }

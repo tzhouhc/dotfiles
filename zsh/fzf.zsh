@@ -61,6 +61,16 @@ function process-name-list() {
   print $(ps -aeo uid,pid,command | fzf --header-lines=1 | cut -d' ' -f4)
 }
 
+# Environment variables
+function env-var-list() {
+  print \$$(echo "Env=Value\n$(env)" | column -s'=' -t 2>/dev/null | fzf --header-lines=1 | cut -d' ' -f1)
+}
+
+# Executable binaries
+function bin-list() {
+  print $(echo "Bin\tPath\n$(whence -pm '*' | sed "s/\([a-zA-Z0-9_.-]*\)$/\1 \1/" | awk '{ print $2 " " $1}')" | fzf --exact --header-lines=1 | cut -d' ' -f2)
+}
+
 # Current Git repo commit history
 function git-commit-list() {
   print $(git log --pretty=oneline --abbrev-commit | fzf --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " ")

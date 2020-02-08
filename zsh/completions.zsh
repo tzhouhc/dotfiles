@@ -19,14 +19,14 @@ _fzf_complete_g4cd_post() {
 }
 
 _fzf_complete_g4cd() {
-  _fzf_complete "+m" "$@" < <(
-    cat ~/.g3marks
+  _fzf_complete "+m --header-lines=1" "$@" < <(
+    echo "Alias\tG3path\n$(cat ~/.g3marks)" | column -t
   )
 }
 
 _fzf_complete_g4cd_post() {
   # remove the marker name bits
-  cut -f2 -d$'\t'
+  grep -o "[^ ]*$"
 }
 
 _fzf_complete_bb() {

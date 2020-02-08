@@ -13,6 +13,11 @@ function p4-change-list() {
   print "$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf | sed 's/ .*//')"
 }
 
+# Notable citc package paths
+function p4-package-list() {
+  print $(echo "Alias\tG3path\n$(cat ~/.g3marks)" | column -t | fzf --header-lines=1 | grep -o "[^ ]*$")
+}
+
 # Build targets visible in the current directory
 function build-target-list() {
   print $(cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//" | fzf)

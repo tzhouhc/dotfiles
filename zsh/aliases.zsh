@@ -19,6 +19,7 @@ if [[ $COREUTILS_VER == GNU ]]; then
 else
   alias ls='ls -G'
 fi
+alias sed='sed -E'
 
 # typo
 alias claer=clear

@@ -25,24 +25,34 @@ function build-target-list() {
 
 # Files visible in the current directory
 function local-file-list() {
-  print "$(fd . -H --type f | fzf -m --preview 'bat {}' | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  print "$(fd . -H --type f | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
 }
 
 # Lines in files visible in the current directory
 function local-lines-list() {
-  print "$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  print "$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
 }
 
 # Lines (matching exactly) in files visible in the current directory
 function local-lines-exact-list() {
-  print "$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/\(.*\)/\"\1\"/g' | paste -sd ' ')"
+  print "$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
 }
 
 # Directories visible in the current directory
 function local-dir-list() {
-  print $(fd . -L -H --type d | fzf -m | sed 's/\(.*\)/\"\1\"/g')
+  print $(fd . -L -H --type d | fzf -m | sed 's/(.*)/\"\1\"/g')
 }
 
+# Dictionary English words
+function english-word-list() {
+  if type wn >/dev/null 2>&1; then
+    print $(cat /usr/share/dict/words | fzf --preview-window=right:wrap --preview 'wn {1} -over')
+  elif type dict >/dev/null 2>&1; then
+    print $(cat /usr/share/dict/words | fzf --preview-window=right:wrap --preview 'dict -f {1}')
+  else
+    print $(cat /usr/share/dict/words | fzf)
+  fi
+}
 # Recently visited directories as per z's record
 function z-mru-dir-list() {
   print $(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf)
@@ -68,7 +78,7 @@ function env-var-list() {
 
 # Executable binaries
 function bin-list() {
-  print $(echo "Bin\tPath\n$(whence -pm '*' | sed "s/\([a-zA-Z0-9_.-]*\)$/\1 \1/" | awk '{ print $2 " " $1}')" | fzf --exact --header-lines=1 | cut -d' ' -f2)
+  print $(echo "Bin\tPath\n$(whence -pm '*' | sed "s/([a-zA-Z0-9_.-]*)$/\1 \1/" | awk '{ print $2 " " $1}')" | column -t | fzf --exact --header-lines=1 | cut -d' ' -f2)
 }
 
 # Current Git repo commit history

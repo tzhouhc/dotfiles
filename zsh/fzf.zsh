@@ -78,7 +78,7 @@ function env-var-list() {
 
 # Executable binaries
 function bin-list() {
-  print $(echo "Bin\tPath\n$(whence -pm '*' | sed "s/([a-zA-Z0-9_.-]*)$/\1 \1/" | awk '{ print $2 " " $1}')" | column -t | fzf --exact --header-lines=1 | cut -d' ' -f2)
+  print $(echo "Bin\tPath\n$(whence -pm '*' | sed "s/([a-zA-Z0-9_.-]*)$/\1 \1/" | awk '{ print $2 " " $1}')" | column -t | fzf --header-lines=1 | grep -o '[^ ]*$')
 }
 
 # Current Git repo commit history

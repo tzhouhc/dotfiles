@@ -23,6 +23,8 @@ if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
   # rust
   export PATH=$HOME/.cargo/bin:$PATH
 
+  # rust
+  export PATH=$HOME/.imagemagick:$PATH
   # tex
   export PATH=/Library/TeX/texbin:$PATH
   # mono

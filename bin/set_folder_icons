@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+IFS=$'\n'
+for dir in $(echo ".\n"; fd . -t d); do
+  if [[ $SET_ICON_SKIP_EXISTING == 1 ]]; then
+    if ls "$dir" | grep Icon >/dev/null; then
+      continue
+    fi
+  fi
+  image=$(fd . --type f -e jpg -e png $dir | head -n 1)
+  suffix=$(echo $image | grep -o '[^.]*$')
+  tmpimg="/tmp/tempimg.$suffix"
+  squareup "$image" $tmpimg
+  fileicon set $dir $tmpimg; rm $tmpimg
+done

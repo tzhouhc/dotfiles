@@ -20,6 +20,9 @@ fi
 export BAT_CONFIG_PATH="$HOME/.batrc"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
+# enable dir-context-aware history tool
+export DIR_AWARE_HISTFILE="$HOME/.zsh_new_history"
+
 export TEXMFHOME="$HOME/.texmf"
 export PYTHONSTARTUP="$HOME/.pythonrc"
 export RUBYLIB="$HOME/local/lib/ruby"

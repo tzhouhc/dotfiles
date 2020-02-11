@@ -21,6 +21,19 @@ branch_icon_map[configs]=" "
 source ~/.zsh/lib/gitstatus/gitstatus.plugin.zsh
 gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
 
+# system hook functions -- for zshaddhistory
+custom_add_history() {
+  print -sr -- ${1%%$'\n'}  # standard base implementation
+  # now additionally we want to ensure directory-aware history
+  if [[ DIR_AWARE_HISTFILE != '' ]]; then
+    echo $PWD#${1%%$'\n'} >> $DIR_AWARE_HISTFILE
+    cat $DIR_AWARE_HISTFILE | sort -u > $DIR_AWARE_HISTFILE.tmp
+    cat $DIR_AWARE_HISTFILE.tmp > $DIR_AWARE_HISTFILE
+    rm $DIR_AWARE_HISTFILE.tmp
+  fi
+}
+add-zsh-hook zshaddhistory custom_add_history
+
 function zsh_fallback() {
   export NERDFONT=false
   export POWERLINE=false

@@ -81,6 +81,11 @@ function bin-list() {
   print $(echo "Bin\tPath\n$(whence -pm '*' | sed "s/([a-zA-Z0-9_.-]*)$/\1 \1/" | awk '{ print $2 " " $1}')" | column -t | fzf --header-lines=1 | grep -o '[^ ]*$')
 }
 
+# Directory-context-aware command history
+function dir-ctx-command-list() {
+  print $(cat $DIR_AWARE_HISTFILE | grep $PWD | cut -d'#' -f2- | fzf)
+}
+
 # Current Git repo commit history
 function git-commit-list() {
   print $(git log --pretty=oneline --abbrev-commit | fzf --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " ")

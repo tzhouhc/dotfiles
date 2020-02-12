@@ -64,6 +64,7 @@ function ivan-snippet-list() {
     | sed '$!N;s/\n/ # /' | sed 's/^#//' \
     | fzf -d'#' --with-nth=1 --preview 'echo {2}' --nth=2 \
     | cut -d'#' -f2 | sed 's/^ *//')
+  # TODO: consider grepping for variables and read user input to populate them
 }
 
 # Current processes; return the PID
@@ -83,7 +84,15 @@ function bin-list() {
 
 # Directory-context-aware command history
 function dir-ctx-command-list() {
-  print $(cat $DIR_AWARE_HISTFILE | grep $PWD | cut -d'#' -f2- | fzf)
+  print $(cat $DIR_AWARE_HISTFILE | grep "$PWD#" | cut -d'#' -f2- | fzf)
+}
+
+# P4-package-context-aware command history
+function p4-dir-ctx-command-list() {
+  g4pwd=$(g4pwd2)
+  if [[ $g4pwd != '' ]]; then
+    print $(cat $DIR_AWARE_HISTFILE | grep "$g4pwd#" | cut -d'#' -f2- | fzf)
+  fi
 }
 
 # Current Git repo commit history

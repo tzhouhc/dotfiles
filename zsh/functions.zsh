@@ -26,7 +26,7 @@ custom_add_history() {
   print -sr -- ${1%%$'\n'}  # standard base implementation
   # now additionally we want to ensure directory-aware history
   if [[ DIR_AWARE_HISTFILE != '' ]]; then
-    echo $PWD#${1%%$'\n'} >> $DIR_AWARE_HISTFILE
+    echo $PWD#$(echo ${1%%$'\n'} | sed 's/ +$//;s/^ +//') >> $DIR_AWARE_HISTFILE
     cat $DIR_AWARE_HISTFILE | sort -u > $DIR_AWARE_HISTFILE.tmp
     cat $DIR_AWARE_HISTFILE.tmp > $DIR_AWARE_HISTFILE
     rm $DIR_AWARE_HISTFILE.tmp

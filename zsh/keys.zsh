@@ -101,6 +101,22 @@ function ivan() {
 zle     -N   ivan
 bindkey '^g' ivan
 
+# context-aware history -- automatically determines if it should use p4 variant
+# or base variant
+function dir-history() {
+  if [[ $(g4pwd) != "" ]]; then
+    snip=$(p4-dir-ctx-command-list)
+  else
+    snip=$(dir-ctx-command-list)
+  fi
+  LBUFFER="$LBUFFER$snip"
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   dir-history
+bindkey '^y' dir-history
+
 # One function that provides all available fzf lists
 function superfzf() {
   choice=$(all-fzf-list)

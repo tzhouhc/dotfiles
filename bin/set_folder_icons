@@ -8,8 +8,10 @@ for dir in $(echo ".\n"; fd . -t d); do
     fi
   fi
   image=$(fd . --type f -e jpg -e png $dir | head -n 1)
-  suffix=$(echo $image | grep -o '[^.]*$')
-  tmpimg="/tmp/tempimg.$suffix"
-  squareup "$image" $tmpimg
-  fileicon set $dir $tmpimg; rm $tmpimg
+  if [[ $image != '' ]]; then
+    suffix=$(echo $image | grep -o '[^.]*$')
+    tmpimg="/tmp/tempimg.$suffix"
+    squareup "$image" $tmpimg
+    fileicon set $dir $tmpimg; rm $tmpimg
+  fi
 done

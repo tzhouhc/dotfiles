@@ -25,8 +25,15 @@ bindkey '^n' my-BUILD-widget
 function my-fzf-file-widget() {
   # clear redundant space
   # allow multiple selection
-  insert=$(local-file-list)
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
+  # TODO: allow spaces in paths
+  maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev )
+  if [[ -d $maybedir ]]; then
+    insert=$(local-file-list $maybedir)
+    LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
+  else
+    insert=$(local-file-list)
+    LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
+  fi
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt
@@ -51,7 +58,14 @@ bindkey '^f' my-fzf-ag-exact-widget
 function my-fzf-folder-widget() {
   # clear redundant space
   # allow multiple selection
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $(local-dir-list)"
+  maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev )
+  if [[ -d $maybedir ]]; then
+    insert=$(local-dir-list $maybedir)
+    LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
+  else
+    insert=$(local-dir-list)
+    LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
+  fi
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt

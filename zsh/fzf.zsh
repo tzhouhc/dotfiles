@@ -25,7 +25,11 @@ function build-target-list() {
 
 # Files visible in the current directory
 function local-file-list() {
-  print "$(fd . -H --type f | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+  if [[ $1 != '' ]]; then
+    print "$(fd . -H --type f $1 | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+  else
+    print "$(fd . -H --type f | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+  fi
 }
 
 # Lines in files visible in the current directory
@@ -40,7 +44,11 @@ function local-lines-exact-list() {
 
 # Directories visible in the current directory
 function local-dir-list() {
-  print $(fd . -L -H --type d | fzf -m | sed 's/(.*)/\"\1\"/g')
+  if [[ $1 != '' ]]; then
+    print "$(fd . -L -H --type d $1 | fzf -m | sed 's/(.*)/\"\1\"/g')"
+  else
+    print "$(fd . -L -H --type d | fzf -m | sed 's/(.*)/\"\1\"/g')"
+  fi
 }
 
 # Dictionary English words

@@ -10,7 +10,7 @@ function local-recent-dir-list() {
 
 # Current Citc client changed files
 function p4-change-list() {
-  print "$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf | sed 's/ .*//')"
+  print "$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf -m | sed 's/ .*//')"
 }
 
 # Notable citc package paths
@@ -70,7 +70,7 @@ function z-mru-dir-list() {
 function ivan-snippet-list() {
   print $(cat ~/.dotfiles/zsh/navi/* | egrep -v '^(%.*)?$' \
     | sed '$!N;s/\n/ # /' | sed 's/^#//' \
-    | fzf -d'#' --with-nth=1 --preview 'echo {2}' --nth=2 \
+    | fzf -d'#' --with-nth=1 --preview 'echo {2}' \
     | cut -d'#' -f2 | sed 's/^ *//')
   # TODO: consider grepping for variables and read user input to populate them
 }

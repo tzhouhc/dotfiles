@@ -2,3 +2,12 @@
 
 # Verify an mpm satisfies MINT
 /google/data/ro/teams/bcid/bin/bcid_check_mpm --noaudit <package_name> [--version_key=<version_or_label>]
+
+# Set label for mpm
+mpm setlabel <package_name> <label> --version=<version_key>
+
+# Check dreampipe file validity
+/google/data/ro/teams/dreampipe/dreampipe-push <dreamfile> print
+
+# Push dreampipe file
+/google/data/ro/teams/dreampipe/dreampipe-push <dreamfile> push

@@ -26,9 +26,10 @@ function my-fzf-file-widget() {
   # clear redundant space
   # allow multiple selection
   # TODO: allow spaces in paths
-  maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev )
-  if [[ -d $maybedir ]]; then
-    insert=$(local-file-list $maybedir)
+  maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev)
+  cleaned=$(echo $maybedir | sed "s:~:$HOME:")
+  if [[ -d "$cleaned" ]]; then
+    insert=$(local-file-list "$cleaned")
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
     insert=$(local-file-list)
@@ -58,9 +59,10 @@ bindkey '^f' my-fzf-ag-exact-widget
 function my-fzf-folder-widget() {
   # clear redundant space
   # allow multiple selection
-  maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev )
-  if [[ -d $maybedir ]]; then
-    insert=$(local-dir-list $maybedir)
+  maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev)
+  cleaned=$(echo $maybedir | sed "s:~:$HOME:")
+  if [[ -d "$cleaned" ]]; then
+    insert=$(local-dir-list "$cleaned")
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
     insert=$(local-dir-list)

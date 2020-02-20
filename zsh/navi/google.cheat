@@ -1,7 +1,7 @@
 % google
 
 # Verify an mpm satisfies MINT
-/google/data/ro/teams/bcid/bin/bcid_check_mpm --noaudit <package_name> [--version_key=<version_or_label>]
+/google/data/ro/teams/bcid/bin/bcid_check_mpm --noaudit <package_name> --version_key=<version_or_label>
 
 # Set label for mpm
 mpm setlabel <package_name> <label> --version=<version_key>

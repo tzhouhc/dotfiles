@@ -68,11 +68,11 @@ function z-mru-dir-list() {
 
 # Helpful shell snippets
 function ivan-snippet-list() {
-  print $(cat ~/.dotfiles/zsh/navi/* | egrep -v '^(%.*)?$' \
+  line=$(cat ~/.dotfiles/zsh/navi/* | egrep -v '^(%.*)?$' \
     | sed '$!N;s/\n/ # /' | sed 's/^#//' \
     | fzf -d'#' --with-nth=1 --preview 'echo {2}' \
     | cut -d'#' -f2 | sed 's/^ *//')
-  # TODO: consider grepping for variables and read user input to populate them
+  print $(populate_tags $line)
 }
 
 # Current processes; return the PID

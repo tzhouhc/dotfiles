@@ -8,3 +8,6 @@ df -h
 
 # List subfolders sorted by readable size
 du -h --max-depth=1 | sort -rh
+
+# Testing multi-variable substitution
+ls <folder> && ls <folder>

@@ -7,16 +7,16 @@
 mpm setlabel <package_name> <label> --version=<version_key>
 
 # Check dreampipe file validity
-/google/data/ro/teams/dreampipe/dreampipe-push <dreamfile> print
+/google/data/ro/teams/dreampipe/dreampipe print <dreamfile>
 
 # Push dreampipe file
-/google/data/ro/teams/dreampipe/dreampipe-push <dreamfile> push
+/google/data/ro/teams/dreampipe/dreampipe push <dreamfile>
+
+# Check dreampipe config push history
+/google/data/ro/teams/dreampipe/dreampipe pipelinehistory mdb/<domain>
 
 # Check entity membership/acl in ganpati (group format: mdb/{group-name})
 /google/data/ro/projects/ganpati/aclcheck <group-name> <entity-name>
 
 # Check pushed versions of mpm by name
 mpm packageinfo --show_version_map <mpm-name>
-
-# P4 - revert all uneditted open files
-p4 revert -a

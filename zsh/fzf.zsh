@@ -77,7 +77,7 @@ function ivan-snippet-list() {
 
 # Current processes; return the PID
 function process-name-list() {
-  print $(ps -aeo uid,pid,command | fzf --header-lines=1 | cut -d' ' -f4)
+  print "$(ps -aeo uid,pid,command | fzf --header-lines=1 | tr -s ' ' | cut -d' ' -f2)"
 }
 
 # Environment variables
@@ -101,6 +101,17 @@ function p4-dir-ctx-command-list() {
   if [[ $g4pwd != '' ]]; then
     print $(cat $DIR_AWARE_HISTFILE | grep "$g4pwd#" | cut -d'#' -f2- | fzf)
   fi
+}
+
+# ALL google3 build targets in folders with footsteps (i.e. visited and actions performed)
+function p4-footstep-build-target-list() {
+  for line in $(google3_footsteps); do
+    if [[ -f "$(g4pwd)/google3/$line/BUILD" ]]; then
+      targets=$(ctags --language-force=bzl -f - "$(g4pwd)/google3/$line/BUILD" | cut -d$'\t' -f1 | sed "s:^://$line\::")
+      targetlist="$targetlist\n$targets"
+    fi
+  done
+  echo $targetlist | fzf
 }
 
 # Current Git repo commit history

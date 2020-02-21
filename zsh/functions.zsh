@@ -474,4 +474,10 @@ if [[ $IS_GOOGLE == 'true' ]]; then
       rm $tmpname
     fi
   }
+
+  function google3_footsteps() {
+    cat ~/.zsh_new_history | cut -d'#' -f1 \
+      | sort -u | grep '/google/src/cloud/[a-z]*/[a-z_-]*/' \
+      | sed 's:/google/src/cloud/[a-z]*/[a-z_-]*/google3/::' | sort -u
+  }
 fi

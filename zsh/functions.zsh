@@ -25,14 +25,23 @@ gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
 custom_add_history() {
   print -sr -- ${1%%$'\n'}  # standard base implementation
   # now additionally we want to ensure directory-aware history
-  if [[ DIR_AWARE_HISTFILE != '' ]]; then
-    echo $PWD#$(echo ${1%%$'\n'} | sed 's/ +$//;s/^ +//') >> $DIR_AWARE_HISTFILE
-    cat $DIR_AWARE_HISTFILE | sort -u > $DIR_AWARE_HISTFILE.tmp
-    cat $DIR_AWARE_HISTFILE.tmp > $DIR_AWARE_HISTFILE
-    rm $DIR_AWARE_HISTFILE.tmp
-  fi
+  echo $PWD#$(echo ${1%%$'\n'} | sed 's/ +$//;s/^ +//') >> $DIR_AWARE_HISTFILE
+  cat $DIR_AWARE_HISTFILE | sort -u > $DIR_AWARE_HISTFILE.tmp
+  cat $DIR_AWARE_HISTFILE.tmp > $DIR_AWARE_HISTFILE
+  rm $DIR_AWARE_HISTFILE.tmp
 }
-add-zsh-hook zshaddhistory custom_add_history
+if [[ $DIR_AWARE_HISTFILE != '' ]]; then
+  add-zsh-hook zshaddhistory custom_add_history
+fi
+
+# custom cd hook -- record folders that we've stepped into
+custom_cd() {
+    sort -u -m $DIR_HISTFILE <(echo $PWD) >> $DIR_HISTFILE.tmp
+    mv $DIR_HISTFILE.tmp $DIR_HISTFILE
+}
+if [[ $DIR_HISTFILE != '' ]]; then
+  add-zsh-hook chpwd custom_cd
+fi
 
 function zsh_fallback() {
   export NERDFONT=false
@@ -302,182 +311,181 @@ if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
   }
 fi
 
-if [[ $IS_GOOGLE == 'true' ]]; then
-  # jump to java test folder of the same package
-  function jt() {
-    if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
-        cd "${match[1]}/java${match[2]}"
+# jump to java test folder of the same package
+function jt() {
+  if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
+      cd "${match[1]}/java${match[2]}"
+  else
+      cd "${PWD/\/google3\/java//google3/javatests}"
+  fi
+}
+
+function batrange() {
+  print $[$[$1 - 3] < 0 ? 0 : $[$1 - 3]]:$[$ln + 20]
+}
+
+function csfind() {
+  # empty query to csfind gets data from the last query
+  # so that one query can be reused multiple times
+  if [[ $@ != '' ]]; then
+    echo "Querying CS..."
+    cs --nostats --local -n $@ 2>/dev/null | cut -d':' -f1-2 | cut -d'/' -f7- | sed 's/\:/ /' > ~/.last_cs
+  else
+    touch ~/.last_cs
+  fi
+  cat ~/.last_cs | fzf --preview "ln={2}; bat -H \$ln -r \$[\$[\$ln - 3] < 0 ? 0 : \$[\$ln - 3]]:\$[\$ln + 40] --theme zenburn /google/src/files/head/depot/{1}"
+}
+
+function csedit() {
+  output=$(csfind $@)
+  # allow ^c early escape
+  if [[ $? == 0 ]]; then
+    read -r file num <<< $(echo $output)
+    if [[ $(g4pwd) != '' ]]; then
+      # open local citc version so that we can start editing
+      vim $(g4pwd)/$file +$num
     else
-        cd "${PWD/\/google3\/java//google3/javatests}"
+      # Read-only view into latest source
+      vim /google/src/files/head/depot/$file +$num
     fi
-  }
+  else
+    exit $?
+  fi
+}
 
-  function batrange() {
-    print $[$[$1 - 3] < 0 ? 0 : $[$1 - 3]]:$[$ln + 20]
-  }
+function cshere() {
+  cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
+}
 
-  function csfind() {
-    # empty query to csfind gets data from the last query
-    # so that one query can be reused multiple times
-    if [[ $@ != '' ]]; then
-      echo "Querying CS..."
-      cs --nostats --local -n $@ 2>/dev/null | cut -d':' -f1-2 | cut -d'/' -f7- | sed 's/\:/ /' > ~/.last_cs
-    else
-      touch ~/.last_cs
-    fi
-    cat ~/.last_cs | fzf --preview "ln={2}; bat -H \$ln -r \$[\$[\$ln - 3] < 0 ? 0 : \$[\$ln - 3]]:\$[\$ln + 40] --theme zenburn /google/src/files/head/depot/{1}"
-  }
+# show current citc client full path
+function g4pwd() {
+  if [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)' ]]; then
+    echo $match[1]
+  fi
+}
 
-  function csedit() {
-    output=$(csfind $@)
-    # allow ^c early escape
-    if [[ $? == 0 ]]; then
-      read -r file num <<< $(echo $output)
-      if [[ $(g4pwd) != '' ]]; then
-        # open local citc version so that we can start editing
-        vim $(g4pwd)/$file +$num
-      else
-        # Read-only view into latest source
-        vim /google/src/files/head/depot/$file +$num
-      fi
-    else
-      exit $?
-    fi
-  }
+# show current rel path under google3
+function g4pwd2() {
+  if [[ $PWD =~ '/google/src/cloud/[^/]+/[^/]+/google3/(.+)' ]]; then
+    echo $match[1]
+  fi
+}
 
-  function cshere() {
-    cs "file://depot/google3/$(pwd | cut -d'/' -f8-) $@"
-  }
+# build, then go to the blaze-out directory
+function bbs() {
+  [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
+  citc_path=$match[1]
+  blaze_path="$(blaze build $@ 2>&1 | grep blaze-out)"
+  blaze_path=${blaze_path// /}
+  if [[ ! -z $blaze_path ]]; then
+    print -P "%F{green}Target built; cd-ing now"
+    cd "$citc_path/google3/$(dirname $blaze_path)"
+  else
+    print -P "%F{red}Target not found; fix something maybe?"
+    exit 1
+  fi
+}
 
-  # show current citc client full path
-  function g4pwd() {
-    if [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)' ]]; then
-      echo $match[1]
-    fi
-  }
+# open test log in $EDITOR if test result is no good
+# TODO: investigate why $() removes color from stderr
+function btlog() {
+  output=$(bt $@)
+  if [[ $? != 0 ]]; then
+    $EDITOR $(echo $output | grep "test.log")
+  fi
+}
 
-  # show current rel path under google3
-  function g4pwd2() {
-    if [[ $PWD =~ '/google/src/cloud/[^/]+/[^/]+/google3/(.+)' ]]; then
-      echo $match[1]
-    fi
-  }
+# mark for google3 -- disregard the workspace and go to short-path
+# this is needed over normal z since z no longer works if we change client
+function mark() {
+  if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
+    remainder=$match[3]
+    echo "$1\t$remainder" >> ~/.g3marks
+    sort ~/.g3marks | uniq > ~/.g3marks.bk
+    cp ~/.g3marks.bk ~/.g3marks
+    rm ~/.g3marks.bk
+  else
+    echo "Not in a google3 folder, simply use 'bookmark' instead."
+  fi
+}
 
-  # build, then go to the blaze-out directory
-  function bbs() {
-    [[ $PWD =~ '(/google/src/cloud/[^/]+/[^/]+)/(.*)' ]]
-    citc_path=$match[1]
-    blaze_path="$(blaze build $@ 2>&1 | grep blaze-out)"
-    blaze_path=${blaze_path// /}
-    if [[ ! -z $blaze_path ]]; then
-      print -P "%F{green}Target built; cd-ing now"
-      cd "$citc_path/google3/$(dirname $blaze_path)"
-    else
-      print -P "%F{red}Target not found; fix something maybe?"
-      exit 1
-    fi
-  }
+function editmarks() {
+  $EDITOR ~/.g3marks
+}
 
-  # open test log in $EDITOR if test result is no good
-  # TODO: investigate why $() removes color from stderr
-  function btlog() {
-    output=$(bt $@)
-    if [[ $? != 0 ]]; then
-      $EDITOR $(echo $output | grep "test.log")
-    fi
-  }
+# generate a link to CS for current directory
+function cslink() {
+  if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
+    remainder=$match[3]
+    echo "https://source.corp.google.com/piper///depot/google3/$remainder/$1"
+  fi
+}
 
-  # mark for google3 -- disregard the workspace and go to short-path
-  # this is needed over normal z since z no longer works if we change client
-  function mark() {
-    if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
-      remainder=$match[3]
-      echo "$1\t$remainder" >> ~/.g3marks
-      sort ~/.g3marks | uniq > ~/.g3marks.bk
-      cp ~/.g3marks.bk ~/.g3marks
-      rm ~/.g3marks.bk
-    else
-      echo "Not in a google3 folder, simply use 'bookmark' instead."
-    fi
-  }
+# cd to specified short-path under the piper client
+function g4cd() {
+  cd "$(g4pwd)/google3/$1"
+}
 
-  function editmarks() {
-    $EDITOR ~/.g3marks
-  }
+function g4do() {
+  pushd "$(g4pwd)/google3" >/dev/null
+  "$@"
+  popd >/dev/null
+}
 
-  # generate a link to CS for current directory
-  function cslink() {
-    if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
-      remainder=$match[3]
-      echo "https://source.corp.google.com/piper///depot/google3/$remainder/$1"
-    fi
-  }
+# cd to current path but under blaze-bin instead
+function g4bin() {
+  if g4pwd2 | grep blaze-bin > /dev/null; then
+  else
+    cd "$(g4pwd)/google3/blaze-bin/$(g4pwd2)"
+  fi
+}
 
-  # cd to specified short-path under the piper client
-  function g4cd() {
-    cd "$(g4pwd)/google3/$1"
-  }
-
-  function g4do() {
-    pushd "$(g4pwd)/google3" >/dev/null
-    "$@"
-    popd >/dev/null
-  }
-
-  # cd to current path but under blaze-bin instead
-  function g4bin() {
-    if g4pwd2 | grep blaze-bin > /dev/null; then
-    else
-      cd "$(g4pwd)/google3/blaze-bin/$(g4pwd2)"
-    fi
-  }
-
-  function p4cd() {
-    set -o pipefail
+function p4cd() {
+  set -o pipefail
+  target=$(p4-change-list)
+  if [ $? -eq 0 ]; then
+    cd $(echo $target | sed 's/[^\/]*$//')
+  fi
+}
+# edit files that are open in the client
+function p4d() {
+  set -o pipefail
+  target=$(p4-change-list)
+  if [ $? -eq 0 ]; then
+    p4 diff $target
+  fi
+}
+# edit files that are open in the client
+function p4e() {
+  set -o pipefail
+  if [[ $@ == '' ]]; then
     target=$(p4-change-list)
-    if [ $? -eq 0 ]; then
-      cd $(echo $target | sed 's/[^\/]*$//')
-    fi
-  }
-  # edit files that are open in the client
-  function p4d() {
-    set -o pipefail
-    target=$(p4-change-list)
-    if [ $? -eq 0 ]; then
-      p4 diff $target
-    fi
-  }
-  # edit files that are open in the client
-  function p4e() {
-    set -o pipefail
-    if [[ $@ == '' ]]; then
-      target=$(p4-change-list)
-    else
-      target="$(g4pwd)/$@"
-    fi
-    if [ $? -eq 0 ]; then
-      $EDITOR $target
-    fi
-    set +o pipefail
-  }
+  else
+    target="$(g4pwd)/$@"
+  fi
+  if [ $? -eq 0 ]; then
+    $EDITOR $target
+  fi
+  set +o pipefail
+}
 
-  function fileutile() {
-    tmpname=$(mktemp)
-    if fileutil test -f $1; then
-      fileutil cat $1 > $tmpname
-      $EDITOR $tmpname
-      fileutil cp -f $tmpname $1
-      rm $tmpname
-    else
-      $EDITOR $tmpname
-      fileutil cp -f $tmpname $1
-      rm $tmpname
-    fi
-  }
+function fileutile() {
+  tmpname=$(mktemp)
+  if fileutil test -f $1; then
+    fileutil cat $1 > $tmpname
+    $EDITOR $tmpname
+    fileutil cp -f $tmpname $1
+    rm $tmpname
+  else
+    $EDITOR $tmpname
+    fileutil cp -f $tmpname $1
+    rm $tmpname
+  fi
+}
 
-  function google3_footsteps() {
-    cat ~/.zsh_new_history | cut -d'#' -f1 \
-      | sort -u | grep '/google/src/cloud/[a-z]*/[a-z_-]*/' \
+function google3_footsteps() {
+  if [[ $DIR_HISTFILE != '' ]]; then
+    cat $DIR_HISTFILE | grep '/google/src/cloud/[a-z]*/[a-z_-]*/' \
       | sed 's:/google/src/cloud/[a-z]*/[a-z_-]*/google3/::' | sort -u
-  }
-fi
+  fi
+}

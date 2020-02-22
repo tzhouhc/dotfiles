@@ -63,7 +63,7 @@ function english-word-list() {
 }
 # Recently visited directories as per z's record
 function z-mru-dir-list() {
-  print $(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf)
+  print "$(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf | sed 's/(.*)/\"\1\"/g')"
 }
 
 # Helpful shell snippets
@@ -77,7 +77,7 @@ function ivan-snippet-list() {
 
 # Current processes; return the PID
 function process-name-list() {
-  print "$(ps -aeo uid,pid,command | fzf --header-lines=1 | tr -s ' ' | cut -d' ' -f2)"
+  ps -aeo uid,pid,command | fzf --header-lines=1 | tr -s ' ' | cut -d' ' -f2
 }
 
 # Environment variables
@@ -87,15 +87,15 @@ function env-var-list() {
 
 # Executable binaries
 function bin-list() {
-  print $(echo "Bin\tPath\n$(whence -pm '*' | sed "s/([a-zA-Z0-9_.-]*)$/\1 \1/" | awk '{ print $2 " " $1}')" | column -t | fzf --header-lines=1 | grep -o '[^ ]*$')
+  echo "Bin\tPath\n$(whence -pm '*' | sed "s/([a-zA-Z0-9_.-]*)$/\1 \1/" | awk '{ print $2 " " $1}')" | column -t | fzf --header-lines=1 | grep -o '[^ ]*$'
 }
 
-# Directory-context-aware command history
+# Directory-context-aware command history (enable by setting DIR_AWARE_HISTFILE)
 function dir-ctx-command-list() {
   print $(cat $DIR_AWARE_HISTFILE | grep "$PWD#" | cut -d'#' -f2- | fzf)
 }
 
-# P4-package-context-aware command history
+# P4-package-context-aware command history (enable by setting DIR_AWARE_HISTFILE)
 function p4-dir-ctx-command-list() {
   g4pwd=$(g4pwd2)
   if [[ $g4pwd != '' ]]; then
@@ -116,7 +116,12 @@ function p4-footstep-build-target-list() {
 
 # Current Git repo commit history
 function git-commit-list() {
-  print $(git log --pretty=oneline --abbrev-commit | fzf --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " ")
+  git log --pretty=oneline --abbrev-commit | fzf --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
+}
+
+# Everything
+function everything-list() {
+  fd . $HOME -H | fzf
 }
 
 # Function that collect all above method names and help messages for fzf

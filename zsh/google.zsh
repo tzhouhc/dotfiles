@@ -12,4 +12,6 @@ if [[ $IS_GOOGLE == "true" ]]; then
   export GTK_IM_MODULE=ibus
   export XMODIFIERS=@im=ibus
   export QT_IM_MODULE=ibus
+
+  export DIR_HISTFILE="$HOME/.zsh_dir_history"
 fi

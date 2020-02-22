@@ -21,7 +21,12 @@ export BAT_CONFIG_PATH="$HOME/.batrc"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 # enable dir-context-aware history tool
-export DIR_AWARE_HISTFILE="$HOME/.zsh_new_history"
+if [[ $DIR_AWARE_HISTFILE != '' && ! -f $DIR_AWARE_HISTFILE ]]; then
+  touch $DIR_AWARE_HISTFILE
+fi
+if [[ $DIR_HISTFILE != '' && ! -f $DIR_HISTFILE ]]; then
+  touch $DIR_HISTFILE
+fi
 
 export TEXMFHOME="$HOME/.texmf"
 export PYTHONSTARTUP="$HOME/.pythonrc"

@@ -4,7 +4,7 @@ function local-recent-dir-list() {
   then
     dirs "$@"
   else
-    print "$(dirs -v | cut -f2 | fzf | sed s:~:$HOME:)"
+    print "$(dirs -v | cut -f2 | fzf | sed s:~:$HOME: | sed 's/(.*)/\"\1\"/g')"
   fi
 }
 
@@ -30,6 +30,18 @@ function local-file-list() {
   else
     print "$(fd . -H --type f | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   fi
+}
+
+function homebrew-formula-list() {
+  brew search | fzf -m
+}
+
+# Ctags visible in the current directory level (non-recursive)
+function local-tag-list() {
+  echo "Tag\tFile\tLine\n$(fd . -d 1 | ctags -L- -f- | cut -d$'\t' -f1,2,5)" \
+    | column -t -s $'\t' | sed $'s/ \([^ ]\)/\u00a0\\1/g' \
+    | fzf --header-lines=1 -d$'\u00a0' --nth=1 \
+    | awk -F $'\u00a0' '{print $2}'
 }
 
 # Lines in files visible in the current directory
@@ -121,7 +133,7 @@ function git-commit-list() {
 
 # Everything
 function everything-list() {
-  fd . $HOME -H | fzf
+  fd . $HOME -H | fzf | sed 's/(.*)/\"\1\"/g'
 }
 
 # Function that collect all above method names and help messages for fzf

@@ -1,10 +1,20 @@
 % google
 
+# Check entity membership/acl in ganpati (group format: mdb/{group-name})
+/google/data/ro/projects/ganpati/aclcheck <group-name> <entity-name>
+
+% ==== mpm ====
+
 # Verify an mpm satisfies MINT
 /google/data/ro/teams/bcid/bin/bcid_check_mpm --noaudit <package_name> --version_key=<version_or_label>
 
+# Check pushed versions of mpm by name
+mpm packageinfo --show_version_map <mpm-name>
+
 # Set label for mpm
 mpm setlabel <package_name> <label> --version=<version_key>
+
+% ==== dreampipe ====
 
 # Check dreampipe file validity
 /google/data/ro/teams/dreampipe/dreampipe print <dreamfile>
@@ -15,8 +25,19 @@ mpm setlabel <package_name> <label> --version=<version_key>
 # Check dreampipe config push history
 /google/data/ro/teams/dreampipe/dreampipe pipelinehistory mdb/<domain>
 
-# Check entity membership/acl in ganpati (group format: mdb/{group-name})
-/google/data/ro/projects/ganpati/aclcheck <group-name> <entity-name>
+% ==== x20 ====
 
-# Check pushed versions of mpm by name
-mpm packageinfo --show_version_map <mpm-name>
+# X20 personal directory
+cd "/google/data/rw/users/${USER:0:2}/$USER"
+
+# X20 other user's personal dir
+PERSON=<person>; cd "/google/data/rw/users/${PERSON:0:2}/$PERSON"
+
+# X20 team directory
+cd /google/data/rw/teams/<team-name>
+
+# X20 project directory
+cd /google/data/rw/projects/<project-folder-name>
+
+# Short help message for absl
+--helpshort

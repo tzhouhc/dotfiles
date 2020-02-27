@@ -56,6 +56,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden'
 export FZF_DEFAULT_OPTS="--height 40% --reverse"
 
 if [[ $IS_GOOGLE == 'true' ]]; then
+  export VIM_USE_CIDER_STAGING=1
 fi
 
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then

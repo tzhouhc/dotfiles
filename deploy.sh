@@ -8,11 +8,7 @@ if ! [ -d "$HOME/.fzf" ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install
 fi
-# oh-my-zsh
-if ! [ -d "$HOME/.oh-my-zsh" ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-fi
-# zgen
+# zgen (handles zsh)
 if ! [ -e "$HOME/.zgen" ]; then
   git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 fi

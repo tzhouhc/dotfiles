@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+
+# ======================================
+# Adapted from https://github.com/joetats/youtube_search, with the following
+# license document:
+# MIT License
+#
+# Copyright (c) 2019 joe tats
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# ======================================
+
+import argparse
+import requests
+from bs4 import BeautifulSoup
+import urllib.parse
+import json
+
+
+class YoutubeSearch:
+
+    def __init__(self, search_terms: str, max_results=None):
+        self.search_terms = search_terms
+        self.max_results = max_results
+        self.videos = self.search()
+
+    def search(self):
+        encoded_search = urllib.parse.quote(self.search_terms)
+        base_url = "https://youtube.com"
+        url = f"{base_url}/results?search_query={encoded_search}&pbj=1"
+        response = BeautifulSoup(requests.get(url).text, "html.parser")
+        results = self.parse_html(response)
+        if self.max_results is not None and len(results) > self.max_results:
+            return results[:self.max_results]
+        return results
+
+    def parse_html(self, soup):
+        results = []
+        for video in soup.select(".yt-uix-tile-link"):
+            if video["href"].startswith("/watch?v="):
+                video_info = {
+                    "title": video["title"],
+                    "link": video["href"],
+                    "id": video["href"][video["href"].index("=") + 1:]
+                }
+                results.append(video_info)
+        return results
+
+    def to_dict(self):
+        return self.videos
+
+    def to_json(self):
+        return json.dumps({"videos": self.videos})
+
+
+def parse_args():
+    parser = argparse.ArgumentParser("Search youtube for video link.")
+    parser.add_argument("query", help="The keywords to search youtube with.")
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    search = YoutubeSearch(args.query)
+    if len(search.videos) > 0:
+        print(f"https://youtube.com{search.videos[0]['link']}")
+
+
+if __name__ == "__main__":
+    main()

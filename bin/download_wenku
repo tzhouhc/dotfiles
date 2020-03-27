@@ -145,14 +145,15 @@ class Volume:
                     )
                 content_main = page.find("div", {"id": "contentmain"})
                 cover = content_main.find("div", {"class": "divimage"})
-                cover_url = cover.find("img")["src"]
-                # failing to provide an extension might cause some epub readers --
-                # cough Marvin cough -- to be unable to parse the cover image
-                cover_ext = "." + os.path.basename(cover_url).split(".")[-1]
-                async with session.get(cover_url) as resp:
-                    cover = await resp.read()
-                print("Automatically identified cover image.")
-                return cover_ext, cover
+                if cover:
+                    cover_url = cover.find("img")["src"]
+                    # failing to provide an extension might cause some epub readers --
+                    # cough Marvin cough -- to be unable to parse the cover image
+                    cover_ext = "." + os.path.basename(cover_url).split(".")[-1]
+                    async with session.get(cover_url) as resp:
+                        cover = await resp.read()
+                    print("Automatically identified cover image.")
+                    return cover_ext, cover
         return "", b""
 
     def to_markdown(self) -> str:

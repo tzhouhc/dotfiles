@@ -62,4 +62,5 @@ if [[ $IS_GOOGLE == 'true' ]]; then
 fi
 
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
+  export CRITICAL_ROLE_PATH="/Users/tingzhou/Documents/Critical Role/Campaign 1"
 fi

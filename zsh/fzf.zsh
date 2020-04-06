@@ -84,7 +84,7 @@ function ivan-snippet-list() {
     | sed '$!N;s/\n/ # /' | sed 's/^#//' \
     | fzf -d'#' --with-nth=1 --preview 'echo {2}' \
     | cut -d'#' -f2 | sed 's/^ *//')
-  print $(populate_tags $line)
+  print -- $(populate_tags $line)
 }
 
 # Current processes; return the PID

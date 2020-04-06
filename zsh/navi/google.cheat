@@ -39,5 +39,21 @@ cd /google/data/rw/teams/<team-name>
 # X20 project directory
 cd /google/data/rw/projects/<project-folder-name>
 
+% ==== plx ====
+
+# Check plx workflow ACL
+/google/data/ro/teams/plx/plxutil cat workflow <ID> --acl
+
+# Set plx workflow ACL
+/google/data/ro/teams/plx/plxutil set_acl workflow <ID> <ACL>
+
+% ==== misc ====
+
 # Short help message for absl
 --helpshort
+
+# Get Piper file changelists
+g4 print -a <file> | grep <file> | cut -d' ' -f5
+
+# Temp cloud storage space with ttl
+/cns/ix-d/home/tingzhou/ttl=7d

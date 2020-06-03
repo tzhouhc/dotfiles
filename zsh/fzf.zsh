@@ -10,7 +10,7 @@ function local-recent-dir-list() {
 
 # Current Citc client changed files
 function p4-change-list() {
-  print "$(g4pwd)/$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf -m | sed 's/ .*//')"
+  print "$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf -m | sed 's/ .*//' | sed s:^:$(g4pwd)/:)"
 }
 
 # Notable citc package paths

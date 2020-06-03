@@ -5,6 +5,9 @@
 
 % ==== mpm ====
 
+# Verifiable build
+rabbit --verifiable mpm -c opt
+
 # Verify an mpm satisfies MINT
 /google/data/ro/teams/bcid/bin/bcid_check_mpm --noaudit <package_name> --version_key=<version_or_label>
 
@@ -57,3 +60,6 @@ g4 print -a <file> | grep <file> | cut -d' ' -f5
 
 # Temp cloud storage space with ttl
 /cns/ix-d/home/tingzhou/ttl=7d
+
+# local cider
+g4d && devtools/cider/editorservices/hub/local.sh --go

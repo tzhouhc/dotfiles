@@ -63,3 +63,6 @@ g4 print -a <file> | grep <file> | cut -d' ' -f5
 
 # local cider
 g4d && devtools/cider/editorservices/hub/local.sh --go
+
+# Oncall rotation list
+g4cd ../ops/data/mail/configs

@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
+if [[ -z $1 ]]; then
+  wd=$PWD
+else
+  wd=$1
+fi
 
 # root -- a root path for some common file path, e.g. home
 # branch -- the first dir under the root on pwd
@@ -9,7 +14,7 @@
 #   positive means we are inside $branch
 # base -- the name of the current dir
 function cut_pwd() {
-  if [[ $PWD =~ '/google/src/cloud/[^/]+/([^/]+)/?([^/]*)/?(.*)' ]]; then
+  if [[ $wd =~ '/google/src/cloud/[^/]+/([^/]+)/?([^/]*)/?(.*)' ]]; then
     # this is the citc client name
     root=$match[1]
     # top level package; skipping 'google3'
@@ -20,21 +25,21 @@ function cut_pwd() {
     else
       depth=-1
     fi
-  elif [[ $PWD =~ "$HOME/?(.*)" ]]; then
+  elif [[ $wd =~ "$HOME/?(.*)" ]]; then
     root="~"
     branch=$(echo $match[1] | cut -d'/' -f 1)
     depth=$(echo $match[1] | awk -F"/" '{print NF - 1}')
   else
     root="/"
-    branch=$(echo $PWD | cut -d'/' -f 2)  # first / has nothing on left
-    if [[ $PWD == "/" ]]; then
-      # special case since at root of /, '/' is still in $PWD
+    branch=$(echo $wd | cut -d'/' -f 2)  # first / has nothing on left
+    if [[ $wd == "/" ]]; then
+      # special case since at root of /, '/' is still in $wd
       depth=-1
     else
-      depth=$(echo $PWD | awk -F"/" '{print NF - 2}')
+      depth=$(echo $wd | awk -F"/" '{print NF - 2}')
     fi
   fi
-  base=$(basename $PWD)
+  base=$(basename $wd)
   print -rn "$root\n$branch\n$depth\n$base"
 }
 

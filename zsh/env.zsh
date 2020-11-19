@@ -21,6 +21,9 @@ fi
 export BAT_CONFIG_PATH="$HOME/.batrc"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
+# always skip existing when setting folder icons
+export SET_ICON_SKIP_EXISTING=1
+
 # enable dir-context-aware history tool
 if [[ $DIR_AWARE_HISTFILE != '' && ! -f $DIR_AWARE_HISTFILE ]]; then
   touch $DIR_AWARE_HISTFILE
@@ -62,5 +65,5 @@ if [[ $IS_GOOGLE == 'true' ]]; then
 fi
 
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
-  export CRITICAL_ROLE_PATH="/Users/tingzhou/Documents/Critical Role/Campaign 1"
+  export CRITICAL_ROLE_PATH="/Users/tingzhou/Documents/Critical Role/CR FULL/tsv_transcripts"
 fi

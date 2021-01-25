@@ -43,6 +43,19 @@ if [[ $DIR_HISTFILE != '' ]]; then
   add-zsh-hook chpwd custom_cd
 fi
 
+cd() {
+  if [ $# -eq 0 ] ; then
+    # no arguments
+    builtin cd
+  elif [ -d $1 ] ; then
+    # argument is a directory
+    builtin cd "$1"
+  else
+    # argument is not a directory
+    builtin cd "$(dirname $1)"
+  fi
+}
+
 function zsh_fallback() {
   export NERDFONT=false
   export POWERLINE=false

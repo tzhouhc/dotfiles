@@ -17,6 +17,9 @@ mpm packageinfo --show_version_map <mpm-name>
 # Set label for mpm
 mpm setlabel <package_name> <label> --version=<version_key>
 
+# fetch mpm file to location
+mpm fetch -a -v <version> <package> <directory>
+
 % ==== dreampipe ====
 
 # Check dreampipe file validity

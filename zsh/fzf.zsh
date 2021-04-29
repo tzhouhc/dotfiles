@@ -126,6 +126,28 @@ function p4-footstep-build-target-list() {
   echo $targetlist | fzf
 }
 
+# Search CS and return result
+function cs() {
+  if [[ -n $1 ]]; then
+    /usr/bin/cs $@ 2>/dev/null | \
+      fzf -d':' --with-nth=1 --preview 'ln={2}; bat {1} -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | \
+      cut -d':' -f1
+  else
+    /usr/bin/cs
+  fi
+}
+
+# CD after searching through CS
+function cscd() {
+  if [[ -n $1 ]]; then
+    res=$(cs $@)
+    if [[ -n $res ]]; then
+      echo $res
+      g4cd $(echo $res | cut -d'/' -f8-)
+    fi
+  fi
+}
+
 # Current Git repo commit history
 function git-commit-list() {
   git log --pretty=oneline --abbrev-commit | fzf --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "

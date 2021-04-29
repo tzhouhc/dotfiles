@@ -190,6 +190,32 @@ function prompt_small_status() {
   fi
 }
 
+# record absolute paths of files/folders
+function send() {
+  echo $@ | xargs realpath > ~/.send.temp
+}
+
+# show what's in the file pasteboard
+function sent() {
+  cat ~/.send.temp
+}
+
+# copy the files over to current directory
+function paste() {
+  cp -r $(sent) ./
+}
+
+function paste_link() {
+  ln -s $(sent) ./
+}
+
+# move the files over to current directory
+function receive() {
+  mv $(sent) ./
+  # clear the pasteboard -- nothing left there
+  echo "" > ~/.send.temp
+}
+
 # customized prompt
 # LEGACY -- use in case of no powerline support
 function google3_prompt_info() {

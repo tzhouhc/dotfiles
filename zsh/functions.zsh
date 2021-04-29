@@ -195,6 +195,12 @@ function send() {
   echo $@ | xargs realpath > ~/.send.temp
 }
 
+# record absolute paths of files/folders
+# send_more will not overwrite existing sending targets
+function send_more() {
+  echo $@ | xargs realpath >> ~/.send.temp
+}
+
 # show what's in the file pasteboard
 function sent() {
   cat ~/.send.temp

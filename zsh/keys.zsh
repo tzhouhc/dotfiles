@@ -3,9 +3,9 @@ bindkey -e
 bindkey '[A' history-beginning-search-backward
 bindkey '[B' history-beginning-search-forward
 
-function my-BUILD-widget() {
+function my_BUILD_widget() {
   if [[ -f BUILD ]]; then
-    insert=$(build-target-list)
+    insert=$(build_target_list)
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
     LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
     local ret=$?
@@ -17,22 +17,22 @@ function my-BUILD-widget() {
     return
   fi
 }
-zle     -N   my-BUILD-widget
-bindkey '^n' my-BUILD-widget
+zle     -N   my_BUILD_widget
+bindkey '^n' my_BUILD_widget
 
 # Ctrl-o to write local files to the zle
 # customized version adds a space and removes unwanted files with fd
-function my-fzf-file-widget() {
+function my_fzf_file_widget() {
   # clear redundant space
   # allow multiple selection
   # TODO: allow spaces in paths
   maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev)
   cleaned=$(echo $maybedir | sed "s:~:$HOME:")
   if [[ -d "$cleaned" ]]; then
-    insert=$(local-file-list "$cleaned")
+    insert=$(local_file_list "$cleaned")
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
-    insert=$(local-file-list)
+    insert=$(local_file_list)
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   fi
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
@@ -40,32 +40,32 @@ function my-fzf-file-widget() {
   zle reset-prompt
   return $ret
 }
-zle     -N   my-fzf-file-widget
-bindkey '^o' my-fzf-file-widget
+zle     -N   my_fzf_file_widget
+bindkey '^o' my_fzf_file_widget
 
 # Ctrl-h to run ag non-fuzzily and open selected file by content
-function my-fzf-ag-exact-widget() {
-  insert=$(local-lines-exact-list)
+function my_fzf_ag_exact_widget() {
+  insert=$(local_lines_exact_list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt
   return $ret
 }
-zle     -N   my-fzf-ag-exact-widget
-bindkey '^f' my-fzf-ag-exact-widget
+zle     -N   my_fzf_ag_exact_widget
+bindkey '^f' my_fzf_ag_exact_widget
 
 # Ctrl-i to write local folders to the zle
-function my-fzf-folder-widget() {
+function my_fzf_folder_widget() {
   # clear redundant space
   # allow multiple selection
   maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev)
   cleaned=$(echo $maybedir | sed "s:~:$HOME:")
   if [[ -d "$cleaned" ]]; then
-    insert=$(local-dir-list "$cleaned")
+    insert=$(local_dir_list "$cleaned")
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
-    insert=$(local-dir-list)
+    insert=$(local_dir_list)
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   fi
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
@@ -73,12 +73,12 @@ function my-fzf-folder-widget() {
   zle reset-prompt
   return $ret
 }
-zle     -N   my-fzf-folder-widget
-bindkey '^p' my-fzf-folder-widget
+zle     -N   my_fzf_folder_widget
+bindkey '^p' my_fzf_folder_widget
 
 # Ctrl-v to edit line in vim (with auto cursor positioning and insert mode)
 # ALSO FMI: `fc` opens the last command in $EDITOR
-function edit-line-in-vim() {
+function edit_line_in_vim() {
   tmpf=$(mktemp)
   echo $BUFFER > $tmpf
   # jump to end of file and insert at end of line
@@ -89,12 +89,12 @@ function edit-line-in-vim() {
   zle reset-prompt
   return $ret
 }
-zle     -N   edit-line-in-vim
-bindkey '^v' edit-line-in-vim
+zle     -N   edit_line_in_vim
+bindkey '^v' edit_line_in_vim
 
 # use z's history for recently-accessed directories
-function my-mru-dir() {
-  choice=$(z-mru-dir-list)
+function my_mru_dir() {
+  choice=$(z_mru_dir_list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
@@ -108,7 +108,7 @@ function my-mru-dir() {
 # Utilities to quickly insert snippets into current line
 # Snippets use the same format as navi(denisidoro/navi)'s cheat files
 function ivan() {
-  snip=$(ivan-snippet-list)
+  snip=$(ivan_snippet_list)
   LBUFFER="$LBUFFER$snip"
   local ret=$?
   zle reset-prompt
@@ -119,23 +119,23 @@ bindkey '^g' ivan
 
 # context-aware history -- automatically determines if it should use p4 variant
 # or base variant
-function dir-history() {
+function dir_history() {
   if [[ $(g4pwd) != "" ]]; then
-    snip=$(p4-dir-ctx-command-list)
+    snip=$(p4_dir_ctx_command_list)
   else
-    snip=$(dir-ctx-command-list)
+    snip=$(dir_ctx_command_list)
   fi
   LBUFFER="$LBUFFER$snip"
   local ret=$?
   zle reset-prompt
   return $ret
 }
-zle     -N   dir-history
-bindkey '^y' dir-history
+zle     -N   dir_history
+bindkey '^y' dir_history
 
 # One function that provides all available fzf lists
 function superfzf() {
-  choice=$(all-fzf-list)
+  choice=$(all_fzf_list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?

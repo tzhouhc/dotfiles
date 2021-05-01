@@ -1,5 +1,5 @@
 # Recently visited directories in current shell session
-function local-recent-dir-list() {
+function local_recent_dir_list() {
   if [[ -n $1 ]]
   then
     dirs "$@"
@@ -9,22 +9,22 @@ function local-recent-dir-list() {
 }
 
 # Current Citc client changed files
-function p4-change-list() {
+function p4_change_list() {
   print "$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf -m | sed 's/ .*//' | sed s:^:$(g4pwd)/:)"
 }
 
 # Notable citc package paths
-function p4-package-list() {
+function p4_package_list() {
   print $(echo "Alias\tG3path\n$(cat ~/.g3marks)" | column -t | fzf --header-lines=1 | grep -o "[^ ]*$")
 }
 
 # Build targets visible in the current directory
-function build-target-list() {
+function build_target_list() {
   print $(cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//" | fzf)
 }
 
 # Files visible in the current directory
-function local-file-list() {
+function local_file_list() {
   if [[ $1 != '' ]]; then
     print "$(fd . -H --type f $1 | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   else
@@ -32,12 +32,12 @@ function local-file-list() {
   fi
 }
 
-function homebrew-formula-list() {
+function homebrew_formula_list() {
   brew search | fzf -m
 }
 
 # Ctags visible in the current directory level (non-recursive)
-function local-tag-list() {
+function local_tag_list() {
   echo "Tag\tFile\tLine\n$(fd . -d 1 | ctags -L- -f- | cut -d$'\t' -f1,2,5)" \
     | column -t -s $'\t' | sed $'s/ \([^ ]\)/\u00a0\\1/g' \
     | fzf --header-lines=1 -d$'\u00a0' --nth=1 \
@@ -45,17 +45,17 @@ function local-tag-list() {
 }
 
 # Lines in files visible in the current directory
-function local-lines-list() {
+function local_lines_list() {
   print "$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
 }
 
 # Lines (matching exactly) in files visible in the current directory
-function local-lines-exact-list() {
+function local_lines_exact_list() {
   print "$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
 }
 
 # Directories visible in the current directory
-function local-dir-list() {
+function local_dir_list() {
   if [[ $1 != '' ]]; then
     print "$(fd . -L -H --type d $1 | fzf -m | sed 's/(.*)/\"\1\"/g')"
   else
@@ -64,7 +64,7 @@ function local-dir-list() {
 }
 
 # Dictionary English words
-function english-word-list() {
+function english_word_list() {
   if type wn >/dev/null 2>&1; then
     print $(cat /usr/share/dict/words | fzf --preview-window=right:wrap --preview 'wn {1} -over')
   elif type dict >/dev/null 2>&1; then
@@ -74,12 +74,12 @@ function english-word-list() {
   fi
 }
 # Recently visited directories as per z's record
-function z-mru-dir-list() {
+function z_mru_dir_list() {
   print "$(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf | sed 's/(.*)/\"\1\"/g')"
 }
 
 # Helpful shell snippets
-function ivan-snippet-list() {
+function ivan_snippet_list() {
   line=$(cat ~/.dotfiles/zsh/navi/* | egrep -v '^(%.*)?$' \
     | sed '$!N;s/\n/ # /' | sed 's/^#//' \
     | fzf -d'#' --with-nth=1 --preview 'echo {2}' \
@@ -88,27 +88,27 @@ function ivan-snippet-list() {
 }
 
 # Current processes; return the PID
-function process-name-list() {
+function process_name_list() {
   ps -aeo uid,pid,command | fzf --header-lines=1 | tr -s ' ' | cut -d' ' -f2
 }
 
 # Environment variables
-function env-var-list() {
+function env_var_list() {
   print \$$(echo "Env=Value\n$(env)" | column -s'=' -t 2>/dev/null | fzf --header-lines=1 | cut -d' ' -f1)
 }
 
 # Executable binaries
-function bin-list() {
+function bin_list() {
   echo "Bin\tPath\n$(whence -pm '*' | sed "s/([a-zA-Z0-9_.-]*)$/\1 \1/" | awk '{ print $2 " " $1}')" | column -t | fzf --header-lines=1 | grep -o '[^ ]*$'
 }
 
 # Directory-context-aware command history (enable by setting DIR_AWARE_HISTFILE)
-function dir-ctx-command-list() {
+function dir_ctx_command_list() {
   print $(cat $DIR_AWARE_HISTFILE | grep "$PWD#" | cut -d'#' -f2- | fzf)
 }
 
 # P4-package-context-aware command history (enable by setting DIR_AWARE_HISTFILE)
-function p4-dir-ctx-command-list() {
+function p4_dir_ctx_command_list() {
   g4pwd=$(g4pwd2)
   if [[ $g4pwd != '' ]]; then
     print $(cat $DIR_AWARE_HISTFILE | grep "$g4pwd#" | cut -d'#' -f2- | fzf)
@@ -116,7 +116,7 @@ function p4-dir-ctx-command-list() {
 }
 
 # ALL google3 build targets in folders with footsteps (i.e. visited and actions performed)
-function p4-footstep-build-target-list() {
+function p4_footstep_build_target_list() {
   for line in $(google3_footsteps); do
     if [[ -f "$(g4pwd)/google3/$line/BUILD" ]]; then
       targets=$(ctags --language-force=bzl -f - "$(g4pwd)/google3/$line/BUILD" | cut -d$'\t' -f1 | sed "s:^://$line\::")
@@ -149,17 +149,17 @@ function cscd() {
 }
 
 # Current Git repo commit history
-function git-commit-list() {
+function git_commit_list() {
   git log --pretty=oneline --abbrev-commit | fzf --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
 }
 
 # Everything
-function everything-list() {
+function everything_list() {
   fd . $HOME -H | fzf | sed 's/(.*)/\"\1\"/g'
 }
 
 # Function that collect all above method names and help messages for fzf
-function all-fzf-list() {
+function all_fzf_list() {
   funcs=("${(f)$(cat ~/.zsh/fzf.zsh | grep 'function' -B 1 | head -n -7 | grep -v '^\-\-' | paste -d'#' - -)}")
   res=("Method                           Details")
   for line in $funcs; do

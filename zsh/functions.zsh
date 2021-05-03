@@ -191,27 +191,27 @@ function prompt_small_status() {
 }
 
 # record absolute paths of files/folders
-function send() {
+function send_files() {
   echo $@ | xargs realpath > ~/.send.temp
 }
 
 # record absolute paths of files/folders
 # send_more will not overwrite existing sending targets
-function send_more() {
+function send_more_files() {
   echo $@ | xargs realpath >> ~/.send.temp
 }
 
 # show what's in the file pasteboard
-function sent() {
+function sent_files() {
   cat ~/.send.temp
 }
 
 # copy the files over to current directory
-function paste() {
+function paste_files() {
   cp -r $(sent) ./
 }
 
-function paste_link() {
+function paste_links() {
   ln -s $(sent) ./
 }
 

@@ -216,7 +216,7 @@ function paste_links() {
 }
 
 # move the files over to current directory
-function receive() {
+function receive_files() {
   mv $(sent) ./
   # clear the pasteboard -- nothing left there
   echo "" > ~/.send.temp
@@ -493,7 +493,7 @@ function g4bin() {
 
 function p4cd() {
   set -o pipefail
-  target=$(p4-change-list)
+  target=$(p4_change_list)
   if [ $? -eq 0 ]; then
     cd $(echo $target | sed 's/[^\/]*$//')
   fi
@@ -501,7 +501,7 @@ function p4cd() {
 # edit files that are open in the client
 function p4d() {
   set -o pipefail
-  target=$(p4-change-list)
+  target=$(p4_change_list)
   if [ $? -eq 0 ]; then
     p4 diff $target
   fi
@@ -510,7 +510,7 @@ function p4d() {
 function p4e() {
   set -o pipefail
   if [[ $@ == '' ]]; then
-    target=$(p4-change-list)
+    target=$(p4_change_list)
   else
     target="$(g4pwd)/$@"
   fi

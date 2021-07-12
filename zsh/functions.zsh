@@ -208,16 +208,16 @@ function sent_files() {
 
 # copy the files over to current directory
 function paste_files() {
-  cp -r $(sent) ./
+  cp -r $(sent_files) ./
 }
 
 function paste_links() {
-  ln -s $(sent) ./
+  ln -s $(sent_files) ./
 }
 
 # move the files over to current directory
 function receive_files() {
-  mv $(sent) ./
+  mv $(sent_files) ./
   # clear the pasteboard -- nothing left there
   echo "" > ~/.send.temp
 }

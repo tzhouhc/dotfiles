@@ -47,4 +47,5 @@ if [[ $IS_GOOGLE == "true" ]]; then
   alias pastebin="/google/src/head/depot/eng/tools/pastebin"
   alias buildfix='/google/data/ro/teams/ads-integrity/buildfix'
   alias mkredirect='/google/src/head/depot/google3/corp/g3doc_contrib/tools/mkredirect/mkredirect.sh'
+  alias dreampipe="/google/data/ro/teams/dreampipe/dreampipe"
 fi

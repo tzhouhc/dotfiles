@@ -55,6 +55,16 @@ function my_fzf_ag_exact_widget() {
 zle     -N   my_fzf_ag_exact_widget
 bindkey '^f' my_fzf_ag_exact_widget
 
+function my_fzf_ag_exact_num_widget() {
+  tuple=$(local_lines_exact_list_with_num)
+  file=$(echo $tuple | cut -d':' -f1)
+  line=$(echo $tuple | cut -d':' -f2)
+  less "+${line}g" "${file}"
+  zle reset-prompt
+}
+zle     -N   my_fzf_ag_exact_num_widget
+bindkey '^e' my_fzf_ag_exact_num_widget
+
 # Ctrl-i to write local folders to the zle
 function my_fzf_folder_widget() {
   # clear redundant space

@@ -67,6 +67,18 @@ function my_fzf_ag_num_widget() {
 zle     -N   my_fzf_ag_num_widget
 bindkey '^e' my_fzf_ag_num_widget
 
+function my_vim_edit_num_widget() {
+  tuple=$(local_lines_list_with_num)
+  if [[ ! -z $tuple ]]; then
+    file=$(echo $tuple | cut -d':' -f1)
+    line=$(echo $tuple | cut -d':' -f2)
+    vim $file +$line
+  fi
+  zle reset-prompt
+}
+zle     -N   my_vim_edit_num_widget
+bindkey '^v' my_vim_edit_num_widget
+
 # Ctrl-i to write local folders to the zle
 function my_fzf_folder_widget() {
   # clear redundant space
@@ -102,7 +114,7 @@ function edit_line_in_vim() {
   return $ret
 }
 zle     -N   edit_line_in_vim
-bindkey '^v' edit_line_in_vim
+bindkey '^z' edit_line_in_vim
 
 # use z's history for recently-accessed directories
 function my_mru_dir() {

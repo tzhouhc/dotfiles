@@ -46,7 +46,7 @@ function local_tag_list() {
 
 # Lines in files visible in the current directory
 function local_lines_list() {
-  print "$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+  print "$(ag --nobreak --noheading . | fzf -m -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
 }
 
 # Lines (matching exactly) in files visible in the current directory
@@ -55,10 +55,9 @@ function local_lines_exact_list() {
 }
 
 # Lines (matching exactly) in files visible in the current directory with line numbers
-function local_lines_exact_list_with_num() {
-  print "$(ag --nobreak --noheading . | fzf -m --exact -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1,2 | paste -sd ' ')"
+function local_lines_list_with_num() {
+  print "$(ag --nobreak --noheading . | fzf -m -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1,2 | paste -sd ' ')"
 }
-
 
 # Directories visible in the current directory
 function local_dir_list() {

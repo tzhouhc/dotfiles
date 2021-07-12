@@ -44,26 +44,28 @@ zle     -N   my_fzf_file_widget
 bindkey '^o' my_fzf_file_widget
 
 # Ctrl-h to run ag non-fuzzily and open selected file by content
-function my_fzf_ag_exact_widget() {
-  insert=$(local_lines_exact_list)
+function my_fzf_ag_widget() {
+  insert=$(local_lines_list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt
   return $ret
 }
-zle     -N   my_fzf_ag_exact_widget
-bindkey '^f' my_fzf_ag_exact_widget
+zle     -N   my_fzf_ag_widget
+bindkey '^f' my_fzf_ag_widget
 
-function my_fzf_ag_exact_num_widget() {
-  tuple=$(local_lines_exact_list_with_num)
-  file=$(echo $tuple | cut -d':' -f1)
-  line=$(echo $tuple | cut -d':' -f2)
-  less "+${line}g" "${file}"
+function my_fzf_ag_num_widget() {
+  tuple=$(local_lines_list_with_num)
+  if [[ ! -z $tuple ]]; then
+    file=$(echo $tuple | cut -d':' -f1)
+    line=$(echo $tuple | cut -d':' -f2)
+    bat --pager "less +${line}g" "${file}"
+  fi
   zle reset-prompt
 }
-zle     -N   my_fzf_ag_exact_num_widget
-bindkey '^e' my_fzf_ag_exact_num_widget
+zle     -N   my_fzf_ag_num_widget
+bindkey '^e' my_fzf_ag_num_widget
 
 # Ctrl-i to write local folders to the zle
 function my_fzf_folder_widget() {

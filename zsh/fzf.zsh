@@ -8,9 +8,13 @@ function local_recent_dir_list() {
   fi
 }
 
-# Current Citc client changed files
+# Current Citc client changed files; also handles git
 function p4_change_list() {
-  print "$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf -m | sed 's/ .*//' | sed s:^:$(g4pwd)/:)"
+  if is_git ; then
+    print "$(git ls-files -m | fzf -m | tr '\n' ' ')"
+  elif is_p4 ; then
+    print "$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf -m | sed 's/ .*//' | sed s:^:$(g4pwd)/: | tr '\n' ' ')"
+  fi
 }
 
 # Notable citc package paths
@@ -21,6 +25,11 @@ function p4_package_list() {
 # Build targets visible in the current directory
 function build_target_list() {
   print $(cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//" | fzf)
+}
+
+# Build targets visible in the current directory
+function build_test_target_list() {
+  print $(cat BUILD | egrep '^\s+name \=' | grep 'test' | sed "s/^[^\"]*\"//" | sed "s/\".*$//" | fzf)
 }
 
 # Files visible in the current directory

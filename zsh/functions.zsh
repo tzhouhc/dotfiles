@@ -165,6 +165,14 @@ function is_git() {
   git rev-parse --is-inside-work-tree >/dev/null 2>&1
 }
 
+function is_p4() {
+  if [[ $(pwd) == /google/src/cloud/tingzhou/* ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 function prompt_gitstatus() {
   if gitstatus_query MY && [[ $VCS_STATUS_RESULT == ok-sync ]]; then
     message=${${VCS_STATUS_LOCAL_BRANCH:-@${VCS_STATUS_COMMIT}}//\%/%%}  # escape %

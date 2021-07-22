@@ -22,6 +22,8 @@ else
 fi
 alias sed='sed -E'
 
+alias diff='diff -y --color=always'
+
 # typo
 alias claer=clear
 alias cl=clear

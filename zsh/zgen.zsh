@@ -10,7 +10,6 @@ if ! zgen saved; then
   zgen load rupa/z
   zgen load changyuheng/fz
   zgen oh-my-zsh plugins/git
-  zgen oh-my-zsh plugins/pip
   zgen oh-my-zsh plugins/fd
   if type "hg" > /dev/null; then
     zgen oh-my-zsh plugins/mercurial

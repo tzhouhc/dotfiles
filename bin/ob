@@ -1,0 +1,3 @@
+#!/bin/bash
+
+open "obsidian://$(readlink -f $@ | python -c 'import urllib, sys; print urllib.quote(sys.stdin.read().strip())')"

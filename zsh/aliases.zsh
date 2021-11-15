@@ -14,6 +14,8 @@ alias :wq="echo 'you are not in vim'"
 
 # convenience
 alias j=jump
+alias diff='git diff'
+
 # BSD or GNU?
 if [[ $COREUTILS_VER == GNU ]]; then
   alias ls='ls -N --color -h --sort=extension --group-directories-first -v'
@@ -22,7 +24,6 @@ else
 fi
 alias sed='sed -E'
 
-alias diff='diff -y --color=always'
 
 # typo
 alias claer=clear

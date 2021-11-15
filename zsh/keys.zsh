@@ -162,6 +162,18 @@ function edit_line_in_vim() {
 zle     -N   edit_line_in_vim
 bindkey '^z' edit_line_in_vim
 
+# Opt-v to list pasteboard content
+function get_pasteboard() {
+  content=$(pbpaste | fzf)
+  BUFFER="$LBUFFER$content"
+  rm -f $content
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   get_pasteboard
+bindkey '^[v' get_pasteboard
+
 # Meta-k to open command shorthands
 # 'navi' backwards
 # Utilities to quickly insert snippets into current line

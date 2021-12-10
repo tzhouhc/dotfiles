@@ -3,7 +3,7 @@
 Normal initialization:
 
 ```sh
-git clone --resurse-submodule https://tzhouhc.github.com/dotfiles ~/.dotfiles
+git clone --recurse-submodules git@github.com:tzhouhc/dotfiles.git ~/.dotfiles
 ~/.dotfiles/deploy.sh
 ```
 

@@ -17,6 +17,15 @@ function p4_change_list() {
   fi
 }
 
+# Current Citc client changed files, including deletions; also handles git
+function p4_full_change_list() {
+  if is_git ; then
+    print "$(git ls-files -m | fzf -m | tr '\n' ' ')"
+  elif is_p4 ; then
+    print "$(p4 p -l | grep depot --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf -m | sed 's/ .*//' | sed s:^:$(g4pwd)/: | tr '\n' ' ')"
+  fi
+}
+
 # Notable citc package paths
 function p4_package_list() {
   print $(echo "Alias\tG3path\n$(cat ~/.g3marks)" | column -t | fzf --header-lines=1 | grep -o "[^ ]*$")
@@ -35,9 +44,9 @@ function build_test_target_list() {
 # Files visible in the current directory
 function local_file_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . -H --type f $1 | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . -H --type f $1 | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   else
-    print "$(fd . -H --type f | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . -H --type f | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   fi
 }
 

@@ -14,7 +14,6 @@ alias :wq="echo 'you are not in vim'"
 
 # convenience
 alias j=jump
-alias diff='git diff'
 
 # BSD or GNU?
 if [[ $COREUTILS_VER == GNU ]]; then
@@ -24,6 +23,7 @@ else
 fi
 alias sed='sed -E'
 
+alias diff='diff --color=always'
 
 # typo
 alias claer=clear
@@ -51,4 +51,7 @@ if [[ $IS_GOOGLE == "true" ]]; then
   alias buildfix='/google/data/ro/teams/ads-integrity/buildfix'
   alias mkredirect='/google/src/head/depot/google3/corp/g3doc_contrib/tools/mkredirect/mkredirect.sh'
   alias dreampipe="/google/data/ro/teams/dreampipe/dreampipe"
+  alias conduit="/google/data/ro/teams/conduit/conduit/conduit_live/conduit"
+  alias napa="/google/data/ro/teams/napa/tools/napa"
+  alias sqlp="/google/data/ro/teams/sqlp/sqlp"
 fi

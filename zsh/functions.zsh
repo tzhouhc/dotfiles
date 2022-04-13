@@ -423,6 +423,10 @@ function g4pwd() {
   fi
 }
 
+function g4name() {
+  echo "$(g4pwd | rev | cut -d'/' -f1 | rev)"
+}
+
 # show current rel path under google3
 function g4pwd2() {
   if [[ $PWD =~ '/google/src/cloud/[^/]+/[^/]+/google3/(.+)' ]]; then
@@ -477,6 +481,15 @@ function cslink() {
   if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
     remainder=$match[3]
     echo "https://source.corp.google.com/piper///depot/google3/$remainder/$1"
+  fi
+}
+
+# generate a link to cider for current directory
+function ciderlink() {
+  if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
+    remainder=$match[3]
+    file=$(local_file_list | sed s/\"//g)
+    echo "http://cider-v/?ws=$(g4name)&files=//depot/google3/$(g4pwd2)/$file"
   fi
 }
 

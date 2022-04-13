@@ -112,6 +112,17 @@ function my_vim_edit_num_widget() {
 zle     -N   my_vim_edit_num_widget
 bindkey '^v' my_vim_edit_num_widget
 
+# Meta-v to edit changed files in current version control system
+function my_vim_edit_change_widget() {
+  files=$(p4_change_list)
+  if [[ ! -z $files ]]; then
+    vim $(echo $files)  # I don't really understand this...
+  fi
+  zle reset-prompt
+}
+zle     -N   my_vim_edit_change_widget
+bindkey '^[v' my_vim_edit_change_widget
+
 # Ctrl-p to write local folders to the zle
 function my_fzf_folder_widget() {
   # clear redundant space

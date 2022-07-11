@@ -54,4 +54,5 @@ if [[ $IS_GOOGLE == "true" ]]; then
   alias conduit="/google/data/ro/teams/conduit/conduit/conduit_live/conduit"
   alias napa="/google/data/ro/teams/napa/tools/napa"
   alias sqlp="/google/data/ro/teams/sqlp/sqlp"
+  alias bluze="/google/bin/releases/blueprint-bluze/public/bluze"
 fi

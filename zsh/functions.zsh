@@ -460,7 +460,7 @@ function btlog() {
 
 # mark for google3 -- disregard the workspace and go to short-path
 # this is needed over normal z since z no longer works if we change client
-function mark() {
+function g3mark() {
   if [[ $PWD =~ '(/google/src/cloud/[^/]+)/([^/]+)/google3/(.*)' ]]; then
     remainder=$match[3]
     echo "$1\t$remainder" >> ~/.g3marks

@@ -10,6 +10,7 @@ export LANG=en_US.UTF-8
 export TERM=xterm-256color
 export MYVIMRC='~/.vim/vimrc'
 export COPY_FILE="$HOME/.copy"
+export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR=supervim
 export GIT_EDITOR=nvim
 export P4EDITOR=nvim

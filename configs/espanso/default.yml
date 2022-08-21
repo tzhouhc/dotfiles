@@ -10,11 +10,33 @@ matches:
         params:
           format: "%Y-%m-%d"
 
-  # Shell commands
-  - trigger: ":shell"
-    replace: "{{output}}"
-    vars:
-      - name: output
-        type: shell
-        params:
-          cmd: "echo Hello from your shell"
+  # Dataview
+  - trigger: ":dql"
+    replace: "```dataview\n$|$\n```"
+
+  # Dataview JS
+  - trigger: ":dvjs"
+    replace: "```dataviewjs\n$|$\n```"
+
+  # Router
+  - trigger: ":router"
+    replace: "http://192.168.1.1/"
+
+  # NAS
+  - trigger: ":nas"
+    replace: "http://192.168.1.162:5000/"
+
+  # Obsidian hub
+  - trigger: ":ob_hub"
+    replace: "https://publish.obsidian.md/hub/00+-+Start+here"
+  # Obsidian plugins
+  - trigger: ":ob_plugins"
+    replace: "https://publish.obsidian.md/hub/02+-+Community+Expansions/02.01+Plugins+by+Category/%F0%9F%97%82%EF%B8%8F+02.01+Plugins+by+Category"
+
+  # Obsidian roundup
+  - trigger: ":ob_roundup"
+    replace: "https://www.obsidianroundup.org/"
+
+  # Obsidian videos
+  - trigger: "ob_vids"
+    replace: "https://publish.obsidian.md/hub/01+-+Community/Video+Channels/%F0%9F%97%82%EF%B8%8F+Video+Channels"

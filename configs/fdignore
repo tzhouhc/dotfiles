@@ -1,3 +1,9 @@
 Library
+.git
 */.git/*
 *.pyc
+.DS_Store
+.Rhistory
+.nomedia
+Icon?
+.cache

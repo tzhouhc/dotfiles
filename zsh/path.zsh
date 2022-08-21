@@ -19,10 +19,20 @@ export PATH=$HOME/.fzf/bin:$PATH
 # gnubin -- ls without color AND with stupid ass quotes
 export PATH=/opt/homebrew/opt/grep/libexec/gnubin:$PATH
 export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
+export PATH=/opt/homebrew/opt/openjdk/bin:$PATH
 
 if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
   # ruby
-  export PATH=/usr/local/opt/ruby/bin:$PATH
-  # ruby gems
-  export PATH=/usr/local/lib/ruby/gems/2.7.0/bin:$PATH
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  export PATH=/opt/homebrew/lib/ruby/gems/3.0.0/bin:$PATH
+  # dotnot
+  export PATH=/usr/local/share/dotnet/x64/:$PATH
+  # latex
+  export PATH=/Library/TeX/texbin/:$PATH
 fi
+
+
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/ruby/lib/pkgconfig"

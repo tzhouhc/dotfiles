@@ -80,9 +80,9 @@ function local_lines_list_with_num() {
 # Directories visible in the current directory
 function local_dir_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . -L -H --type d $1 | fzf -m | sed 's/(.*)/\"\1\"/g')"
+    print "$(fd . -L -H --type d $1 | fzf -m --preview 'ls --color=always {}' | sed 's/(.*)/\"\1\"/g')"
   else
-    print "$(fd . -L -H --type d | fzf -m | sed 's/(.*)/\"\1\"/g')"
+    print "$(fd . -L -H --type d | fzf -m --preview 'ls --color=always {}' | sed 's/(.*)/\"\1\"/g')"
   fi
 }
 

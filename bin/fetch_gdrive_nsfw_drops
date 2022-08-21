@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+# optionally create dir with year-month name format in NSFW dir.
+TARGET_DIR=/Users/tingzhou/Pictures/.NSFW/$(date -u +%Y-%m)
+mkdir -p $TARGET_DIR
+# move all files from source to destination
+rclone move gdrive:Drops $TARGET_DIR

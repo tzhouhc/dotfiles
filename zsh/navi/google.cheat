@@ -1,7 +1,7 @@
 % google
 
 # Check entity membership/acl in ganpati (group format: mdb/{group-name})
-/google/data/ro/projects/ganpati/aclcheck <group-name> <entity-name>
+/google/data/ro/projects/ganpati/aclcheck mdb/<group-name> <entity-name>
 
 % ==== mpm ====
 

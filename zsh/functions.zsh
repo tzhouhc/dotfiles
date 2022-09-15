@@ -198,36 +198,35 @@ function prompt_small_status() {
   fi
 }
 
-# record absolute paths of files/folders
-function send_files() {
-  echo $@ | xargs realpath > ~/.send.temp
-}
-
-# record absolute paths of files/folders
-# send_more will not overwrite existing sending targets
-function send_more_files() {
+# record absolute paths of files/folders.
+# will not overwrite existing sending targets.
+function push() {
   echo $@ | xargs realpath >> ~/.send.temp
 }
 
 # show what's in the file pasteboard
-function sent_files() {
+function peek() {
   cat ~/.send.temp
 }
 
-# copy the files over to current directory
-function paste_files() {
-  cp -r $(sent_files) ./
+function pop() {
+  cat ~/.send.temp
+  rm ~/.send.temp
+  touch ~/.send.temp
 }
 
-function paste_links() {
-  ln -s $(sent_files) ./
+# copy the files over to current directory
+function copy_files() {
+  cp -r $(peek) ./
+}
+
+function copy_links() {
+  ln -s $(peek) ./
 }
 
 # move the files over to current directory
-function receive_files() {
-  mv $(sent_files) ./
-  # clear the pasteboard -- nothing left there
-  echo "" > ~/.send.temp
+function cut_files() {
+  mv $(pop) ./
 }
 
 # customized prompt
@@ -495,7 +494,11 @@ function ciderlink() {
 
 # cd to specified short-path under the piper client
 function g4cd() {
-  cd "$(g4pwd)/google3/$1"
+  if [[ $1 == google3/* ]]; then
+    cd "$(g4pwd)/$1"
+  else
+    cd "$(g4pwd)/google3/$1"
+  fi
 }
 
 function g4do() {
@@ -561,4 +564,9 @@ function google3_footsteps() {
     cat $DIR_HISTFILE | grep '/google/src/cloud/[a-z]*/[a-z_-]*/' \
       | sed 's:/google/src/cloud/[a-z]*/[a-z_-]*/google3/::' | sort -u
   fi
+}
+
+# edit after code search
+function cse() {
+  p4e $(cs $@)
 }

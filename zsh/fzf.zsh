@@ -154,7 +154,7 @@ function cs() {
   if [[ -n $1 ]]; then
     /usr/bin/cs $@ 2>/dev/null | \
       fzf -d':' --with-nth=1 --preview 'ln={2}; bat {1} -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | \
-      cut -d':' -f1
+      cut -d':' -f1 | cut -d'/' -f7-
   else
     /usr/bin/cs
   fi

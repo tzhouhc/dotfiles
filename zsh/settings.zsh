@@ -65,3 +65,4 @@ set -o magicequalsubst
 PROMPT='$(google3_prompt_info)$(git_prompt)%f '  # %f for stopping the foreground color
 RPROMPT='$(last_exitcode)'
 
+setopt RE_MATCH_PCRE

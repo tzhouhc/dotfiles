@@ -11,7 +11,7 @@ export TERM=xterm-256color
 export MYVIMRC='~/.vim/vimrc'
 export COPY_FILE="$HOME/.copy"
 export XDG_CONFIG_HOME="$HOME/.config"
-export EDITOR=supervim
+export EDITOR=nvim
 export GIT_EDITOR=nvim
 export P4EDITOR=nvim
 if type bat >/dev/null 2>&1; then

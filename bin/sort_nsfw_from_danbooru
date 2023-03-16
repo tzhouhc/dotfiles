@@ -1,0 +1,16 @@
+#!/opt/homebrew/bin/zsh
+
+set -e
+setopt REMATCH_PCRE
+
+DEST="/Users/tingzhou/Pictures/.NSFW/Artists"
+FILE=$1
+REGEX="(?<=drawn_by_)(\w+)(?=__)"
+
+if [[ $FILE =~ $REGEX ]]; then
+  ARTIST=$MATCH
+  mkdir -p $DEST/$ARTIST
+  mv $1 $DEST/$ARTIST
+else
+  echo "No artist identified"
+fi

@@ -2,6 +2,28 @@
 
 # optionally create dir with year-month name format in NSFW dir.
 TARGET_DIR=/Users/tingzhou/Pictures/.NSFW/$(date -u +%Y-%m)
+TEMP_DIR=/tmp/img_conversion
 mkdir -p $TARGET_DIR
-# move all files from source to destination
-rclone move gdrive:Drops $TARGET_DIR
+mkdir -p $TEMP_DIR
+
+# move all files from source to temp location for precise identification
+/opt/homebrew/bin/rclone move gdrive:Drops $TEMP_DIR
+
+for f in $TEMP_DIR/*; do
+  TYPE=$(file $f | cut -d':' -f2 | cut -d' ' -f2)
+  case $TYPE in
+    JPEG)
+      if [[ $f:e != 'jpg' ]]; then
+        mv $f $f.jpg
+      fi
+      ;;
+    PNG)
+      if [[ $f:e != 'png' ]]; then
+        mv $f $f.png
+      fi
+      ;;
+  esac
+done
+
+# move renamed file to destination
+mv $TEMP_DIR/* $TARGET_DIR

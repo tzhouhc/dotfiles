@@ -7,6 +7,10 @@ alias b=bat
 alias clear="clear -x"  # keep scrollback
 alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"
 
+if type logo-ls >/dev/null 2>&1; then
+  alias l=logo-ls -a
+fi
+
 # kek
 alias :w="echo 'you are not in vim'"
 alias :q="echo 'you are not in vim'"

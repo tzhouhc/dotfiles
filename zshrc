@@ -44,6 +44,9 @@ source "$ZSH_SETUP/settings.zsh"
 # key mappings
 source "$ZSH_SETUP/keys.zsh"
 
+# zoxide
+eval "$(zoxide init zsh)"
+
 # fzf
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 

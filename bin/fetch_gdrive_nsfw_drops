@@ -6,6 +6,8 @@ TEMP_DIR=/tmp/img_conversion
 mkdir -p $TARGET_DIR
 mkdir -p $TEMP_DIR
 
+setopt +o nullglob
+
 # move all files from source to temp location for precise identification
 /opt/homebrew/bin/rclone move gdrive:Drops $TEMP_DIR
 

@@ -56,6 +56,12 @@ cd() {
   fi
 }
 
+function wenku() {
+  pushd ~/Downloads/Wenku
+  wenku8 --no-epub
+  popd
+}
+
 function zsh_fallback() {
   export NERDFONT=false
   export POWERLINE=false

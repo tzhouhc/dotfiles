@@ -10,11 +10,27 @@
   email = zhoutingneyc@gmail.com
 [pager]
   branch = false
+
 [core]
-  pager = /usr/bin/less
+  pager = delta
   excludesfile = ~/.gitignore
+
 [diff]
   algorithm = patience
+  colorMoved = default
+
 [url "https://github.com/"]
-	insteadOf = git://github.com/
-	insteadOf = http://github.com/
+  insteadOf = git://github.com/
+  insteadOf = http://github.com/
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  side-by-side = true
+  true-color = always
+  navigate = true    # use n and N to move between diff sections
+  dark = true
+
+[merge]
+  conflictstyle = diff3

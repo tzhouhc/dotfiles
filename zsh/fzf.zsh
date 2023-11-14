@@ -13,7 +13,7 @@ function p4_change_list() {
   if is_git ; then
     print "$(git ls-files -m | fzf -m | tr '\n' ' ')"
   elif is_p4 ; then
-    print "$(p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf -m | sed 's/ .*//' | sed s:^:$(g4pwd)/: | tr '\n' ' ')"
+    print "$(p4 p -l | grep depot --color=never | egrep -v delete$ --color=never | sed 's/#[0-9]*//' | cut -d'/' -f4- | fzf -m | sed 's/ .*//' | sed s:^:$(g4pwd)/: | tr '\n' ' ')"
   fi
 }
 

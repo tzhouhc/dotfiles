@@ -5,6 +5,7 @@
 --langdef=gcl
 --langmap=gcl:.gcl.borg.dream
 --regex-gcl=/^([a-zA-Z0-9_-]+\s+)?([a-zA-Z0-9_-]+)\s+\=/\2/d,def,definition/
+--regex-gcl=/^(template )?(job|dreampipe) ([a-zA-Z0-9-])/\4/d,def,definition/
 
 --langdef=ini
 --langmap=ini:.ini

@@ -125,6 +125,12 @@ function unicode() {
   echo -e "\u$1"
 }
 
+function get_workspace() {
+  res=$(short_pwd)
+  root=$(echo $res | cut -d$'\n' -f 1)
+  printf $root
+}
+
 function prompt_short_pwd() {
   res=$(short_pwd)
   root=$(echo $res | cut -d$'\n' -f 1)
@@ -222,16 +228,24 @@ function pop() {
 }
 
 # copy the files over to current directory
-function copy_files() {
+function paste_files() {
+  cp -r $(pop) ./
+}
+
+function paste_files_no_flush() {
   cp -r $(peek) ./
 }
 
-function copy_links() {
+function paste_links() {
+  ln -s $(pop) ./
+}
+
+function paste_links_no_flush() {
   ln -s $(peek) ./
 }
 
 # move the files over to current directory
-function cut_files() {
+function move_files() {
   mv $(pop) ./
 }
 
@@ -549,6 +563,11 @@ function p4e() {
     $EDITOR $(echo $target)
   fi
   set +o pipefail
+}
+
+# select files to revert in the client
+function p4_choose_revert() {
+  p4 revert $(p4_full_change_list)
 }
 
 function fileutile() {

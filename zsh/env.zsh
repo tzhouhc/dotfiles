@@ -61,7 +61,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden'
 export FZF_DEFAULT_OPTS="--height 40% --reverse"
 
 if [[ $IS_GOOGLE == 'true' ]]; then
-  export VIM_USE_CIDER_STAGING=1
+  export VIM_USE_CIDER_STAGING=0
   export VIM_USE_SEMANTIC_HIGHLIGHTING=1
 fi
 

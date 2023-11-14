@@ -1,5 +1,8 @@
 % google
 
+# Move to google3 readonly head
+cd /google/src/files/head/depot/google3
+
 # Check entity membership/acl in ganpati (group format: mdb/{group-name})
 /google/data/ro/projects/ganpati/aclcheck mdb/<group-name> <entity-name>
 
@@ -69,3 +72,21 @@ g4d && devtools/cider/editorservices/hub/local.sh --go
 
 # Oncall rotation list
 g4cd ../ops/data/mail/configs
+
+# Start a security CL review on current change
+/google/data/ro/teams/bcid/bin/start_sp_review --branch_family=woodchuck_dev_branch --reviewers=<reviewers>
+
+# View content for Staging floorboard multiday output
+gqui /namespace/logs/loga-home/woodchuck-staging/features/ttl=14d/search/floorboard_features/2023/<DATE>/<COOKIETYPE>/ttl=55d/floorboard_sst-00001-of-22000 proto multiday.AggregatedFeatureUsageMessage
+
+# View content for OLD staging floorboard multiday output
+gqui /namespace/logs/loga-home/woodchuck-staging/features/ttl=14d/search/feature_usage/2023/<DATE>/<COOKIETYPE>/feature_usage-00001-of-22000 proto multiday.AggregatedFeatureUsageMessage
+
+# View content for Production floorboard multiday output
+gqui /namespace/logs/loga-home/woodchuck-prod/features/search/feature_usage/2023/<DATE>/<COOKIETYPE>/feature_usage-00001-of-22000 proto multiday.AggregatedFeatureUsageMessage
+
+# View content for testing floorboard multiday output
+gqui /namespace/logs/loga-home/woodchuck-staging/tingzhou/features/ttl=14d/floorboard_features/2023/<DATE>/<COOKIETYPE>/floorboard_sst-00001-of-22000 proto multiday.AggregatedFeatureUsageMessage
+
+# View counters for floorboard multiday test run
+gqui /namespace/logs/loga-home/woodchuck-staging/tingzhou/features/ttl=14d/floorboard_features/2023/<DATE>/<COOKIETYPE>/counters.csv

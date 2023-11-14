@@ -1,4 +1,3 @@
-# editor
 alias vim=supervim
 alias vi=nvim  # in case multiple open vim windows are needed
 alias v=supervim
@@ -28,7 +27,7 @@ else
 fi
 alias sed='sed -E'
 
-alias diff='diff --color=always'
+alias vimdiff='nvim -d'
 
 # typo
 alias claer=clear
@@ -60,4 +59,9 @@ if [[ $IS_GOOGLE == "true" ]]; then
   alias napa="/google/data/ro/teams/napa/tools/napa"
   alias sqlp="/google/data/ro/teams/sqlp/sqlp"
   alias bluze="/google/bin/releases/blueprint-bluze/public/bluze"
+  alias gpython="/google/bin/releases/gpython-team/gpython/gpython.par"
+  alias lfd_cli="/google/data/ro/projects/logs/lfd_cli"
+  alias logsutil="/google/data/ro/projects/logs/logsutil"
+  alias fu=fileutil
+  alias p4p="p4 p"
 fi

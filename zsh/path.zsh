@@ -20,6 +20,7 @@ export PATH=$HOME/.fzf/bin:$PATH
 export PATH=/opt/homebrew/opt/grep/libexec/gnubin:$PATH
 export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 export PATH=/opt/homebrew/opt/openjdk/bin:$PATH
+export PATH=$HOME/.cargo/bin:$PATH
 
 if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
   # ruby
@@ -29,6 +30,8 @@ if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
   export PATH=/usr/local/share/dotnet/x64/:$PATH
   # latex
   export PATH=/Library/TeX/texbin/:$PATH
+else
+  export PATH=$PATH:/google/bin/releases/editor-devtools
 fi
 
 

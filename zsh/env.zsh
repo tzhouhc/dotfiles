@@ -14,6 +14,8 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR=nvim
 export GIT_EDITOR=nvim
 export P4EDITOR=nvim
+export P4DIFF=delta
+export G4MULTIDIFF=0
 if type bat >/dev/null 2>&1; then
   PREVIEWER=bat
 else

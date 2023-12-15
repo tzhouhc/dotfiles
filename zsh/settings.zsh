@@ -44,7 +44,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy/mm/dd"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -52,7 +52,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
 
 setopt EXTENDED_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
+# setopt HIST_IGNORE_ALL_DUPS
+# too aggressive
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_NO_STORE

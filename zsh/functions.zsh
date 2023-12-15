@@ -595,3 +595,8 @@ function google3_footsteps() {
 function cse() {
   p4e $(cs $@)
 }
+
+# cd after code search
+function csd() {
+  g4cd $(cs $@)
+}

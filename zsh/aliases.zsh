@@ -5,7 +5,6 @@ alias lvim="LEANVIM=true nvim"
 alias b=bat
 alias clear="clear -x"  # keep scrollback
 alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"
-alias z="zoxide"
 
 if type logo-ls >/dev/null 2>&1; then
   alias l=logo-ls -a

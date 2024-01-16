@@ -69,4 +69,7 @@ fi
 
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
   export CRITICAL_ROLE_PATH="/Users/tingzhou/Documents/Critical Role/CR FULL/tsv_transcripts"
+  export ANDROID_HOME=~/Library/Android/sdk
+  export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools
+  export ANDROID_AVD_HOME=~/.android/avd
 fi

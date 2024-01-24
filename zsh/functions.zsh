@@ -538,7 +538,7 @@ function g4bin() {
 function p4cd() {
   set -o pipefail
   target=$(p4_change_list)
-  if [ $? -eq 0 ]; then
+  if [[ $target != "" ]]; then
     cd $(echo $target | sed 's/[^\/]*$//')
   fi
 }

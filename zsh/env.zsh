@@ -38,7 +38,7 @@ fi
 export TEXMFHOME="$HOME/.texmf"
 export PYTHONSTARTUP="$HOME/.pythonrc"
 export RUBYLIB="$HOME/local/lib/ruby"
-export LESS='--ignore-case --quit-if-one-screen --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=2 --no-init --window=-4'
+export LESS='--ignore-case --quit-if-one-screen --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=2 --no-init --window=-4 -j.5'
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # run if 'navi' exists on path

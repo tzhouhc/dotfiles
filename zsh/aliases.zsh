@@ -48,7 +48,7 @@ if [[ $IS_GOOGLE == "true" ]]; then
   alias mdformat=/google/data/ro/teams/g3doc/mdformat
   alias bb="blaze build -c opt"
   alias br="blaze run -c opt"
-  alias bt="blaze test -c opt"
+  alias bt="blaze test"
   alias bigtable="/usr/bin/bt"
   alias wiki="g4d ting-wiki@"
   alias pastebin="/google/src/head/depot/eng/tools/pastebin"

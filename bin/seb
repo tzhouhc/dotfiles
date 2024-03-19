@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+result="$(( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf)"
+if [[ "$result" != '' ]]; then
+  open $result
+fi
+

@@ -1,6 +1,7 @@
 [submodule "vim"]
   path = vim
   url = ../vim
+  branch = nvim
   ignore = all
 [submodule "zsh/lib/gitstatus"]
   path = zsh/lib/gitstatus

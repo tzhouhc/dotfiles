@@ -8,7 +8,7 @@ export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
-export MYVIMRC='~/.vim/vimrc'
+export MYVIMRC='~/.vim/init.lua'
 export COPY_FILE="$HOME/.copy"
 export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR=nvim

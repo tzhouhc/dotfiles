@@ -2,6 +2,7 @@ alias vim=supervim
 alias vi=nvim  # in case multiple open vim windows are needed
 alias v=supervim
 alias lvim="LEANVIM=true nvim"
+alias ovim="nvim -u ~/.vim/vimrc"
 alias b=bat
 alias clear="clear -x"  # keep scrollback
 alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"

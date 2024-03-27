@@ -48,12 +48,8 @@ rm -f "$cwd/vim/vim"
 
 # setup nvim setup
 mkdir -p ~/.config/nvim
-if ! [ -e "~/.config/nvim/init.vim" ]; then
-    cat <<EOF > ~/.config/nvim/init.vim
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath = &runtimepath
-source ~/.vim/vimrc
-EOF
+if ! [ -e "~/.config/nvim/init.lua" ]; then
+  ln -sf "$HOME/.vim/init.lua" "$HOME/.config/nvim/init.lua"
 fi
 
 # setting up variation software

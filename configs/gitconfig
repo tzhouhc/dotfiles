@@ -3,14 +3,15 @@
   whereami = rev-parse --abbrev-ref HEAD
   ck = checkout
   amend = commit -a --amend
-  s = status
+  p = status
 
 [user]
   name = Ting Zhou
   email = zhoutingneyc@gmail.com
 [pager]
   branch = false
-
+[push]
+  default = current
 [core]
   pager = delta
   excludesfile = ~/.gitignore

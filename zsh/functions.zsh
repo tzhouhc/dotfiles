@@ -2,20 +2,19 @@
 # ZSH COLORS: https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png
 
 typeset -gA branch_icon_map
-branch_icon_map[Documents]=" "
+branch_icon_map[Documents]="󰈙 "
 branch_icon_map[Downloads]=" "
-branch_icon_map[Desktop]=" "
-branch_icon_map[Movies]="辶"
-branch_icon_map[Pictures]=" "
+branch_icon_map[Desktop]=" "
+branch_icon_map[Movies]="󰎁"
+branch_icon_map[Pictures]=" "
 branch_icon_map[Library]=" "
 branch_icon_map[Music]=" "
 branch_icon_map[search]=" "
-branch_icon_map[evaluation]=" "
-branch_icon_map[wireless]="ﲎ "
-branch_icon_map[logs]=" "
+branch_icon_map[evaluation]="󰍉 "
+branch_icon_map[logs]=" "
 branch_icon_map[blaze-out]=" "
 branch_icon_map[blaze-bin]=" "
-branch_icon_map[production]="ﲳ "
+branch_icon_map[production]=" "
 branch_icon_map[configs]=" "
 
 source ~/.zsh/lib/gitstatus/gitstatus.plugin.zsh
@@ -141,7 +140,7 @@ function prompt_short_pwd() {
   if [[ $root == "/" ]]; then
     p10k segment -b red -f black -t ﮈ
   elif [[ $root == "~" ]]; then
-    p10k segment -b springgreen4 -f black -t ﳐ
+    p10k segment -b springgreen4 -f black -t 󰋜
   else
     p10k segment -b grey23 -f orangered1 -t $root
   fi
@@ -190,12 +189,12 @@ function prompt_gitstatus() {
     message=${${VCS_STATUS_LOCAL_BRANCH:-@${VCS_STATUS_COMMIT}}//\%/%%}  # escape %
     message+=' '
     color=green
-    (( $VCS_STATUS_COMMITS_AHEAD )) && message+="$VCS_STATUS_COMMITS_AHEAD "
-    (( $VCS_STATUS_COMMITS_BEHIND )) && message+="$VCS_STATUS_COMMITS_BEHIND "
-    (( $VCS_STATUS_NUM_STAGED    )) && message+=' ' && color=yellow
-    (( $VCS_STATUS_NUM_UNSTAGED  )) && message+=' ' && color=yellow
-    (( $VCS_STATUS_NUM_UNTRACKED )) && message+=' '
-    [[ $color == green ]] && message+=''
+    (( $VCS_STATUS_COMMITS_AHEAD )) && message+="$VCS_STATUS_COMMITS_AHEAD "
+    (( $VCS_STATUS_COMMITS_BEHIND )) && message+="$VCS_STATUS_COMMITS_BEHIND "
+    (( $VCS_STATUS_NUM_STAGED    )) && message+=' ' && color=yellow
+    (( $VCS_STATUS_NUM_UNSTAGED  )) && message+=' ' && color=yellow
+    (( $VCS_STATUS_NUM_UNTRACKED )) && message+=' '
+    [[ $color == green ]] && message+=''
     message=$(echo $message | sed 's/ +/ /g' | sed 's/ $//')
     p10k segment -b $color -f black -t $message
   fi
@@ -204,9 +203,9 @@ function prompt_gitstatus() {
 function prompt_small_status() {
   # shows last command success or failure (and exit code)
   if [[ $_p9k_status -eq 0 ]]; then
-    p10k segment -b grey23 -f green -t ""
+    p10k segment -b grey23 -f green -t ""
   else
-    p10k segment -b grey23 -f red -t "$_p9k_status "
+    p10k segment -b grey23 -f red -t "$_p9k_status "
   fi
 }
 

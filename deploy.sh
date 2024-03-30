@@ -49,7 +49,7 @@ rm -f "$cwd/vim/vim"
 # setup nvim setup
 mkdir -p ~/.config/nvim
 if ! [ -e "~/.config/nvim/init.lua" ]; then
-  ln -sf "$HOME/.vim/init.lua" "$HOME/.config/nvim/init.lua"
+  ln -sf "$HOME/.vim" "$HOME/.config/nvim"
 fi
 
 # setting up variation software

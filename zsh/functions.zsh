@@ -104,7 +104,9 @@ function gotovim() {
   if [[ $TMUX != '' ]]; then
     vim_pane=$(vimpane)
     if [[ $vim_pane != '' ]]; then
-      tmux select-pane -t $vim_pane
+      tmux select-pane -t $vim_pane && tmux send-keys Enter
+      # the extra step is needed to avoid the hit-enter events due to low
+      # cmdheight in nvim.
     else
       echo "Vim is not running in the current window."
       return 1
@@ -140,7 +142,7 @@ function prompt_short_pwd() {
   if [[ $root == "/" ]]; then
     p10k segment -b red -f black -t ﮈ
   elif [[ $root == "~" ]]; then
-    p10k segment -b springgreen4 -f black -t 󰋜
+    p10k segment -b springgreen4 -f black -t 
   else
     p10k segment -b grey23 -f orangered1 -t $root
   fi

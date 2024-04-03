@@ -140,7 +140,7 @@ function prompt_short_pwd() {
   base=$(echo $res | cut -d$'\n' -f 4)
 
   if [[ $root == "/" ]]; then
-    p10k segment -b red -f black -t ﮈ
+    p10k segment -b red -f black -t 
   elif [[ $root == "~" ]]; then
     p10k segment -b springgreen4 -f black -t 
   else

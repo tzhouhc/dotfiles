@@ -72,6 +72,12 @@ function supervim() {
   #   * create new server if none exist
   #   * one server for each tmux window
   if type nvr >/dev/null 2>&1; then
+    # vim internal-terminal mode
+    if [[ $NVIM != '' ]]; then
+      nvr $@
+      return
+    fi
+    # determine tmux mode
     if [[ $TMUX != '' ]]; then
       window=$(tmux display-message -p '#I')
       expect_name="/tmp/nvimsocket_$window"
@@ -132,6 +138,7 @@ function get_workspace() {
   printf $root
 }
 
+# THIS IS THE ACTUAL SHELL PROMPT
 function prompt_short_pwd() {
   res=$(short_pwd)
   root=$(echo $res | cut -d$'\n' -f 1)
@@ -207,7 +214,7 @@ function prompt_small_status() {
   if [[ $_p9k_status -eq 0 ]]; then
     p10k segment -b grey23 -f green -t ""
   else
-    p10k segment -b grey23 -f red -t "$_p9k_status "
+    p10k segment -b grey23 -f red -t "$_p9k_status "
   fi
 }
 

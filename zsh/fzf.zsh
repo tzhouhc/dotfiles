@@ -173,7 +173,9 @@ function cscd() {
 
 # Current Git repo commit history
 function git_commit_list() {
-  git log --pretty=oneline --abbrev-commit | fzf --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
+  git log --graph --color=always \
+          --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" | \
+    fzf --ansi --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 2 -d " "
 }
 
 # Everything

@@ -215,6 +215,18 @@ function dir_history() {
 zle     -N   dir_history
 bindkey '^y' dir_history
 
+# Ctrl-g to list git commits
+function git_commits() {
+  choice=$(git_commit_list)
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
+  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   git_commits
+bindkey '^g' git_commits
+
 # Ctrl-k to list ALL available fzf handlers.
 # One function that provides all available fzf lists
 function superfzf() {

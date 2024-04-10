@@ -379,7 +379,7 @@ if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
   }
 
   function o() {
-    pushd $(showmarks $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
+    pushd $(zoxide query $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
     /usr/bin/open .
     popd 2>&1 > /dev/null
     hide_iterm_window

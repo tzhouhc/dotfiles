@@ -97,6 +97,8 @@ function english_word_list() {
   fi
 }
 # Recently visited directories as per z's record
+# DEPRECATED: decided to move from shell impl to zoxide, which now makes this
+# not quite work
 function z_mru_dir_list() {
   print "$(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf | sed 's/(.*)/\"\1\"/g')"
 }

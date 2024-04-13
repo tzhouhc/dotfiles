@@ -10,6 +10,10 @@ bindkey '[B' history-beginning-search-forward
 # ctrl + left/right for moving around words
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
+# meta + left/right for moving around words
+bindkey '^[b' beginning-of-line
+bindkey '^[f' end-of-line
+
 
 # ---- some fzf functions with keyboard shortcuts
 
@@ -74,9 +78,11 @@ function my_vim_edit_num_widget() {
   zle reset-prompt
 }
 zle     -N   my_vim_edit_num_widget
-bindkey '^v' my_vim_edit_num_widget
+# Seems to have some conflicts with iTerm's signals
+# bindkey '^v' my_vim_edit_num_widget
 
 # Meta-v to edit changed files in current version control system
+# Unused -- conflict keymapping; TODO: revise
 function my_vim_edit_change_widget() {
   files=$(p4_change_list)
   if [[ ! -z $files ]]; then
@@ -147,7 +153,7 @@ function get_pasteboard() {
   return $ret
 }
 zle     -N   get_pasteboard
-# bindkey '^[v' get_pasteboard
+bindkey '^[v' get_pasteboard
 
 # Meta-k to open command shorthands
 # 'navi' backwards
@@ -209,6 +215,7 @@ zle     -N   dir_history
 bindkey '^y' dir_history
 
 # Meta-o to open changed files in current version control system
+# I don't really use it -- I normally just use p4e
 function my_p4_change_widget() {
   insert=$(p4_change_list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
@@ -254,4 +261,4 @@ function my_BUILD_test_widget() {
   fi
 }
 zle     -N   my_BUILD_test_widget
-# bindkey '^[n' my_BUILD_test_widget
+bindkey '^[n' my_BUILD_test_widget

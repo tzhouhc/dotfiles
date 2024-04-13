@@ -397,6 +397,25 @@ if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
   }
 fi
 
+function batrange() {
+  print $[$[$1 - 3] < 0 ? 0 : $[$1 - 3]]:$[$ln + 20]
+}
+
+
+# mark for general usage -- store a path with a simple alias.
+# z is fine but sometimes one needs a bit of a reminder of what things are even
+# there to begin with.
+function mark() {
+  echo "$1\t$PWD" >> ~/.marks
+  sort ~/.marks | uniq > ~/.marks.bk
+  cp ~/.marks.bk ~/.marks
+  rm ~/.marks.bk
+}
+
+# --------
+# Google stuff
+# --------
+
 # jump to java test folder of the same package
 function jt() {
   if [[ $PWD =~ '(.*)/javatests(.*)' ]]; then
@@ -404,10 +423,6 @@ function jt() {
   else
       cd "${PWD/\/google3\/java//google3/javatests}"
   fi
-}
-
-function batrange() {
-  print $[$[$1 - 3] < 0 ? 0 : $[$1 - 3]]:$[$ln + 20]
 }
 
 function csfind() {

@@ -185,7 +185,7 @@ function everything_list() {
 
 # Function that collect all above method names and help messages for fzf
 function all_fzf_list() {
-  funcs=("${(f)$(cat ~/.zsh/fzf.zsh | grep 'function' -B 1 | head -n -7 | grep -v '^\-\-' | paste -d'#' - -)}")
+  funcs=("${(f)$(cat ~/.zsh/fzf.zsh | grep 'function' -B 1 | head -n -7 | grep -v '^--' | paste -d'#' - -)}")
   res=("Method                           Details")
   for line in $funcs; do
     comment=$(echo $line | grep -oP "(?<=# )[\w\s]+")

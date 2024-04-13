@@ -1,3 +1,17 @@
+_fzf_complete_cd() {
+  _fzf_complete "+m --header-lines=1" "$@" < <(
+    echo "Alias\tPath\n$(cat ~/.marks)" | column -t
+  )
+}
+
+_fzf_complete_cd_post() {
+  grep -o "[^ ]*$"
+}
+
+# ---------
+# Google stuff
+# ---------
+
 # completion for piper
 _fzf_complete_g4d() {
   _fzf_complete '+m' "$@" < <(
@@ -11,11 +25,6 @@ _fzf_complete_g4do() {
   _fzf_complete "+m" "$@" < <(
     p4 p -l | grep depot --color=never | grep -v delete --color=never | sed 's/#[0-9]*//' | cut -d'/' -f5-11 | cut -d' ' -f1
   )
-}
-
-_fzf_complete_g4cd_post() {
-  # remove the marker name bits
-  cut -f2 -d$'\t'
 }
 
 _fzf_complete_g4cd() {

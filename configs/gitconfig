@@ -4,6 +4,8 @@
   ck = checkout
   amend = commit -a --amend
   p = status
+  list = log --all --decorate --oneline --color
+  l = list
 
 [user]
   name = Ting Zhou

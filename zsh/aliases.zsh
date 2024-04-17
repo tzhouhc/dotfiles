@@ -8,6 +8,11 @@ alias b=bat
 alias clear="clear -x"  # keep scrollback
 alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"
 
+alias '..'='cd ..'
+alias '...'='cd ../..'
+alias '....'='cd ../../..'
+alias '.....'='cd ../../../..'
+
 alias what_am_i_typing="STTY='raw -echo min 0 time 40' cat -vte"
 
 if type logo-ls >/dev/null 2>&1; then

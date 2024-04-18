@@ -583,7 +583,7 @@ function p4e() {
   fi
   if [[ $target != "" ]]; then
     # extra echo to prevent editor from consuming all as a single line
-    $EDITOR $(echo $target)
+    supervim $(echo $target)
   fi
   set +o pipefail
 }

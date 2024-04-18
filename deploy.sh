@@ -22,6 +22,9 @@ cwd="$(dirname "$0")"
 cwd="$(cd $cwd; pwd)"
 
 config_dir="$cwd/configs"
+# for XDG_CONFIG_HOME
+xdg_dir="$HOME/.config"
+mkdir -p $xdg_dir
 
 # potentially the one introduced by oh-my-zsh
 if [ -e "$HOME/.zshrc" ]; then
@@ -30,36 +33,44 @@ fi
 
 # link config files
 ln -sf "$cwd/zshrc" "$HOME/.zshrc"
-ln -sf "$config_dir/gitconfig" "$HOME/.gitconfig"
-ln -sf "$config_dir/gitignore" "$HOME/.gitignore"
 ln -sf "$config_dir/batrc" "$HOME/.batrc"
 ln -sf "$config_dir/ripgreprc" "$HOME/.ripgreprc"
-mkdir -p "~/.configs/fd"
-mkdir -p "~/.data/zoxide"
-ln -sf "$config_dir/fdignore" "~/.configs/fd/ignore"
 ln -sf "$config_dir/pythonrc" "$HOME/.pythonrc"
-ln -sf "$config_dir/tmux.conf" "$HOME/.tmux.conf"
-# TODO: fix tpm install
-ln -sf "$config_dir/ctags" "$HOME/.ctags"
+
+mkdir -p "~/.data/zoxide"
+
 # folders
 ln -sf "$cwd/zsh" "$HOME/.zsh"
 ln -sf "$cwd/vim" "$HOME/.vim"
 rm -f "$cwd/zsh/zsh"
 rm -f "$cwd/vim/vim"
 
+# ---- XDG_CONFIG_HOME ----
+# git
+mkdir -p "$xdg_dir/git"
+ln -sf "$config_dir/gitconfig" "$xdg_dir/git/config"
+ln -sf "$config_dir/gitignore" "$xdg_dir/git/ignore"
+
+# fd
+mkdir -p "$xdg_dir/fd"
+ln -sf "$config_dir/fdignore" "$xdg_dir/fd/ignore"
+
+# tmux
+mkdir -p "$xdg_dir/tmux"
+ln -sf "$config_dir/tmux.conf" "$xdg_dir/tmux/tmux.conf"
+
+# ctags
+ln -sf "$config_dir/ctags" "$xdg_dir/ctags"
+
 # setup nvim setup
 mkdir -p ~/.config/nvim
 if ! [ -e "~/.config/nvim/init.lua" ]; then
-  ln -sf "$HOME/.vim" "$HOME/.config/nvim"
+  ln -sf "$HOME/.vim" "$xdg_dir/nvim"
 fi
 
 # setting up variation software
 if type fdfind 2>/dev/null; then
   ln -sf $(which fdfind) "$HOME/.local/bin/fd"
 fi
-
-# install plugs for nvim
-# headless for that quiet installation
-nvim --headless +'PlugInstall --sync' +qa 2> /dev/null
 
 echo "successfully deployed dotfiles."

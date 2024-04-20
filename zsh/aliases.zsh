@@ -2,6 +2,7 @@ alias vim=supervim
 alias vi=nvim  # in case multiple open vim windows are needed
 alias g=git
 alias v=supervim
+alias fbv="v -u $HOME/.vim/fallback.lua"
 alias lvim="LEANVIM=true nvim"
 alias ovim="nvim -u ~/.vim/vimrc"
 alias b=bat

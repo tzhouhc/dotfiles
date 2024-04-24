@@ -36,6 +36,7 @@ ln -sf "$cwd/zshrc" "$HOME/.zshrc"
 ln -sf "$config_dir/batrc" "$HOME/.batrc"
 ln -sf "$config_dir/ripgreprc" "$HOME/.ripgreprc"
 ln -sf "$config_dir/pythonrc" "$HOME/.pythonrc"
+ln -sf "$config_dir/hammerspoon" "$HOME/.hammerspoon"
 
 mkdir -p "~/.data/zoxide"
 
@@ -47,6 +48,8 @@ ln -sfT "$cwd/zsh" "$HOME/.zsh"
 mkdir -p "$xdg_dir/git"
 ln -sf "$config_dir/gitconfig" "$xdg_dir/git/config"
 ln -sf "$config_dir/gitignore" "$xdg_dir/git/ignore"
+ln -sf "$config_dir/kitty" "$xdg_dir/kitty"
+ln -sf "$config_dir/gitignore" "$HOME/.gitignore"
 
 # fd
 mkdir -p "$xdg_dir/fd"

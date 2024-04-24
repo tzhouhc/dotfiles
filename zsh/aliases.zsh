@@ -16,10 +16,6 @@ alias '.....'='cd ../../../..'
 
 alias what_am_i_typing="STTY='raw -echo min 0 time 40' cat -vte"
 
-if type logo-ls >/dev/null 2>&1; then
-  alias l=logo-ls -a
-fi
-
 # kek
 alias :w="echo 'you are not in vim'"
 alias :q="echo 'you are not in vim'"

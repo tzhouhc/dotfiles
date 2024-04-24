@@ -1,14 +1,18 @@
-local toggle_kitty function()
-    local app = hs.application.get("kitty")
-    if app then
-        if not app:mainWindow() then
-            app:selectMenuItem({"kitty", "New OS window"})
-        elseif app:isFrontmost() then
-            app:hide()
-        else
-            app:activate()
+-- window management; replaces Rectangle.app
+require('windows')
+
+-- reload shortcut
+local function reload_config(files)
+    local do_reload = false
+    for _,file in pairs(files) do
+        if file:sub(-4) == ".lua" then
+            do_reload = true
         end
-    else
-        hs.application.launchOrFocus("kitty")
+    end
+    if do_reload then
+        hs.reload()
     end
 end
+
+MyWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reload_config):start()
+hs.alert.show("Hammerspoon config reloaded.")

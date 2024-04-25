@@ -40,10 +40,7 @@ ln -sf "$config_dir/pythonrc" "$HOME/.pythonrc"
 mkdir -p "~/.data/zoxide"
 
 # folders
-ln -sf "$cwd/zsh" "$HOME/.zsh"
-ln -sf "$cwd/vim" "$HOME/.vim"
-rm -f "$cwd/zsh/zsh"
-rm -f "$cwd/vim/vim"
+ln -sfT "$cwd/zsh" "$HOME/.zsh"
 
 # ---- XDG_CONFIG_HOME ----
 # git
@@ -60,13 +57,10 @@ mkdir -p "$xdg_dir/tmux"
 ln -sf "$config_dir/tmux.conf" "$xdg_dir/tmux/tmux.conf"
 
 # ctags
-ln -sf "$config_dir/ctags" "$xdg_dir/ctags"
+ln -sfT "$config_dir/ctags" "$xdg_dir/ctags"
 
 # setup nvim setup
-mkdir -p ~/.config/nvim
-if ! [ -e "~/.config/nvim/init.lua" ]; then
-  ln -sf "$HOME/.vim" "$xdg_dir/nvim"
-fi
+ln -sfT "$cwd/vim" "$xdg_dir/nvim"
 
 # setting up variation software
 if type fdfind 2>/dev/null; then

@@ -5,16 +5,12 @@ set -e
 
 # fzf
 if ! [ -d "$HOME/.fzf" ]; then
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
   ~/.fzf/install
 fi
 # zgen (handles zsh)
 if ! [ -e "$HOME/.zgen" ]; then
-  git clone https://github.com/tarjoilija/zgen.git ~/.zgen
-fi
-# tpm
-if ! [ -d "$HOME/.tmux/plugins/tpm" ]; then
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  git clone https://github.com/tarjoilija/zgen.git $HOME/.zgen
 fi
 
 # current script location
@@ -27,17 +23,18 @@ xdg_dir="$HOME/.config"
 mkdir -p $xdg_dir
 
 # potentially the one introduced by oh-my-zsh
+# removing and relinking is idempotent
 if [ -e "$HOME/.zshrc" ]; then
-  rm ~/.zshrc
+  rm $HOME/.zshrc
 fi
 
-# link config files
+# link config files; -f flag makes it idempotent
 ln -sf "$cwd/zshrc" "$HOME/.zshrc"
 ln -sf "$config_dir/batrc" "$HOME/.batrc"
 ln -sf "$config_dir/ripgreprc" "$HOME/.ripgreprc"
 ln -sf "$config_dir/pythonrc" "$HOME/.pythonrc"
 
-mkdir -p "~/.data/zoxide"
+mkdir -p "$HOME/.data/zoxide"
 
 # folders
 ln -sfT "$cwd/zsh" "$HOME/.zsh"
@@ -53,8 +50,13 @@ mkdir -p "$xdg_dir/fd"
 ln -sf "$config_dir/fdignore" "$xdg_dir/fd/ignore"
 
 # tmux
-mkdir -p "$xdg_dir/tmux"
+mkdir -p "$xdg_dir/tmux/plugins"
 ln -sf "$config_dir/tmux.conf" "$xdg_dir/tmux/tmux.conf"
+# tpm
+if ! [ -d "$xdg_dir/tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm $xdg_dir/tmux/plugins/tpm
+fi
+
 
 # ctags
 ln -sfT "$config_dir/ctags" "$xdg_dir/ctags"

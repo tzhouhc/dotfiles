@@ -16,7 +16,6 @@
   default = current
 [core]
   pager = delta
-  excludesfile = ~/.gitignore
 
 [diff]
   algorithm = patience

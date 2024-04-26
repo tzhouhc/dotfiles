@@ -61,12 +61,6 @@ function wenku() {
   popd
 }
 
-function zsh_fallback() {
-  export NERDFONT=false
-  export POWERLINE=false
-  zsh_reload
-}
-
 function supervim() {
   # start neovim as a server with a fixed socket
   #   * create new server if none exist

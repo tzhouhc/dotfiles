@@ -1,3 +1,6 @@
+# Source FZF if available
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
 # Recently visited directories in current shell session
 function local_recent_dir_list() {
   if [[ -n $1 ]]

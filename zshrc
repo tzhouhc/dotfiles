@@ -44,25 +44,10 @@ source "$ZSH_SETUP/settings.zsh"
 # key mappings
 source "$ZSH_SETUP/keys.zsh"
 
+# prompt
+source "$ZSH_SETUP/starship.zsh"
+
 # zoxide
 if type zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
-fi
-
-
-# fzf
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
-if [[ $NERDFONT == 'false' ]]; then
-  if [[ $POWERLINE == 'false' ]]; then
-    [[ -f ~/.zsh/p10k_base.zsh ]] && source ~/.zsh/p10k_base.zsh
-  else
-    [[ -f ~/.zsh/p10k_pl.zsh ]] && source ~/.zsh/p10k_pl.zsh
-  fi
-else
-  # starship
-  if type starship >/dev/null 2>&1; then
-    eval "$(starship init zsh)"
-  fi
-  source "$ZSH_SETUP/misc.zsh"
 fi

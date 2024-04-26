@@ -1,8 +1,17 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = """$sudo$directory$character"""
+right_format = """$all"""
+
 # Inserts a blank line between shell prompts
 add_newline = false
+
+[directory]
+read_only = ''
+home_symbol = '~'
+truncation_symbol = '…/'
+style = 'bold blue'
 
 [line_break]
 disabled = true
@@ -10,6 +19,36 @@ disabled = true
 [aws]
 disabled = true
 
+[status]
+symbol = ''
+not_executable_symbol = ''
+not_found_symbol = '󰍉'
+sigint_symbol = '󰩈'
+signal_symbol = '󱐋'
+
+[time]
+disabled = false
+
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
 success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol   = '[➜](bold red)'
+
+[sudo]
+symbol = '󰌆 '
+
+[git_branch]
+symbol = ' '
+
+[git_commit]
+tag_symbol = ' 󰓹 '
+
+[git_status]
+conflicted = '󰝠'
+ahead = ''
+behind = ''
+diverged = ''
+untracked = '?'
+modified = '!'
+deleted = '󰆴'
+style = 'bold blue'

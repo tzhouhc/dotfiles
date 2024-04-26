@@ -10,3 +10,5 @@ else
   export IS_GOOGLE=false
 fi
 
+# summarily, no nerd font, no powershell, use simple ascii where possible
+export FALLBACK_MODE=false

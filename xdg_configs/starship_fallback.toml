@@ -7,11 +7,23 @@ right_format = """$all"""
 # Inserts a blank line between shell prompts
 add_newline = false
 
+[hostname]
+ssh_symbol = '@'
+
+[directory]
+read_only = ''
+home_symbol = '~'
+truncation_symbol = '…/'
+style = 'bold blue'
+
 [line_break]
 disabled = true
 
 [aws]
 disabled = true
+
+[time]
+disabled = false
 
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'

@@ -7,6 +7,9 @@ right_format = """$all"""
 # Inserts a blank line between shell prompts
 add_newline = false
 
+[hostname]
+ssh_symbol = '󰛳 '
+
 [directory]
 read_only = ''
 home_symbol = '~'

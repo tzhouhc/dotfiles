@@ -8,4 +8,6 @@ fi
 
 brew update
 
-brew install wget bat neovim fd tmux zsh ctags the_silver_searcher ripgrep grep zoxide git-delta universal-ctags
+brew install wget stow bat neovim fd tmux zsh \
+  the_silver_searcher ripgrep grep zoxide git-delta \
+  universal-ctags starship

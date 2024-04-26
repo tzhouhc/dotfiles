@@ -25,6 +25,7 @@ cwd="$(cd $cwd; pwd)"
 
 config_dir="$cwd/configs"
 # for XDG_CONFIG_HOME
+xdg_source_dir="$cwd/xdg_configs"
 xdg_dir="$HOME/.config"
 mkdir -p $xdg_dir
 
@@ -49,23 +50,8 @@ mkdir -p "$HOME/.data/zoxide"
 ln -sfT "$cwd/zsh" "$HOME/.zsh"
 
 # ---- XDG_CONFIG_HOME ----
-# git
-mkdir -p "$xdg_dir/git"
-ln -sf "$config_dir/gitconfig" "$xdg_dir/git/config"
-ln -sf "$config_dir/gitignore" "$xdg_dir/git/ignore"
-ln -sf "$config_dir/gitignore" "$HOME/.gitignore"
+stow --target="$xdg_dir" $xdg_source_dir
 
-# new experimental tools
-ln -sfT "$config_dir/kitty" "$xdg_dir/kitty"
-ln -sfT "$config_dir/zellij" "$xdg_dir/zellij"
-
-# fd
-mkdir -p "$xdg_dir/fd"
-ln -sf "$config_dir/fdignore" "$xdg_dir/fd/ignore"
-
-# tmux
-mkdir -p "$xdg_dir/tmux/plugins"
-ln -sf "$config_dir/tmux.conf" "$xdg_dir/tmux/tmux.conf"
 # tpm
 if ! [ -d "$xdg_dir/tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm $xdg_dir/tmux/plugins/tpm
@@ -73,12 +59,6 @@ if ! [ -d "$xdg_dir/tmux/plugins/tpm" ]; then
 else
   echo "TPM already installed"
 fi
-
-# ctags
-ln -sfT "$config_dir/ctags" "$xdg_dir/ctags"
-
-# setup nvim setup
-ln -sfT "$cwd/vim" "$xdg_dir/nvim"
 
 # setting up variation software
 if type fdfind 2>/dev/null; then

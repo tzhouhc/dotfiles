@@ -1,5 +1,6 @@
 experiment/
 vim/
+xdg_configs/tmux/plugins
 zsh/lib/gitstatus/
 zsh/navi/local.cheat
 .DS_STORE

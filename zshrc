@@ -45,7 +45,10 @@ source "$ZSH_SETUP/settings.zsh"
 source "$ZSH_SETUP/keys.zsh"
 
 # zoxide
-eval "$(zoxide init zsh)"
+if type zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
 
 # fzf
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
@@ -57,5 +60,9 @@ if [[ $NERDFONT == 'false' ]]; then
     [[ -f ~/.zsh/p10k_pl.zsh ]] && source ~/.zsh/p10k_pl.zsh
   fi
 else
+  # starship
+  if type starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+  fi
   source "$ZSH_SETUP/misc.zsh"
 fi

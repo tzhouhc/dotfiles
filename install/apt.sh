@@ -13,3 +13,6 @@ dpkg -i /tmp/rg.deb
 rm /tmp/rg.deb
 
 echo "install `git-delta` via deb package releases; see https://github.com/dandavison/delta/releases"
+
+# starship
+curl -sS https://starship.rs/install.sh | sh

@@ -43,7 +43,7 @@ export _ZO_DATA_DIR="$HOME/.data/zoxide"
 
 # run if 'navi' exists on path
 if type navi >/dev/null 2>&1; then
-  export NAVI_PATH=$HOME/.zsh/navi:$HOME/.local/share/navi
+  export NAVI_PATH=$HOME/.dotfiles/lib/navi:$HOME/.local/share/navi
 fi
 
 if [[ -a $HOME/.dotfiles/visuals/lscolors ]]; then

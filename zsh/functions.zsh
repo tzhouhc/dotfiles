@@ -17,9 +17,6 @@ branch_icon_map[blaze-bin]=" "
 branch_icon_map[production]=" "
 branch_icon_map[configs]=" "
 
-source ~/.zsh/lib/gitstatus/gitstatus.plugin.zsh
-gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
-
 # system hook functions -- for zshaddhistory
 custom_add_history() {
   print -sr -- ${1%%$'\n'}  # standard base implementation
@@ -194,22 +191,6 @@ function is_p4() {
     return 0
   else
     return 1
-  fi
-}
-
-function prompt_gitstatus() {
-  if gitstatus_query MY && [[ $VCS_STATUS_RESULT == ok-sync ]]; then
-    message=${${VCS_STATUS_LOCAL_BRANCH:-@${VCS_STATUS_COMMIT}}//\%/%%}  # escape %
-    message+=' '
-    color=green
-    (( $VCS_STATUS_COMMITS_AHEAD )) && message+="$VCS_STATUS_COMMITS_AHEAD "
-    (( $VCS_STATUS_COMMITS_BEHIND )) && message+="$VCS_STATUS_COMMITS_BEHIND "
-    (( $VCS_STATUS_NUM_STAGED    )) && message+=' ' && color=yellow
-    (( $VCS_STATUS_NUM_UNSTAGED  )) && message+=' ' && color=yellow
-    (( $VCS_STATUS_NUM_UNTRACKED )) && message+=' '
-    [[ $color == green ]] && message+=''
-    message=$(echo $message | sed 's/ +/ /g' | sed 's/ $//')
-    p10k segment -b $color -f black -t $message
   fi
 }
 

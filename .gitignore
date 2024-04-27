@@ -3,6 +3,5 @@ vim/
 xdg_configs/navi/navi.log
 xdg_configs/nushell/history.txt
 xdg_configs/tmux/plugins
-zsh/lib/gitstatus/
-zsh/navi/local.cheat
+lib/navi/local.cheat
 .DS_STORE

@@ -50,13 +50,13 @@ symbol = ' '
 tag_symbol = ' 󰓹 '
 
 [git_status]
-conflicted = '󰝠'
+conflicted = ''
 ahead = ''
 behind = ''
 diverged = ''
 untracked = '?'
 modified = '!'
-deleted = '󰆴'
+deleted = ''
 style = 'bold blue'
 
 # use nerd font for languages and misc

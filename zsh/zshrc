@@ -57,6 +57,3 @@ source "$ZSH_SETUP/post_functions.zsh"
 if type zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
-
-# broot
-source "$XDG_CONFIG_HOME/broot/launcher/bash/br"

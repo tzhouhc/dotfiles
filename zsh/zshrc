@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 ZSH_SETUP="$HOME/.zsh"
 
 # variables

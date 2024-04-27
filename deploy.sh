@@ -36,7 +36,7 @@ if [ -e "$HOME/.zshrc" ]; then
 fi
 
 # link config files; -f flag makes it idempotent
-ln -sf "$cwd/zshrc" "$HOME/.zshrc"
+ln -sf "$cwd/zsh/zshrc" "$HOME/.zshrc"
 ln -sf "$config_dir/batrc" "$HOME/.batrc"
 ln -sf "$config_dir/ripgreprc" "$HOME/.ripgreprc"
 ln -sf "$config_dir/pythonrc" "$HOME/.pythonrc"

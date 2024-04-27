@@ -10,8 +10,8 @@ add_newline = false
 [custom.nushell]
 when="""$env.STARSHIP_SHELL = nu"""
 symbol=" "
-format="[$symbol($output )]($style)"
-style="bold red"
+format="[$symbol($output)]($style)"
+style="bold yellow"
 
 [hostname]
 ssh_symbol = '󰛳 '

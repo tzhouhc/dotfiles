@@ -17,31 +17,28 @@ git submodule update --init --recursive
 
 If additional tooling is required, run the `install.sh` script.
 
+## Neovim
+
+[Installation Guide](https://github.com/neovim/neovim/blob/master/INSTALL.md)
+
+[macOS Download](https://github.com/neovim/neovim/releases/latest/download/nvim-macos.tar.gz)
+
+```sh
+xattr -c ./nvim-macos-arm64.tar.gz
+tar xzvf nvim-macos-arm64.tar.gz  # creating a new dir with all the stuff
+rsync -a nvim-macos/ $HOME/.local/  # note the ending slash on both dirs
+```
+
+[linux Download](https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz)
+
+Similar commands apply.
+
+```sh
+xattr -c ./nvim-linux64.tar.gz
+tar xzvf nvim-linux64.tar.gz  # creating a new dir with all the stuff
+rsync -a nvim-linux/ $HOME/.local/  # note the ending slash on both dirs
+```
+
 # Requirements
 
 Latest zsh configurations require `Nerdfont` support.
-
-# Key Mappings Logic
-
-### Tmux
-
-The base tmux uses `Ctrl-b` as prefix.
-
-Custom tmux short cuts uses `Meta` and modifier/numeric keys for convenience
-features.
-
-### Zsh
-
-Zsh uses `Ctrl` directly for various key maps.
-
-### Vim
-
-Vim uses `Leader` for some operations, `Ctrl` for some others, and `Meta` with
-letters to maximize utility while avoiding collision with Tmux.
-
-Distinctions:
-
-  * `Leader` is used to activate plugin features, if they have unique actions.
-  * `Ctrl` is used for the series of `fzf` functions and other commonly used to
-  make stuff happen make things happen.
-  * `Meta` is currently reserved.

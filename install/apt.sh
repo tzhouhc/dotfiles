@@ -3,8 +3,9 @@ set -e
 
 apt-get update
 
-apt-get install wget neovim fd-find bat \
-  tmux zsh ctags silversearcher-ag zoxide universal-ctags \
+# note: this neovim is likely not the right version
+apt-get install wget neovim \
+  tmux zsh ctags silversearcher-ag universal-ctags \
   stow
 
 # need ripgrep

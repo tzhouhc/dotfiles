@@ -12,6 +12,7 @@ export PATH=/Applications/Sublime\ Text.app/Contents/SharedSupport/bin:$PATH
 
 # HOME paths
 export PATH=$HOME/local/bin:$PATH
+export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.dotfiles/bin:$PATH
 # fzf
@@ -33,7 +34,6 @@ if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
 else
   export PATH=$PATH:/google/bin/releases/editor-devtools
 fi
-
 
 export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"

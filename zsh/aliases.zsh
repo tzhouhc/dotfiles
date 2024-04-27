@@ -3,11 +3,7 @@ alias vi=nvim  # in case multiple open vim windows are needed
 alias g=git
 alias v=supervim
 alias fbv="v -u $HOME/.vim/fallback.lua"
-alias lvim="LEANVIM=true nvim"
-alias ovim="nvim -u ~/.vim/vimrc"
-alias b=bat
 alias clear="clear -x"  # keep scrollback
-alias clear_nvim_cache="rm ~/.local/share/nvim/swap/*"
 
 alias '..'='cd ..'
 alias '...'='cd ../..'
@@ -24,12 +20,6 @@ alias :wq="echo 'you are not in vim'"
 # convenience
 alias j=jump
 
-# BSD or GNU?
-if [[ $COREUTILS_VER == GNU ]]; then
-  alias ls='ls -N --color -h --sort=extension --group-directories-first -v'
-else
-  alias ls='ls -G'
-fi
 alias sed='sed -E'
 
 alias vimdiff='nvim -d'
@@ -70,3 +60,31 @@ if [[ $IS_GOOGLE == "true" ]]; then
   alias fu=fileutil
   alias p4p="p4 p"
 fi
+
+# Aliasing some shiny new tools over classic ones
+# note: mainly the interactive ones -- the other ones might be used as part of
+# some tool chain
+if type bat >/dev/null 2>&1; then
+  alias less=bat
+fi
+
+if type eza >/dev/null 2>&1; then
+  alias ls=eza
+else
+  # BSD or GNU?
+  if [[ $COREUTILS_VER == GNU ]]; then
+    alias ls='ls -N --color -h --sort=extension --group-directories-first -v'
+  else
+    alias ls='ls -G'
+  fi
+fi
+
+if type procs >/dev/null 2>&1; then
+  alias ps=smart_procs
+  alias procs=smart_procs
+fi
+
+if type dust >/dev/null 2>&1; then
+  alias du=dust
+fi
+

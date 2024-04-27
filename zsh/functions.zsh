@@ -617,3 +617,12 @@ function cse() {
 function csd() {
   g4cd $(cs $@)
 }
+
+# See https://github.com/dalance/procs/issues/330
+function smart_procs() {
+  if [[ $TMUX != '' ]]; then
+    procs --theme dark $@
+  else
+    procs $@
+  fi
+}

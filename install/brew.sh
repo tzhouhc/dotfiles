@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # install brew if none present
 if type brew >/dev/null; then
@@ -8,6 +9,6 @@ fi
 
 brew update
 
-brew install wget stow bat neovim fd tmux zsh \
-  the_silver_searcher ripgrep grep zoxide git-delta \
-  universal-ctags starship
+brew install wget stow neovim tmux zsh \
+  the_silver_searcher \
+  universal-ctags \

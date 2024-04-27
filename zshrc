@@ -23,9 +23,6 @@ fi
 # stuff for googleland
 source "$ZSH_SETUP/google.zsh"
 
-# read convenient short hands
-source "$ZSH_SETUP/aliases.zsh"
-
 # read fzf related tools
 source "$ZSH_SETUP/fzf.zsh"
 
@@ -47,7 +44,14 @@ source "$ZSH_SETUP/keys.zsh"
 # prompt
 source "$ZSH_SETUP/starship.zsh"
 
+# read convenient short hands
+# also ensures functions do _not_ see the aliases and get messed up logic
+source "$ZSH_SETUP/aliases.zsh"
+
 # zoxide
 if type zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
+
+# broot
+source "$XDG_CONFIG_HOME/broot/launcher/bash/br"

@@ -1,7 +1,7 @@
 % search, fd
 
-# Find all files under current directory recursively
-fd . --type f
+# Find all files (and links) under current directory recursively
+fd . --type f --type l
 
 # Find all directories under current directory recursively
 fd . --type d

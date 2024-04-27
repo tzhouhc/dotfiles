@@ -1,11 +1,17 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = """$sudo$directory$character"""
+format = """${custom.nushell}$sudo$directory$character"""
 right_format = """$all"""
 
 # Inserts a blank line between shell prompts
 add_newline = false
+
+[custom.nushell]
+when="""$env.STARSHIP_SHELL = nu"""
+symbol=" "
+format="[$symbol($output )]($style)"
+style="bold red"
 
 [hostname]
 ssh_symbol = '󰛳 '

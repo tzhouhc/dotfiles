@@ -43,7 +43,7 @@ export _ZO_DATA_DIR="$HOME/.data/zoxide"
 
 # run if 'navi' exists on path
 if type navi >/dev/null 2>&1; then
-  export NAVI_PATH=$HOME/.zsh/navi:$(readlink -f $(which navi) | sed 's/bin\/navi/libexec\/cheats/')
+  export NAVI_PATH=$HOME/.zsh/navi:$HOME/.local/share/navi
 fi
 
 if [[ -a $HOME/.dotfiles/visuals/lscolors ]]; then
@@ -59,7 +59,8 @@ export MANPAGER="less"
 # export LDFLAGS="-L/usr/local/opt/llvm/lib"
 # export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
-export FZF_DEFAULT_COMMAND='fd --type f --hidden'
+# also find symlinks
+export FZF_DEFAULT_COMMAND='fd --type f --type l --hidden'
 export FZF_DEFAULT_OPTS="--height 40% --reverse"
 
 if [[ $IS_GOOGLE == 'true' ]]; then

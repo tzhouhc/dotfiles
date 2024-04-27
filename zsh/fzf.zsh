@@ -47,9 +47,9 @@ function build_test_target_list() {
 # Files visible in the current directory
 function local_file_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . -H --type f $1 | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . -H --type f --type l $1 | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   else
-    print "$(fd . -H --type f | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . -H --type f --type l | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   fi
 }
 

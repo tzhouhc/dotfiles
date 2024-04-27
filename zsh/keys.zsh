@@ -159,6 +159,7 @@ bindkey '^[v' get_pasteboard
 # 'navi' backwards
 # Utilities to quickly insert snippets into current line
 # Snippets use the same format as navi(denisidoro/navi)'s cheat files
+# DEPRECATED since we're just using regular navi now if possible.
 function ivan() {
   snip=$(ivan_snippet_list)
   LBUFFER="$LBUFFER$snip"
@@ -167,7 +168,6 @@ function ivan() {
   return $ret
 }
 zle     -N   ivan
-# bindkey '^[k' ivan
 
 # Ctrl-g to list git commits
 function git_commits() {

@@ -42,16 +42,26 @@ if [[ $DIR_HISTFILE != '' ]]; then
   add-zsh-hook chpwd custom_cd
 fi
 
-cd() {
+# combination of zoxide and a more liberal cd-experience:
+#   - jumps to home if no args given
+#   - jumps to the containing dir if given a file
+#   - jumps to a dir if it _is_ a dir
+#   - jumps to zoxide query if none of the above
+function my_cd() {
+  if type zoxide >/dev/null 2>&1; then
+    cmd=z
+  else
+    cmd=cd
+  fi
   if [ $# -eq 0 ] ; then
     # no arguments
-    builtin cd
-  elif [ -d $1 ] ; then
-    # argument is a directory
-    builtin cd "$1"
-  else
+    $cmd
+  elif [ -f $1 ] ; then
     # argument is not a directory
-    builtin cd "$(dirname $1)"
+    $cmd "$(dirname $1)"
+  else
+    # argument is a dir or some zoxide moniker
+    $cmd "$1"
   fi
 }
 
@@ -625,4 +635,8 @@ function smart_procs() {
   else
     procs $@
   fi
+}
+
+function inline_navi() {
+  print -z $(env navi --print)
 }

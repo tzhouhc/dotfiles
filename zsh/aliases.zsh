@@ -64,6 +64,15 @@ fi
 # Aliasing some shiny new tools over classic ones
 # note: mainly the interactive ones -- the other ones might be used as part of
 # some tool chain
+if type zoxide >/dev/null 2>&1; then
+  alias cd=my_cd
+fi
+
+if type delta >/dev/null 2>&1; then
+  alias diff=delta
+fi
+
+
 if type bat >/dev/null 2>&1; then
   alias less=bat
 fi
@@ -86,5 +95,13 @@ fi
 
 if type dust >/dev/null 2>&1; then
   alias du=dust
+fi
+
+if type navi >/dev/null 2>&1; then
+  alias navi=inline_navi
+fi
+
+if type btm >/dev/null 2>&1; then
+  alias top=btm
 fi
 

@@ -48,6 +48,9 @@ source "$ZSH_SETUP/starship.zsh"
 # also ensures functions do _not_ see the aliases and get messed up logic
 source "$ZSH_SETUP/aliases.zsh"
 
+# functions where we _do_ want to see post-aliasing logic
+source "$ZSH_SETUP/post_functions.zsh"
+
 # zoxide
 if type zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"

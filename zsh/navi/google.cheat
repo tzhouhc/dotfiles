@@ -6,7 +6,7 @@ cd /google/src/files/head/depot/google3
 # Check entity membership/acl in ganpati (group format: mdb/{group-name})
 /google/data/ro/projects/ganpati/aclcheck mdb/<group-name> <entity-name>
 
-% ==== mpm ====
+% mpm
 
 # Verifiable build
 rabbit --verifiable mpm -c opt
@@ -23,7 +23,7 @@ mpm setlabel <package_name> <label> --version=<version_key>
 # fetch mpm file to location
 mpm fetch -a -v <version> <package> <directory>
 
-% ==== dreampipe ====
+% dreampipe
 
 # Check dreampipe file validity
 /google/data/ro/teams/dreampipe/dreampipe print <dreamfile>
@@ -34,7 +34,7 @@ mpm fetch -a -v <version> <package> <directory>
 # Check dreampipe config push history
 /google/data/ro/teams/dreampipe/dreampipe pipelinehistory mdb/<domain>
 
-% ==== x20 ====
+% x20
 
 # X20 personal directory
 cd "/google/data/rw/users/${USER:0:2}/$USER"
@@ -48,7 +48,7 @@ cd /google/data/rw/teams/<team-name>
 # X20 project directory
 cd /google/data/rw/projects/<project-folder-name>
 
-% ==== plx ====
+% plx
 
 # Check plx workflow ACL
 /google/data/ro/teams/plx/plxutil cat workflow <ID> --acl
@@ -56,7 +56,7 @@ cd /google/data/rw/projects/<project-folder-name>
 # Set plx workflow ACL
 /google/data/ro/teams/plx/plxutil set_acl workflow <ID> <ACL>
 
-% ==== misc ====
+% misc
 
 # Short help message for absl
 --helpshort
@@ -75,6 +75,8 @@ g4cd ../ops/data/mail/configs
 
 # Start a security CL review on current change
 /google/data/ro/teams/bcid/bin/start_sp_review --branch_family=woodchuck_dev_branch --reviewers=<reviewers>
+
+% gqui
 
 # View content for Staging floorboard multiday output
 gqui /namespace/logs/loga-home/woodchuck-staging/features/ttl=14d/search/floorboard_features/2023/<DATE>/<COOKIETYPE>/ttl=55d/floorboard_sst-00001-of-22000 proto multiday.AggregatedFeatureUsageMessage

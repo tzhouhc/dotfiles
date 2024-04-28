@@ -1,7 +1,8 @@
 #!/bin/bash
+set -e
 
 if ! type "pip3" > /dev/null; then
-  echo "No pip3 found!"
+  echo "pip3 not found!"
   exit 1
 fi
 

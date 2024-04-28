@@ -49,3 +49,9 @@ Latest zsh configurations require `Nerdfont` support.
 
 It's important for most of the scripts used in this repo that the system
 coreutils is the GNU version, as opposed to the BSD version.
+
+# Planned
+
+## Rip
+
+Add crontab to periodically remove files that are too old.

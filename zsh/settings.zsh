@@ -62,8 +62,4 @@ setopt HIST_VERIFY
 
 set -o magicequalsubst
 
-# legacy setting in case of no powerline
-PROMPT='$(google3_prompt_info)$(git_prompt)%f '  # %f for stopping the foreground color
-RPROMPT='$(last_exitcode)'
-
 setopt RE_MATCH_PCRE

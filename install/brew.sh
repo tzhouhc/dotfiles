@@ -2,8 +2,8 @@
 set -e
 
 # install brew if none present
-if type brew >/dev/null; then
-else
+if ! type brew >/dev/null; then
+  echo "Installing homebrew:"
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 

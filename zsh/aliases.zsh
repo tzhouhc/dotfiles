@@ -10,15 +10,15 @@ alias '...'='cd ../..'
 alias '....'='cd ../../..'
 alias '.....'='cd ../../../..'
 
+alias notes="v $XDG_CONFIG_HOME/notes"
+
+# for checking terminal key codes
 alias what_am_i_typing="STTY='raw -echo min 0 time 40' cat -vte"
 
 # kek
 alias :w="echo 'you are not in vim'"
 alias :q="echo 'you are not in vim'"
 alias :wq="echo 'you are not in vim'"
-
-# convenience
-alias j=jump
 
 alias sed='sed -E'
 
@@ -78,7 +78,7 @@ if type bat >/dev/null 2>&1; then
 fi
 
 if type eza >/dev/null 2>&1; then
-  alias ls=eza
+  alias ls='eza --icons=always --no-quotes --group-directories-first'
 else
   # BSD or GNU?
   if [[ $COREUTILS_VER == GNU ]]; then
@@ -94,7 +94,7 @@ if type procs >/dev/null 2>&1; then
 fi
 
 if type dust >/dev/null 2>&1; then
-  alias du=dust
+  alias du='dust -d1 -r -B -z=1MB -w=80'
 fi
 
 if type navi >/dev/null 2>&1; then
@@ -105,3 +105,19 @@ if type btm >/dev/null 2>&1; then
   alias top=btm
 fi
 
+if type just >/dev/null 2>&1; then
+  alias j=just
+fi
+
+if type rg >/dev/null 2>&1; then
+  alias grep=rg
+else
+  # run if 'ggrep' exists on path
+  if type ggrep >/dev/null 2>&1; then
+    alias grep=$(which ggrep)
+  fi
+fi
+
+if type rip >/dev/null 2>&1; then
+  alias rm=rip
+fi

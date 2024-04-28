@@ -10,6 +10,7 @@ if type cargo >/dev/null 2>&1; then
   cargo install fd-find   # find
   cargo install just   # make
   cargo install bottom --locked  # top
+  cargo install rm-improved  # rm
   cargo install navi   # find
   cargo install ripgrep   # grep
   cargo install starship   # shell prompt
@@ -17,5 +18,6 @@ if type cargo >/dev/null 2>&1; then
   cargo install zellij   # tmux
   cargo install procs   # ps
   cargo install nu  # shell for data
+else
+  echo "cargo not found!"
 fi
-

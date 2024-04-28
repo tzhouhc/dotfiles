@@ -5,8 +5,11 @@ cwd="$(dirname "$0")"
 cwd="$(cd $cwd; pwd)"
 
 # install rust for cargo -- OS agnostic, more or less
-curl https://sh.rustup.rs -sSf | sh
-source $cwd/install/cargo.sh
+if ! type cargo >/dev/null 2>&1; then
+  echo "Installing rust/cargo:"
+  curl https://sh.rustup.rs -sSf | sh
+  source $cwd/install/cargo.sh
+fi
 
 # install OS-dependent specific items
 if uname -a | grep -i darwin > /dev/null; then
@@ -14,6 +17,8 @@ if uname -a | grep -i darwin > /dev/null; then
 else
   if type apt-get >/dev/null 2>&1; then
     sudo $cwd/install/apt.sh
+  else
+    echo "Unknown OS, remainder of software installation incomplete."
   fi
 fi
 

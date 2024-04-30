@@ -52,7 +52,7 @@ ln -sfT "$cwd/zsh" "$HOME/.zsh"
 # ---- XDG_CONFIG_HOME ----
 # stow _superficially_ does not allow source to contain slashes,
 # but we can simply make sure to call it from the containing directory.
-stow -v --target="$xdg_dir" "xdg_configs"
+stow --dotfiles -v --target="$xdg_dir" "xdg_configs"
 
 # tpm
 if ! [ -d "$xdg_dir/tmux/plugins/tpm" ]; then

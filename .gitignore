@@ -1,7 +1,9 @@
 experiment/
 vim/
+xdg_configs/notes
 xdg_configs/navi/navi.log
 xdg_configs/nushell/history.txt
+xdg_configs/pipr/history
 xdg_configs/tmux/plugins
 lib/navi/local.cheat
 .DS_STORE

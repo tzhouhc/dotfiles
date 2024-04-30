@@ -1,3 +1,0 @@
-* Review vim telescope and zsh fzf commands to possibly use `fd` with 
-    `fd_across_repo` instead of basic `fd`.
-

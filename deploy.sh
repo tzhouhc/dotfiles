@@ -35,23 +35,15 @@ if [ -e "$HOME/.zshrc" ]; then
   rm $HOME/.zshrc
 fi
 
-# link config files; -f flag makes it idempotent
-ln -sf "$cwd/zsh/zshrc" "$HOME/.zshrc"
-ln -sf "$config_dir/batrc" "$HOME/.batrc"
-ln -sf "$config_dir/ripgreprc" "$HOME/.ripgreprc"
-ln -sf "$config_dir/pythonrc" "$HOME/.pythonrc"
-echo "(Re)linked RC files"
-
-ln -sfT "$config_dir/hammerspoon" "$HOME/.hammerspoon"
-
+# make zoxide database dir
 mkdir -p "$HOME/.data/zoxide"
 
-# folders
-ln -sfT "$cwd/zsh" "$HOME/.zsh"
-
-# ---- XDG_CONFIG_HOME ----
+# Use stow to manage symlinks
+#
 # stow _superficially_ does not allow source to contain slashes,
 # but we can simply make sure to call it from the containing directory.
+# Link all $HOME dotfiles, including the various RC files and zsh dir.
+stow --dotfiles -v --target="$HOME" "configs"
 stow --dotfiles -v --target="$xdg_dir" "xdg_configs"
 
 # tpm

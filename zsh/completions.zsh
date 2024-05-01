@@ -64,3 +64,14 @@ _fzf_complete_br() {
     fi
   )
 }
+
+# NOTE: Completion files in the completion dir should start with an underscore.
+# Once the files are in, run `rm ~/.zcompdump*` to remove cached completions.
+
+# Add to completion path
+eval "$(brew shellenv)"
+fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+fpath=($HOME/.zsh/completion $fpath)
+
+autoload -U compinit
+compinit

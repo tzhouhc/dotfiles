@@ -87,6 +87,7 @@ else
     alias ls='ls -G'
   fi
 fi
+alias l=ls
 
 if type procs >/dev/null 2>&1; then
   alias ps=smart_procs

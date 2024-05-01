@@ -19,7 +19,7 @@ ssh_symbol = '󰛳 '
 [directory]
 read_only = ''
 home_symbol = '~'
-truncation_symbol = ''
+truncation_symbol = ' '
 style = 'bold blue'
 
 [line_break]

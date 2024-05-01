@@ -12,6 +12,10 @@ export PATH=$HOME/local/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.dotfiles/bin:$PATH
+
+# NEOVIM via bob-nvim
+export PATH=$HOME/.local/share/bob/nvim-bin:$PATH
+
 # fzf
 export PATH=$HOME/.fzf/bin:$PATH
 # gnubin -- ls without color AND with stupid ass quotes
@@ -22,7 +26,6 @@ export PATH=/opt/homebrew/opt/openjdk/bin:$PATH
 if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
   # ruby
   export PATH=/opt/homebrew/opt/ruby/bin:$PATH
-  export PATH=/opt/homebrew/lib/ruby/gems/3.0.0/bin:$PATH
   # dotnet
   export PATH=/usr/local/share/dotnet/x64/:$PATH
   # latex

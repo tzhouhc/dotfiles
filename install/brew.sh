@@ -9,6 +9,4 @@ fi
 
 brew update
 
-brew install wget stow neovim tmux zsh \
-  the_silver_searcher \
-  universal-ctags \
+brew install wget stow tmux zsh the_silver_searcher universal-ctags

@@ -11,6 +11,8 @@ if ! type cargo >/dev/null 2>&1; then
   source $cwd/install/cargo.sh
 fi
 
+source $cwd/install/nvim.sh
+
 # install OS-dependent specific items
 if uname -a | grep -i darwin > /dev/null; then
   $cwd/install/brew.sh

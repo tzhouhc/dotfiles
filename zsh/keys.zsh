@@ -198,22 +198,6 @@ bindkey '^k' superfzf
 # Google
 # --------
 
-# context-aware history -- automatically determines if it should use p4 variant
-# or base variant
-function dir_history() {
-  if [[ $(g4pwd) != "" ]]; then
-    snip=$(p4_dir_ctx_command_list)
-  else
-    snip=$(dir_ctx_command_list)
-  fi
-  LBUFFER="$LBUFFER$snip"
-  local ret=$?
-  zle reset-prompt
-  return $ret
-}
-zle     -N   dir_history
-bindkey '^y' dir_history
-
 # Meta-o to open changed files in current version control system
 # I don't really use it -- I normally just use p4e
 function my_p4_change_widget() {

@@ -17,7 +17,7 @@ if type cargo >/dev/null 2>&1; then
   cargo install nu  # shell for data
   cargo install pipr  # pipeline crafter
   cargo install procs   # ps
-  cargo install ripgrep   # grep
+  cargo install ripgrep --features 'pcre2'  # grep
   cargo install rm-improved  # rm
   cargo install starship   # shell prompt
   cargo install zellij   # tmux

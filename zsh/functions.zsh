@@ -1,28 +1,3 @@
-# REFERENCE
-# ZSH COLORS: https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png
-
-# system hook functions -- for zshaddhistory
-custom_add_history() {
-  print -sr -- ${1%%$'\n'}  # standard base implementation
-  # now additionally we want to ensure directory-aware history
-  echo $PWD#$(echo ${1%%$'\n'} | sed 's/ +$//;s/^ +//') >> $DIR_AWARE_HISTFILE
-  cat $DIR_AWARE_HISTFILE | sort -u > $DIR_AWARE_HISTFILE.tmp
-  cat $DIR_AWARE_HISTFILE.tmp > $DIR_AWARE_HISTFILE
-  rm $DIR_AWARE_HISTFILE.tmp
-}
-if [[ $DIR_AWARE_HISTFILE != '' ]]; then
-  add-zsh-hook zshaddhistory custom_add_history
-fi
-
-# custom cd hook -- record folders that we've stepped into
-custom_cd() {
-    sort -u -m $DIR_HISTFILE <(echo $PWD) >> $DIR_HISTFILE.tmp
-    mv $DIR_HISTFILE.tmp $DIR_HISTFILE
-}
-if [[ $DIR_HISTFILE != '' ]]; then
-  add-zsh-hook chpwd custom_cd
-fi
-
 # combination of zoxide and a more liberal cd-experience:
 #   - jumps to home if no args given
 #   - jumps to the containing dir if given a file
@@ -46,16 +21,10 @@ function my_cd() {
   fi
 }
 
-function wenku() {
-  pushd ~/Downloads/Wenku
-  wenku8 --no-epub
-  popd
-}
-
+# start neovim as a server with a fixed socket
+#   * create new server if none exist
+#   * one server for each tmux window
 function supervim() {
-  # start neovim as a server with a fixed socket
-  #   * create new server if none exist
-  #   * one server for each tmux window
   if type nvr >/dev/null 2>&1; then
     # vim internal-terminal mode
     if [[ $NVIM != '' ]]; then
@@ -82,16 +51,18 @@ function supervim() {
   fi
 }
 
+# Find the pane containing vim instance in current tmux window
 function vimpane() {
   if [[ $TMUX != '' ]]; then
     tmux list-panes -F '#I:#P #{pane_current_command}' | grep nvim | cut -d' ' -f1  | cut -d':' -f2
   fi
 }
 
+
+# if tmux is running, then try to find running vim panel
+# will probably fail if no nvim is running
+# though this really should only be called from the above supervim cmd
 function gotovim() {
-  # if tmux is running, then try to find running vim panel
-  # will probably fail if no nvim is running
-  # though this really should only be called from the above supervim cmd
   if [[ $TMUX != '' ]]; then
     vim_pane=$(vimpane)
     if [[ $vim_pane != '' ]]; then
@@ -105,22 +76,9 @@ function gotovim() {
   fi
 }
 
+# restart current thread
 function zsh_reload() {
   exec zsh
-}
-
-function get_workspace() {
-  res=$(short_pwd)
-  root=$(echo $res | cut -d$'\n' -f 1)
-  printf $root
-}
-
-function is_p4() {
-  if [[ $(pwd) == /google/src/cloud/tingzhou/* ]]; then
-    return 0
-  else
-    return 1
-  fi
 }
 
 # record absolute paths of files/folders.
@@ -134,6 +92,7 @@ function peek() {
   cat ~/.send.temp
 }
 
+# emit pushed content to stdout then clear
 function pop() {
   cat ~/.send.temp
   rm ~/.send.temp
@@ -145,16 +104,9 @@ function paste_files() {
   cp -r $(pop) ./
 }
 
+# same as above, but keeps temp as is
 function paste_files_no_flush() {
   cp -r $(peek) ./
-}
-
-function paste_links() {
-  ln -s $(pop) ./
-}
-
-function paste_links_no_flush() {
-  ln -s $(peek) ./
 }
 
 # move the files over to current directory
@@ -162,15 +114,7 @@ function move_files() {
   mv $(pop) ./
 }
 
-function last_exitcode() {
-  # shows last command success or failure (and exit code)
-  if [[ $? -eq 0 ]]; then
-    print -rn -- "%F{cyan} ="
-  else
-    print -rn -- "%F{red}$? +"
-  fi
-}
-
+# display a colored band to test for true color support in the terminal
 function check_true_color() {
   awk 'BEGIN{
       s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
@@ -187,16 +131,7 @@ function check_true_color() {
   }'
 }
 
-# this makes it so fzf won't go searching for files in gitignore paths
-if type fd > /dev/null; then
-  _fzf_compgen_path() {
-    fd --hidden --follow --exclude ".git" . "$1"
-  }
-  _fzf_compgen_dir() {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
-  }
-fi
-
+# some text coloring functions
 function red() {
   print -nP "%F{red}$1%f"
 }
@@ -221,18 +156,22 @@ function cyan() {
   print -nP "%F{cyan}$1%f"
 }
 
+# is the current directory a git repo?
 function is_git() {
   git rev-parse --is-inside-work-tree >/dev/null 2>&1
 }
 
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
+  # open $(cd)
   function o() {
-    pushd $(zoxide query $1 | sed -e 's:\~:/Users/tingzhou:' | tr -d '\r') > /dev/null
+    cwd=$(pwd)
+    my_cd $1
     /usr/bin/open .
-    popd 2>&1 > /dev/null
+    cd $cwd
     hide_iterm_window
   }
 
+  # open and then hide iterm window
   function open_and_switch() {
     /usr/bin/open $1
     hide_iterm_window
@@ -258,14 +197,18 @@ function smart_procs() {
   fi
 }
 
+# navi, except result is not run, but instead filled to the command line
 function inline_navi() {
   print -z $(env navi --print)
 }
 
+# fd except it looks through the entire current repo
 function fd_across_repo() {
   # git
   if is_git; then
-    fd $@ $(git rev-parse --show-toplevel)
+    pushd "$(git rev-parse --show-toplevel)"
+    fd -a $@
+    popd
   else
     fd $@
   fi

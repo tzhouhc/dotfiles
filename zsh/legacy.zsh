@@ -52,11 +52,25 @@ function prompt_short_pwd() {
   fi
 }
 
+function get_workspace() {
+  res=$(short_pwd)
+  root=$(echo $res | cut -d$'\n' -f 1)
+  printf $root
+}
+
 function git_dirty() {
   if git diff --quiet; then
     return 1
   else
     return 0
+  fi
+}
+
+function is_p4() {
+  if [[ $(pwd) == /google/src/cloud/tingzhou/* ]]; then
+    return 0
+  else
+    return 1
   fi
 }
 

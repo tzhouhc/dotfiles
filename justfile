@@ -15,3 +15,7 @@ atuin:
 # edit justfile
 justfile:
   nvim justfile
+
+# refresh bat cached binaries
+refresh-bat:
+  bat cache --build

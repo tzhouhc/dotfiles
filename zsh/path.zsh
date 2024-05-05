@@ -7,10 +7,12 @@ export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 export PATH=/usr/sbin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
 
-# HOME paths
-export PATH=$HOME/local/bin:$PATH
+# ---- HOME paths ----
+# rust based tools
 export PATH=$HOME/.cargo/bin:$PATH
+# custom scripts
 export PATH=$HOME/.local/bin:$PATH
+# portable scripts
 export PATH=$HOME/.dotfiles/bin:$PATH
 
 # NEOVIM via bob-nvim

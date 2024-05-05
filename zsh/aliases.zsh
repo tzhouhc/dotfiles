@@ -10,7 +10,7 @@ alias '...'='cd ../..'
 alias '....'='cd ../../..'
 alias '.....'='cd ../../../..'
 
-alias notes="v $XDG_CONFIG_HOME/notes"
+alias notes="v $HOME/.notes"
 
 # for checking terminal key codes
 alias what_am_i_typing="STTY='raw -echo min 0 time 40' cat -vte"

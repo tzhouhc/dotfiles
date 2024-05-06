@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 # optionally create dir with year-month name format in NSFW dir.
 TARGET_DIR=/Users/tingzhou/Pictures/.NSFW/$(date -u +%Y-%m)

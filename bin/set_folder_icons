@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 IFS=$'\n'
 for dir in $(echo ".\n"; fd . -t d); do

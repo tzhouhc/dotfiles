@@ -127,21 +127,8 @@ function my_mru_dir() {
 zle     -N   my_mru_dir
 # bindkey '^[p' my_mru_dir
 
-# Ctrl-v to edit line in vim (with auto cursor positioning and insert mode)
-# ALSO FMI: `fc` opens the last command in $EDITOR
-function edit_line_in_vim() {
-  tmpf=$(mktemp)
-  echo $BUFFER > $tmpf
-  # jump to end of file and insert at end of line
-  lvim -s <(printf 'GA') +'set ft=sh' $tmpf
-  BUFFER=$(cat $tmpf)
-  rm -f $tmpf
-  local ret=$?
-  zle reset-prompt
-  return $ret
-}
-zle     -N   edit_line_in_vim
-bindkey '^z' edit_line_in_vim
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^z' edit-command-line
 
 # Opt-v to list pasteboard content
 function get_pasteboard() {

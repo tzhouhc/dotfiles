@@ -2,7 +2,7 @@ alias vim=supervim
 alias vi=nvim  # in case multiple open vim windows are needed
 alias g=git
 alias v=supervim
-alias fbv="v -u $HOME/.vim/fallback.lua"
+alias fbv="v -u $VIM_HOME/fallback.lua"
 alias clear="clear -x"  # keep scrollback
 
 alias '..'='cd ..'

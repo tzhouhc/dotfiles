@@ -7,9 +7,10 @@ export MANPATH="/usr/local/man:$MANPATH"
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
-export MYVIMRC='~/.vim/init.lua'
-export COPY_FILE="$HOME/.copy"
 export XDG_CONFIG_HOME="$HOME/.config"
+export VIM_HOME="$XDG_CONFIG_HOME/nvim"
+export MYVIMRC="$VIM_HOME/init.lua"
+export COPY_FILE="$HOME/.copy"
 export EDITOR=nvim
 export GIT_EDITOR=nvim
 export P4EDITOR=nvim

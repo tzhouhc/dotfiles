@@ -81,18 +81,6 @@ zle     -N   my_vim_edit_num_widget
 # Seems to have some conflicts with iTerm's signals
 # bindkey '^v' my_vim_edit_num_widget
 
-# Meta-v to edit changed files in current version control system
-# Unused -- conflict keymapping; TODO: revise
-function my_vim_edit_change_widget() {
-  files=$(p4_change_list)
-  if [[ ! -z $files ]]; then
-    vim $(echo $files)  # I don't really understand this...
-  fi
-  zle reset-prompt
-}
-zle     -N   my_vim_edit_change_widget
-# bindkey '^[v' my_vim_edit_change_widget
-
 # Ctrl-p to write local folders to the zle
 function my_fzf_folder_widget() {
   # clear redundant space
@@ -114,19 +102,6 @@ function my_fzf_folder_widget() {
 zle     -N   my_fzf_folder_widget
 bindkey '^p' my_fzf_folder_widget
 
-# Meta-p to open recently accessed folders
-# use z's history for recently-accessed directories
-function my_mru_dir() {
-  choice=$(z_mru_dir_list)
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
-  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
-  local ret=$?
-  zle reset-prompt
-  return $ret
-}
-zle     -N   my_mru_dir
-# bindkey '^[p' my_mru_dir
-
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^z' edit-command-line
 
@@ -142,32 +117,6 @@ function get_pasteboard() {
 zle     -N   get_pasteboard
 bindkey '^[v' get_pasteboard
 
-# Meta-k to open command shorthands
-# 'navi' backwards
-# Utilities to quickly insert snippets into current line
-# Snippets use the same format as navi(denisidoro/navi)'s cheat files
-# DEPRECATED since we're just using regular navi now if possible.
-function ivan() {
-  snip=$(ivan_snippet_list)
-  LBUFFER="$LBUFFER$snip"
-  local ret=$?
-  zle reset-prompt
-  return $ret
-}
-zle     -N   ivan
-
-# Ctrl-g to list git commits
-function git_commits() {
-  choice=$(git_commit_list)
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
-  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
-  local ret=$?
-  zle reset-prompt
-  return $ret
-}
-zle     -N   git_commits
-bindkey '^g' git_commits
-
 # Ctrl-k to list ALL available fzf handlers.
 # One function that provides all available fzf lists
 function superfzf() {
@@ -180,56 +129,3 @@ function superfzf() {
 }
 zle     -N   superfzf
 bindkey '^k' superfzf
-
-# --------
-# Google
-# --------
-
-# Meta-o to open changed files in current version control system
-# I don't really use it -- I normally just use p4e
-function my_p4_change_widget() {
-  insert=$(p4_change_list)
-  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
-  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
-  local ret=$?
-  zle reset-prompt
-  return $ret
-}
-zle     -N   my_p4_change_widget
-# bindkey '^[o' my_p4_change_widget
-
-# Ctrl-n to list available blaze build targets
-function my_BUILD_widget() {
-  if [[ -f BUILD ]]; then
-    insert=$(build_target_list)
-    LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
-    LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
-    local ret=$?
-    zle reset-prompt
-    return $ret
-  else
-    echo "No BUILD file found."
-    zle reset-prompt
-    return
-  fi
-}
-zle     -N   my_BUILD_widget
-bindkey '^n' my_BUILD_widget
-
-# Meta-n to list available blaze test targets
-function my_BUILD_test_widget() {
-  if [[ -f BUILD ]]; then
-    insert=$(build_test_target_list)
-    LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
-    LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
-    local ret=$?
-    zle reset-prompt
-    return $ret
-  else
-    echo "No BUILD file found."
-    zle reset-prompt
-    return
-  fi
-}
-zle     -N   my_BUILD_test_widget
-bindkey '^[n' my_BUILD_test_widget

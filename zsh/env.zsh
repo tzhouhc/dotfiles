@@ -65,11 +65,6 @@ export FZF_DEFAULT_OPTS="--height 40% --reverse"
 export FZF_CTRL_T_COMMAND=
 export FZF_ALT_C_COMMAND=
 
-if [[ $IS_GOOGLE == 'true' ]]; then
-  export VIM_USE_CIDER_STAGING=0
-  export VIM_USE_SEMANTIC_HIGHLIGHTING=1
-fi
-
 if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
   export CRITICAL_ROLE_PATH="/Users/tingzhou/Documents/Critical Role/CR FULL/tsv_transcripts"
   export ANDROID_HOME=~/Library/Android/sdk

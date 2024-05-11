@@ -25,15 +25,13 @@ export PATH=/opt/homebrew/opt/grep/libexec/gnubin:$PATH
 export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 export PATH=/opt/homebrew/opt/openjdk/bin:$PATH
 
-if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
+# dotnet
+export PATH=/usr/local/share/dotnet/x64/:$PATH
+if uname -a | grep -i darwin > /dev/null; then
   # ruby
   export PATH=/opt/homebrew/opt/ruby/bin:$PATH
-  # dotnet
-  export PATH=/usr/local/share/dotnet/x64/:$PATH
   # latex
   export PATH=/Library/TeX/texbin/:$PATH
-else
-  export PATH=$PATH:/google/bin/releases/editor-devtools
 fi
 
 export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"

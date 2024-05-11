@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin
 IFS=$'\n'
 for dir in $(echo ".\n"; fd . -t d); do
   if [[ $SET_ICON_SKIP_EXISTING == 1 ]]; then

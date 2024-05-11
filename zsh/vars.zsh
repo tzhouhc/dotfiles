@@ -4,12 +4,6 @@ else
   export IS_PERSONAL_COMPUTER=false
 fi
 
-if [[ -d "/google" ]] ; then
-  export IS_GOOGLE=true
-else
-  export IS_GOOGLE=false
-fi
-
 # Now that PATH is set, check whether the coreutils on top of the list
 # is BSD or GNU
 if [[ -z $(ls --version 2>/dev/null | grep gnu) ]]; then

@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-result="$(( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf)"
+result="$(( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf --bind 'enter:become(open {}),ctrl-o:become(cd "$(dirname {})"; open .)')"
 if [[ "$result" != '' ]]; then
   open $result
 fi

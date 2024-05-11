@@ -24,9 +24,6 @@ source "$ZSH_SETUP/completions.zsh"
 # various basic zsh settings
 source "$ZSH_SETUP/settings.zsh"
 
-# stuff for googleland
-source "$ZSH_SETUP/google.zsh"
-
 # key mappings
 source "$ZSH_SETUP/keys.zsh"
 

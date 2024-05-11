@@ -44,16 +44,6 @@ function p4_package_list() {
   print $(echo "Alias\tG3path\n$(cat ~/.g3marks)" | column -t | fzf --header-lines=1 | grep -o "[^ ]*$")
 }
 
-# Build targets visible in the current directory
-function build_target_list() {
-  print $(cat BUILD | egrep '^\s+name \=' | sed "s/^[^\"]*\"//" | sed "s/\".*$//" | fzf)
-}
-
-# Build targets visible in the current directory
-function build_test_target_list() {
-  print $(cat BUILD | egrep '^\s+name \=' | grep 'test' | sed "s/^[^\"]*\"//" | sed "s/\".*$//" | fzf)
-}
-
 # Files visible in the current directory
 function local_file_list() {
   if [[ $1 != '' ]]; then
@@ -116,15 +106,6 @@ function z_mru_dir_list() {
   print "$(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf | sed 's/(.*)/\"\1\"/g')"
 }
 
-# Helpful shell snippets
-function ivan_snippet_list() {
-  line=$(cat ~/.dotfiles/zsh/navi/* | egrep -v '^(%.*)?$' \
-    | sed '$!N;s/\n/ # /' | sed 's/^#//' \
-    | fzf -d'#' --with-nth=1 --preview 'echo {2}' \
-    | cut -d'#' -f2 | sed 's/^ *//')
-  print -- $(populate_tags $line)
-}
-
 # Current processes; return the PID
 function process_name_list() {
   ps -aeo uid,pid,command | fzf --header-lines=1 | tr -s ' ' | cut -d' ' -f2
@@ -150,39 +131,6 @@ function p4_dir_ctx_command_list() {
   g4pwd=$(g4pwd2)
   if [[ $g4pwd != '' ]]; then
     print $(cat $DIR_AWARE_HISTFILE | grep "$g4pwd#" | cut -d'#' -f2- | fzf)
-  fi
-}
-
-# ALL google3 build targets in folders with footsteps (i.e. visited and actions performed)
-function p4_footstep_build_target_list() {
-  for line in $(google3_footsteps); do
-    if [[ -f "$(g4pwd)/google3/$line/BUILD" ]]; then
-      targets=$(ctags --language-force=bzl -f - "$(g4pwd)/google3/$line/BUILD" | cut -d$'\t' -f1 | sed "s:^://$line\::")
-      targetlist="$targetlist\n$targets"
-    fi
-  done
-  echo $targetlist | fzf
-}
-
-# Search CS and return result
-function cs() {
-  if [[ -n $1 ]]; then
-    /usr/bin/cs $@ 2>/dev/null | \
-      fzf -d':' --with-nth=1 --preview 'ln={2}; bat {1} -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | \
-      cut -d':' -f1 | cut -d'/' -f7-
-  else
-    /usr/bin/cs
-  fi
-}
-
-# CD after searching through CS
-function cscd() {
-  if [[ -n $1 ]]; then
-    res=$(cs $@)
-    if [[ -n $res ]]; then
-      echo $res
-      g4cd $(echo $res | cut -d'/' -f8-)
-    fi
   fi
 }
 

@@ -131,52 +131,10 @@ function check_true_color() {
   }'
 }
 
-# some text coloring functions
-function red() {
-  print -nP "%F{red}$1%f"
-}
-
-function green() {
-  print -nP "%F{green}$1%f"
-}
-
-function blue() {
-  print -nP "%F{blue}$1%f"
-}
-
-function yellow() {
-  print -nP "%F{yellow}$1%f"
-}
-
-function magenta() {
-  print -nP "%F{magenta}$1%f"
-}
-
-function cyan() {
-  print -nP "%F{cyan}$1%f"
-}
-
 # is the current directory a git repo?
 function is_git() {
   git rev-parse --is-inside-work-tree >/dev/null 2>&1
 }
-
-if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
-  # open $(cd)
-  function o() {
-    cwd=$(pwd)
-    my_cd $1
-    /usr/bin/open .
-    cd $cwd
-    hide_iterm_window
-  }
-
-  # open and then hide iterm window
-  function open_and_switch() {
-    /usr/bin/open $1
-    hide_iterm_window
-  }
-fi
 
 # mark for general usage -- store a path with a simple alias.
 # z is fine but sometimes one needs a bit of a reminder of what things are even
@@ -213,3 +171,78 @@ function fd_across_repo() {
     fd $@
   fi
 }
+
+# ==============================
+# Letter Functions
+# ==============================
+
+# function a() {
+# }
+
+# Edit
+# Open any recent files by this name in supervim
+function e() {
+  hist_file="$HOME/.data/edit_history"
+  if ! [[ -f "$hist_file" ]]; then
+    touch "$hist_file"
+  fi
+  if [[ -f "$1" ]]; then
+    echo $(readlink -f "$1") >> "$hist_file"
+    sort "$hist_file" | uniq -u | sponge "$hist_file"
+    supervim "$1"
+    return
+  fi
+  if res=$(cat "$hist_file" | fzf --preview='bat {}'); then
+    supervim "$res"
+  fi
+}
+
+# Find
+# Searches local files via fzf and opens to selected line for edit.
+function f() {
+  preview='ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:'
+  file_line=$(ag --nobreak --noheading . | fzf -m -d':' -n3.. --preview="$preview")
+  read -r file line <<<$(echo "$file_line" | choose -f ':' 0 1)
+  if [[ $file != '' ]]; then
+    supervim +$line "$file"
+  fi
+}
+
+# Git
+# function g() is an alias to git
+
+# Just
+# function j() is an alias to just
+
+# List
+# function l() is an alias to exa
+
+# Open
+# Open a directory by either direct naming or zoxide reference if given a name.
+# Otherwise, open a selector for either files or directories.
+# Reasoning being it's harder and requires more precision to find a file
+# by name.
+function o() {
+  if [[ $1 != '' ]]; then
+    cwd=$(pwd)
+    my_cd $1
+    /usr/bin/open .
+    cd $cwd
+    if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
+      hide_iterm_window
+    fi
+    return
+  fi
+  binding='enter:become(open {}),ctrl-o:become(cd "$(dirname {})"; open .)'
+  result=$( ( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf --bind "$binding" )
+  if [[ "$result" != '' ]]; then
+    open $result
+  fi
+}
+
+# Vim
+# function v() is an alias to supervim
+
+# Zoxide
+# function z() already defined via zoxide
+

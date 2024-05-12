@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# install rust for cargo -- OS agnostic, more or less
+if ! type cargo >/dev/null 2>&1; then
+  echo "Installing rust/cargo:"
+  curl https://sh.rustup.rs -sSf | sh
+fi
+
 if type cargo >/dev/null 2>&1; then
   cargo install atuin  # shell history
   cargo install bat   # less

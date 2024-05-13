@@ -2,7 +2,7 @@
 # custom version of the `o` letter command to be used as a binary.
 
 binding='enter:become(open {}),ctrl-o:become(cd "$(dirname {})"; open .)'
-result=$( ( $HOME/.cargo/bin/fd . ~/ --hidden & fd . "/Applications/" --extension app ) | $HOME/.fzf/bin/fzf --bind "$binding")
+result=$( ( $HOME/.cargo/bin/fd . ~/ --hidden & fd . "/Applications/" --extension app ) | $HOME/.fzf/bin/fzf --bind "$binding" --preview 'bat {}')
 
 if [[ "$result" != '' ]]; then
   open $result

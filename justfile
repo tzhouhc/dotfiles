@@ -4,13 +4,9 @@
 deploy:
   ./deploy.sh
 
-# edit starship config
-starship:
-  nvim xdg_configs/starship.toml
-
-# edit atuin config
-atuin:
-  nvim xdg_configs/atuin/config.toml
+# install optional tools
+install-optional:
+  ./install/cargo_optional.sh
 
 # edit justfile
 justfile:

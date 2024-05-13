@@ -153,9 +153,3 @@ function critical_role_by_script() {
 function batrange() {
   print $[$[$1 - 3] < 0 ? 0 : $[$1 - 3]]:$[$ln + 20]
 }
-
-# open and then hide iterm window
-function open_and_switch() {
-  /usr/bin/open $1
-  hide_iterm_window
-}

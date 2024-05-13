@@ -172,6 +172,13 @@ function fd_across_repo() {
   fi
 }
 
+# open and then hide iterm window
+# used as an alias for open
+function open_and_switch() {
+  /usr/bin/open $1
+  hide_iterm_window
+}
+
 # ==============================
 # Letter Functions
 # ==============================

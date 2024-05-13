@@ -69,9 +69,11 @@ _fzf_complete_br() {
 # Once the files are in, run `rm ~/.zcompdump*` to remove cached completions.
 
 # Add to completion path
-eval "$(brew shellenv)"
-fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
-fpath=($HOME/.zsh/completion $fpath)
+if type brew >/dev/null 2>&1; then
+  eval "$(brew shellenv)"
+  fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+fi
 
+fpath=($HOME/.zsh/completion $fpath)
 autoload -U compinit
 compinit

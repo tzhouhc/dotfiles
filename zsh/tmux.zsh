@@ -6,4 +6,6 @@ if [[ -e ~/.notmux ]]; then
   return
 fi
 
-tmux attach
+if [[ -v $TMUX ]]; then
+  tmux attach
+fi

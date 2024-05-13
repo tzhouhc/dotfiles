@@ -6,7 +6,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 
 # Homebrew
 if uname -a | grep -i darwin > /dev/null; then
-  brew shellenv
+  eval "$(brew shellenv)"
 else
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi

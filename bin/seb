@@ -1,8 +1,9 @@
 #!/usr/bin/env zsh
 # custom version of the `o` letter command to be used as a binary.
+PATH=$PATH:$HOME/.cargo/bin:$HOME/.fzf/bin:$HOME/.dotfiles/bin
 
-binding='enter:become(open {}),ctrl-o:become(cd "$(dirname {})"; open .)'
-result=$( ( $HOME/.cargo/bin/fd . ~/ --hidden & fd . "/Applications/" --extension app ) | $HOME/.fzf/bin/fzf --bind "$binding" --preview 'bat {}')
+binding='enter:become(open {}),ctrl-o:become(open -R {})'
+result=$( ( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf --bind "$binding" --preview 'smart_preview {}')
 
 if [[ "$result" != '' ]]; then
   open $result

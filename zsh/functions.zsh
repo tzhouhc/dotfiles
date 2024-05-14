@@ -199,7 +199,7 @@ function e() {
     supervim "$1"
     return
   fi
-  if res=$(cat "$hist_file" | fzf --preview='bat {}'); then
+  if res=$(cat "$hist_file" | fzf --preview='smart_preview {}'); then
     supervim "$res"
   fi
 }
@@ -240,7 +240,7 @@ function o() {
     fi
     return
   fi
-  binding='enter:become(open {}),ctrl-o:become(cd "$(dirname {})"; open .)'
+  binding='enter:become(open {}),ctrl-o:become(open -R {})'
   result=$( ( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf --bind "$binding" )
   if [[ "$result" != '' ]]; then
     open $result
@@ -249,6 +249,26 @@ function o() {
 
 # Vim
 # function v() is an alias to supervim
+
+# Which
+# Edit the source of an commandline runnable.
+function w() {
+  t=$(type "$1")
+  # if type fails, runnable doesn't exist
+  if [[ $? != 0 ]]; then
+    return
+  fi
+  # this _might_ be a file path
+  f=$(echo $t | choose -1)
+  if echo $t | grep 'shell builtin' >& /dev/null; then
+    echo $t
+  elif echo $t | grep 'alias' >& /dev/null; then
+    echo $t
+  # if file exists and is a text file (i.e. script)
+  elif [[ -f "$f" ]] && file "$f" | ggrep -Eq 'text$'; then
+    supervim "$f"
+  fi
+}
 
 # Zoxide
 # function z() already defined via zoxide

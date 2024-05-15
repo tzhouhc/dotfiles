@@ -208,7 +208,7 @@ function e() {
 # Searches local files via fzf and opens to selected line for edit.
 function f() {
   preview='ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:'
-  file_line=$(ag --nobreak --noheading . | fzf -m -d':' -n3.. --preview="$preview")
+  file_line=$(rg --no-heading --no-context-separator . | fzf -m -d':' -n3.. --preview="$preview")
   read -r file line <<<$(echo "$file_line" | choose -f ':' 0 1)
   if [[ $file != '' ]]; then
     supervim +$line "$file"

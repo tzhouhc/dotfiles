@@ -1,5 +1,14 @@
 Library
-*/.git/*
+Library/**
+Pictures
+Pictures/**
+
+*.plist
+*.lock
 *.pyc
 Icon?
+
+!.config
 !.config/**
+!.dotfiles
+!.dotfiles/**

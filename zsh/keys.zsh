@@ -42,7 +42,7 @@ bindkey '^o' my_fzf_file_widget
 
 
 # Ctrl-f to run fuzzy search and return file name
-function my_fzf_ag_widget() {
+function my_fzf_rg_widget() {
   insert=$(local_lines_list)
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
@@ -50,36 +50,8 @@ function my_fzf_ag_widget() {
   zle reset-prompt
   return $ret
 }
-zle     -N   my_fzf_ag_widget
-bindkey '^f' my_fzf_ag_widget
-
-# Meta-f to fuzzy search for line and jump to view in less
-function my_fzf_ag_num_widget() {
-  tuple=$(local_lines_list_with_num)
-  if [[ ! -z $tuple ]]; then
-    file=$(echo $tuple | cut -d':' -f1)
-    line=$(echo $tuple | cut -d':' -f2)
-    bat --pager "less +${line}g" "${file}"
-  fi
-  zle reset-prompt
-}
-zle     -N   my_fzf_ag_num_widget
-# -- conflict with iTerm's natural editing escape sequences.
-# bindkey '^[f' my_fzf_ag_num_widget
-
-# Ctrl-v to fuzzy-search for lines and edit
-function my_vim_edit_num_widget() {
-  tuple=$(local_lines_list_with_num)
-  if [[ ! -z $tuple ]]; then
-    file=$(echo $tuple | cut -d':' -f1)
-    line=$(echo $tuple | cut -d':' -f2)
-    vim $file +$line
-  fi
-  zle reset-prompt
-}
-zle     -N   my_vim_edit_num_widget
-# Seems to have some conflicts with iTerm's signals
-# bindkey '^v' my_vim_edit_num_widget
+zle     -N   my_fzf_rg_widget
+bindkey '^f' my_fzf_rg_widget
 
 # Ctrl-p to write local folders to the zle
 function my_fzf_folder_widget() {

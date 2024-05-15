@@ -65,19 +65,21 @@ function local_tag_list() {
     | awk -F $'\u00a0' '{print $2}'
 }
 
+fzf_preview='ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:'
+
 # Lines in files visible in the current directory
 function local_lines_list() {
-  print "$(ag --nobreak --noheading . | fzf -m -d':' -n3.. --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+  print "$(rg --no-heading --no-context-separator . | fzf --ansi -d':' -n3.. --preview $fzf_preview | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
 }
 
 # Lines (matching exactly) in files visible in the current directory
 function local_lines_exact_list() {
-  print "$(ag --nobreak --noheading . | fzf -m --exact -d':' -n3.. --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+  print "$(rg --no-heading --no-context-separator . | fzf --ansi --exact -d':' -n3.. --preview $fzf_preview | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
 }
 
 # Lines (matching exactly) in files visible in the current directory with line numbers
 function local_lines_list_with_num() {
-  print "$(ag --nobreak --noheading . | fzf -m -d':' --preview 'ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:' | cut -d':' -f1,2 | paste -sd ' ')"
+  print "$(rg --no-heading --no-context-separator . | fzf --ansi -d':' --preview $fzf_preview | cut -d':' -f1,2 | paste -sd ' ')"
 }
 
 # Directories visible in the current directory

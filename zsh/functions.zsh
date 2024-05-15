@@ -175,7 +175,7 @@ function fd_across_repo() {
 # open and then hide iterm window
 # used as an alias for open
 function open_and_switch() {
-  /usr/bin/open $1
+  /usr/bin/open $@
   hide_iterm_window
 }
 
@@ -241,7 +241,7 @@ function o() {
     return
   fi
   binding='enter:become(open {}),ctrl-o:become(open -R {})'
-  result=$( ( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf --bind "$binding" )
+  result=$( ( fd . ~/ & fd . "/Applications/" --extension app ) | fzf --bind "$binding" )
   if [[ "$result" != '' ]]; then
     open $result
   fi

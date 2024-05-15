@@ -4,10 +4,10 @@
 # this makes it so fzf won't go searching for files in gitignore paths
 if type fd > /dev/null; then
   _fzf_compgen_path() {
-    fd --hidden --follow --exclude ".git" . "$1"
+    fd --follow --exclude ".git" . "$1"
   }
   _fzf_compgen_dir() {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
+    fd --type d --follow --exclude ".git" . "$1"
   }
 fi
 
@@ -47,9 +47,9 @@ function p4_package_list() {
 # Files visible in the current directory
 function local_file_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . -H --type f --type l $1 | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . --type f --type l $1 | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   else
-    print "$(fd . -H --type f --type l | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . --type f --type l | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   fi
 }
 
@@ -83,9 +83,9 @@ function local_lines_list_with_num() {
 # Directories visible in the current directory
 function local_dir_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . -L -H --type d $1 | fzf -m --preview 'ls --color=always {}' | sed 's/(.*)/\"\1\"/g')"
+    print "$(fd . -L --type d $1 | fzf -m --preview 'ls --color=always {}' | sed 's/(.*)/\"\1\"/g')"
   else
-    print "$(fd . -L -H --type d | fzf -m --preview 'ls --color=always {}' | sed 's/(.*)/\"\1\"/g')"
+    print "$(fd . -L --type d | fzf -m --preview 'ls --color=always {}' | sed 's/(.*)/\"\1\"/g')"
   fi
 }
 
@@ -143,7 +143,7 @@ function git_commit_list() {
 
 # Everything
 function everything_list() {
-  fd . $HOME -H | fzf | sed 's/(.*)/\"\1\"/g'
+  fd . $HOME | fzf | sed 's/(.*)/\"\1\"/g'
 }
 
 # Function that collect all above method names and help messages for fzf

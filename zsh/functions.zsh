@@ -21,61 +21,6 @@ function my_cd() {
   fi
 }
 
-# start neovim as a server with a fixed socket
-#   * create new server if none exist
-#   * one server for each tmux window
-function supervim() {
-  if type nvr >/dev/null 2>&1; then
-    # vim internal-terminal mode
-    if [[ $NVIM != '' ]]; then
-      nvr $@
-      return
-    fi
-    # determine tmux mode
-    if [[ $TMUX != '' ]]; then
-      window=$(tmux display-message -p '#I')
-      expect_name="/tmp/nvimsocket_$window"
-    else
-      expect_name="/tmp/nvimsocket"
-    fi
-    if [[ $(vimpane) != '' ]]; then
-      NVIM_LISTEN_ADDRESS=$expect_name nvr $@ && gotovim
-    else
-      # if we are creating a new server, make sure there's no leftover sockets
-      # that might lock us out
-      rm -f $expect_name
-      NVIM_LISTEN_ADDRESS=$expect_name nvim $@
-    fi
-  else
-    nvim $@
-  fi
-}
-
-# Find the pane containing vim instance in current tmux window
-function vimpane() {
-  if [[ $TMUX != '' ]]; then
-    tmux list-panes -F '#I:#P #{pane_current_command}' | grep nvim | cut -d' ' -f1  | cut -d':' -f2
-  fi
-}
-
-
-# if tmux is running, then try to find running vim panel
-# will probably fail if no nvim is running
-# though this really should only be called from the above supervim cmd
-function gotovim() {
-  if [[ $TMUX != '' ]]; then
-    vim_pane=$(vimpane)
-    if [[ $vim_pane != '' ]]; then
-      tmux select-pane -t $vim_pane && tmux send-keys Enter
-      # the extra step is needed to avoid the hit-enter events due to low
-      # cmdheight in nvim.
-    else
-      echo "Vim is not running in the current window."
-      return 1
-    fi
-  fi
-}
-
 # restart current thread
 function zsh_reload() {
   exec zsh
@@ -205,14 +150,19 @@ function e() {
 }
 
 # Find
-# Searches local files via fzf and opens to selected line for edit.
+# Searches local files via fzf and
+#   - prints file name on Enter
+#   - opens to selected line for edit on ctrl-E
+#   - opens in bat on ctrl-L
+#   - opens containing directory on ctrl-O
 function f() {
   preview='ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:'
-  file_line=$(rg --no-heading --no-context-separator . | fzf -m -d':' -n3.. --preview="$preview")
-  read -r file line <<<$(echo "$file_line" | choose -f ':' 0 1)
-  if [[ $file != '' ]]; then
-    supervim +$line "$file"
-  fi
+  rg --no-heading --no-context-separator . | \
+  fzf --ansi -d':' -n3.. --preview="$preview" \
+    --bind 'enter:become(print {1})' \
+    --bind 'ctrl-e:become(supervim +{2} {1})' \
+    --bind 'ctrl-l:become(bat {1} -H {2})' \
+    --bind 'ctrl-o:become(open -R {1})'
 }
 
 # Git

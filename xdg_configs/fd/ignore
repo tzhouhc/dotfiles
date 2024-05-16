@@ -1,7 +1,5 @@
 Library
 Library/**
-Pictures
-Pictures/**
 
 *.plist
 *.lock

@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-PATH=$PATH:$HOME/.cargo/bin:/opt/homebrew/bin/
+source $HOME/.zsh/path.zsh
 
 # list dir content if is dir
 if [[ -d "$1" ]]; then

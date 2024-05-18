@@ -2,8 +2,13 @@
 # custom version of the `o` letter command to be used as a binary.
 source $HOME/.zsh/path.zsh
 
+# get current TTY size and calculate space available for imgcatr
+read -r vert hori <<<$(stty size)
+(( vert = vert - 2 ))
+(( hori = (hori - 7) / 2 ))
+
 binding='enter:become(open {}),ctrl-o:become(open -R {})'
-result=$( ( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf --bind "$binding" --preview 'smart_preview {}')
+result=$( ( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf --bind "$binding" --preview "smart_preview {} ${vert} ${hori}")
 
 if [[ "$result" != '' ]]; then
   open $result

@@ -6,6 +6,9 @@ Library/**
 *.pyc
 Icon?
 
+.DS_Store
+.mypy_cache
+
 !.config
 !.config/**
 !.dotfiles

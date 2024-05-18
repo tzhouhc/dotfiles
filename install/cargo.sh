@@ -14,6 +14,7 @@ if type cargo >/dev/null 2>&1; then
   cargo install eza   # ls
   cargo install fd-find   # find
   cargo install git-delta   # diff
+  cargo install imgcatr  # show images
   cargo install just   # make
   cargo install navi   # find
   cargo install ripgrep --features 'pcre2'  # grep

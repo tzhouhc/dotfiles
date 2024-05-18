@@ -2,6 +2,15 @@
 
 source $HOME/.zsh/path.zsh
 
+# default preview image dimensions
+hori=50
+vert=20
+# optional image dimensions
+if [[ "$2" != '' ]] && [[ $3 != '' ]]; then
+  vert=$2
+  hori=$3
+fi
+
 # list dir content if is dir
 if [[ -d "$1" ]]; then
   eza --color=always --icons=always -l "$1"
@@ -9,5 +18,7 @@ elif [[ -f "$1" ]]; then
   # only try to print file content if file is text
   if file "$1" | ggrep -Eq 'text$'; then
     bat --color=always --theme=base16 --italic-text=always "$1"
+  elif file "$1" | ggrep -Eq 'image data'; then
+    imgcatr -s "${hori}x${vert}" "$1"
   fi
 fi

@@ -110,13 +110,9 @@ if type just >/dev/null 2>&1; then
   alias j=just
 fi
 
-if type rg >/dev/null 2>&1; then
-  alias grep=rg
-else
-  # run if 'ggrep' exists on path
-  if type ggrep >/dev/null 2>&1; then
-    alias grep=$(which ggrep)
-  fi
+# run if 'ggrep' exists on path
+if type ggrep >/dev/null 2>&1; then
+  alias grep=ggrep
 fi
 
 if type rip >/dev/null 2>&1; then

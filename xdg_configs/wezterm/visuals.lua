@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 
 local M = {}
 
-function M.update_visuals(config)
+function M.update_config(config)
   -- Minimal user interface
   -- still allow resizing with mouse
   config.window_decorations = "RESIZE"
@@ -13,7 +13,7 @@ function M.update_visuals(config)
 
   -- font
   config.font = wezterm.font('Cascadia Code NF')
-  config.font_size = 12
+  config.font_size = 13
   config.harfbuzz_features = {
     -- ligatures
     'calt=1',

@@ -1,3 +1,4 @@
+
 # Base paths
 export PATH=''
 export PATH=/bin:$PATH
@@ -40,6 +41,8 @@ if uname -a | grep -i darwin > /dev/null; then
   export PATH=/$BREW_HOME/opt/ruby/bin:$PATH
   # latex
   export PATH=/Library/TeX/texbin/:$PATH
+  # wezterm
+  export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 fi
 
 export LDFLAGS="-L/$BREW_HOME/opt/ruby/lib"

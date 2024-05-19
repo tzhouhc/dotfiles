@@ -20,7 +20,7 @@ read -r vert hori <<<$(stty size)
 (( hori = (hori - 7) / 2 ))
 
 binding='enter:become(open {}),ctrl-o:become(open -R {})'
-result=$( ( fd . "/Applications/" --extension app & fd . ~/ --hidden ) | fzf --bind "$binding" --preview "smart_preview {} ${vert} ${hori}")
+result=$( ( fd . "/Applications/" --extension app & fd . ~/ --hidden ) | fzf --height 100% --bind "$binding" --preview "smart_preview {} ${vert} ${hori}")
 
 if [[ "$result" != '' ]]; then
   open $result

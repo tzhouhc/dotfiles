@@ -191,7 +191,7 @@ function o() {
     return
   fi
   binding='enter:become(open {}),ctrl-o:become(open -R {})'
-  result=$( ( fd . ~/ & fd . "/Applications/" --extension app ) | fzf --bind "$binding" )
+  result=$( ( fd . --hidden ~/ & fd . "/Applications/" --extension app ) | fzf --bind "$binding" )
   if [[ "$result" != '' ]]; then
     open $result
   fi

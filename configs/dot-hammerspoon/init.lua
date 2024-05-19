@@ -1,5 +1,6 @@
 -- window management; replaces Rectangle.app
 require('windows')
+require('apps')
 
 -- reload shortcut
 local function reload_config(files)

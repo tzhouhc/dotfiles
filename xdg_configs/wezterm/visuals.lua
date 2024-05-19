@@ -13,6 +13,17 @@ function M.update_visuals(config)
 
   -- font
   config.font = wezterm.font('Cascadia Code NF')
+  config.font_size = 12
+  config.harfbuzz_features = {
+    -- ligatures
+    'calt=1',
+    -- cursive italics
+    -- 'ss01=1',
+    -- slashed zero
+    'ss19=1',
+    -- graphical control chars
+    'ss20=1'
+  }
 end
 
 return M

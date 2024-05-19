@@ -1,5 +1,17 @@
 #!/usr/bin/env zsh
-# custom version of the `o` letter command to be used as a binary.
+# Seb, named as a reference to Alfred and the Black Butler series.
+# It's expected to eventually grow into a Alfred replacement that is more
+# OS agnostic.
+# ----
+# Currently it only serves as a file finder (by name) and opener, with some
+# preview capabilties.
+# TODO:
+# * reorder -- suggestions are sorted by order of input; make use of this
+# * fallback mode - search in browser?
+# * mode - open browser bookmarks
+# * mode - do math using kalker
+# * mode - open file from obsidian
+
 source $HOME/.zsh/path.zsh
 
 # get current TTY size and calculate space available for imgcatr
@@ -8,7 +20,7 @@ read -r vert hori <<<$(stty size)
 (( hori = (hori - 7) / 2 ))
 
 binding='enter:become(open {}),ctrl-o:become(open -R {})'
-result=$( ( fd . ~/ --hidden & fd . "/Applications/" --extension app ) | fzf --bind "$binding" --preview "smart_preview {} ${vert} ${hori}")
+result=$( ( fd . "/Applications/" --extension app & fd . ~/ --hidden ) | fzf --bind "$binding" --preview "smart_preview {} ${vert} ${hori}")
 
 if [[ "$result" != '' ]]; then
   open $result

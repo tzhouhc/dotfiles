@@ -2,6 +2,9 @@
 require('windows')
 require('apps')
 
+-- required for cli use
+require("hs.ipc")
+
 -- reload shortcut
 local function reload_config(files)
     local do_reload = false

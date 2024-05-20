@@ -43,6 +43,8 @@ if uname -a | grep -i darwin > /dev/null; then
   export PATH=/Library/TeX/texbin/:$PATH
   # wezterm
   export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+  # hammerspoon
+  export PATH="$PATH:$HOME/.hammerspoon/bin"
 fi
 
 export LDFLAGS="-L/$BREW_HOME/opt/ruby/lib"

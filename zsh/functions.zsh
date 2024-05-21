@@ -124,6 +124,26 @@ function open_and_switch() {
   hide_iterm_window
 }
 
+# check if file or directory is in an obsidian vault
+function is_ob_vault() {
+  dir=$1
+  if [[ "$dir" == '' ]]; then
+    dir=$(pwd)
+  fi
+  while [[ $dir != '/' ]]; do
+    if ls -a "$dir" | ggrep -Eq '.obsidian'; then
+      return 0
+    fi
+    dir=$(dirname "$dir")
+  done
+  return 1
+}
+
+function open_in_ob() {
+  file_path=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$1'''))")
+  open "obsidian://open?path=$file_path"
+}
+
 # ==============================
 # Letter Functions
 # ==============================

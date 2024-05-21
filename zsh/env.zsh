@@ -1,7 +1,8 @@
-# ====================
 # Environemental Vars
-# ====================
-# User configuration
+#
+# Can be sourced as a standalone file for effect, though less meaningful
+# outside shell contexts.
+
 export MANPATH="/usr/local/man:$MANPATH"
 
 # Homebrew
@@ -62,20 +63,7 @@ fi
 export PAGER="less"
 export MANPAGER="less"
 
-# export QUOTING_STYLE=literal
-
-# export LDFLAGS="-L/usr/local/opt/llvm/lib"
-# export CPPFLAGS="-I/usr/local/opt/llvm/include"
-
-# also find symlinks
 export FZF_DEFAULT_COMMAND='fd --type f --type l --hidden'
 export FZF_DEFAULT_OPTS="--height 40% --reverse"
 export FZF_CTRL_T_COMMAND=
 export FZF_ALT_C_COMMAND=
-
-if [[ $IS_PERSONAL_COMPUTER == 'true' ]]; then
-  export CRITICAL_ROLE_PATH="/Users/tingzhou/Documents/Critical Role/CR FULL/tsv_transcripts"
-  export ANDROID_HOME=~/Library/Android/sdk
-  export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools
-  export ANDROID_AVD_HOME=~/.android/avd
-fi

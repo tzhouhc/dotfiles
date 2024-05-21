@@ -1,3 +1,6 @@
+# Establishes the locations of various executables.
+#
+# Can be sourced as a standalone file for effect.
 
 # Base paths
 export PATH=''

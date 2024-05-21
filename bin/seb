@@ -12,8 +12,7 @@
 # * mode - do math using kalker
 # * mode - open file from obsidian
 
-source $HOME/.zsh/path.zsh
-source $HOME/.zsh/functions.zsh
+source $HOME/.zsh/base.zsh
 
 # get current TTY size and calculate space available for imgcatr
 read -r vert hori <<<$(stty size)

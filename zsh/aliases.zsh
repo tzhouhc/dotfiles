@@ -31,7 +31,8 @@ alias cl=clear
 # customize calling
 alias gtop="TERM='xterm' gtop"
 
-if [[ $IS_PERSONAL_COMPUTER == "true" ]]; then
+# use custom variant that also hides the terminal after opening
+if uname -a | grep -i darwin > /dev/null; then
   alias open=open_and_switch
 fi
 
@@ -80,11 +81,12 @@ fi
 if type eza >/dev/null 2>&1; then
   alias ls='eza --icons=always --no-quotes --group-directories-first'
 else
-  # BSD or GNU?
-  if [[ $COREUTILS_VER == GNU ]]; then
-    alias ls='ls -N --color -h --sort=extension --group-directories-first -v'
-  else
+  if [[ -z $(ls --version 2>/dev/null | grep gnu) ]]; then
+    # GNU
     alias ls='ls -G'
+    # BSD
+  else
+    alias ls='ls -N --color -h --sort=extension --group-directories-first -v'
   fi
 fi
 alias l=ls

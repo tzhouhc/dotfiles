@@ -1,41 +1,10 @@
 #!/usr/bin/env zsh
 
-ZSH_SETUP="$HOME/.zsh"
+ZSH_HOME="$HOME/.zsh"
 
-# If you come from bash you might have to change your $PATH.
-# Has no dependency anything
-source "$ZSH_SETUP/path.zsh"
+# common imports for both shell and other invocations of zsh
+source "$ZSH_HOME/base.zsh"
 
-# variables
-source "$ZSH_SETUP/vars.zsh"
+# other configs and operations unique to login shells
+source "$ZSH_HOME/shell.zsh"
 
-# env vars
-source "$ZSH_SETUP/env.zsh"
-
-# read slightly longer 'shorthands'
-source "$ZSH_SETUP/functions.zsh"
-
-# read fzf related tools
-source "$ZSH_SETUP/fzf.zsh"
-
-# read custom completions
-source "$ZSH_SETUP/completions.zsh"
-
-# various basic zsh settings
-source "$ZSH_SETUP/settings.zsh"
-
-# key mappings
-source "$ZSH_SETUP/keys.zsh"
-
-# read convenient short hands
-# also ensures functions do _not_ see the aliases and get messed up logic
-source "$ZSH_SETUP/aliases.zsh"
-
-# functions where we _do_ want to see post-aliasing logic
-source "$ZSH_SETUP/post_functions.zsh"
-
-# configuring tool hooks
-source "$ZSH_SETUP/tools.zsh"
-
-# optionally start up TMUX unless NOTMUX is set
-source "$ZSH_SETUP/tmux.zsh"

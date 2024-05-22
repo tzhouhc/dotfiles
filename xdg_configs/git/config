@@ -32,6 +32,7 @@
 [delta]
   side-by-side = true
   true-color = always
+  tabs = 2
   navigate = true    # use n and N to move between diff sections
   dark = true
   # arctic-fox theme

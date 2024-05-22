@@ -1,8 +1,13 @@
-# Installation is irrelevant since just is not installed yet.
+# Installation is irrelevant for new setups, but can still be used for
+# reinstallations -- they _should_ all be idempotent.
 
 # deploy all symlinks from the dotfiles storage
 deploy:
   ./deploy.sh
+
+# install main tools
+install:
+  ./install.sh
 
 # install optional tools
 install-optional:

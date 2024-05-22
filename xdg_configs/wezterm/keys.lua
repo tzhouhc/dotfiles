@@ -12,11 +12,6 @@ function M.update_config(config)
       mods = 'CMD',
       action = wezterm.action.DisableDefaultAssignment,
     },
-    {
-      key = 't',
-      mods = 'CMD',
-      action = wezterm.action.DisableDefaultAssignment,
-    },
   }
 end
 

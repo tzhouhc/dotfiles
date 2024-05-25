@@ -21,7 +21,7 @@ fi
 # zgen plugins
 # load early so that local changes remain in effect
 source "$HOME/.zgen/zgen.zsh"
-source "$ZSH_HOME/zgen.zsh"
+source "$ZSH_HOME/shell/zgen.zsh"
 
 # atuin (shell history db)
 eval "$(atuin init zsh --disable-up-arrow)"

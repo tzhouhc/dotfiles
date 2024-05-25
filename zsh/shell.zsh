@@ -1,22 +1,25 @@
 #!/usr/bin/env zsh
+# Contains additional setups and configurations that are only relavant in an
+# interactive shell environment, such as completions, shortcuts, aliases, etc.
 
 ZSH_HOME="$HOME/.zsh"
+SHELL_SCRIPTS_DIR="$ZSH_HOME/shell"
 
 # read custom completions for zsh
-source "$ZSH_HOME/completions.zsh"
+source "$SHELL_SCRIPTS_DIR/completions.zsh"
 
 # various basic zsh settings
-source "$ZSH_HOME/settings.zsh"
+source "$SHELL_SCRIPTS_DIR/settings.zsh"
 
 # key mappings in zsh
-source "$ZSH_HOME/keys.zsh"
+source "$SHELL_SCRIPTS_DIR/keys.zsh"
 
 # read convenient short hands
 # also ensures functions do _not_ see the aliases and get messed up logic
-source "$ZSH_HOME/aliases.zsh"
+source "$SHELL_SCRIPTS_DIR/aliases.zsh"
 
 # configuring tool hooks in zsh
-source "$ZSH_HOME/tools.zsh"
+source "$SHELL_SCRIPTS_DIR/tools.zsh"
 
 # optionally start up TMUX unless NOTMUX is set
-source "$ZSH_HOME/tmux.zsh"
+source "$SHELL_SCRIPTS_DIR/tmux.zsh"

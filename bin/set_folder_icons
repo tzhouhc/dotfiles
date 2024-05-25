@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-source $HOME/.zsh/path.zsh
+source $HOME/.zsh/env/path.zsh
+
 IFS=$'\n'
 for dir in $(echo ".\n"; fd . -t d); do
   if [[ $SET_ICON_SKIP_EXISTING == 1 ]]; then

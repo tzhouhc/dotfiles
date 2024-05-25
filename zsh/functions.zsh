@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # Overall collection of various shell functions available for use
 #
 # Can be sourced as a standalone file for effect.

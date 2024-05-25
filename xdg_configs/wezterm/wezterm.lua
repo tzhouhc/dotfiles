@@ -12,5 +12,8 @@ require'common'.update_config(config)
 require'keys'.update_config(config)
 require'visuals'.update_config(config)
 
+-- additional interactions
+require'integrations'
+
 -- and finally, return the configuration to wezterm
 return config

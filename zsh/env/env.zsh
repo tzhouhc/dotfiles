@@ -20,6 +20,7 @@ export VIM_HOME="$XDG_CONFIG_HOME/nvim"
 export MYVIMRC="$VIM_HOME/init.lua"
 export COPY_FILE="$HOME/.copy"
 export EDITOR=nvim
+export VISUAL=nvim
 export GIT_EDITOR=nvim
 export P4EDITOR=nvim
 export P4DIFF=delta

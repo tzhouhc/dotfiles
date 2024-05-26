@@ -142,7 +142,16 @@ function is_ob_vault() {
   return 1
 }
 
+# open a file in obsidian (assuming it is in a vault)
 function open_in_ob() {
   file_path=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$1'''))")
   open "obsidian://open?path=$file_path"
+}
+
+# if current dir contains a python venv, invoke it
+function venv() {
+  if [[ -d '.venv']]; then
+    source ./venv/bin/activate
+  fi
+
 }

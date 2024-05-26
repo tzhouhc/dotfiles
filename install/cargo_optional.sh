@@ -9,3 +9,4 @@ cargo install pipr  # pipeline crafter
 cargo install procs   # ps
 cargo install zellij   # tmux
 cargo install --git https://github.com/lotabout/rargs.git  # xargs
+cargo install --locked yazi-fm yazi-cli  # file explorer

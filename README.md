@@ -93,3 +93,11 @@ META modifiers should take care to avoid Tmux ones.
 ### OS
 With macOS, system level shortcuts almost always use CMD. Custom, global ones
 should try not to be modified with solely META or CTRL.
+
+# Imports
+
+A number of the zsh scripts can be sourced for effect:
+
+* `$HOME/.zsh/base.zsh` encapsulates all the `PATH` and other env variables
+    changed in the regular zsh shell session, as well as a large number of
+    functions that could be useful.

@@ -19,6 +19,10 @@ elif [[ -f "$1" ]]; then
   if file "$1" | ggrep -Eq 'text$'; then
     bat "$1"
   elif file "$1" | ggrep -Eq 'image data'; then
-    imgcatr -s "${hori}x${vert}" "$1"
+    if type imgcatr >/dev/null 2>&1; then
+      imgcatr -s "${hori}x${vert}" "$1"
+    else
+      echo "$1" is an image.
+    fi
   fi
 fi

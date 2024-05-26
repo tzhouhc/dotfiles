@@ -3,8 +3,9 @@ local logger = hs.logger.new('apps', 'debug')
 -- use <cmd> + <tilde> to summon WezTerm or despawn.
 hs.hotkey.bind({ "cmd" }, "`", function()
   local wez = hs.application.find("Wezterm")
-  if not wez then
+  if not wez or wez == nil then
     hs.application.launchOrFocus("WezTerm")
+    return
   end
   if wez:isFrontmost() then
     wez:hide()

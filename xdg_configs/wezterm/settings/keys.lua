@@ -12,6 +12,11 @@ function M.update_config(config)
       mods = 'CMD',
       action = wezterm.action.DisableDefaultAssignment,
     },
+    {
+      key = 'q',
+      mods = 'CMD',
+      action = wezterm.action { CloseCurrentTab = { confirm = false } },
+    },
   }
 end
 

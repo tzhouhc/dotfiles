@@ -1,4 +1,5 @@
 local wezterm = require 'wezterm'
+local tabs = require 'settings/tabs'
 
 local M = {}
 

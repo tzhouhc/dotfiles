@@ -154,3 +154,8 @@ function venv() {
     source ./.venv/bin/activate
   fi
 }
+
+# for checking terminal key codes
+function what_am_i_typing() {
+  STTY='raw -echo min 0 time 40' cat -vte
+}

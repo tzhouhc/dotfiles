@@ -7,3 +7,4 @@ xdg_configs/pipr/history
 xdg_configs/tmux/plugins
 lib/navi/local.cheat
 .DS_STORE
+btop.log

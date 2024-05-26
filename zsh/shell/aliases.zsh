@@ -28,9 +28,6 @@ alias vimdiff='nvim -d'
 alias claer=clear
 alias cl=clear
 
-# customize calling
-alias gtop="TERM='xterm' gtop"
-
 # use custom variant that also hides the terminal after opening
 if uname -a | grep -i darwin > /dev/null; then
   alias open=open_and_switch
@@ -106,6 +103,10 @@ fi
 
 if type btm >/dev/null 2>&1; then
   alias top=btm
+fi
+
+if type btop >/dev/null 2>&1; then
+  alias top=btop
 fi
 
 if type just >/dev/null 2>&1; then

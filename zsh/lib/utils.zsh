@@ -150,8 +150,7 @@ function open_in_ob() {
 
 # if current dir contains a python venv, invoke it
 function venv() {
-  if [[ -d '.venv']]; then
-    source ./venv/bin/activate
+  if [[ -d '.venv' ]]; then
+    source ./.venv/bin/activate
   fi
-
 }

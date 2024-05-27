@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+# get extended path
+source $HOME/.zsh/env/path.zsh
+
+# include:
+#   * locally changed files
+#   * untracked files (new)
+git ls-files --modified --others | fzf --bind 'enter:become(supervim {})'

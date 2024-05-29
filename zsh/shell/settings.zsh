@@ -62,4 +62,7 @@ setopt HIST_VERIFY
 
 set -o magicequalsubst
 
+# recall recent dirs
+set -o autopushd
+
 setopt RE_MATCH_PCRE

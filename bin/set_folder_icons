@@ -1,13 +1,14 @@
 #!/usr/bin/env zsh
+# This script recursively sets current directory icons with images found
+# inside, skipping if one is already set.
 
 source $HOME/.zsh/env/path.zsh
 
 IFS=$'\n'
 for dir in $(echo ".\n"; fd . -t d); do
-  if [[ $SET_ICON_SKIP_EXISTING == 1 ]]; then
-    if ls "$dir" | grep Icon >/dev/null; then
-      continue
-    fi
+  # always skip directories where Icon is already set
+  if ls "$dir" | grep Icon >/dev/null; then
+    continue
   fi
   image=$(fd . --type f -e jpg -e png $dir | head -n 1)
   if [[ $image != '' ]]; then

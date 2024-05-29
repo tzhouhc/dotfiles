@@ -1,6 +1,9 @@
 -- ctrl + arrow keys or Q/R/Z/C for moving the active window around the screen.
+-- See https://www.hammerspoon.org/docs/hs.window.html for docs
 
-local hotkey = require "hs.hotkey"
+hs.window.animationDuration = 0
+
+local hotkey = require("hs.hotkey")
 local geometry = require("hs.geometry")
 
 hotkey.bind({"alt", "ctrl"}, "Right", function()

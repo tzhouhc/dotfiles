@@ -12,6 +12,12 @@ alias '....'='cd ../../..'
 alias '.....'='cd ../../../..'
 # return to previous wd
 alias -- -="cd -"
+alias d="dirs -v"
+alias 0="cd +0"
+alias 1="cd +1"
+alias 2="cd +2"
+alias 3="cd +3"
+alias 4="cd +4"
 
 alias notes="v $HOME/.notes"
 

@@ -21,5 +21,9 @@ source "$SHELL_SCRIPTS_DIR/aliases.zsh"
 # configuring tool hooks in zsh
 source "$SHELL_SCRIPTS_DIR/tools.zsh"
 
+if [[ "$FALLBACK_MODE" == 'true' ]]; then
+  source "$SHELL_SCRIPTS_DIR/fallback.zsh"
+fi
+
 # optionally start up TMUX unless NOTMUX is set
 source "$SHELL_SCRIPTS_DIR/tmux.zsh"

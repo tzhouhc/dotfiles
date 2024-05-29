@@ -7,11 +7,6 @@ fi
 
 # starship prompt
 if type starship >/dev/null 2>&1; then
-  # used to be set in vars.zsh; can be set anywhere appropriate.
-  if [[ "$FALLBACK_MODE" == 'true' ]]; then
-    # has reduced special character usage
-    export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship_fallback.toml"
-  fi
   # defaults to the standard starship.toml
   eval "$(starship init zsh)"
 else

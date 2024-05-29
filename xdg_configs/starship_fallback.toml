@@ -2,7 +2,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """$sudo$character"""
-right_format = """$all"""
+right_format = ""
 
 # Inserts a blank line between shell prompts
 add_newline = false
@@ -27,8 +27,8 @@ disabled = false
 
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
-success_symbol = '[$](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
-error_sumbol   = '[$](bold red)'
+success_symbol = '[\$](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol   = '[\$](bold red)'
 
 [sudo]
 symbol = '# '

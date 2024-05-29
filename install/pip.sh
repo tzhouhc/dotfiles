@@ -7,4 +7,6 @@ if ! type "pip3" > /dev/null; then
 fi
 
 # neovim compat and nvr for client-server mode
-pip3 install ranger-fm neovim neovim-remote
+# using --break-system-packages flag; should _not_ be using system pkg manager
+# for python packages anyway.
+pip3 install neovim neovim-remote --break-system-packages

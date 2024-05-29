@@ -25,3 +25,6 @@ source "$ZSH_HOME/shell/zgen.zsh"
 
 # atuin (shell history db)
 eval "$(atuin init zsh --disable-up-arrow)"
+
+# direnv (automatically run commands for certain directories)
+eval "$(direnv hook zsh)"

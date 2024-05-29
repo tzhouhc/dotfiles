@@ -13,3 +13,8 @@ Icon?
 !.config/**
 !.dotfiles
 !.dotfiles/**
+
+karabiner
+coc
+NuGet
+Wondershare

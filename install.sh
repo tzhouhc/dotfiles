@@ -23,7 +23,6 @@ source $cwd/install/brew.sh
 
 # install rust tools
 source $cwd/install/cargo.sh
-PATH=$PATH:$HOME/.cargo/bin
 
 # with cargo installed, tools like bob should all become available for
 # subsequent use.

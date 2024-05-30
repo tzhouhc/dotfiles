@@ -17,4 +17,4 @@ export PATH=$BREW_HOME/bin:$PATH
 
 brew update
 brew install wget stow tmux zsh the_silver_searcher universal-ctags moreutils \
-  btop lazygit direnv
+  btop lazygit direnv jq

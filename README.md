@@ -4,6 +4,7 @@ Normal initialization:
 
 ```sh
 git clone --recurse-submodules git@github.com:tzhouhc/dotfiles.git ~/.dotfiles
+~/.dotfiles/install.sh
 ~/.dotfiles/deploy.sh
 ```
 
@@ -13,17 +14,60 @@ If cloned without `--recurse-submodule`:
 git submodule update --init --recursive
 ```
 
+# Requirements
+
+Latest zsh configurations require [Nerd Fonts](https://www.nerdfonts.com/)
+support at major version 3. Powerline symbols is also required. Use of fonts
+like `Cascadia Code NF` or `JetBrains Nerd Font Mono` is recommended.
+
+The main installation script requires `sudo` access to run the initial
+installation of tools; specific installations using `cargo` or `homebrew` do
+not.
+
+
 # Install tools
 
-If additional tooling is required, run the `install.sh` script.
+If additional tooling is required, run the `install.sh` script. It should call
+the other installation scripts automatically.
+
+> [!NOTE]:
+> `cargo_optional.sh` is not invoked as part of the standard installation
+> process, as none of the tools within are used in the other scripts in this
+> setup.
 
 ## Neovim
 
 Downloaded using `bob-nvim` which is part of the rust installation.
 
-# Requirements
+# Tools
 
-Latest zsh configurations require `Nerdfont` support.
+## Scripts
+
+A number of custom scripts are available in `.dotfiles/bin`; this is
+automatically added to the `$PATH` env var as part of the `zshrc`.
+
+## Just
+
+A `justfile` is provided for a couple of frequently used commands.
+
+## Templater
+
+The `templates` dir under `xdg_configs` stores what are essentially project
+templates that can be used to quickly replicate a standard setup in a directory
+by using the `tmpl` script.
+
+For each template directory, there are usually a number of files that will be
+copied over to the new project directory upon invocation of the command.
+However, there are also a couple of special cases:
+
+* An `info` plaintext file is expected and will be used to provide a short
+    readable summary of the template dir.
+* A `prep` shell script, if provided, will be sourced in the destination
+    directory, and then removed.
+* A `dot-envrc` file, if provided, will be copied and then renamed to `.envrc`
+    in order to trigger the `direnv` tool. While this behavior follows that of
+    stow, it is not currently done for other typically hidden files.
+
 
 # Trouble Shooting
 
@@ -43,7 +87,6 @@ The `xdg_configs` directory contains dotfiles and dot config directories that
 should be symlinked to `$XDG_CONFIG_HOME`, which is typically `$HOME/.config`.
 
 These symlinks are managed with `stow`.
-
 
 ## Running Commands
 
@@ -101,3 +144,4 @@ A number of the zsh scripts can be sourced for effect:
 * `$HOME/.zsh/base.zsh` encapsulates all the `PATH` and other env variables
     changed in the regular zsh shell session, as well as a large number of
     functions that could be useful.
+

@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+export PATH=$HOME/.cargo/bin:$PATH
+
 # install rust for cargo -- OS agnostic, more or less
 if ! type cargo >/dev/null 2>&1; then
   echo "Installing rust/cargo:"

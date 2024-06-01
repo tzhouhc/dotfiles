@@ -4,6 +4,18 @@ Normal initialization:
 
 ```sh
 git clone --recurse-submodules git@github.com:tzhouhc/dotfiles.git ~/.dotfiles
+```
+
+If running on AWS EC2, first set password for the default user:
+
+```
+sudo su -
+passwd ubuntu
+```
+
+Then proceed with installation (recommend doing so inside of `tmux`):
+
+```
 ~/.dotfiles/install.sh
 ~/.dotfiles/deploy.sh
 ```

@@ -16,5 +16,5 @@ if ! type brew  >/dev/null 2>&1; then
 fi
 
 brew update
-brew install wget stow tmux zsh the_silver_searcher universal-ctags moreutils \
-  btop lazygit direnv jq
+brew install wget git stow tmux zsh the_silver_searcher universal-ctags \
+  moreutils btop lazygit direnv jq git-secrets

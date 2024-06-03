@@ -1,8 +1,13 @@
 #!/bin/bash
 set -e
 
+if [[ $TMUX == '' ]]; then
+  echo "Not running in tmux. This is not ideal for running the installation."
+  exit 1
+fi
+
 cwd="$(dirname "$0")"
-cwd="$(cd $cwd; pwd)"
+cd $cwd
 
 # install OS-dependent specific items
 if uname -a | grep -i linux > /dev/null; then

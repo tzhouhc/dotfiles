@@ -1,7 +1,7 @@
-local logger = hs.logger.new('apps', 'debug')
+local M = {}
 
 -- use <cmd> + <tilde> to summon WezTerm or despawn.
-hs.hotkey.bind({ "cmd" }, "`", function()
+function M.toggle_wizterm()
   local wez = hs.application.find("Wezterm")
   if not wez or wez == nil then
     hs.application.launchOrFocus("WezTerm")
@@ -12,7 +12,7 @@ hs.hotkey.bind({ "cmd" }, "`", function()
   else
     wez:activate()
   end
-end)
+end
 
 local function unhidden_wez_window()
   local windows = { hs.application.find("WezTerm") }
@@ -34,18 +34,15 @@ local function focus_unhidden_wez_window()
 end
 
 -- invoke "seb" with <cmd> + <opt> + <a>.
-hs.hotkey.bind({ "cmd", "ctrl" }, "a", function()
+function M.summon_quick_open()
   -- pipe to null and send to background to prevent blocking hs
   os.execute(
     "/Applications/WezTerm.app/Contents/MacOS/wezterm --config-file $HOME/.config/wezterm/popup_wezterm.lua start -- $HOME/.dotfiles/bin/seb >& /dev/null &")
-  -- allow app some startup time that's barely noticeable
-  local retries = 0
-  -- do not spend more than 1s on trying this
-  logger.f("entering")
-
   hs.timer.waitUntil(
     unhidden_wez_window_present,
     focus_unhidden_wez_window,
     0.1
   )
-end)
+end
+
+return M

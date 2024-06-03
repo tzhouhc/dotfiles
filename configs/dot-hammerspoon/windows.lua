@@ -3,10 +3,9 @@
 
 hs.window.animationDuration = 0
 
-local hotkey = require("hs.hotkey")
-local geometry = require("hs.geometry")
+local M = {}
 
-hotkey.bind({"alt", "ctrl"}, "Right", function()
+function M.right_half()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -17,9 +16,9 @@ hotkey.bind({"alt", "ctrl"}, "Right", function()
   f.w = max.w / 2
   f.h = max.h
   win:setFrame(f)
-end)
+end
 
-hotkey.bind({"alt", "ctrl"}, "Left", function()
+function M.left_half()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -30,9 +29,9 @@ hotkey.bind({"alt", "ctrl"}, "Left", function()
   f.w = max.w / 2
   f.h = max.h
   win:setFrame(f)
-end)
+end
 
-hotkey.bind({"alt", "ctrl"}, "Return", function()
+function M.maximize()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -43,9 +42,9 @@ hotkey.bind({"alt", "ctrl"}, "Return", function()
   f.w = max.w
   f.h = max.h
   win:setFrame(f)
-end)
+end
 
-hotkey.bind({"alt", "ctrl"}, "Down", function()
+function M.bottom_half()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -56,9 +55,9 @@ hotkey.bind({"alt", "ctrl"}, "Down", function()
   f.w = max.w
   f.h = max.h / 2
   win:setFrame(f)
-end)
+end
 
-hotkey.bind({"alt", "ctrl"}, "Up", function()
+function M.top_half()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -69,9 +68,10 @@ hotkey.bind({"alt", "ctrl"}, "Up", function()
   f.w = max.w
   f.h = max.h / 2
   win:setFrame(f)
-end)
+end
 
-hotkey.bind({"alt", "ctrl"}, "q", function()
+
+function M.top_left_quadrant()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -82,9 +82,9 @@ hotkey.bind({"alt", "ctrl"}, "q", function()
   f.w = max.w / 2
   f.h = max.h / 2
   win:setFrame(f)
-end)
+end
 
-hotkey.bind({"alt", "ctrl"}, "r", function()
+function M.top_right_quadrant()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -95,9 +95,9 @@ hotkey.bind({"alt", "ctrl"}, "r", function()
   f.w = max.w / 2
   f.h = max.h / 2
   win:setFrame(f)
-end)
+end
 
-hotkey.bind({"alt", "ctrl"}, "z", function()
+function M.bottom_left_quadrant()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -108,9 +108,9 @@ hotkey.bind({"alt", "ctrl"}, "z", function()
   f.w = max.w / 2
   f.h = max.h / 2
   win:setFrame(f)
-end)
+end
 
-hotkey.bind({"alt", "ctrl"}, "c", function()
+function M.bottom_right_quadrant()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screen = win:screen()
@@ -121,4 +121,6 @@ hotkey.bind({"alt", "ctrl"}, "c", function()
   f.w = max.w / 2
   f.h = max.h / 2
   win:setFrame(f)
-end)
+end
+
+return M

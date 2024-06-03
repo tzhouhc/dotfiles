@@ -84,6 +84,11 @@ function is_git() {
   git rev-parse --is-inside-work-tree >/dev/null 2>&1
 }
 
+# root dir of current git repo
+function git_repo_root() {
+  git rev-parse --show-toplevel
+}
+
 # mark for general usage -- store a path with a simple alias.
 # z is fine but sometimes one needs a bit of a reminder of what things are even
 # there to begin with.

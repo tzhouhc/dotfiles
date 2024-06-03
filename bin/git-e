@@ -1,9 +1,8 @@
 #!/usr/bin/env zsh
 
 # get extended path
-source $HOME/.zsh/env/path.zsh
+source $HOME/.zsh/base.zsh
 
-# include:
-#   * locally changed files
-#   * untracked files (new)
-git ls-files --modified --others | fzf --bind 'enter:become(supervim {})'
+root=$(git_repo_root)
+git status --porcelain | choose 1 | sed "s:^:${root}/:" | \
+  fzf -m --bind 'enter:become(supervim {+})'

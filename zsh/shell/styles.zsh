@@ -23,8 +23,6 @@ zstyle ':fzf-tab:*' fzf-min-height 12
 
 # space for multi-select
 zstyle ':fzf-tab:*' fzf-bindings 'space:toggle'
-# tab to go into a directory (or select when at leaf)
-zstyle ':fzf-tab:*' continuous-trigger 'TAB'
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
 

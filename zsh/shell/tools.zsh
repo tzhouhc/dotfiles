@@ -5,10 +5,9 @@ if type zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
 
-# starship prompt
-if type starship >/dev/null 2>&1; then
-  # defaults to the standard starship.toml
-  eval "$(starship init zsh)"
+# oh-my-posh prompt
+if type oh-my-posh >/dev/null 2>&1; then
+  eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/oh-my-posh/prompt.json)"
 else
   export PS1='%F{blue}%~ %(?.%F{green}.%F{red})%#%f '
 fi

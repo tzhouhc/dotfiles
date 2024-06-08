@@ -1,44 +1,76 @@
-local wezterm = require 'wezterm'
-local tabs = require 'settings/tabs'
+local wezterm = require("wezterm")
+local tabs = require("settings/tabs")
 
 local M = {}
 
 local function is_osx()
-  local f = io.popen("uname -a")
-  return (f:read("*a") or ""):match("Darwin") == "Darwin"
+	local f = io.popen("uname -a")
+	return (f:read("*a") or ""):match("Darwin") == "Darwin"
 end
 
 function M.update_config(config)
-  -- Minimal user interface
-  -- still allow resizing with mouse
-  config.window_decorations = "RESIZE"
-  config.hide_tab_bar_if_only_one_tab = true
+	-- Minimal user interface
+	-- still allow resizing with mouse
+	config.window_decorations = "RESIZE"
+	config.hide_tab_bar_if_only_one_tab = true
 
-  -- visual appearance
-  config.color_scheme = 'nord'
+	-- visual appearance
+	config.color_scheme = "nord"
 
-  if is_osx() then
-    config.window_padding = {
-      left = '0.5cell',
-      right = '0.5cell',
-      top = "1cell",
-      bottom = '0cell'
-    }
-  end
+	if is_osx() then
+		config.window_padding = {
+			left = "0.5cell",
+			right = "0.5cell",
+			top = "1cell",
+			bottom = "0cell",
+		}
+	end
 
-  -- font
-  config.font = wezterm.font('Cascadia Code NF')
-  config.font_size = 13
-  config.harfbuzz_features = {
-    -- ligatures
-    'calt=1',
-    -- cursive italics
-    -- 'ss01=1',
-    -- slashed zero
-    'ss19=1',
-    -- graphical control chars
-    'ss20=1'
-  }
+	-- font
+	local cascadia = "Cascadia Code NF"
+	local jetbrains = "JetBrainsMono Nerd Font Mono"
+	config.font = wezterm.font_with_fallback({
+		{
+			family = cascadia,
+			harfbuzz_features = {
+				-- ligatures
+				"calt",
+				-- cursive italics
+				-- 'ss01=1',
+				-- slashed zero
+				"ss19",
+				-- graphical control chars
+				"ss20",
+			},
+		},
+		{
+			family = jetbrains,
+		},
+	})
+	config.font_rules = {
+		-- Normal and Italic -- usually comments
+		{
+			intensity = "Normal",
+			italic = true,
+			font = wezterm.font_with_fallback({
+				{
+					-- a cursive font by design
+					family = "Victor Mono",
+					italic = true,
+					weight = "Bold",
+					-- see https://github.com/rubjo/victor-mono for stylistics.
+					harfbuzz_features = { "ss02", "ss06", "ss07" },
+				},
+				{
+					family = cascadia,
+					italic = true,
+					-- enable cursive italics
+					harfbuzz_features = { "calt=1", "ss01=1", "ss19=1", "ss20=1" },
+				},
+			}),
+		},
+	}
+	config.font_size = 13
 end
 
 return M

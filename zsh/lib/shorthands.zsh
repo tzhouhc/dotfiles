@@ -6,6 +6,13 @@
 # function a() {
 # }
 
+# Configs
+# Choose and Edit all config files
+function c() {
+  binding='enter:become(supervim {})'
+  fd . $HOME/.dotfiles | fzf --preview="smart_preview {}" --bind="$binding"
+}
+
 # Edit
 # Open any recent files by this name in supervim
 function e() {

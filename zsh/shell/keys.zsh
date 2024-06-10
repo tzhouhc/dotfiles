@@ -101,3 +101,6 @@ function superfzf() {
 }
 zle     -N   superfzf
 bindkey '^k' superfzf
+
+zle -N pipe_to_less
+bindkey "^[e" pipe_to_less

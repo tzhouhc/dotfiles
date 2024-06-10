@@ -164,3 +164,8 @@ function venv() {
 function what_am_i_typing() {
   STTY='raw -echo min 0 time 40' cat -vte
 }
+
+# take previous cmd output and pipe to bat
+pipe_to_less() {
+    $SHELL -i -c "$(fc -ln -1) | bat"
+}

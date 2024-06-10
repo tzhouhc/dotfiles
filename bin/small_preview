@@ -7,7 +7,12 @@ source $HOME/.zsh/env/path.zsh
 # default preview image dimensions
 hori=20
 vert=10
-# optional image dimensions
+# read from fzf dimensions
+if [[ $FZF_PREVIEW_COLUMNS != '' ]]; then
+  hori=${FZF_PREVIEW_COLUMNS}
+  vert=${FZF_PREVIEW_LINES}
+fi
+# optional image dimensions params
 if [[ "$2" != '' ]] && [[ $3 != '' ]]; then
   vert=$2
   hori=$3

@@ -8,6 +8,9 @@ SHELL_SCRIPTS_DIR="$ZSH_HOME/shell"
 # read custom completions for zsh
 source "$SHELL_SCRIPTS_DIR/completions.zsh"
 
+# zstyle settings
+source "$SHELL_SCRIPTS_DIR/styles.zsh"
+
 # various basic zsh settings
 source "$SHELL_SCRIPTS_DIR/settings.zsh"
 

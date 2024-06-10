@@ -93,7 +93,8 @@ function w() {
   if echo $t | grep 'shell builtin' >& /dev/null; then
     echo $t
   elif echo $t | grep 'alias' >& /dev/null; then
-    echo $t
+    # assumes all aliases are in the main alias file.
+    supervim $ZSH_HOME/shell/aliases.zsh
   # if file exists and is a text file (i.e. script)
   elif [[ -f "$f" ]] && file "$f" | ggrep -Eq 'text$'; then
     supervim "$f"

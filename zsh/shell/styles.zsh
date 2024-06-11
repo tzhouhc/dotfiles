@@ -25,8 +25,7 @@ zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:*' popup-min-size 80 8
 
 # - remove preview border
-# - bypass the global 40% max size height limit
-zstyle ':fzf-tab:*' fzf-flags '--preview-window=noborder,--height=100%'
+zstyle ':fzf-tab:*' fzf-flags --preview-window=noborder
 
 # -- keybinds
 

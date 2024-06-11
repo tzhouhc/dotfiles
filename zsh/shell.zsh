@@ -30,3 +30,6 @@ fi
 
 # optionally start up TMUX unless NOTMUX is set
 source "$SHELL_SCRIPTS_DIR/tmux.zsh"
+
+# some items needs to run after tmux
+source "$SHELL_SCRIPTS_DIR/post_tmux.zsh"

@@ -21,9 +21,9 @@ if [[ -d "$1" ]]; then
   eza --color=always --icons=always -l "$1"
 elif [[ -f "$1" ]]; then
   # only try to print file content if file is text
-  if file "$1" | grep -Eq 'text$'; then
+  if file "$1" --mime-type | grep -Eq 'text'; then
     bat -p "$1"
-  elif file "$1" | grep -Eq 'image data'; then
+  elif file "$1" --mime-type | grep -Eq 'image'; then
     if type imgcatr >/dev/null 2>&1; then
       imgcatr -s "${hori}x${vert}" "$1"
     else

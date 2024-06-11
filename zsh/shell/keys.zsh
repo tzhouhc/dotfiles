@@ -40,6 +40,21 @@ function my_fzf_file_widget() {
 zle     -N   my_fzf_file_widget
 bindkey '^o' my_fzf_file_widget
 
+# Meta-O to write recent files to the zle
+function my_fzf_mru_file_widget() {
+  # clear redundant space
+  # allow multiple selection
+  # TODO: allow spaces in paths
+  insert=$(vim_mru_list)
+  LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
+  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   my_fzf_mru_file_widget
+bindkey '^[o' my_fzf_mru_file_widget
+
 
 # Ctrl-f to run fuzzy search and return file name
 function my_fzf_rg_widget() {

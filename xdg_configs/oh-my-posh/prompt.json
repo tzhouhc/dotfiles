@@ -22,7 +22,11 @@
           "properties": {
             "folder_icon": "··",
             "home_icon": "~",
-            "style": "agnoster_short"
+            "style": "agnoster_short",
+            "mapped_locations": {
+              "/Users/tingzhou/Documents/GitHub": "",
+              "/Users/tingzhou/.dotfiles": ""
+            }
           },
           "style": "plain",
           "template": "{{ .Path }} ",

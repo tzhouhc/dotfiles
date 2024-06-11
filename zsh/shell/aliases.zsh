@@ -103,5 +103,9 @@ if type rip >/dev/null 2>&1; then
 fi
 
 if type lazygit >/dev/null 2>&1; then
-  alias lg=lazygit
+  if [[ $NERDFONT == '2' ]]; then
+    alias lg='lazygit -ucf=$XDG_CONFIG_HOME/lazygit/config_backup.yml'
+  else
+    alias lg=lazygit
+  fi
 fi

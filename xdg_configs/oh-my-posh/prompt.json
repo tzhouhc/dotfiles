@@ -11,7 +11,11 @@
     "orange": "#ff9248",
     "reddish-orange": "#f26d50",
     "teal": "#89d1dc",
-    "yellowish-orange": "#f17c37"
+    "yellowish-orange": "#f17c37",
+    "g-blue": "#4285F4",
+    "g-red": "#DB4437",
+    "g-yellow": "#F4B400",
+    "g-green": "#0F9D58"
   },
   "blocks": [
     {
@@ -65,7 +69,40 @@
         {
           "foreground": "p:pink",
           "type": "session",
-          "template": "{{ if .SSHSession }}󱘖 {{ end }}{{ .UserName }}@{{ .HostName }}"
+          "template": "{{ if .SSHSession }} {{ end }}{{ .UserName }}@{{ .HostName }} "
+        },
+        {
+          "type": "battery",
+          "style": "plain",
+          "foreground": "white",
+          "background": "red",
+          "foreground_templates": [
+            "{{if eq \"Charging\" .State.String}}p:navy{{end}}",
+            "{{if gt .Percentage 0.8}}p:navy{{end}}",
+            "{{if gt .Percentage 0.5}}white{{end}}",
+            "{{if gt .Percentage 0.3}}p:navy{{end}}",
+            "{{if gt .Percentage 0.01}}white{{end}}"
+          ],
+          "background_templates": [
+            "{{if eq \"Charging\" .State.String}}p:lime{{end}}",
+            "{{if gt .Percentage 0.8}}p:g-green{{end}}",
+            "{{if gt .Percentage 0.5}}p:g-blue{{end}}",
+            "{{if gt .Percentage 0.3}}p:g-yellow{{end}}",
+            "{{if gt .Percentage 0.01}}p:g-red{{end}}"
+          ],
+          "templates_logic": "first_match",
+          "templates": [
+            " {{ if eq \"Charging\" .State.String }}󱟦 {{ .Percentage }} {{end}}",
+            " {{ if gt .Percentage 0.9 }}󰂂 {{ .Percentage }} {{end}}",
+            " {{ if gt .Percentage 0.8 }}󰂁 {{ .Percentage }} {{end}}",
+            " {{ if gt .Percentage 0.7 }}󰂀 {{ .Percentage }} {{end}}",
+            " {{ if gt .Percentage 0.6 }}󰁿 {{ .Percentage }} {{end}}",
+            " {{ if gt .Percentage 0.5 }}󰁾 {{ .Percentage }} {{end}}",
+            " {{ if gt .Percentage 0.4 }}󰁽 {{ .Percentage }} {{end}}",
+            " {{ if gt .Percentage 0.3 }}󰁼 {{ .Percentage }} {{end}}",
+            " {{ if gt .Percentage 0.2 }}󰁻 {{ .Percentage }} {{end}}",
+            " {{ if gt .Percentage 0.1 }}󰁺 {{ .Percentage }} {{end}}"
+          ]
         }
       ],
       "type": "prompt"
@@ -90,7 +127,7 @@
           "background": "p:yellow",
           "foreground": "p:navy",
           "type": "executiontime",
-          "template": " 󱎫 {{ .FormattedMs }} ",
+          "template": "  {{ .FormattedMs }} ",
           "properties": {
             "threshold": 500,
             "style": "austin"

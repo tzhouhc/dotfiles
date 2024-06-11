@@ -103,7 +103,7 @@ function w() {
     # assumes all aliases are in the main alias file.
     supervim $ZSH_HOME/shell/aliases.zsh
   # if file exists and is a text file (i.e. script)
-  elif [[ -f "$f" ]] && file "$f" | ggrep -Eq 'text$'; then
+  elif [[ -f "$f" ]] && file "$f" | grep -Eq 'text$'; then
     supervim "$f"
   fi
 }

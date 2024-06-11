@@ -139,7 +139,7 @@ function is_ob_vault() {
     dir=$(pwd)
   fi
   while [[ $dir != '/' ]]; do
-    if ls -a "$dir" | ggrep -Eq '.obsidian'; then
+    if ls -a "$dir" | grep -Eq '.obsidian'; then
       return 0
     fi
     dir=$(dirname "$dir")

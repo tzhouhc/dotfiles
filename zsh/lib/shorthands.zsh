@@ -10,7 +10,7 @@
 # Choose and Edit all config files
 function c() {
   binding='enter:become(supervim {})'
-  fd . $HOME/.dotfiles | fzf --preview="smart_preview {}" --bind="$binding"
+  fd . $HOME/.dotfiles | fzf --query="$@" --preview="smart_preview {}" --bind="$binding"
 }
 
 # Edit

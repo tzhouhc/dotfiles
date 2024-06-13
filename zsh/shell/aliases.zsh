@@ -56,7 +56,7 @@ if type bat >/dev/null 2>&1; then
 fi
 
 if type eza >/dev/null 2>&1; then
-  alias ls='eza --icons=always --no-quotes --group-directories-first'
+  alias ls='eza --icons=always --no-quotes --group-directories-first --ignore-glob=".DS_Store|Icon?"'
 else
   if [[ -z $(ls --version 2>/dev/null | grep gnu) ]]; then
     # GNU

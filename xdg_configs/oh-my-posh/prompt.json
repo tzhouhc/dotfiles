@@ -29,7 +29,9 @@
             "style": "agnoster_short",
             "mapped_locations": {
               "/Users/tingzhou/Documents/GitHub": "",
-              "/Users/tingzhou/.dotfiles": ""
+              "/Users/tingzhou/.dotfiles": "",
+              "/Users/tingzhou/.config/nvim": "",
+              "/Users/tingzhou/.dotfiles/vim": ""
             }
           },
           "style": "plain",

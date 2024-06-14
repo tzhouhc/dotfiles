@@ -20,7 +20,10 @@ function my_cd() {
     $cmd "$(dirname $1)"
   else
     # argument is a dir or some zoxide moniker
-    $cmd "$1"
+    # if failed to zoxide then try to just cd to the containing dir
+    if ! $cmd "$1" ; then
+      cd $(dirname "$1")
+    fi
   fi
 }
 

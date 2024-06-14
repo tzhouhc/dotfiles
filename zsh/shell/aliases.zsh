@@ -109,3 +109,8 @@ if type lazygit >/dev/null 2>&1; then
     alias lg=lazygit
   fi
 fi
+
+if type tmux_notify &>/dev/null; then
+  alias tin=tmux_notify
+fi
+

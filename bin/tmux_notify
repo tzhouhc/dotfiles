@@ -18,4 +18,4 @@ tmux display-popup \
   -T " [󰍩] $(date +%H:%M:%S) " \
   -S 'fg=yellow' \
   -s 'align=center' \
-  "$@" &
+  echo "$@" &

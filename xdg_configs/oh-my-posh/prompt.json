@@ -23,6 +23,7 @@
       "segments": [
         {
           "foreground": "p:blue",
+          "background": "darkGray",
           "properties": {
             "folder_icon": "··",
             "home_icon": "~",
@@ -35,7 +36,7 @@
             }
           },
           "style": "plain",
-          "template": "{{ .Path }} ",
+          "template": "▎{{ .Path }} ",
           "type": "path"
         },
         {

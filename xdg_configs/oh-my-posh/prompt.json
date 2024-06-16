@@ -15,7 +15,9 @@
     "g-blue": "#4285F4",
     "g-red": "#DB4437",
     "g-yellow": "#F4B400",
-    "g-green": "#0F9D58"
+    "g-green": "#0F9D58",
+    "darkerGray": "#434C5E",
+    "darkestGray": "#3B4252"
   },
   "blocks": [
     {
@@ -23,7 +25,7 @@
       "segments": [
         {
           "foreground": "p:blue",
-          "background": "darkGray",
+          "background": "p:darkerGray",
           "properties": {
             "folder_icon": "··",
             "home_icon": "~",

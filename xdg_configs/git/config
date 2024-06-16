@@ -55,6 +55,11 @@
   plus-emph-style = black green
   minus-style = syntax "#41343a"
   minus-emph-style = black red
+  # color-moved:
+  map-styles = "bold purple => syntax #412B59, \
+                bold cyan => syntax #385959"
+
+  # others
   line-numbers = true
   line-numbers-minus-style = brightred
   line-numbers-plus-style = brightgreen

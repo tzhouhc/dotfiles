@@ -114,3 +114,6 @@ if type tmux_notify &>/dev/null; then
   alias tin=tmux_notify
 fi
 
+if type oh-my-posh &>/dev/null; then
+  alias omp=oh-my-posh
+fi

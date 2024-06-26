@@ -27,14 +27,18 @@
           "foreground": "p:blue",
           "background": "p:darkerGray",
           "properties": {
-            "folder_icon": "··",
-            "home_icon": "~",
+            "folder_icon": "",
+            "folder_separator_icon": "  ",
+            "home_icon": "",
             "style": "agnoster_short",
             "mapped_locations": {
-              "/Users/tingzhou/Documents/GitHub": "",
-              "/Users/tingzhou/.dotfiles": "",
-              "/Users/tingzhou/.config/nvim": "",
-              "/Users/tingzhou/.dotfiles/vim": ""
+              "~/Documents/GitHub": "",
+              "~/Downloads": "",
+              "~/Documents": "󰈙",
+              "~/.dotfiles": "",
+              "~/.config": "",
+              "~/.config/nvim": "",
+              "~/.dotfiles/vim": ""
             }
           },
           "style": "plain",

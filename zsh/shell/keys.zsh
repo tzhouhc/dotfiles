@@ -10,6 +10,9 @@ bindkey '[B' history-beginning-search-forward
 # ctrl + left/right for moving around words
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
+# option + left/right for also moving around words
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word
 # meta + left/right for moving around words
 bindkey '^[b' beginning-of-line
 bindkey '^[f' end-of-line

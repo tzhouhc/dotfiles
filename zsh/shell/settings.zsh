@@ -49,6 +49,9 @@ HIST_STAMPS="yyyy/mm/dd"
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+# Determines what is a "word" for the purpose of backward-kill-word
+WORDCHARS="*?_.[]~=&;!#$%^(){}<>"
+
 setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
 
 setopt EXTENDED_HISTORY

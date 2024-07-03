@@ -8,14 +8,14 @@ git clone --recurse-submodules git@github.com:tzhouhc/dotfiles.git ~/.dotfiles
 
 If running on AWS EC2, first set password for the default user:
 
-```
+```sh
 sudo su -
 passwd ubuntu
 ```
 
 Then proceed with installation (recommend doing so inside of `tmux`):
 
-```
+```sh
 ~/.dotfiles/install.sh
 ~/.dotfiles/deploy.sh
 ```
@@ -35,7 +35,6 @@ like `Cascadia Code NF` or `JetBrains Nerd Font Mono` is recommended.
 The main installation script requires `sudo` access to run the initial
 installation of tools; specific installations using `cargo` or `homebrew` do
 not.
-
 
 # Install tools
 
@@ -72,14 +71,13 @@ For each template directory, there are usually a number of files that will be
 copied over to the new project directory upon invocation of the command.
 However, there are also a couple of special cases:
 
-* An `info` plaintext file is expected and will be used to provide a short
-    readable summary of the template dir.
-* A `prep` shell script, if provided, will be sourced in the destination
-    directory, and then removed.
-* A `dot-envrc` file, if provided, will be copied and then renamed to `.envrc`
-    in order to trigger the `direnv` tool. While this behavior follows that of
-    stow, it is not currently done for other typically hidden files.
-
+- An `info` plaintext file is expected and will be used to provide a short
+  readable summary of the template dir.
+- A `prep` shell script, if provided, will be sourced in the destination
+  directory, and then removed.
+- A `dot-envrc` file, if provided, will be copied and then renamed to `.envrc`
+  in order to trigger the `direnv` tool. While this behavior follows that of
+  stow, it is not currently done for other typically hidden files.
 
 # Trouble Shooting
 
@@ -125,12 +123,14 @@ some kind of principle with respect to the keyboard shortcuts set in various
 contexts.
 
 ### Tmux
+
 Tmux options should primarily be restricted to either using the tmux prefix
 `c-b`, or in rare occasions, using the META modifier, and avoid CTRL modifiers.
 
 The reasoning is that it should let almost all other modifier keys go through.
 
 ### Shell
+
 The commandline is almost all commands, as the name would suggest, so shortcuts
 should mainly focus on options that facilitate quick insertion of content, and
 use the CTRL modifier. The META modifier should be used to basically indicate
@@ -138,6 +138,7 @@ alternate modes of the same shortcut -- e.g. searching for files under current
 directory with `c-o` or across current repo with `m-o` (not implemented).
 
 ### Vim
+
 More sophisticated actions should be handled by lua functions and mapped using
 `commands.lua`. Simple actions should be tied to regular keys in normal mode,
 and modifier shortcuts should try to replicate their function in the shell where
@@ -146,6 +147,7 @@ possible to ensure uniformity and reduce memory burden.
 META modifiers should take care to avoid Tmux ones.
 
 ### OS
+
 With macOS, system level shortcuts almost always use CMD. Custom, global ones
 should try not to be modified with solely META or CTRL.
 
@@ -153,7 +155,8 @@ should try not to be modified with solely META or CTRL.
 
 A number of the zsh scripts can be sourced for effect:
 
-* `$HOME/.zsh/base.zsh` encapsulates all the `PATH` and other env variables
-    changed in the regular zsh shell session, as well as a large number of
-    functions that could be useful.
-
+- `$HOME/.zsh/base.zsh` encapsulates all the `PATH` and other env variables
+  changed in the regular zsh shell session, as well as a large number of
+  functions that could be useful.
+- If the full set of functions are not needed, then `$HOME/.zsh/env/path.zsh`
+  provides access to regular tools from `homebrew`, `rust`, etc.

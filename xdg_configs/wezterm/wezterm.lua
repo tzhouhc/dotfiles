@@ -10,6 +10,10 @@ require'settings/keys'.update_config(config)
 require'settings/visuals'.update_config(config)
 require'settings/tabs'.update_config(config)
 
+-- additional configs that don't involve a config file
+require'settings/events'
+require'settings/commands'
+
 -- additional interactions
 -- for default window, open as fullscreen windowed mode
 require'effects/start_maximized'

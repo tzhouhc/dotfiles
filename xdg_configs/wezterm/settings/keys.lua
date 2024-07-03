@@ -32,6 +32,21 @@ function M.update_config(config)
       mods = "CTRL",
       action = wezterm.action { SendString = "\x1b[13;5u" },
     },
+    {
+      key = "p",
+      mods = "CMD|SHIFT",
+      action = wezterm.action.ActivateCommandPalette,
+    },
+    {
+      key = "UpArrow",
+      mods = "CMD|SHIFT",
+      action = wezterm.action.EmitEvent("increase-window-opacity"),
+    },
+    {
+      key = "DownArrow",
+      mods = "CMD|SHIFT",
+      action = wezterm.action.EmitEvent("decrease-window-opacity"),
+    },
   }
 end
 

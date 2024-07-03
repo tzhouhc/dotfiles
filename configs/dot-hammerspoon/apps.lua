@@ -23,6 +23,15 @@ local function pop_app_stack(excluded)
   end
 end
 
+local function hidden_wez_window(wez)
+  for _, win in ipairs(wez:allWindows()) do
+    if not win:isVisible() then
+      return win
+    end
+  end
+  return nil
+end
+
 ---use <cmd> + <tilde> to summon WezTerm or despawn.
 function M.toggle_wizterm()
   local wez = hs.application.find("Wezterm")
@@ -36,11 +45,16 @@ function M.toggle_wizterm()
     -- since it's hecking useless.
     pop_app_stack(default_exclude)
   else
+    local space = hs.spaces.activeSpaceOnScreen()
+    local hidden_wez = hidden_wez_window(wez)
+    if hidden_wez ~= nil then
+      hs.spaces.moveWindowToSpace(hidden_wez, space)
+    end
     wez:activate()
   end
 end
 
-local function unhidden_wez_window()
+local function unhidden_wez_app()
   local windows = { hs.application.find("WezTerm") }
   for _, win in ipairs(windows) do
     if not win:isHidden() and not win:isFrontmost() then
@@ -50,12 +64,12 @@ local function unhidden_wez_window()
   return nil
 end
 
-local function unhidden_wez_window_present()
-  return unhidden_wez_window() ~= nil
+local function unhidden_wez_app_present()
+  return unhidden_wez_app() ~= nil
 end
 
 local function focus_unhidden_wez_window()
-  local win = unhidden_wez_window()
+  local win = unhidden_wez_app()
   win:activate()
 end
 
@@ -65,7 +79,7 @@ function M.summon_quick_open()
   os.execute(
     "/Applications/WezTerm.app/Contents/MacOS/wezterm --config-file $HOME/.config/wezterm/popup_wezterm.lua start -- $HOME/.dotfiles/bin/seb >& /dev/null &")
   hs.timer.waitUntil(
-    unhidden_wez_window_present,
+    unhidden_wez_app_present,
     focus_unhidden_wez_window,
     0.1
   )

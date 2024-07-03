@@ -39,12 +39,16 @@ function M.toggle_wizterm()
     hs.application.launchOrFocus("WezTerm")
     return
   end
+  -- always hide wez app: hidden apps are considered across spaces.
+  wez:hide()
   if wez:isFrontmost() then
-    wez:hide()
     -- after hiding wezterm, avoid osx defaulting back to Finder as the focus
     -- since it's hecking useless.
     pop_app_stack(default_exclude)
   else
+    -- we want to bring forth wezterm. Either it's on current space and hidden,
+    -- or its hidden on another space, which makes it visible in `allWindows`.
+    -- Regardless, we want to move it to current space and then activate it.
     local space = hs.spaces.activeSpaceOnScreen()
     local hidden_wez = hidden_wez_window(wez)
     if hidden_wez ~= nil then

@@ -3,6 +3,8 @@ require("mappings")
 -- required for cli use
 require("hs.ipc")
 
+local notify = require("hs.notify")
+
 -- reload shortcut
 local function reload_config(files)
 	local do_reload = false
@@ -17,4 +19,4 @@ local function reload_config(files)
 end
 
 MyWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reload_config):start()
-hs.alert.show("Hammerspoon config reloaded.")
+notify.show("Hammerspoon", "", "Config reloaded.")

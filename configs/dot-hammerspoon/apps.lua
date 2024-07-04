@@ -40,12 +40,16 @@ function M.toggle_wizterm()
     return
   end
   -- always hide wez app: hidden apps are considered across spaces.
-  wez:hide()
   if wez:isFrontmost() then
+    -- extracting this `hide` to before the loop sometimes would cause
+    -- flickering of the window. I can only assume that the `isFrontmost`
+    -- call actually has some time-related side effect.
+    wez:hide()
     -- after hiding wezterm, avoid osx defaulting back to Finder as the focus
     -- since it's hecking useless.
     pop_app_stack(default_exclude)
   else
+    wez:hide()
     -- we want to bring forth wezterm. Either it's on current space and hidden,
     -- or its hidden on another space, which makes it visible in `allWindows`.
     -- Regardless, we want to move it to current space and then activate it.

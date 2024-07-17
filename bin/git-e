@@ -3,6 +3,5 @@
 # get extended path
 source $HOME/.zsh/base.zsh
 
-root=$(git_repo_root)
-git status --porcelain | choose 1 | sed "s:^:${root}/:" | \
+git-dirt | \
   fzf -m --bind 'enter:become(supervim {+})' --preview="smart_preview {}"

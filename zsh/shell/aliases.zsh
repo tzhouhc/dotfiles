@@ -117,3 +117,8 @@ fi
 if type oh-my-posh &>/dev/null; then
   alias omp=oh-my-posh
 fi
+
+if type evcxr &>/dev/null; then
+  alias rust=evcxr
+fi
+

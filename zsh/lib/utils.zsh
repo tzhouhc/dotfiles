@@ -92,6 +92,11 @@ function git_repo_root() {
   git rev-parse --show-toplevel
 }
 
+# cd to git repo root
+function gcd() {
+  cd $(git_repo_root)
+}
+
 # mark for general usage -- store a path with a simple alias.
 # z is fine but sometimes one needs a bit of a reminder of what things are even
 # there to begin with.

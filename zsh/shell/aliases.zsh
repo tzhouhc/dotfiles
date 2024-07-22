@@ -122,3 +122,6 @@ if type evcxr &>/dev/null; then
   alias rust=evcxr
 fi
 
+if type lolcate &>/dev/null; then
+  alias locate=lolcate
+fi

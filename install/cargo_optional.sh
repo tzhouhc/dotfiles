@@ -11,6 +11,7 @@ cargo install atuin  # shell history
 cargo install bottom --locked  # top
 cargo install du-dust  # better disk usage display
 cargo install evcxr_repl  # repl for rust
+cargo install lolcate-rs  # locate indexer database
 cargo install nu  # shell for data
 cargo install pipr  # pipeline crafter
 cargo install procs  # ps

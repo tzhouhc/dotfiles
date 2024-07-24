@@ -110,7 +110,8 @@ run in contexts beyond the commandline or zshrc -- e.g. as part of other
 scripts.
 
 `lib/navi` contains recipes that typically involve some params, but are not
-worth creating special shell functions to run.
+worth creating special shell functions to run, or one-off commands that don't
+need dedicated scripts.
 
 The `justfile` contains commands that could potentially involve some kind of
 dependency, or are otherwise more context-aware -- associated with specific

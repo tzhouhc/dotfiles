@@ -1,0 +1,7 @@
+% macos
+
+# Disable the default macos Language (IME) switching indicator
+defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled 0
+
+# Enable the default macos Language (IME) switching indicator
+defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled 1

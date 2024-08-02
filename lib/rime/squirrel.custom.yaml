@@ -46,7 +46,9 @@ patch:
     corner_radius: 4
     hilited_corner_radius: 3
     line_spacing: 5
-    font_face: 'PingFangSC'
+    # 假定为Mac系统
+    font_face: "PingFangSC, MiSans, MiSans L3"
+    label_font_face: "Monaco"
     font_point: 14
     label_font_point: 13
     comment_font_point: 13

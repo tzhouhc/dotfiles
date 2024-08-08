@@ -30,6 +30,8 @@ function M.update_config(config)
 	-- font
 	local cascadia = "Cascadia Code NF"
 	local jetbrains = "JetBrainsMono Nerd Font Mono"
+  local pingfang = "PingFang SC"
+
 	config.font = wezterm.font_with_fallback({
 		{
 			family = cascadia,
@@ -46,6 +48,9 @@ function M.update_config(config)
 		},
 		{
 			family = jetbrains,
+		},
+		{
+			family = pingfang,
 		},
 	})
 	config.font_rules = {
@@ -68,6 +73,9 @@ function M.update_config(config)
 					-- enable cursive italics
 					harfbuzz_features = { "calt=1", "ss01=1", "ss19=1", "ss20=1" },
 				},
+        {
+          family = pingfang,
+        },
 			}),
 		},
 	}

@@ -78,7 +78,7 @@
         {
           "foreground": "p:pink",
           "type": "session",
-          "template": "{{ if .SSHSession }} {{ end }}{{ .UserName }}@{{ .HostName }} "
+          "template": "{{ if .SSHSession }} {{ .HostName}}{{ end }}"
         },
         {
           "type": "battery",
@@ -138,7 +138,8 @@
           "type": "time",
           "style": "plain",
           "foreground": "p:yellow",
-          "template": " {{ .CurrentDate | date .Format }}",
+          "background": "p:darkerGray",
+          "template": " {{ .CurrentDate | date .Format }}🮇",
           "properties": {
             "time_format": "15:04:05"
           }

@@ -7,6 +7,7 @@ cargo install --locked bacon  # rust compiling and testing
 cargo install --locked typst-cli  # latex replacement
 cargo install --locked yazi-fm yazi-cli  # file explorer
 
+cargo install atac  # requests
 cargo install atuin  # shell history
 cargo install bottom --locked  # top
 cargo install du-dust  # better disk usage display

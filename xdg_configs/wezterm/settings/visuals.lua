@@ -30,6 +30,9 @@ function M.update_config(config)
 	-- font
 	local cascadia = "Cascadia Code NF"
 	local jetbrains = "JetBrainsMono Nerd Font Mono"
+  -- interesting note: if a fallback font is not provided,
+  -- then screen updates would take a lot of time trying to find replacements
+  -- and cause "boxes" to remain on screen in the place of CJK characters.
   local pingfang = "PingFang SC"
 
 	config.font = wezterm.font_with_fallback({

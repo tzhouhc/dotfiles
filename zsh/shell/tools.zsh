@@ -3,6 +3,8 @@
 # zoxide
 if type zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
+  # however, we'd rather use `z` as alias for `smart_cd`
+  alias z=smart_cd
 fi
 
 # oh-my-posh prompt

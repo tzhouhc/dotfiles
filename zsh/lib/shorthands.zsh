@@ -69,7 +69,7 @@ function f() {
 function o() {
   if [[ $1 != '' ]]; then
     cwd=$(pwd)
-    my_cd $1
+    smart_cd $1
     /usr/bin/open .
     cd $cwd
     if uname -a | grep -i darwin > /dev/null; then

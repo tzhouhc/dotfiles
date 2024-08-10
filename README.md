@@ -161,3 +161,45 @@ A number of the zsh scripts can be sourced for effect:
   functions that could be useful.
 - If the full set of functions are not needed, then `$HOME/.zsh/env/path.zsh`
   provides access to regular tools from `homebrew`, `rust`, etc.
+
+# External Dependencies
+
+Due to various constraints, not _all_ tooling and systems or configurations are
+recorded in the dotfiles repo. The external dependencies are noted here:
+
+## Lolcate database
+
+For working with the custom version of `cd`, a `lolcate` database named `dirs`
+that searches and indexes are directories in relevant locations is required.
+That is, one should run
+
+```sh
+lolcate create --db dirs
+```
+
+and setup its `config.toml` with
+
+```toml
+skip = "Files"
+```
+
+and then run
+
+```sh
+lolcate update --db dirs
+```
+
+and possibly add it to crontab:
+
+```cron
+0 22 * * *   /Users/tingzhou/.cargo/bin/lolcate --update --db dirs &>/dev/null
+```
+
+## Fonts
+
+[Cascadia Code](https://github.com/microsoft/cascadia-code) alone is the
+recommended font to use for this repo -- that is, I haven't really tested it
+with any other font. Other Nerdfont-enabled fonts should work, but there might
+be minor display issues?
+
+Also, Nerdfont v3 is required.

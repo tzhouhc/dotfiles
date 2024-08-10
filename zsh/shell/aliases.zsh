@@ -42,8 +42,12 @@ fi
 # Aliasing some shiny new tools over classic ones
 # note: mainly the interactive ones -- the other ones might be used as part of
 # some tool chain
-if type zoxide >/dev/null 2>&1; then
-  alias cd=my_cd
+if type zoxide &>/dev/null; then
+  alias cd=smart_cd
+  if type lolcate &>/dev/null; then
+    alias cdd=smart_cd_no_z
+    alias zz=smart_cd_no_z
+  fi
 fi
 
 if type delta >/dev/null 2>&1; then

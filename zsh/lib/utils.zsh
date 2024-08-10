@@ -6,23 +6,57 @@
 #   - jumps to the containing dir if given a file
 #   - jumps to a dir if it _is_ a dir
 #   - jumps to zoxide query if none of the above
-function my_cd() {
-  if type zoxide >/dev/null 2>&1; then
-    cmd=z
-  else
-    cmd=cd
-  fi
-  if [ $# -eq 0 ] ; then
-    # no arguments
-    $cmd
+#   - checks lolcate for unknown target to zoxide
+function smart_cd() {
+  if [ $# -eq 0 ] || [ -z "$1" ] ; then
+    # no arguments, go home by default
+    cd
+  elif [ -d "$1" ]; then
+    # argument is a current dir; go into it
+    cd "$1"
   elif [ -f $1 ] ; then
-    # argument is not a directory
-    $cmd "$(dirname $1)"
+    # argument is a file; go to containing dir
+    cd "$(dirname $1)"
   else
-    # argument is a dir or some zoxide moniker
-    # if failed to zoxide then try to just cd to the containing dir
-    if ! $cmd "$1" ; then
-      cd $(dirname "$1")
+    # argument is some zoxide moniker or something unknown
+    # first try to invoke zoxide;
+    # if zoxide fails, then ask lolcate to try and find the dir.
+    # then use fzf to choose from possible results.
+    if ! z "$1" &>/dev/null ; then
+      if type lolcate &>/dev/null; then
+        # argument is not known to zoxide
+        target=$(lolcate --db dirs "$1" | fzf --preview="smart_preview {}")
+        if [ -z "$target" ] ; then
+          # fzf cancel
+          return
+        fi
+        smart_cd "$target"
+      fi
+    fi
+  fi
+}
+
+# like smart_cd, but does not use zoxide.
+function smart_cd_no_z() {
+  if [ $# -eq 0 ] || [ -z "$1" ] ; then
+    # no arguments, go home by default
+    cd
+  elif [ -d "$1" ]; then
+    # argument is a current dir; go into it
+    cd "$1"
+  elif [ -f $1 ] ; then
+    # argument is a file; go to containing dir
+    cd "$(dirname $1)"
+  else
+    locs=$(lolcate --db dirs "$1")
+    count=$(echo $locs | wc -l)
+    if [ $count -eq 0 ] ; then
+      return
+    elif [ $count -eq 1 ] ; then
+      cd $locs
+    else
+      target=$(echo $locs | fzf --preview="smart_preview {}")
+      cd "$target"
     fi
   fi
 }

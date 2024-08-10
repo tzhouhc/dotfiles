@@ -77,10 +77,6 @@ if type dust >/dev/null 2>&1; then
   alias du='dust -d1 -r -B -z=1MB -w=80'
 fi
 
-if type navi >/dev/null 2>&1; then
-  alias navi=inline_navi
-fi
-
 if type btm >/dev/null 2>&1; then
   alias top=btm
 fi

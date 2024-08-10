@@ -25,3 +25,6 @@ eval "$(atuin init zsh --disable-up-arrow)"
 
 # direnv (automatically run commands for certain directories)
 eval "$(direnv hook zsh)"
+
+# navi shell widget (so that it doesn't run immediately, allowing editing)
+eval "$(navi widget zsh)"

@@ -116,11 +116,6 @@ function smart_procs() {
   fi
 }
 
-# navi, except result is not run, but instead filled to the command line
-function inline_navi() {
-  print -z $(env navi --print)
-}
-
 # fd except it looks through the entire current repo
 function fd_across_repo() {
   # git

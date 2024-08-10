@@ -9,11 +9,10 @@ df -h
 # List subfolders sorted by readable size
 du -h --max-depth=1 | sort -rh
 
-# Testing multi-variable substitution
-ls <folder> && ls <folder>
-
-# Start tabby as a regular service
-brew services start tabbyml/tabby/tabby
+% ai, tabby
 
 # Start tabby as a one-time job
 /opt/homebrew/opt/tabby/bin/tabby serve --device metal --model StarCoder-1B
+
+# Start tabby as a regular service
+brew services start tabbyml/tabby/tabby

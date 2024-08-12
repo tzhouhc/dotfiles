@@ -125,3 +125,9 @@ fi
 if type lolcate &>/dev/null; then
   alias locate=lolcate
 fi
+
+if type cmus &>/dev/null; then
+  actual=$(which cmus)
+  alias cmus="tmux new-session -s cmus -d "$actual" 2> /dev/null; tmux switch-client -t cmus"
+fi
+

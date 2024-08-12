@@ -203,3 +203,17 @@ with any other font. Other Nerdfont-enabled fonts should work, but there might
 be minor display issues?
 
 Also, Nerdfont v3 is required.
+
+## MacOS Configs
+
+### `at` and `atrun`
+
+To use `at` to schedule jobs, `atrun` must first be enabled by running
+
+```sh
+launchctl load -w /System/Library/LaunchDaemons/com.apple.atrun.plist
+```
+
+### Detachable CMUS
+
+[Source](https://github.com/cmus/cmus/wiki/detachable-cmus)

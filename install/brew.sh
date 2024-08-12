@@ -19,4 +19,4 @@ brew update
 brew install wget git stow tmux zsh the_silver_searcher universal-ctags \
   moreutils btop lazygit direnv jq git-secrets \
   jandedobbeleer/oh-my-posh/oh-my-posh \
-  age
+  age cmus

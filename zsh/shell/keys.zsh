@@ -119,3 +119,5 @@ function superfzf() {
 }
 zle     -N   superfzf
 bindkey '^k' superfzf
+
+bindkey -s '^y' "yazi^M"

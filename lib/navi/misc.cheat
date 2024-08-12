@@ -5,3 +5,7 @@ defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled 0
 
 # Enable the default macos Language (IME) switching indicator
 defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled 1
+
+% macos, notify, schedule
+# Notify self with content at some future point
+echo "tmux_notify <msg>" | at <time>

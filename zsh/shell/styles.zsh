@@ -25,7 +25,9 @@ zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:*' popup-min-size 80 8
 
 # - remove preview border
-zstyle ':fzf-tab:*' fzf-flags --preview-window=noborder
+# NOTE: Reloading zsh is insufficient to fully apply options like heights; for
+# height, tmux itself needs to be reloaded for the config to take effect.
+zstyle ':fzf-tab:*' fzf-flags --preview-window=noborder --height=100%
 
 # -- keybinds
 

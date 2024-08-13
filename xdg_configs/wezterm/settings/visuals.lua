@@ -20,9 +20,9 @@ function M.update_config(config)
 
 	if is_osx() then
 		config.window_padding = {
-			left = "0.5cell",
-			right = "0.5cell",
-			top = "1cell",
+			left = "0.3cell",
+			right = "0cell",
+			top = "0.9cell",
 			bottom = "0cell",
 		}
 	end

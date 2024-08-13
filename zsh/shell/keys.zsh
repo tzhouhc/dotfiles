@@ -20,7 +20,27 @@ bindkey '^[f' end-of-line
 
 # ---- some fzf functions with keyboard shortcuts
 
-# Ctrl-o to write local files to the zle
+function my_fzf_global_dir_widget() {
+  # clear redundant space
+  # allow multiple selection
+  # TODO: allow spaces in paths
+  maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev)
+  cleaned=$(echo $maybedir | sed "s:~:$HOME:")
+  if [[ -d "$cleaned" ]]; then
+    insert=$(global_dir_list "$cleaned")
+    LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
+  else
+    insert=$(global_dir_list)
+    LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
+  fi
+  LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
+  local ret=$?
+  zle reset-prompt
+  return $ret
+}
+zle     -N   my_fzf_global_dir_widget
+bindkey '^[p' my_fzf_global_dir_widget
+
 # customized version adds a space and removes unwanted files with fd
 function my_fzf_file_widget() {
   # clear redundant space

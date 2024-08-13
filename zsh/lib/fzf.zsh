@@ -21,6 +21,17 @@ function local_recent_dir_list() {
   fi
 }
 
+function global_dir_list() {
+  res=$(lolcate --db dirs | fzf -m --preview "smart_preview {}")
+  print "$res"
+}
+
+# This takes up wayyy too much time for a quick searching tool
+function global_file_list() {
+  res=$(lolcate | fzf -m --preview "smart_preview {}")
+  print "$res"
+}
+
 # Recently edited files based on neovim
 function vim_mru_list() {
   res=$(cat /tmp/oldfiles.txt | choose 1 | grep . | grep -v "\[Preview\]" | sort | uniq | fzf --preview="smart_preview {}" -m)

@@ -16,3 +16,7 @@ du -h --max-depth=1 | sort -rh
 
 # Start tabby as a regular service
 brew services start tabbyml/tabby/tabby
+
+% rust, install
+# Install updates for all available cargo binaries
+cargo install $(cargo install --list | egrep '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')

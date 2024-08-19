@@ -203,6 +203,10 @@ function what_am_i_typing() {
 }
 
 # take previous cmd output and pipe to bat
-pipe_to_less() {
+function pipe_to_less() {
     $SHELL -i -c "$(fc -ln -1) | bat"
+}
+
+function file_full_path() {
+  print $(readlink -f "$1")
 }

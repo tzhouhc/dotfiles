@@ -18,3 +18,4 @@ cargo install pipr  # pipeline crafter
 cargo install procs  # ps
 cargo install tv  # csv viewer
 cargo install zellij  # tmux
+cargo install cargo-cache  # clear cargo cache

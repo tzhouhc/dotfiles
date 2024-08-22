@@ -64,9 +64,9 @@ function p4_package_list() {
 # Files visible in the current directory
 function local_file_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . --type f --type l $1 | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . --type f --type l $1 | sort | fzf -m --preview 'smart_preview {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   else
-    print "$(fd . --type f --type l | sort | fzf -m --preview 'bat {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . --type f --type l | sort | fzf -m --preview 'smart_preview {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
   fi
 }
 
@@ -102,9 +102,9 @@ function local_lines_list_with_num() {
 # Directories visible in the current directory
 function local_dir_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . -L --type d $1 | fzf -m --preview 'ls --color=always {}' | sed 's/(.*)/\"\1\"/g')"
+    print "$(fd . -L --type d $1 | fzf -m --preview 'smart_preview {}' | sed 's/(.*)/\"\1\"/g')"
   else
-    print "$(fd . -L --type d | fzf -m --preview 'ls --color=always {}' | sed 's/(.*)/\"\1\"/g')"
+    print "$(fd . -L --type d | fzf -m --preview 'smart_preview {}' | sed 's/(.*)/\"\1\"/g')"
   fi
 }
 

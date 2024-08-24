@@ -2,6 +2,7 @@
 # improvements for a functional UI (e.g. SSH-ing from tablets).
 
 # Use version with reduced nerd font glyph usage
+# Not relevant -- we use oh-my-posh now
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship_fallback.toml"
 
 # No icon eza lists

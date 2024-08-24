@@ -24,7 +24,7 @@ source "$SHELL_SCRIPTS_DIR/aliases.zsh"
 # configuring tool hooks in zsh
 source "$SHELL_SCRIPTS_DIR/tools.zsh"
 
-if [[ "$FALLBACK_MODE" == 'true' ]]; then
+if [[ -n "$FALLBACK_MODE" ]]; then
   source "$SHELL_SCRIPTS_DIR/fallback.zsh"
 fi
 

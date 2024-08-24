@@ -9,7 +9,11 @@ fi
 
 # oh-my-posh prompt
 if type oh-my-posh >/dev/null 2>&1; then
-  eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/oh-my-posh/prompt.json)"
+  if [[ $FALLBACK_MODE != '' ]]; then
+    eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/oh-my-posh/fallback_prompt.json)"
+  else
+    eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/oh-my-posh/prompt.json)"
+  fi
 elif type starship &>/dev/null; then
   # starship prompt (no transient prompt)
   eval "$(starship init zsh)"

@@ -80,3 +80,6 @@ export MANPAGER="less"
 export FZF_DEFAULT_COMMAND='fd --type f --type l --hidden'
 export FZF_CTRL_T_COMMAND=
 export FZF_ALT_C_COMMAND=
+
+# ChatGPT
+export OPENAI_API_KEY="$(/opt/homebrew/bin/age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openai_key)"

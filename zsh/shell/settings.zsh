@@ -50,7 +50,10 @@ HIST_STAMPS="yyyy/mm/dd"
 # export ARCHFLAGS="-arch x86_64"
 
 # Determines what is a "word" for the purpose of backward-kill-word
-WORDCHARS="*?_.[]~=&;!#$%^(){}<>"
+WORDCHARS=" *?_-.[]~=&;!#$%^(){}<>/"
+autoload -Uz select-word-style
+select-word-style normal
+zstyle ':zle:*' word-style unspecified
 
 setopt prompt_subst  # enable command substitution (and otheR expansions) in PROMPT
 

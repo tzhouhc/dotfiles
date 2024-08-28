@@ -1,5 +1,6 @@
 [alias]
   dag = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  dft = difftool
   cam = commit -a -m
   whereami = rev-parse --abbrev-ref HEAD
   ck = checkout
@@ -12,6 +13,7 @@
   name = Ting Zhou
   email = zhoutingneyc@gmail.com
 [pager]
+  difftool = true
   branch = false
 [push]
   default = current
@@ -19,8 +21,11 @@
   pager = delta
 
 [diff]
-  algorithm = patience
-  colorMoved = default
+  tool = difftastic
+[difftool]
+  prompt = false
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
 
 [url "https://github.com/"]
   insteadOf = git://github.com/

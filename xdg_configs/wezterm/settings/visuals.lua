@@ -22,7 +22,7 @@ function M.update_config(config)
 		config.window_padding = {
 			left = "0.3cell",
 			right = "0cell",
-			top = "0.9cell",
+			top = "0cell",
 			bottom = "0cell",
 		}
 	end

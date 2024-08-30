@@ -83,3 +83,4 @@ export FZF_ALT_C_COMMAND=
 
 # ChatGPT
 export OPENAI_API_KEY="$(/opt/homebrew/bin/age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openai_key)"
+export OPENROUTER_API_KEY="$(/opt/homebrew/bin/age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openrouter_key)"

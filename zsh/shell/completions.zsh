@@ -75,5 +75,9 @@ if type brew >/dev/null 2>&1; then
 fi
 
 fpath=($HOME/.zsh/shell/completion $fpath)
-autoload -U compinit
-compinit
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi

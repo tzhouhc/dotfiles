@@ -156,7 +156,7 @@
   "transient_prompt": {
     "background": "transparent",
     "foreground": "darkGray",
-    "template": "{{ .Segments.Time.CurrentDate | date .Segments.Time.Format }} {{ if gt .Segments.Executiontime.Ms 500 }}+$(tput setaf 3){{ .Segments.Executiontime.FormattedMs }} {{end}}{{ if gt .Code 0 }}$(tput setaf 1){{ .Code }}  {{ else }}$(tput setaf 2) {{ end }}"
+    "template": "{{ .Segments.Time.CurrentDate | date .Segments.Time.Format }} {{ if gt .Segments.Executiontime.Ms 500 }}+<#ebcb8b>{{ .Segments.Executiontime.FormattedMs }} {{end}}{{ if gt .Code 0 }}<#bf616a>{{ .Code }}  {{ else }}<#a3be8c> {{ end }}"
   },
   "final_space": true,
   "version": 2

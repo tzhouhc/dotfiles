@@ -34,3 +34,8 @@ eval "$(direnv hook zsh)"
 
 # navi shell widget (so that it doesn't run immediately, allowing editing)
 eval "$(navi widget zsh)"
+
+if [[ -d "$(brew --prefix)/Caskroom/google-cloud-sdk" ]]; then
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+fi

@@ -10,6 +10,7 @@ if ! type cargo >/dev/null 2>&1; then
 fi
 
 if type cargo >/dev/null 2>&1; then
+  cargo install atuin  # shell history
   cargo install bat   # less
   cargo install bob-nvim  # nvim manager
   cargo install choose   # cut
@@ -19,9 +20,10 @@ if type cargo >/dev/null 2>&1; then
   cargo install imgcatr  # show images
   cargo install just   # make
   cargo install navi   # find
+  cargo install --git https://github.com/lotabout/rargs.git  # xargs
   cargo install ripgrep --features 'pcre2'  # grep
   cargo install rm-improved  # rm
-  cargo install starship   # shell prompt
+  cargo install --locked yazi-fm yazi-cli  # file explorer
   cargo install zoxide   # z
 else
   echo "cargo not found!"

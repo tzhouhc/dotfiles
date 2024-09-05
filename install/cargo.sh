@@ -18,7 +18,6 @@ if type cargo >/dev/null 2>&1; then
   cargo install git-delta   # diff
   cargo install imgcatr  # show images
   cargo install just   # make
-  cargo install kalker   # calculator
   cargo install navi   # find
   cargo install ripgrep --features 'pcre2'  # grep
   cargo install rm-improved  # rm

@@ -5,11 +5,13 @@
 
 export MANPATH="/usr/local/man:$MANPATH"
 
-# Homebrew
-if uname -a | grep -i darwin > /dev/null; then
-  eval "$(brew shellenv)"
-else
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if type brew &>/dev/null; then
+  # Homebrew
+  if uname -a | grep -i darwin > /dev/null; then
+    eval "$(brew shellenv)"
+  else
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
 fi
 
 # While in China, use TSU's homebrew mirrors:
@@ -82,5 +84,7 @@ export FZF_CTRL_T_COMMAND=
 export FZF_ALT_C_COMMAND=
 
 # ChatGPT
-export OPENAI_API_KEY="$(/opt/homebrew/bin/age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openai_key)"
-export OPENROUTER_API_KEY="$(/opt/homebrew/bin/age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openrouter_key)"
+if type age &>/dev/null; then
+  export OPENAI_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openai_key)"
+  export OPENROUTER_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openrouter_key)"
+fi

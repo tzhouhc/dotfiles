@@ -30,6 +30,13 @@ alias sed='sed -E'
 
 alias vimdiff='nvim -d'
 
+# vmware
+alias vmrun="/Applications/VMware\ Fusion.app/Contents/Library/vmrun"
+
+# for school specifically
+alias start_virt="vmrun -T fusion start ~/Virtual\ Machines.localized/OS_Ubuntu.vmwarevm/OS_Ubuntu.vmx nogui"
+alias stop_virt="vmrun -T fusion suspend ~/Virtual\ Machines.localized/OS_Ubuntu.vmwarevm/OS_Ubuntu.vmx"
+
 # typo
 alias claer=clear
 alias cl=clear
@@ -130,5 +137,9 @@ if type cmus &>/dev/null; then
   actual=$(which cmus)
   # alias cmus="tmux new-session -s cmus -d "$actual" 2> /dev/null; tmux switch-client -t cmus"
   alias cmus='screen -q -r -D cmus || screen -S cmus "$actual"'
+fi
+
+if type glow &>/dev/null; then
+  alias glow="glow -p"
 fi
 

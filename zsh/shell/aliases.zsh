@@ -143,3 +143,7 @@ if type glow &>/dev/null; then
   alias glow="glow -p"
 fi
 
+if type wezvim &>/dev/null; then
+  alias wv=wezvim
+fi
+

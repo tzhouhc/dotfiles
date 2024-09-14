@@ -17,7 +17,6 @@ bindkey '^[[1;3C' forward-word
 bindkey '^[b' beginning-of-line
 bindkey '^[f' end-of-line
 
-
 # ---- some fzf functions with keyboard shortcuts
 
 function my_fzf_global_dir_widget() {
@@ -89,6 +88,35 @@ function my_fzf_global_file_widget() {
 }
 zle     -N   my_fzf_global_file_widget
 bindkey '^[o' my_fzf_global_file_widget
+
+# Define the widget function
+function my-csearch-fzf-widget() {
+  # Save the current buffer
+  local buffer=$BUFFER
+  # Clear the buffer
+  BUFFER=""
+  # Redisplay the prompt
+  zle -R
+  # Read user input
+  echo -n "Enter search term: "
+  read search_term
+  # Perform the search and pipe to fzf
+  local result=$(csearch "$search_term" | fzf --height 40% --reverse)
+  # If a result was selected, append it to the buffer
+  if [ -n "$result" ]; then
+    result=$(echo $result | cut -d':' -f1)
+    BUFFER="$buffer$result"
+    # Move the cursor to the end of the buffer
+    CURSOR=$#BUFFER
+  else
+    # If no result was selected, restore the original buffer
+    BUFFER=$buffer
+  fi
+  # Redisplay the prompt
+  zle -R
+}
+zle -N my-csearch-fzf-widget
+bindkey '^[f' my-csearch-fzf-widget
 
 
 # Ctrl-f to run fuzzy search and return file name

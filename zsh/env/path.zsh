@@ -8,6 +8,7 @@ export PATH=/bin:$PATH
 export PATH=/sbin:$PATH
 export PATH=/usr/bin:$PATH
 export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+export PATH=/usr/local/go/bin:$PATH
 export PATH=/usr/sbin:$PATH
 
 # os-dependent brew home

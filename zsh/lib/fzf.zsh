@@ -176,3 +176,13 @@ function all_fzf_list() {
   done
   print $($(print -l $res | fzf --header-lines=1 | cut -d':' -f1))
 }
+
+function csearch_list() {
+  echo -n "Enter search term: "
+  read search_term
+  # Perform the search and pipe to fzf
+  partial=$(csearch $search_term)
+  result=$(echo $partial | fzf --height 40% --reverse)
+  file=$(echo $result | cut -d':' -f1)
+  print ${result}
+}

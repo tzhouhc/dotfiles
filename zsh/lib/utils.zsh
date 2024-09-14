@@ -237,3 +237,25 @@ function pipe_to_less() {
 function file_full_path() {
   print $(readlink -f "$1")
 }
+
+function cse() {
+  # Perform the search and pipe to fzf
+  partial=$(csearch -n $@)
+  result=$(echo $partial | fzf --height 40% --reverse)
+  file=$(echo $result | cut -d':' -f1)
+  line=$(echo $result | cut -d':' -f2)
+  if [[ -n $file ]]; then
+    supervim "${file}" +$line
+  fi
+}
+
+function csv() {
+  # Perform the search and pipe to fzf
+  partial=$(csearch -n $@)
+  result=$(echo $partial | fzf --height 40% --reverse)
+  file=$(echo $result | cut -d':' -f1)
+  line=$(echo $result | cut -d':' -f2)
+  if [[ -n $file ]]; then
+    bat "${file}" -H $line --pager="less +${line}G"
+  fi
+}

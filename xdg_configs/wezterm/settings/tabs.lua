@@ -5,7 +5,8 @@ local M = {}
 -- reference:
 -- https://wezfurlong.org/wezterm/config/lua/window-events/format-tab-title.html
 
-local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
+local SOLID_LEFT_PILL = wezterm.nerdfonts.ple_left_half_circle_thick
+local SOLID_RIGHT_PILL = wezterm.nerdfonts.ple_right_half_circle_thick
 
 local function tab_title(tab_info)
   local title = tab_info.tab_title
@@ -18,52 +19,74 @@ local function tab_title(tab_info)
   return tab_info.active_pane.title
 end
 
+local function tab_icon(title)
+  if title:find("tmux") then
+    return ""
+  else
+    return ""
+  end
+end
+
+local trp = "rgba(0, 0, 0, 0)"
+local darkest = "#2e3440"
+local dark = "#434c5e"
+local gray = "#4c566a"
+
+local bright = "#e5e9f0"
+local cyan = "#88c0d0"
+local green = "#a3be8c"
+
 wezterm.on(
   'format-tab-title',
   function(tab, _, _, _, hover, max_width)
-    local edge_background = '#2E3440'
-    local background = '#4C566A'
-    local foreground = '#D8DEE9'
+    local title = tab_title(tab)
+    local index = tab.tab_index
+    local icon = tab_icon(title)
+    local edge_foreground, edge_background, background, foreground
 
     if tab.is_active then
-      background = '#5E81AC'
-      foreground = '#3B4252'
+      edge_foreground = trp
+      edge_background = green
+      background = dark
+      foreground = bright
     elseif hover then
-      background = '#81A1C1'
-      foreground = '#2E3440'
+      edge_foreground = trp
+      edge_background = cyan
+      background = dark
+      foreground = bright
+    else
+      edge_foreground = trp
+      edge_background = gray
+      background = darkest
+      foreground = bright
     end
-
-    local edge_foreground = background
-
-    local title = tab_title(tab)
 
     -- ensure that the titles fit in the available space,
     -- and that we have room for the edges.
     title = wezterm.truncate_right(title, max_width - 2)
 
-    local left_edge
-    if tab.tab_id == 0 then
-      left_edge = ' '
-    else
-      left_edge = SOLID_RIGHT_ARROW
-    end
-
     return {
       { Background = { Color = edge_foreground } },
+      { Foreground = { Color = trp } },
+      { Text = ' ' },
+      { Background = { Color = trp } },
       { Foreground = { Color = edge_background } },
-      { Text = left_edge },
-      { Background = { Color = background } },
-      { Foreground = { Color = foreground } },
-      { Text = '  [' .. title .. ']  ' },
+      { Text = SOLID_LEFT_PILL },
       { Background = { Color = edge_background } },
       { Foreground = { Color = edge_foreground } },
-      { Text = SOLID_RIGHT_ARROW },
+      { Text = '' .. index .. ' ' .. icon .. ' ' },
+      { Background = { Color = background } },
+      { Foreground = { Color = foreground } },
+      { Text = '  ' .. title .. ' ' },
+      { Background = { Color = trp } },
+      { Foreground = { Color = background } },
+      { Text = SOLID_RIGHT_PILL },
     }
   end
 )
 
 local tab_colors = {
-  background = '#2E3440',
+  background = "rgba(0,0,0,0)",
 
   new_tab = {
     bg_color = '#2E3440',
@@ -79,6 +102,7 @@ local tab_colors = {
 function M.update_config(config)
   config.tab_bar_at_bottom = true
   config.use_fancy_tab_bar = false
+  config.show_new_tab_button_in_tab_bar = false
   if config['colors'] then
     config.colors['tab_bar'] = tab_colors
   else

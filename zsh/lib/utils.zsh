@@ -239,9 +239,11 @@ function file_full_path() {
 }
 
 function cse() {
-  # Perform the search and pipe to fzf
-  partial=$(csearch -n $@)
-  result=$(echo $partial | fzf --height 40% --reverse)
+  if [[ -z $@ ]]; then
+    echo "csearch needs input."
+    return 0;
+  fi
+  result=$(csearch -n $@ | fzf --height 40% --reverse)
   file=$(echo $result | cut -d':' -f1)
   line=$(echo $result | cut -d':' -f2)
   if [[ -n $file ]]; then
@@ -250,9 +252,11 @@ function cse() {
 }
 
 function csv() {
-  # Perform the search and pipe to fzf
-  partial=$(csearch -n $@)
-  result=$(echo $partial | fzf --height 40% --reverse)
+  if [[ -z $@ ]]; then
+    echo "csearch needs input."
+    return 0;
+  fi
+  result=$(csearch -n $@ | fzf --height 40% --reverse)
   file=$(echo $result | cut -d':' -f1)
   line=$(echo $result | cut -d':' -f2)
   if [[ -n $file ]]; then

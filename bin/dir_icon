@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+get_nerd_font_icon

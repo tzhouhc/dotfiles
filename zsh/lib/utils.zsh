@@ -116,6 +116,33 @@ function check_true_color() {
   }'
 }
 
+# Function to match the current working directory against common system
+# paths and return a Nerd Font icon
+function get_nerd_font_icon() {
+    local current_dir=$(pwd)
+    local icon=""
+
+    case $current_dir in
+        */vim*) icon="";;
+        */.dotfiles*) icon="";;
+        */.git*) icon="󰊢";;
+        */Columbia*) icon="󰑴";;
+        */Documents*) icon="";;
+        */Downloads*) icon="";;
+        */Library*) icon="";;
+        */Pictures*) icon="";;
+        */Music*) icon="";;
+        */Videos*) icon="";;
+        */Desktop*) icon="";;
+        */tingzhou*) icon="";;
+        /*) icon="";;
+        *) icon="";;
+    esac
+
+    echo $icon
+}
+
+
 # is the current directory a git repo?
 function is_git() {
   git rev-parse --is-inside-work-tree >/dev/null 2>&1

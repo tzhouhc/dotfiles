@@ -65,6 +65,7 @@ export RUBYLIB="$HOME/local/lib/ruby"
 export LESS='--ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=2 --no-init --window=-4 -j.5'
 export HOMEBREW_NO_AUTO_UPDATE=1
 export _ZO_DATA_DIR="$HOME/.data/zoxide"
+export GOPATH="$HOME/.go"
 
 # run if 'navi' exists on path
 if type navi >/dev/null 2>&1; then

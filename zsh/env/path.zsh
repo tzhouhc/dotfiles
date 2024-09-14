@@ -22,6 +22,8 @@ export PATH=$BREW_HOME/bin:$PATH
 # ---- HOME paths ----
 # rust based tools
 export PATH=$HOME/.cargo/bin:$PATH
+# go based tools
+export PATH=$HOME/.go/bin:$PATH
 # custom scripts
 export PATH=$HOME/.local/bin:$PATH
 # portable scripts

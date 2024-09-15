@@ -13,9 +13,20 @@ function M.update_config(config)
       action = wezterm.action.DisableDefaultAssignment,
     },
     {
+      key = 't',
+      mods = 'CMD',
+      action = wezterm.action.Multiple({
+        wezterm.action.SpawnTab("DefaultDomain"),
+        wezterm.action.EmitEvent("modify-tabs"),
+      }),
+    },
+    {
       key = 'w',
       mods = 'CMD',
-      action = wezterm.action({ CloseCurrentTab = { confirm = false } }),
+      action = wezterm.action.Multiple({
+        wezterm.action({ CloseCurrentTab = { confirm = false } }),
+        wezterm.action.EmitEvent("modify-tabs"),
+      }),
     },
     {
       key = "q",

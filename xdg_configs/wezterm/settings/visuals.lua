@@ -1,5 +1,5 @@
 local wezterm = require("wezterm")
-local tabs = require("settings/tabs")
+require("settings/tabs")
 
 local M = {}
 
@@ -16,13 +16,13 @@ function M.update_config(config)
 
 	-- visual appearance
 	config.color_scheme = "nord"
-  config.window_background_opacity = 0.9
+	config.window_background_opacity = 0.9
 
 	if is_osx() then
 		config.window_padding = {
 			left = "0.3cell",
 			right = "0cell",
-			top = "0.9cell",
+			top = "1cell",
 			bottom = "0cell",
 		}
 	end
@@ -30,10 +30,10 @@ function M.update_config(config)
 	-- font
 	local cascadia = "Cascadia Code NF"
 	local jetbrains = "JetBrainsMono Nerd Font Mono"
-  -- interesting note: if a fallback font is not provided,
-  -- then screen updates would take a lot of time trying to find replacements
-  -- and cause "boxes" to remain on screen in the place of CJK characters.
-  local pingfang = "PingFang SC"
+	-- interesting note: if a fallback font is not provided,
+	-- then screen updates would take a lot of time trying to find replacements
+	-- and cause "boxes" to remain on screen in the place of CJK characters.
+	local pingfang = "PingFang SC"
 
 	config.font = wezterm.font_with_fallback({
 		{
@@ -76,9 +76,9 @@ function M.update_config(config)
 					-- enable cursive italics
 					harfbuzz_features = { "calt=1", "ss01=1", "ss19=1", "ss20=1" },
 				},
-        {
-          family = pingfang,
-        },
+				{
+					family = pingfang,
+				},
 			}),
 		},
 	}

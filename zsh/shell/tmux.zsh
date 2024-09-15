@@ -7,5 +7,5 @@ if [[ -e ~/.notmux ]]; then
 fi
 
 if ! [[ -v TMUX ]]; then
-  tmux attach -t main
+  tmux attach -t main || tmux new -s main
 fi

@@ -86,6 +86,11 @@ However, there are also a couple of special cases:
 It's important for most of the scripts used in this repo that the system
 coreutils is the GNU version, as opposed to the BSD version.
 
+## Zsh slowness
+
+Might be due to `oh-my-posh` checking for updates. Run
+`oh-my-posh disable notice` to prevent.
+
 # Guidelines
 
 ## Configs

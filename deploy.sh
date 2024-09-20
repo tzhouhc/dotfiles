@@ -11,13 +11,13 @@ if ! [ -d "$HOME/.fzf" ]; then
 else
   echo "FZF already present"
 fi
-# zgen (handles zsh)
-if ! [ -e "$HOME/.zgen" ]; then
-  git clone https://github.com/tarjoilija/zgen.git $HOME/.zgen
-  echo "Installed Zgen"
+
+if ! [[ -d "$HOME/.local/share/zinit"]]; then
+  bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 else
-  echo "Zgen already present"
+  echo "Zinit already present"
 fi
+
 
 # current script location
 cwd="$(dirname "$0")"

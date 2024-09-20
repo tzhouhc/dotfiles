@@ -68,17 +68,8 @@ _fzf_complete_br() {
 # NOTE: Completion files in the completion dir should start with an underscore.
 # Once the files are in, run `rm ~/.zcompdump*` to remove cached completions.
 
-# Add to completion path
-if type brew >/dev/null 2>&1; then
-  eval "$(brew shellenv)"
-  fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
-fi
-
-fpath=($HOME/.zsh/shell/completion $fpath)
-if [ -f ~/.zsh_completions_dump ]; then
-  source ~/.zsh_completions_dump
-else
-  autoload -Uz compinit
-  compinit
-  compdump ~/.zsh_completions_dump
-fi
+fpath=(/opt/homebrew/Cellar/zsh/5.9/share/zsh/functions $HOME/.zsh/shell/completion)
+compaudit() { :; }
+compdump() { :; }
+autoload -Uz compinit
+compinit

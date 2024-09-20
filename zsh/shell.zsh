@@ -22,6 +22,7 @@ source "$SHELL_SCRIPTS_DIR/keys.zsh"
 source "$SHELL_SCRIPTS_DIR/aliases.zsh"
 
 # configuring tool hooks in zsh
+# Cumulatively about 0.2s of load time
 source "$SHELL_SCRIPTS_DIR/tools.zsh"
 
 if [[ -n "$FALLBACK_MODE" ]]; then

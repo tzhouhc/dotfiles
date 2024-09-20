@@ -58,9 +58,10 @@ fi
 # navi shell widget (so that it doesn't run immediately, allowing editing)
 eval "$(navi widget zsh)"
 
-if type brew &>/dev/null; then
-  if [[ -d "$(brew --prefix)/Caskroom/google-cloud-sdk" ]]; then
-    source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-    source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-  fi
-fi
+# When using google-cloud-sdk, uncomment
+# if type brew &>/dev/null; then
+#   if [[ -d "$(brew --prefix)/Caskroom/google-cloud-sdk" ]]; then
+#     source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+#     source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+#   fi
+# fi

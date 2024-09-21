@@ -67,8 +67,6 @@ _fzf_complete_br() {
 
 # NOTE: Completion files in the completion dir should start with an underscore.
 # Once the files are in, run `rm ~/.zcompdump*` to remove cached completions.
-
-fpath=(/opt/homebrew/Cellar/zsh/5.9/share/zsh/functions $HOME/.zsh/shell/completion)
 compaudit() { :; }
 compdump() { :; }
 autoload -Uz compinit

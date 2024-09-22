@@ -36,6 +36,7 @@ alias vmrun="/Applications/VMware\ Fusion.app/Contents/Library/vmrun"
 # for school specifically
 alias start_virt="vmrun -T fusion start ~/Virtual\ Machines.localized/OS_Ubuntu.vmwarevm/OS_Ubuntu.vmx nogui"
 alias stop_virt="vmrun -T fusion suspend ~/Virtual\ Machines.localized/OS_Ubuntu.vmwarevm/OS_Ubuntu.vmx"
+alias pause_virt="stop_virt"
 
 # typo
 alias claer=clear

@@ -243,7 +243,7 @@ function cse() {
     echo "csearch needs input."
     return 0;
   fi
-  result=$(csearch -n $@ | fzf --height 40% --reverse)
+  result=$(csearch -n $@ | fzf --height 40% --reverse -d':' --preview="fzf-bat-preview {1} {2}")
   file=$(echo $result | cut -d':' -f1)
   line=$(echo $result | cut -d':' -f2)
   if [[ -n $file ]]; then
@@ -256,7 +256,7 @@ function csv() {
     echo "csearch needs input."
     return 0;
   fi
-  result=$(csearch -n $@ | fzf --height 40% --reverse)
+  result=$(csearch -n $@ | fzf --height 40% --reverse -d':' --preview="fzf-bat-preview {1} {2}")
   file=$(echo $result | cut -d':' -f1)
   line=$(echo $result | cut -d':' -f2)
   if [[ -n $file ]]; then

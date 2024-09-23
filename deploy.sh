@@ -12,7 +12,7 @@ else
   echo "FZF already present"
 fi
 
-if ! [[ -d "$HOME/.local/share/zinit"]]; then
+if ! [[ -d "$HOME/.local/share/zinit" ]]; then
   bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 else
   echo "Zinit already present"

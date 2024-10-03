@@ -9,3 +9,7 @@ defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled 1
 % macos, notify, schedule
 # Notify self with content at some future point
 echo "tmux_notify <msg>" | at <time>
+
+% macos, cleanup, fold_icons
+# Recursively clean up folder icons
+find . -name 'Icon*' | rargs /bin/rm {0}$'\r'

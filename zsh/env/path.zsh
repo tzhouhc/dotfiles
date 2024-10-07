@@ -18,6 +18,8 @@ else
   export BREW_HOME=/home/linuxbrew/.linuxbrew
 fi
 
+export PATH=/snap/bin:$PATH
+
 export PATH=$BREW_HOME/bin:$PATH
 
 # ---- HOME paths ----

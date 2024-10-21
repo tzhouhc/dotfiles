@@ -57,6 +57,7 @@ if uname -a | grep -i darwin > /dev/null; then
   export PATH="$PATH:$HOME/.hammerspoon/bin"
 fi
 
+export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl@3/lib/
 export LDFLAGS="-L/$BREW_HOME/opt/ruby/lib"
 export CPPFLAGS="-I/$BREW_HOME/opt/ruby/include"
 export CPPFLAGS="-I/$BREW_HOME/opt/openjdk/include"

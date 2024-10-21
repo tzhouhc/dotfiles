@@ -31,6 +31,8 @@ export PATH=$HOME/.go/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 # portable scripts
 export PATH=$HOME/.dotfiles/bin:$PATH
+# floaterm
+export PATH=$HOME/.local/share/nvim/lazy/vim-floaterm/bin:$PATH
 
 # NEOVIM via bob-nvim
 export PATH=$HOME/.local/share/bob/nvim-bin:$PATH

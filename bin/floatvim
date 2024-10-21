@@ -1,0 +1,58 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/env/path.zsh
+
+# Find the pane containing vim instance in current tmux window
+function vimpane() {
+  if [[ $TMUX != '' ]]; then
+    tmux list-panes -F '#I:#P #{pane_current_command}' | grep nvim | cut -d' ' -f1  | cut -d':' -f2
+  fi
+}
+
+# if tmux is running, then try to find running vim panel
+# will probably fail if no nvim is running
+# though this really should only be called from the above supervim cmd
+function gotovim() {
+  if [[ $TMUX != '' ]]; then
+    vim_pane=$(vimpane)
+    if [[ $vim_pane != '' ]]; then
+      tmux select-pane -t $vim_pane && tmux send-keys Enter
+      # the extra step is needed to avoid the hit-enter events due to low
+      # cmdheight in nvim.
+    else
+      echo "Vim is not running in the current window."
+      return 1
+    fi
+  fi
+}
+
+if type nvr >/dev/null 2>&1; then
+  # vim internal-terminal mode
+  if [[ $NVIM != '' ]]; then
+    # reusing current (parent) nvim instance
+    nvr --remote-send "<C-\><C-N>:1wincmd w<CR>:e $1<CR>" $@
+    return
+  fi
+  # determine tmux mode
+  if [[ $TMUX != '' ]]; then
+    window=$(tmux display-message -p '#I')
+    expect_name="/tmp/nvimsocket_$window"
+  else
+    expect_name="/tmp/nvimsocket"
+  fi
+  if [[ $(vimpane) != '' ]]; then
+    # no exec needed -- reusing existing nvim instance
+    NVIM_LISTEN_ADDRESS=$expect_name nvr --remote-send "<C-\><C-N>:1wincmd w<CR>:e $1<CR>" $@ && gotovim
+  else
+    # if we are creating a new server, make sure there's no leftover sockets
+    # that might lock us out
+    rm -f $expect_name
+    # using exec because this creates a new neovim instance and it must replace
+    # the zsh script for tmux to recognize it
+    NVIM_LISTEN_ADDRESS=$expect_name exec nvim $@
+  fi
+else
+  # using exec because ditto
+  exec nvim --remote-send "<C-\><C-N>:1wincmd w<CR>:e $1<CR>" $@
+fi
+

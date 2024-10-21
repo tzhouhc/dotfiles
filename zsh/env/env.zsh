@@ -35,7 +35,8 @@ export VIM_HOME="$XDG_CONFIG_HOME/nvim"
 export MYVIMRC="$VIM_HOME/init.lua"
 export COPY_FILE="$HOME/.copy"
 export EDITOR=nvim
-export CSCOPE_EDITOR=supervim
+# for when the editor can be called from within nvim itself
+export CSCOPE_EDITOR=floatvim
 export VISUAL=nvim
 export GIT_EDITOR=nvim
 export P4EDITOR=nvim

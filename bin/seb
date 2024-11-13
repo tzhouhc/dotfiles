@@ -24,9 +24,5 @@ binding='ctrl-o:become(open -R {})'
 result=$( ( fd . "/Applications/" --extension app & fd . ~/ --hidden ) | fzf --height 100% --bind "$binding" --preview "smart_preview {} ${vert} ${hori}")
 
 if [[ "$result" != '' ]]; then
-  if is_ob_vault "$result"; then
-    open_in_ob $result
-    return 0
-  fi
   open $result
 fi

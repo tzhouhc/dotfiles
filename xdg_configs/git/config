@@ -12,9 +12,13 @@
 [user]
   name = Ting Zhou
   email = zhoutingneyc@gmail.com
+
 [pager]
   difftool = true
-  branch = false
+  branch = true
+  log = true
+  status = true
+
 [push]
   default = current
 [core]
@@ -87,3 +91,7 @@
   conflictstyle = diff3
 [init]
 	defaultBranch = main
+[column]
+	ui = auto
+[branch]
+	sort = committerdate

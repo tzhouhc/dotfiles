@@ -43,6 +43,7 @@ export PATH=$HOME/.fzf/bin:$PATH
 export PATH=/$BREW_HOME/opt/grep/libexec/gnubin:$PATH
 export PATH=/$BREW_HOME/opt/coreutils/libexec/gnubin:$PATH
 export PATH=/$BREW_HOME/opt/openjdk/bin:$PATH
+export PATH=$BREW_HOME/opt/make/libexec/gnubin:$PATH
 
 # dotnet
 export PATH=/usr/local/share/dotnet/x64/:$PATH

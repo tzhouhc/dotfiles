@@ -3,7 +3,7 @@ zinit light zsh-users/zsh-completions
 
 zinit load zsh-users/zsh-syntax-highlighting
 
-zinit ice wait lucid atload'_zsh_autosuggest_start'
+zinit ice wait lucid atload'_zsh_autosuggest_start; unalias zi'
 zinit load zsh-users/zsh-autosuggestions
 
 zinit ice wait'!0'

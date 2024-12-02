@@ -43,7 +43,7 @@ function smart_select() {
     
     # Find related text files
     local related_files=($(find_related_files "$file"))
-    if (( ${#related_files} > 0 )); then
+    if (( ${#related_files} > 1 )); then
         should_prompt=true
         choices=("${related_files[@]}" "${choices[@]}")
     fi

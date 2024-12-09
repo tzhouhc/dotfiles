@@ -115,4 +115,8 @@ function smart_edit() {
   fi
 }
 
-smart_edit $(smart_select $@)
+if [ $# -eq 1 ]; then
+  smart_edit $(smart_select $@)
+else
+  smart_edit $@
+fi

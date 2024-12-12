@@ -88,6 +88,8 @@ export FZF_ALT_C_COMMAND=
 
 # ChatGPT
 if type age &>/dev/null; then
-  export OPENAI_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openai_key)"
-  export OPENROUTER_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openrouter_key)"
+  if [[ -f "$HOME/.ssh/id_rsa" ]]; then
+    export OPENAI_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openai_key)"
+    export OPENROUTER_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openrouter_key)"
+  fi
 fi

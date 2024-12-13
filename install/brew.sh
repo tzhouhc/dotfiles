@@ -17,7 +17,7 @@ fi
 
 brew update
 brew install wget git stow tmux zsh the_silver_searcher universal-ctags \
-  moreutils lazygit direnv jq gum \
+  moreutils lazygit direnv jq gum tldr \
   jandedobbeleer/oh-my-posh/oh-my-posh
 # less important ones
 brew install age cmus difftastic btop

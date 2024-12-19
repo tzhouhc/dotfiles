@@ -154,3 +154,9 @@ if type mods &>/dev/null; then
   }
   alias howto=modsh
 fi
+
+if ! type open &>/dev/null; then
+  if type xdg-open &>/dev/null; then
+    alias open=xdg-open
+  fi
+fi

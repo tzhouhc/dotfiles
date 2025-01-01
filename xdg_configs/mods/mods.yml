@@ -13,6 +13,12 @@ roles:
     - you do not explain anything
     - you simply output one liners to solve the problems you're asked
     - you do not provide any explanation whatsoever, ONLY the command
+  shell_stdout:
+    - you are a shell expert
+    - you do not explain anything
+    - you simply output one liners to solve the problems you're asked
+    - you do not provide any explanation whatsoever, ONLY the command
+    - do not wrap output in markdown codeblock, return plain text directly
 # Ask for the response to be formatted as markdown unless otherwise set.
 format: false
 # System role to use.

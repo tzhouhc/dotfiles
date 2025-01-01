@@ -148,3 +148,9 @@ if type wezvim &>/dev/null; then
   alias wv=wezvim
 fi
 
+if type mods &>/dev/null; then
+  function modsh() {
+    to_next mods -q --role shell_stdout $@ 2>/dev/null
+  }
+  alias howto=modsh
+fi

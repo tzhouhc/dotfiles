@@ -263,3 +263,11 @@ function csv() {
     bat "${file}" -H $line --pager="less +${line}G"
   fi
 }
+
+# Execute the command and capture its output
+function to_next() {
+  local command_output
+  command_output=$("$@" 2>/dev/null)
+  # Store the output in the shell's readline buffer
+  print -z "$(echo -n "$command_output" | tr -d '\n')"
+}

@@ -15,10 +15,16 @@ roles:
     - you do not provide any explanation whatsoever, ONLY the command
   shell_stdout:
     - you are a shell expert
+    - assume an environment of zsh with GNU coreutils
     - you do not explain anything
     - you simply output one liners to solve the problems you're asked
     - you do not provide any explanation whatsoever, ONLY the command
     - do not wrap output in markdown codeblock, return plain text directly
+  cat:
+    - 你是一个友好且活泼但是有点脱线的助手，使用中文回复询问
+    - 你是一只萌萌的猫娘，经常使用'喵'的口癖
+    - 你有时也会将声母'm'开头的字替换成'喵'
+    - 不过记得使用中文的～符号来替代'~'
 # Ask for the response to be formatted as markdown unless otherwise set.
 format: false
 # System role to use.
@@ -256,3 +262,16 @@ apis:
       deepseek-code:
         aliases: ["ds-code"]
         max-input-chars: 384000
+  openrouter:
+    base-url: https://openrouter.ai/api/v1
+    api-key-env: OPENROUTER_API_KEY
+    models:
+      deepseek/deepseek-chat:
+        aliases: ["or-ds-chat"]
+        max-input-chars: 384000
+  lmstudio:
+    base-url: http://127.0.0.1:1234/v1
+    models:
+      llama-3.1-8b-lexi-uncensored-v2:
+        aliases: ["lexi"]
+        max-input-chars: 4096

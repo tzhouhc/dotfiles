@@ -23,7 +23,7 @@ generate_title() {
 
 # Initialize session
 SESSION_TITLE=$(generate_title)
-echo "Starting new chat session: $SESSION_TITLE\n"
+echo -e "Starting new chat session: ${GREEN}$SESSION_TITLE${NC}\n"
 
 # Main chat loop
 while true; do
@@ -42,11 +42,11 @@ while true; do
     # Send to mods, capturing only stdout
     if [ -z "$FIRST_MESSAGE" ]; then
         # First message in session
-        mods --title "$SESSION_TITLE" "$USER_INPUT" 2>/dev/null
+        mods --title "$SESSION_TITLE" $@ "$USER_INPUT" 2>/dev/null
         FIRST_MESSAGE=1
     else
         # Continuing session
-        mods --continue "$SESSION_TITLE" "$USER_INPUT" 2>/dev/null
+        mods --continue "$SESSION_TITLE" $@ "$USER_INPUT" 2>/dev/null
     fi
     
     # Print prompt for next input

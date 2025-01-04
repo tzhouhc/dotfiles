@@ -20,5 +20,5 @@ brew install wget git stow tmux zsh the_silver_searcher universal-ctags \
   moreutils lazygit direnv jq gum tldr mods \
   jandedobbeleer/oh-my-posh/oh-my-posh
 # less important ones
-brew install age cmus difftastic btop
+brew install age cmus difftastic btop pnpm
 

@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+# get extended path
+source $HOME/.zsh/base.zsh
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+PROMPT_MSG="write a succinct git commit command with -a, with semantic commit message title (<70 chars) and description under 200 chars"
+
+# temporarily add untracked files as "intended to commit"
+git add -N .
+WILL_DO=$(git diff | mods --role shell_stdout -f ${PROMPT_MSG} 2>/dev/null)
+
+echo -ne "${GREEN}Command: ${NC}"
+echo "\`\`\`shell
+${WILL_DO}
+\`\`\`" | glow
+
+gum confirm "Use generated title and description?" && eval ${WILL_DO}

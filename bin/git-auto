@@ -14,6 +14,11 @@ PROMPT_MSG='summarize the commit with a title that follows the semantic commit m
 
 # temporarily add untracked files as "intended to commit"
 git add -N .
+if [[ -z $(git diff HEAD) ]]; then
+  echo "No diff found."
+  exit 0
+fi
+
 WILL_DO=$(git diff HEAD | mods -f ${PROMPT_MSG} 2>/dev/null)
 TITLE=$(echo ${WILL_DO} | jq -r .title)
 DESC=$(echo ${WILL_DO} | jq -r .desc)

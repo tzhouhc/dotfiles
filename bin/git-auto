@@ -18,6 +18,12 @@ WILL_DO=$(git diff HEAD | mods -f ${PROMPT_MSG} 2>/dev/null)
 TITLE=$(echo ${WILL_DO} | jq -r .title)
 DESC=$(echo ${WILL_DO} | jq -r .desc)
 
+if [[ $* == *"-y"* ]]; then
+    # Flag is present
+    git commit -am ${TITLE} -m ${DESC}
+    exit $?
+fi
+
 # gum confirm "Use generated title and description?" && eval ${WILL_DO}
 TITLE=$(gum input --prompt "Title: " --value "${TITLE}")
 echo -e "Description:"

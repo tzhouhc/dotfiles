@@ -11,7 +11,7 @@ PROMPT_MSG="write a succinct git commit command with -a, with semantic commit me
 
 # temporarily add untracked files as "intended to commit"
 git add -N .
-WILL_DO=$(git diff | mods --role shell_stdout -f ${PROMPT_MSG} 2>/dev/null)
+WILL_DO=$(git diff HEAD | mods --role shell_stdout -f ${PROMPT_MSG} 2>/dev/null)
 
 echo -ne "${GREEN}Command: ${NC}"
 echo "\`\`\`shell

@@ -2,7 +2,20 @@
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
+YELLOW='\033[0;33m'
 NC='\033[0m'
+
+print_status() {
+  local name=$1
+  local length=$2
+  local exit_status=$3
+  
+  if [[ $exit_status -eq 0 ]]; then
+    printf "${YELLOW}%-${length}s${NC} -> ${GREEN}✓${NC}\n" ${name}
+  else
+    printf "${YELLOW}%-${length}s${NC} -> ${RED}𐄂${NC}\n" ${name}
+  fi
+}
 
 main_bins=(tmux git wget brew stow ag fzf fd lazygit gum tldr mods bat atuin eza choose delta just navi rg yazi zoxide nvim)
 
@@ -10,9 +23,15 @@ echo "Running crucial binary presence check:"
 
 for bin in $main_bins
 do
-  if type ${bin} &>/dev/null; then
-    printf "%-10s -> ${GREEN}✓${NC}\n" ${bin}
-  else
-    printf "%-10s -> ${RED}𐄂${NC}\n" ${bin}
-  fi
+  type ${bin} &>/dev/null
+  print_status ${bin} 10 $?
+done
+
+echo "Running commonly used ENV var check:"
+
+env_vars=(XDG_CONFIG_HOME OPENAI_API_KEY OPENROUTER_API_KEY EDITOR GIT_EDITOR)
+for env_var in $env_vars
+do
+  [[ -n ${${env_var}} ]]
+  print_status ${env_var} 20 $?
 done

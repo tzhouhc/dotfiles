@@ -64,3 +64,7 @@ export CPPFLAGS="-I/$BREW_HOME/opt/ruby/include"
 export CPPFLAGS="-I/$BREW_HOME/opt/openjdk/include"
 export PKG_CONFIG_PATH="/$BREW_HOME/opt/ruby/lib/pkgconfig"
 export DYLD_LIBRARY_PATH="$BREW_HOME/lib:$DYLD_LIBRARY_PATH"
+
+if [[ -d "$HOME/.cache/lm-studio/bin" ]]; then
+  export PATH=$PATH:$HOME/.cache/lm-studio/bin
+fi

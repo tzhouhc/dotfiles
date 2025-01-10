@@ -8,7 +8,6 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-# PROMPT_MSG="write a succinct git commit command with -a, with semantic commit message title (<70 chars) and description under 200 chars"
 PROMPT_MSG='summarize the commit with a title that follows the semantic commit message format, <70 chars, \
  and a description under 200 chars, format as raw json without formatting with field names "title" and "desc".'
 
@@ -19,7 +18,13 @@ if [[ -z $(git diff HEAD) ]]; then
   exit 0
 fi
 
-WILL_DO=$(git diff HEAD | mods -f ${PROMPT_MSG} 2>/dev/null)
+TEMP_FILE=$(mktemp)
+# using a temp file since gum doesn't play very nicely with command that needs
+# output captured.
+gum spin --spinner dot --show-output --title "Summarizing..." -- \
+  sh -c "git diff HEAD | mods -f \"$PROMPT_MSG\" > $TEMP_FILE 2>/dev/null"
+WILL_DO=$(cat $TEMP_FILE)
+rm $TEMP_FILE
 TITLE=$(echo ${WILL_DO} | jq -r .title)
 DESC=$(echo ${WILL_DO} | jq -r .desc)
 
@@ -30,9 +35,8 @@ if [[ $* == *"-y"* ]]; then
 fi
 
 # gum confirm "Use generated title and description?" && eval ${WILL_DO}
-TITLE=$(gum input --prompt "Title: " --value "${TITLE}")
-echo -e "Description:"
-DESC=$(gum write --prompt "Description: " --value "${DESC}")
+TITLE=$(gum input --prompt.foreground "#76ba29" --prompt "Title: " --value "${TITLE}")
+DESC=$(gum write --prompt.foreground "#76ba29" --prompt "Description: " --value "${DESC}")
 
 cmd="git commit -am \"${TITLE}\" -m \"${DESC}\""
 gum confirm ${cmd} && git commit -am ${TITLE} -m ${DESC}

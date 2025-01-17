@@ -42,15 +42,17 @@ function e() {
 #   - opens to selected line for edit on ctrl-E
 #   - opens in bat on ctrl-L
 #   - opens containing directory on ctrl-O
-function f() {
-  preview='ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:'
-  rg --no-heading --no-context-separator . | \
-  fzf --ansi -d':' -n3.. --preview="$preview" \
-    --bind 'enter:become(print {1})' \
-    --bind 'ctrl-e:become(supervim +{2} {1})' \
-    --bind 'ctrl-l:become(bat {1} -H {2})' \
-    --bind 'ctrl-o:become(open -R {1})'
-}
+# key used for pay-respect instead
+
+# function f() {
+#   preview='ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:'
+#   rg --no-heading --no-context-separator . | \
+#   fzf --ansi -d':' -n3.. --preview="$preview" \
+#     --bind 'enter:become(print {1})' \
+#     --bind 'ctrl-e:become(supervim +{2} {1})' \
+#     --bind 'ctrl-l:become(bat {1} -H {2})' \
+#     --bind 'ctrl-o:become(open -R {1})'
+# }
 
 # Git
 # function g() is an alias to git

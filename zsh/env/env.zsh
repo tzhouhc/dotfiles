@@ -104,6 +104,12 @@ if type age &>/dev/null; then
     fi
   fi
 fi
+# pay-respect
+if [[ $OPENAI_API_KEY != '' ]]; then
+  export _PR_AI_API_KEY=${OPENROUTER_API_KEY}
+  export _PR_AI_URL="https://openrouter.ai/api/v1/chat/completions"
+  export _PR_AI_MODEL="deepseek/deepseek-chat"
+fi
 
 # pnpm
 export PNPM_HOME="/Users/tingzhou/Library/pnpm"

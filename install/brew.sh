@@ -21,4 +21,4 @@ brew install wget git stow tmux zsh the_silver_searcher universal-ctags \
   jandedobbeleer/oh-my-posh/oh-my-posh
 # less important ones
 brew install age cmus difftastic btop pnpm
-
+brew install timescam/homebrew-tap/pay-respects

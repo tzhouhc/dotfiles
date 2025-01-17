@@ -65,3 +65,7 @@ eval "$(navi widget zsh)"
 #     source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 #   fi
 # fi
+
+if type pay-respects &>/dev/null; then
+  eval "$(pay-respects zsh --alias)"
+fi

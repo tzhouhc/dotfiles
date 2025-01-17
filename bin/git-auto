@@ -9,7 +9,7 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 PROMPT_MSG='summarize the commit with a title that follows the semantic commit message format, <70 chars, \
- and a description under 200 chars, format as raw json without formatting with field names "title" and "desc".'
+ and a description under 200 chars, format as raw json without formatting with field names "title" and "desc". Avoid stating the obvious.'
 
 # temporarily add untracked files as "intended to commit"
 git add -N .

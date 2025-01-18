@@ -179,7 +179,7 @@ that searches and indexes are directories in relevant locations is required.
 That is, one should run
 
 ```sh
-lolcate create --db dirs
+lolcate --create --db dirs
 ```
 
 and setup its `config.toml` with
@@ -191,7 +191,7 @@ skip = "Files"
 and then run
 
 ```sh
-lolcate update --db dirs
+lolcate --update --db dirs
 ```
 
 and possibly add it to crontab:

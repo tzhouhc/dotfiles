@@ -82,7 +82,11 @@ function M.update_config(config)
 			}),
 		},
 	}
-	config.font_size = 13
+  if is_osx() then
+    config.font_size = 13
+  else
+    config.font_size = 11
+  end
 end
 
 return M

@@ -266,6 +266,9 @@ apis:
     base-url: https://openrouter.ai/api/v1
     api-key-env: OPENROUTER_API_KEY
     models:
+      deepseek/deepseek-r1:
+        aliases: ["or-ds-r1"]
+        max-input-chars: 384000
       deepseek/deepseek-chat:
         aliases: ["or-ds-chat"]
         max-input-chars: 384000

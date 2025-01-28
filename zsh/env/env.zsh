@@ -95,6 +95,9 @@ if type age &>/dev/null; then
     if [[ -f "$HOME/.credentials/openrouter_key" ]]; then
       export OPENROUTER_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openrouter_key)"
     fi
+    if [[ -f "$HOME/.credentials/deepseek_key" ]]; then
+      export DEEPSEEK_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/deepseek_key)"
+    fi
   elif [[ -f "$HOME/.ssh/id_ed25519" ]]; then
     if [[ -f "$HOME/.credentials/openai_key" ]]; then
       export OPENAI_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_ed25519 $HOME/.credentials/openai_key)"

@@ -5,3 +5,6 @@
 
 # zoxide
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+# atuin
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh

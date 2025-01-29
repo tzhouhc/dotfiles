@@ -56,7 +56,9 @@ if type direnv &>/dev/null; then
 fi
 
 # navi shell widget (so that it doesn't run immediately, allowing editing)
-eval "$(navi widget zsh)"
+if type navi &>/dev/null; then
+  eval "$(navi widget zsh)"
+fi
 
 # When using google-cloud-sdk, uncomment
 # if type brew &>/dev/null; then

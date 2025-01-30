@@ -11,7 +11,7 @@ fi
 
 source_dir="${tmpl_dir}/${choice}/"
 
-Echo "Copying template files for \"$choice\"..."
+echo "Copying template files for \"$choice\"..."
 rsync -aq "$source_dir" --exclude "info" ./
 # rename `dot-envrc` files to `.envrc` a la gnu-stow
 if [[ -f "./dot-envrc"  ]]; then

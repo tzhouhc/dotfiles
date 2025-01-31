@@ -5,18 +5,19 @@ source $HOME/.zsh/env/path.zsh
 # Function to check if a file is binary
 function is_binary() {
     local file="$1"
-    [[ -f "$file" ]] || return 1
+    [[ ! -s "$file" ]] && return 1
     file "$file" | grep -q "text" && return 1 || return 0
 }
 
-# Function to find related text files
 function find_related_files() {
     local base="$1"
     local dir=$(dirname "$base")
     local name=$(basename "$base")
+    basef=$(readlink -f "$base")
     
     find "$dir" -maxdepth 1 -type f -name "${name}*" | while read -r file; do
-        if [[ "$file" != "$base" ]] && ! is_binary "$file"; then
+        filef=$(readlink -f "$file")
+        if [[ "$filef" != "$basef" ]] && ! is_binary "$file"; then
             echo "$file"
         fi
     done
@@ -31,21 +32,19 @@ function smart_select() {
     # Initialize choices array with the original file
     local -a choices=()
     local should_prompt=false
-    
+
     # Check if file exists and is binary, or doesn't exist
     if [[ -f "$file" ]] && is_binary "$file"; then
-        should_prompt=true
         choices+=("$file (binary)")
     elif [[ ! -f "$file" ]]; then
-        should_prompt=true
         choices+=("$file (new)")
     fi
     
     # Find related text files
     local related_files=($(find_related_files "$file"))
-    if (( ${#related_files} >= 1 )); then
+    choices=("${related_files[@]}" "${choices[@]}")
+    if (( ${#choices} > 1 )); then
         should_prompt=true
-        choices=("${related_files[@]}" "${choices[@]}")
     fi
     
     # If we should prompt, let user choose

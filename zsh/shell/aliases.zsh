@@ -153,6 +153,7 @@ if type mods &>/dev/null; then
     to_next mods -q --role shell_stdout $@ 2>/dev/null
   }
   alias howto=modsh
+  alias catsh='mods --api deepseek --model deepseek-chat --role cat'
 fi
 
 if ! type open &>/dev/null; then

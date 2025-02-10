@@ -41,7 +41,7 @@ wezterm.on(
 	'format-tab-title',
 	function(tab, _, _, _, hover, max_width)
 		local title = tab_title(tab)
-		local index = tab.tab_index
+		local index = tab.tab_index + 1
 		local icon = tab_icon(title)
 		local edge_foreground, edge_background, background, foreground
 

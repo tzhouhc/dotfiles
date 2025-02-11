@@ -11,6 +11,10 @@ for cmd in mods gum; do
     fi
 done
 
+# Parse logging flag
+zparseopts -D -E - l:=log_file -log:=log_file
+LOG_FILE=${log_file[2]:-}
+
 # Generate a random session title
 generate_title() {
     local words=($(cat /usr/share/dict/words 2>/dev/null | grep -E '^[a-z]{4,8}$' | shuf -n 2))
@@ -42,11 +46,19 @@ while true; do
     # Send to mods, capturing only stdout
     if [ -z "$FIRST_MESSAGE" ]; then
         # First message in session
-        mods --title "$SESSION_TITLE" $@ "$USER_INPUT" 2>/dev/null
+        RESPONSE=$(mods --title "$SESSION_TITLE" $@ "$USER_INPUT" 2>/dev/null)
+        echo -e "${GREEN}LLM:${NC} $RESPONSE"
         FIRST_MESSAGE=1
     else
         # Continuing session
-        mods --continue "$SESSION_TITLE" $@ "$USER_INPUT" 2>/dev/null
+        RESPONSE=$(mods --continue "$SESSION_TITLE" $@ "$USER_INPUT" 2>/dev/null)
+        echo -e "${GREEN}LLM:${NC} $RESPONSE"
+    fi
+    
+    # Log to file if enabled; no coloring
+    if [[ -n "$LOG_FILE" ]]; then
+        echo "[$(date -Iseconds)] User: $USER_INPUT" >> "$LOG_FILE"
+        echo "[$(date -Iseconds)] LLM: $RESPONSE" >> "$LOG_FILE"
     fi
     
     # Print prompt for next input

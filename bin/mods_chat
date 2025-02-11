@@ -11,9 +11,11 @@ for cmd in mods gum; do
     fi
 done
 
-# Parse logging flag
+# Parse logging flag; use default logging dir and timestamped name if not
+# specified.
 zparseopts -D -E - l:=log_file -log:=log_file
-LOG_FILE=${log_file[2]:-}
+LOG_FILE=${log_file[2]:-"$HOME/.local/share/mods/$(date +%Y%m%d_%H%M%S).log"}
+mkdir -p "${LOG_FILE:h}"
 
 # Generate a random session title
 generate_title() {

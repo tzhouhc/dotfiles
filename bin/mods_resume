@@ -11,6 +11,11 @@ for cmd in mods gum; do
     fi
 done
 
+# Let the user pick a recent conversation
+hash=$(mods --list --raw 2>/dev/null \
+  | fzf --delimiter='\t' -n1 --with-nth=2 --preview='mods --show {1} | bat --language=markdown' \
+  | cut -d$'\t' -f1)
+
 # Main chat loop
 while true; do
     # Use gum to get multiline input with a prompt
@@ -26,17 +31,11 @@ while true; do
     echo -e "${GREEN}You:${NC} ${USER_INPUT}"
     
     # Send to mods, capturing only stdout
-    if [ -z "$FIRST_MESSAGE" ]; then
-        # First message in session
-        RESPONSE=$(mods $@ "$USER_INPUT" 2>/dev/null)
-        echo -e "${GREEN}LLM:${NC} $RESPONSE"
-        FIRST_MESSAGE=1
-    else
-        # Continuing session
-        RESPONSE=$(mods --continue-last $@ "$USER_INPUT" 2>/dev/null)
-        echo -e "${GREEN}LLM:${NC} $RESPONSE"
-    fi
+    # Continuing session
+    RESPONSE=$(mods --continue ${hash} "$USER_INPUT" 2>/dev/null)
+    echo -e "${GREEN}LLM:${NC} $RESPONSE"
     
     # Print prompt for next input
     echo ""
 done
+

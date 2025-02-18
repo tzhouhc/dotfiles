@@ -34,9 +34,9 @@ raw: false
 # Quiet mode (hide the spinner while loading and stderr messages for success).
 quiet: false
 # Temperature (randomness) of results, from 0.0 to 2.0.
-temp: 1.0
+temp: 0.4
 # TopP, an alternative to temperature that narrows response, from 0.0 to 1.0.
-topp: 1.0
+topp: 0.5
 # TopK, only sample from the top K options for each subsequent token.
 topk: 50
 # Turn off the client-side limit on the size of the input into the model.

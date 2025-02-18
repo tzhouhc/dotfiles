@@ -161,3 +161,9 @@ if ! type open &>/dev/null; then
     alias open=xdg-open
   fi
 fi
+
+if type bazel &>/dev/null; then
+  alias bb="bazel build"
+  alias br="bazel run"
+  alias bt="bazel test"
+fi

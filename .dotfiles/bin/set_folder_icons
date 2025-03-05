@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+# This script recursively sets current directory icons with images found
+# inside, skipping if one is already set.
+
+source $HOME/.zsh/env/path.zsh
+
+IFS=$'\n'
+for dir in $(echo ".\n"; fd . -t d); do
+  # always skip directories where Icon is already set
+  if ls "$dir" | grep Icon >/dev/null; then
+    continue
+  fi
+  image=$(fd . --type f -e jpg -e png $dir | head -n 1)
+  if [[ $image != '' ]]; then
+    suffix=$(echo $image | grep -o '[^.]*$')
+    tmpimg="/tmp/tempimg.$suffix"
+    squareup "$image" $tmpimg
+    fileicon set $dir $tmpimg; rm $tmpimg
+  fi
+done

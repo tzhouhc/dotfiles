@@ -1,0 +1,24 @@
+config nu --default
+ls
+ls | sort-by size | reverse
+rm zsh-bench/
+ls | sort-by size | reverse
+ls | where size > 3Kb
+z nsfw
+zoxide
+zoxide query nsfw
+cd /Users/tingzhou/Documents/Living/Travel/.nsfw/
+ls
+fd .
+which fd
+ls -r
+ls -a
+ps
+ps | where mem > 100MiB
+help commands
+help commands | grep list
+help where
+help commands | where usage =~ "list"
+clear
+cd
+clear

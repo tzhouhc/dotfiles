@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+# get extended path
+source $HOME/.zsh/base.zsh
+
+# -c: always send to the default first tty
+# TODO: use `tmux lsc` to find actual ones
+
+# -xywh: place at bottom-right corner, single line, some size
+# -T: title
+# -S: border style
+# -s: content style
+# "$@": run args as passed in
+# &: nohup, backgrounds the job to not block
+tmux display-popup \
+  -c /dev/ttys000 \
+  -x R -w 15% -y S -h 3 \
+  -T " [󰍩] $(date +%H:%M:%S) " \
+  -S 'fg=yellow' \
+  -s 'align=center' \
+  echo "$@" &

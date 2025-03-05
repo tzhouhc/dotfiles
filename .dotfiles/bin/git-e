@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+# get extended path
+source $HOME/.zsh/base.zsh
+
+git-dirt | \
+  fzf -m --bind 'enter:become(supervim {+})' --preview="smart_preview {}"

@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+if [[ $@ == "" ]]; then
+  /Applications/WezTerm.app/Contents/MacOS/wezterm --config-file $HOME/.config/wezterm/app_wezterm.lua start \
+    -- env nvim -c ene &> /dev/null &
+else 
+  target=$(readlink -f "$1")
+  /Applications/WezTerm.app/Contents/MacOS/wezterm --config-file $HOME/.config/wezterm/app_wezterm.lua start \
+    -- env nvim "$target" >& /dev/null &
+fi

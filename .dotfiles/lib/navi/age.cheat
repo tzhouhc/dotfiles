@@ -1,0 +1,13 @@
+% age, encrypt
+
+# Encrypt a file to output file using current host's id_rsa.pub
+age -R ~/.ssh/id_rsa.pub -o <output> <input>
+
+$ input: ls
+
+% age, decrypt
+
+# Decrypt a file to output file using current host's id_rsa
+age -d -i ~/.ssh/id_rsa -o <output> <input>
+
+$ input: ls

@@ -1,0 +1,41 @@
+#!/bin/zsh
+
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+# Check if required commands exist
+for cmd in mods gum; do
+    if ! command -v $cmd &> /dev/null; then
+        echo "Error: Required command '$cmd' not found"
+        exit 1
+    fi
+done
+
+# Let the user pick a recent conversation
+hash=$(mods --list --raw 2>/dev/null \
+  | fzf --delimiter='\t' -n1 --with-nth=2 --preview='mods --show {1} | bat --language=markdown' \
+  | cut -d$'\t' -f1)
+
+# Main chat loop
+while true; do
+    # Use gum to get multiline input with a prompt
+    USER_INPUT=$(gum write --char-limit 16384 --placeholder "Enter your message (Ctrl+D to send, Ctrl+C to exit)")
+    
+    # Check if input is empty (user pressed Ctrl+D without input)
+    if [ -z "$USER_INPUT" ]; then
+      exit 0
+    fi
+    
+    # Print response with formatting
+    # Show the user input with a marker
+    echo -e "${GREEN}You:${NC} ${USER_INPUT}"
+    
+    # Send to mods, capturing only stdout
+    # Continuing session
+    RESPONSE=$(mods --continue ${hash} "$USER_INPUT" 2>/dev/null)
+    echo -e "${GREEN}LLM:${NC} $RESPONSE"
+    
+    # Print prompt for next input
+    echo ""
+done
+

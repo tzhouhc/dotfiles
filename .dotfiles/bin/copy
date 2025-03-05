@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# copy takes an optional list of files on the commandline.
+# when called directly, copy returns the list of files.
+# when called with files, copy overwrites the list of noted files.
+# e.g.
+#   $ copy new.txt
+#   $ copy
+#   /home/ting/new.txt
+#   $ copy old.txt
+#   $ copy
+#   /home/ting/old.txt
+#   $ cp $(copy) documents/
+
+touch "${COPY_FILE}"
+if [[ "$@" == "" ]]; then
+  cat "${COPY_FILE}"
+else
+  files=
+  for var in "$@"
+  do
+    files="$(realpath $var) $files"
+  done
+  echo $files > "${COPY_FILE}"
+fi

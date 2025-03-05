@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+# returns an icon from the nerdfont-linux subset that represents the current OS.
+
+if uname -a | grep -i darwin > /dev/null; then
+  # OSX
+  print -rn -- " "
+elif uname -a | grep -i ubuntu > /dev/null; then
+  print -rn -- " "
+elif uname -a | grep -i debian > /dev/null; then
+  print -rn -- " "
+elif uname -a | grep -i linux > /dev/null; then
+  print -rn -- " "
+else
+  print -rn -- " "
+fi

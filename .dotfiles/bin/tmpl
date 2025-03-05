@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+tmpl_dir=$XDG_CONFIG_HOME/templates
+
+choice=$(ls $tmpl_dir | fzf --preview="cat $tmpl_dir/{}/info")
+if [[ $choice == '' ]]; then
+  return
+fi
+
+source_dir="${tmpl_dir}/${choice}/"
+
+echo "Copying template files for \"$choice\"..."
+rsync -aq "$source_dir" --exclude "info" ./
+# rename `dot-envrc` files to `.envrc` a la gnu-stow
+if [[ -f "./dot-envrc"  ]]; then
+  mv ./dot-envrc ./.envrc
+fi
+# run a specific preparation script and then remove it
+if [[ -f "./prep" ]]; then
+  source ./prep
+  rm ./prep
+fi
+

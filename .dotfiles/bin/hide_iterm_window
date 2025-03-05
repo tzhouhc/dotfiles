@@ -1,0 +1,16 @@
+#!/usr/bin/osascript
+# AppleScript _fucking_ sucks
+
+# apparently "tell system events" cannot be outside of checking app is running
+if application "iTerm2" is running then
+  tell application "System Events"
+    # this must check for iTerm2 instead of iTerm
+    set visible of application process "iTerm2" to false
+  end tell
+end if
+
+if application "WezTerm" is running then
+  tell application "System Events"
+    set visible of application process "WezTerm" to false
+  end tell
+end if

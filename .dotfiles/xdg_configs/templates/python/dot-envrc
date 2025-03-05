@@ -1,0 +1,4 @@
+source ./.venv/bin/activate
+for dir in .venv/lib/python*; do
+    export PYTHONPATH=$PYTHONPATH:$dir/site-packages
+done

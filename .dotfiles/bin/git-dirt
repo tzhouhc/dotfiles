@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+# get extended path
+source $HOME/.zsh/base.zsh
+
+root=$(git_repo_root)
+git status --porcelain | choose 1 | sed "s:^:${root}/:"  | rargs readlink -f {}

@@ -1,0 +1,306 @@
+#!/usr/bin/env python3
+"""
+Script used to download light novels from wenku8.net and store as epub files.
+
+This is intended solely for researching purposes. All content rights belong to
+the original content creators.
+
+Dependencies:
+* pandoc
+* beautiful-soup-4
+* pypandoc
+* aiohttp
+* termcolor
+"""
+from __future__ import annotations
+
+
+import asyncio
+import argparse
+import pypandoc
+import os
+import aiohttp
+import sys
+import re
+
+from bs4 import BeautifulSoup
+from tempfile import NamedTemporaryFile
+from termcolor import colored
+from typing import List, Dict, Tuple, Any
+from multiprocessing import Pool
+
+
+INDEX_URL_TEMPLATE = "https://www.wenku8.net/modules/article/reader.php?aid={}"
+MD_TEMPLATE = """---
+title:
+- type: main
+  text: {}
+- type: collection
+  text: {}
+creator:
+- role: author
+  text: {}
+...
+
+
+"""
+PAGE_BREAK = '\n<p style="page-break-after: always;"> </p>\n'
+
+
+def is_file(filename):
+    if not os.path.isfile(filename):
+        raise argparse.ArgumentTypeError(f"'{filename}' is not a valid file.")
+    return filename
+
+
+def is_dir(dirname):
+    if not os.path.isdir(dirname):
+        raise argparse.ArgumentTypeError(f"'{dirname}' is not a valid directory.")
+    return dirname
+
+
+class Chapter:
+    def __init__(self, title: str, text: str, images: List[str]) -> None:
+        """Creates a Chapter object.
+
+        Args:
+            title (str): Title of the chapter
+            text (str): Content of the chapter
+            images (List[str]): List of urls to images in the chapter.
+        """
+        self.title = title
+        self.text = text
+        self.images = images
+
+    def to_markdown(self):
+        """Generates self-contained markdown text for the chapter."""
+        page = ""
+        title = self.title
+        page += f"# {title}\n\n"
+        page += self.text.replace("<", "『").replace(">", "』")
+        for img in self.images:
+            page += PAGE_BREAK
+            page += f"![]({img})" + "{ height=100% }\n"
+        return page
+
+    @staticmethod
+    async def from_url(
+        session: aiohttp.ClientSession, page_url: str, vol_name: str = ""
+    ) -> Chapter:
+        """Generates Chapter from page url.
+
+        Args:
+            page_url (str): Url to the wenku page.
+            vol_name (str, optional): Name of the volume, for sanitizing the
+            title.
+
+        Returns:
+            Chapter: Generated Chapter object.
+        """
+        print(f"Getting page content under {vol_name}")
+        async with session.get(page_url) as resp:
+            page = BeautifulSoup(
+                await resp.text(encoding="gbk", errors="ignore"), features="html.parser"
+            )
+        content_main = page.find("div", {"id": "contentmain"})
+        title = content_main.find("div", {"id": "title"}).text
+        if title.startswith(vol_name):
+            title = title.replace(vol_name, "").strip()
+        content = content_main.find("div", {"id": "content"})
+        for ul in content.find_all("ul"):
+            ul.decompose()
+        images: List[str] = []
+        for img in content.find_all("img"):
+            images += [img["src"]]
+        return Chapter(title, content.text, images)
+
+
+class Volume:
+    def __init__(
+        self,
+        series_title: str,
+        title: str,
+        author: str,
+        chapters: List[Chapter],
+        cover: bytes,
+        cover_ext: str,
+    ) -> None:
+        self.series_title = series_title
+        self.title = title
+        self.author = author
+        self.chapters = chapters
+        self.cover = cover
+        self.cover_ext = cover_ext
+
+    @staticmethod
+    async def guess_cover_image(
+        session: aiohttp.ClientSession, urls: List[Tuple[str, str]]
+    ) -> Tuple[str, bytes]:
+        for title, url in urls:
+            if "插图" in title:
+                async with session.get(url) as resp:
+                    page = BeautifulSoup(
+                        await resp.text(encoding="gbk", errors="ignore"),
+                        features="html.parser",
+                    )
+                content_main = page.find("div", {"id": "contentmain"})
+                cover = content_main.find("div", {"class": "divimage"})
+                if cover:
+                    cover_url = cover.find("img")["src"]
+                    # failing to provide an extension might cause some epub readers --
+                    # cough Marvin cough -- to be unable to parse the cover image
+                    cover_ext = "." + os.path.basename(cover_url).split(".")[-1]
+                    async with session.get(cover_url) as resp:
+                        cover = await resp.read()
+                    print("Automatically identified cover image.")
+                    return cover_ext, cover
+        return "", b""
+
+    def to_markdown(self) -> str:
+        volume = MD_TEMPLATE.format(self.title, self.series_title, self.author)
+        volume += PAGE_BREAK
+        for chapter in self.chapters:
+            volume += chapter.to_markdown()
+            volume += PAGE_BREAK
+        return volume
+
+    def to_epub(self, args: argparse.Namespace) -> None:
+        print(f"Creating epub for '{self.title}';")
+        extra_args = ["--toc"]
+        if args.css:
+            extra_args += [f"--css {args.css}"]
+
+        with NamedTemporaryFile(suffix=self.cover_ext) as cf:
+            if args.cover:
+                extra_args += [f"--epub-cover-image={args.cover}"]
+            else:
+                if self.cover:
+                    cf.write(self.cover)
+                    extra_args += [f"--epub-cover-image={cf.name}"]
+            with NamedTemporaryFile() as tf:
+                vol_title = f"{self.series_title} - {self.title}"
+                filename = f"{vol_title}.epub"
+                # subtitle first, then main series name
+                book_output = self.to_markdown()
+                outputpath = os.path.join(args.output_dir, filename)
+                if args.markdown:
+                    outputpath = outputpath.replace(".epub", ".md")
+                    with open(outputpath, "w+") as of:
+                        of.write(book_output)
+                else:
+                    tf.write(book_output.encode("utf-8"))
+                    _ = pypandoc.convert_file(
+                        tf.name,
+                        to="epub",
+                        format="md",
+                        extra_args=extra_args,
+                        outputfile=outputpath,
+                    )
+                print(f"Volume '{colored(outputpath, 'green')}' created.")
+
+    @staticmethod
+    async def from_urls(
+        session: aiohttp.ClientSession,
+        series_title: str,
+        vol_name: str,
+        author: str,
+        urls: List[Tuple[str, str]],
+    ) -> Volume:
+        print(f"Generating volume {vol_name} from urls")
+        cover_ext, cover = await Volume.guess_cover_image(session, urls)
+        chapters: List[Chapter] = []
+        to_run: List[Any] = []
+        for _, page_url in urls:
+            to_run += [Chapter.from_url(session, page_url, vol_name=vol_name)]
+        chapters = await asyncio.gather(*to_run)
+        return Volume(series_title, vol_name, author, chapters, cover, cover_ext)
+
+
+class Series:
+    def __init__(self, title: str, author: str, volumes: List[Volume]):
+        self.title = title
+        self.author = author
+        self.volumes = volumes
+
+    @staticmethod
+    async def from_id(
+        session: aiohttp.ClientSession, args: argparse.Namespace
+    ) -> Series:
+        print(f"Generating series from ID {args.book_id}")
+        index_url = INDEX_URL_TEMPLATE.format(args.book_id)
+        async with session.get(index_url) as resp:
+            page = BeautifulSoup(
+                await resp.text(encoding="gbk", errors="ignore"), features="html.parser"
+            )
+        title = page.find("div", {"id": "title"}).text
+        title = re.sub(r"\(.*\)", "", title)
+        title = re.sub(r"（.*）", "", title)
+        # info format: "作者：xxx"
+        author = page.find("div", {"id": "info"}).text[3:]
+        volume_urls: Dict[str, List[Tuple[str, str]]] = {}
+        # volume name pairs to list of pairs
+        # pairs are chapter name and chapter url
+        for td in page.find("table").find_all("td"):
+            if "vcss" in td.get("class"):
+                name = td.string  # volume name
+                volume_urls[name] = []
+                current_vol = volume_urls[name]
+            else:
+                if td.find("a"):
+                    current_vol += [(td.a.text, td.find("a")["href"])]
+                    # chapter name, chapter url
+        to_run: List[Any] = []
+        for vol_name, chapters in volume_urls.items():
+            if not args.volume or args.volume == vol_name:
+                to_run += [Volume.from_urls(session, title, vol_name, author, chapters)]
+        volumes = await asyncio.gather(*to_run)
+        return Series(title, author, volumes)
+
+    async def to_epubs(self, args: argparse.Namespace) -> None:
+        print(f"Creating epub for series {self.title}")
+        vols_to_run = [
+            vol for vol in self.volumes if not args.volume or args.volume == vol.title
+        ]
+        p = Pool(processes=len(vols_to_run))
+        results = [p.apply_async(create_epub, (vol, args)) for vol in vols_to_run]
+        [res.get(timeout=60) for res in results]
+
+
+# because multiprocessing cannot handle non-top-level functions;
+# this is entirely a wrapper/adapter
+def create_epub(vol: Volume, args: argparse.Namespace) -> None:
+    vol.to_epub(args)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("book_id", help="The ID of the book on wenku8", type=int)
+    parser.add_argument("--volume", "-v", help="Specific volume to process")
+    parser.add_argument(
+        "--output-dir", "-o", help="Output directory", default=".", type=is_dir
+    )
+    parser.add_argument("--cover", "-r", help="Cover image to use", type=is_file)
+    parser.add_argument("--title", "-t", help="Title for the series")
+    parser.add_argument("--author", "-a", help="Author of the series")
+    parser.add_argument("--css", "-c", help="Epub CSS file", type=is_file)
+    parser.add_argument("--markdown", "-m", help="Epub CSS file", action="store_true")
+    return parser.parse_args()
+
+
+async def main() -> None:
+    # because multiprocessing can't handle objects.
+    # TODO: research why create_epub apparently can't be pickled --
+    # could be Volume, or could be Namespace.
+    sys.setrecursionlimit(25000)
+    args = parse_args()
+    async with aiohttp.ClientSession() as session:
+        series = await Series.from_id(session, args)
+        args.output_dir = os.path.join(args.output_dir, series.title)
+        os.makedirs(args.output_dir, exist_ok=True)
+        args.title = args.title or series.title
+        args.author = args.author or series.author
+        await series.to_epubs(args)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

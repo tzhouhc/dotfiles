@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+open "obsidian://search?query=$(echo $@ | python3 -c 'import urllib.parse as parse, sys; print(parse.quote(sys.stdin.read().strip()))')"

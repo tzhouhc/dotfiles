@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+# reads some text with '<tag-name>'s in them; request user input for these
+# var values and return the input with the variables replaced
+line=$@
+for var in $(echo $line | grep -o '<[^<>]*>' | sort | uniq); do
+  line=$(echo $line | sed "s:$var:$(vared -p "Value for %F{green}$var%f: " -c temp; print -- $temp):g")
+done
+print -- $line

@@ -1,0 +1,30 @@
+% utils
+
+# Cut portions of line by separator
+cut -d'<separator>' -f<range>
+
+# List disk usage
+df -h
+
+# List subfolders sorted by readable size
+du -h --max-depth=1 | sort -rh
+
+% ai, tabby
+
+# Start tabby as a one-time job
+/opt/homebrew/opt/tabby/bin/tabby serve --device metal --model StarCoder-1B
+
+# Start tabby as a regular service
+brew services start tabbyml/tabby/tabby
+
+% rust, install
+# Install updates for all available cargo binaries
+cargo install $(cargo install --list | ggrep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
+
+% latex, iterate
+# Watch for latex file changes and open output pdf file
+ls *.tex | entr -s 'killall Preview; open *.pdf'
+
+% python, venv
+# Update current project venv
+rm ./.venv && python3 -m venv ./.venv && python3 -m pip install -r requirements.txt

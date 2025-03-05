@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+/opt/homebrew/bin/dwebp $1 -o "${1%.webp}.png"

@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+set -eEuCo pipefail
+
+declare -r file=$1
+declare -i -r ln=$2
+
+# Preview at 6th line and highlight.
+exec bat --color always --highlight-line $ln --line-range $[$[$ln - 6] < 0 ? 0 : $[$ln - 3]]: --paging never "$file"

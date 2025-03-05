@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+# This is largely the same as "smart_preview", and should be changed with it,
+# except that its implemention should be more space-conscious.
+
+source $HOME/.zsh/env/path.zsh
+
+# default preview image dimensions
+hori=20
+vert=10
+# read from fzf dimensions
+if [[ $FZF_PREVIEW_COLUMNS != '' ]]; then
+  hori=${FZF_PREVIEW_COLUMNS}
+  vert=${FZF_PREVIEW_LINES}
+fi
+# optional image dimensions params
+if [[ "$2" != '' ]] && [[ $3 != '' ]]; then
+  vert=$2
+  hori=$3
+fi
+
+# list dir content if is dir
+if [[ -d "$1" ]]; then
+  eza --color=always --icons=always "$1"
+elif [[ -f "$1" ]]; then
+  # only try to print file content if file is text
+  if file "$1" --mime-type | grep -Eq 'text'; then
+    bat -p "$1"
+  elif file "$1" --mime-type | grep -Eq 'image'; then
+    if type imgcatr >/dev/null 2>&1; then
+      imgcatr -s "${hori}x${vert}" "$1"
+    else
+      echo "$1" is an image.
+    fi
+  fi
+fi

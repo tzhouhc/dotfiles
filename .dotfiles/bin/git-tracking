@@ -10,7 +10,7 @@ NC='\033[0m' # No Color
 # rel_path=$(realpath "$(pwd)")
 
 # Get list of all items in current directory (excluding hidden files/dirs)
-current_items=$(find . -maxdepth 1 | sort | sed 's|^\./||')
+current_items=$(find . -maxdepth 1 -mindepth 1 -not -path "^.$" | sort | sed 's|^\./||')
 
 # Handle empty directory case
 if [ -z "$current_items" ]; then

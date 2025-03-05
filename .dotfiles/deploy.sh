@@ -23,28 +23,8 @@ fi
 cwd="$(dirname "$0")"
 cwd="$(cd $cwd; pwd)"
 
-config_dir="$cwd/configs"
-# for XDG_CONFIG_HOME
-xdg_source_dir="$cwd/xdg_configs"
-xdg_dir="$HOME/.config"
-mkdir -p $xdg_dir
-
-# potentially the one introduced by oh-my-zsh
-# removing and relinking is idempotent
-if [ -e "$HOME/.zshrc" ]; then
-  rm $HOME/.zshrc
-fi
-
 # make zoxide database dir
 mkdir -p "$HOME/.data/zoxide"
-
-# Use stow to manage symlinks
-#
-# stow _superficially_ does not allow source to contain slashes,
-# but we can simply make sure to call it from the containing directory.
-# Link all $HOME dotfiles, including the various RC files and zsh dir.
-stow --dotfiles -v --target="$HOME" "configs"
-stow --dotfiles -v --target="$xdg_dir" "xdg_configs"
 
 # tpm
 if ! [ -d "$xdg_dir/tmux/plugins/tpm" ]; then

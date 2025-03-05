@@ -1,7 +1,0 @@
-# rebuild all Typst documents
-build:
-  typst compile *.typ
-
-# continuously rebuild upon any typ file change
-watch-build:
-  ls | grep '.typ' | entr -n -s 'just build'

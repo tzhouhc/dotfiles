@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-
-/Applications/Hammerspoon.app/Contents/Frameworks/hs/hs "$(readlink -f "$1")"

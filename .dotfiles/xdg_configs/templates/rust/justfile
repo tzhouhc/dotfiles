@@ -1,7 +1,0 @@
-# Build project
-build:
-  cargo build
-
-# Automatically adopt rustc recommendations
-fix:
-  cargo fix

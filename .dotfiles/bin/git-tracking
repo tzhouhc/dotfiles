@@ -19,7 +19,7 @@ fi
 
 # Get list of tracked files in the bare repository for current directory
 # Note: dfg is assumed to be an alias or function that includes necessary git-dir and work-tree flags
-bare_repo_files=$(git --git-dir=$HOME/.dotfiles.meta --work-tree=$HOME ls-files . | sort)
+bare_repo_files=$(git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME ls-files . | sort)
 
 # Process each item (file or directory)
 while IFS= read -r item; do

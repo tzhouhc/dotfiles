@@ -119,8 +119,8 @@ if type lazygit >/dev/null 2>&1; then
   fi
 fi
 
-alias dfg='git --git-dir=$HOME/.dotfiles.meta --work-tree=$HOME'
-alias dflg='lazygit --git-dir=$HOME/.dotfiles.meta --work-tree=$HOME'
+alias dfg='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
+alias dflg='lazygit --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 
 if type tmux_notify &>/dev/null; then
   alias tin=tmux_notify

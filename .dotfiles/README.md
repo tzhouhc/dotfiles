@@ -3,8 +3,8 @@
 Normal initialization:
 
 ```sh
-git clone --bare git@github.com:tzhouhc/dotfiles.git $HOME/.dotfiles.meta
-alias dfg='git --git-dir=$HOME/.dotfiles.meta --work-tree=$HOME'
+git clone --bare git@github.com:tzhouhc/dotfiles.git $HOME/.dotfiles.git
+alias dfg='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 dfg checkout -f
 dfg submodule update --init --recursive
 dfg config --local status.showUntrackedFiles no

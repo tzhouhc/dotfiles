@@ -1,0 +1,58 @@
+#!/usr/bin/env zsh
+
+# Colors for output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Get the current directory path relative to $HOME
+# rel_path=$(realpath "$(pwd)")
+
+# Get list of all items in current directory (excluding hidden files/dirs)
+current_items=$(find . -maxdepth 1 -not -path "*/\.*" -not -path "." | sort | sed 's|^\./||')
+
+# Handle empty directory case
+if [ -z "$current_items" ]; then
+    echo "No files or directories found in current directory."
+    exit 0
+fi
+
+# Get list of tracked files in the bare repository for current directory
+# Note: dfg is assumed to be an alias or function that includes necessary git-dir and work-tree flags
+bare_repo_files=$(git --git-dir=$HOME/.dotfiles.meta --work-tree=$HOME ls-files . | sort)
+
+# Process each item (file or directory)
+while IFS= read -r item; do
+    # Create the path relative to $HOME for comparison with dfg output
+    item_rel_path="$item"
+    
+    if [ -f "$item" ]; then
+        # Handle files
+        if echo "$bare_repo_files" | grep -q "^$item_rel_path$"; then
+            # File is tracked in the bare repo
+            echo -e "${GREEN}$item${NC}"
+        else
+            # File is not tracked in the bare repo
+            echo -e "${RED}$item${NC}"
+        fi
+    elif [ -d "$item" ]; then
+        # Handle directories
+        # Get all files in this directory that are tracked in the repo
+        tracked_files_in_dir=$(echo "$bare_repo_files" | grep "^$item_rel_path/" | wc -l)
+        
+        # Get total number of files in the directory (excluding hidden files)
+        total_files_in_dir=$(find "$item" -type f -not -path "*/\.*" | wc -l)
+        
+        if [ "$tracked_files_in_dir" -eq 0 ]; then
+            # No files in directory are tracked
+            echo -e "${RED}$item/${NC}"
+        elif [ "$tracked_files_in_dir" -eq "$total_files_in_dir" ]; then
+            # All files in directory are tracked
+            echo -e "${GREEN}$item/${NC}"
+        else
+            # Some files in directory are tracked
+            echo -e "${BLUE}$item/${NC} ($tracked_files_in_dir/$total_files_in_dir)"
+        fi
+    fi
+done <<< "$current_items"

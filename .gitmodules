@@ -1,3 +1,4 @@
 [submodule "vim"]
 	path = .config/nvim
 	url = git@github.com:tzhouhc/vim.git
+        branch = main

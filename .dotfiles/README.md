@@ -3,7 +3,11 @@
 Normal initialization:
 
 ```sh
-git clone --recurse-submodules git@github.com:tzhouhc/dotfiles.git ~/.dotfiles
+git clone --bare git@github.com:tzhouhc/dotfiles.git $HOME/.dotfiles.meta
+alias dfg='git --git-dir=$HOME/.dotfiles.meta --work-tree=$HOME'
+dfg checkout -f
+dfg submodule update --init --recursive
+dfg config --local status.showUntrackedFiles no
 ```
 
 If running on AWS EC2, first set password for the default user:
@@ -17,13 +21,6 @@ Then proceed with installation (recommend doing so inside of `tmux`):
 
 ```sh
 ~/.dotfiles/install.sh
-~/.dotfiles/deploy.sh
-```
-
-If cloned without `--recurse-submodule`:
-
-```sh
-git submodule update --init --recursive
 ```
 
 # Requirements

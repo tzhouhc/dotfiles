@@ -10,11 +10,10 @@ NC='\033[0m' # No Color
 # rel_path=$(realpath "$(pwd)")
 
 # Get list of all items in current directory (excluding hidden files/dirs)
-current_items=$(find . -maxdepth 1 -not -path "*/\.*" -not -path "." | sort | sed 's|^\./||')
+current_items=$(find . -maxdepth 1 | sort | sed 's|^\./||')
 
 # Handle empty directory case
 if [ -z "$current_items" ]; then
-    echo "No files or directories found in current directory."
     exit 0
 fi
 
@@ -40,19 +39,12 @@ while IFS= read -r item; do
         # Handle directories
         # Get all files in this directory that are tracked in the repo
         tracked_files_in_dir=$(echo "$bare_repo_files" | grep "^$item_rel_path/" | wc -l)
-        
-        # Get total number of files in the directory (excluding hidden files)
-        total_files_in_dir=$(find "$item" -type f -not -path "*/\.*" | wc -l)
-        
         if [ "$tracked_files_in_dir" -eq 0 ]; then
             # No files in directory are tracked
             echo -e "${RED}$item/${NC}"
-        elif [ "$tracked_files_in_dir" -eq "$total_files_in_dir" ]; then
-            # All files in directory are tracked
-            echo -e "${GREEN}$item/${NC}"
         else
             # Some files in directory are tracked
-            echo -e "${BLUE}$item/${NC} ($tracked_files_in_dir/$total_files_in_dir)"
+            echo -e "${BLUE}$item/${NC}"
         fi
     fi
 done <<< "$current_items"

@@ -121,6 +121,7 @@ fi
 
 alias dfg='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 alias dflg='lazygit --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
+alias dfe='$EDITOR $(dfg ls-files . | fzf)'
 
 if type tmux_notify &>/dev/null; then
   alias tin=tmux_notify
@@ -156,7 +157,11 @@ if type mods &>/dev/null; then
   function modsh() {
     to_next mods -q --role shell_stdout $@ 2>/dev/null
   }
+  function task_ai() {
+    to_next mods -q --role task_warrior $@ 2>/dev/null
+  }
   alias howto=modsh
+  alias todo=task_ai
   alias catsh='mods --api deepseek --model deepseek-chat --role cat'
 fi
 

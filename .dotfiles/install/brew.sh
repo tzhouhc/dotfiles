@@ -17,7 +17,7 @@ fi
 
 brew update
 brew install wget git stow tmux zsh the_silver_searcher universal-ctags \
-  moreutils lazygit direnv jq gum tldr mods \
+  moreutils lazygit direnv jq gum tldr mods taskwarrior-tui \
 # less important ones
 brew install age cmus difftastic btop pnpm
 brew install timescam/homebrew-tap/pay-respects

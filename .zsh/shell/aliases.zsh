@@ -176,3 +176,8 @@ if type bazel &>/dev/null; then
   alias br="bazel run"
   alias bt="bazel test"
 fi
+
+if type task &>/dev/null; then
+  alias t="task"
+fi
+

@@ -28,3 +28,7 @@ ls *.tex | entr -s 'killall Preview; open *.pdf'
 % python, venv
 # Update current project venv
 rm ./.venv && python3 -m venv ./.venv && python3 -m pip install -r requirements.txt
+
+% zsh
+# Run command for each file in dir
+for file in *(N); do echo "$file"; done

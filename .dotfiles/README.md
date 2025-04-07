@@ -8,7 +8,15 @@ alias dfg='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 dfg checkout -f
 dfg submodule update --init --recursive
 dfg config --local status.showUntrackedFiles no
+
 ```
+
+## Remote Branch Issue
+
+Possible check [this 
+link](https://stackoverflow.com/questions/22446446/cannot-setup-tracking-information-starting-point-origin-master-is-not-a-branc).
+
+## Other hosts
 
 If running on AWS EC2, first set password for the default user:
 

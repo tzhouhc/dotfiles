@@ -1,4 +1,4 @@
-# [Created by task 3.3.0 3/17/2025 11:01:06]
+# [created by task 3.3.0 3/17/2025 11:01:06]
 data.location=/Users/tingzhou/.task
 news.version=10000.0.0
 
@@ -22,3 +22,9 @@ include solarized-dark-256.theme
 #include solarized-light-256.theme
 #include no-color.theme
 
+report.next.columns=id,due.relative,depends,project,description,priority,tags,recur,scheduled.countdown,until.remaining,urgency
+report.next.context=1
+report.next.description=Most urgent tasks
+report.next.filter=status:pending -WAITING limit:page
+report.next.labels=ID,Due,Deps,Project,Description,Prio,Tag,Recur,Sched,Until,Urg
+report.next.sort=urgency-

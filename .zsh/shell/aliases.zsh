@@ -160,6 +160,20 @@ if type mods &>/dev/null; then
   function task_ai() {
     to_next mods -q --role task_warrior $@ 2>/dev/null
   }
+  chat() {
+    # pick a model alias from your config
+    model=$(echo "4o\n4o-mini\nds-chat\nds-r1" \
+      | gum choose --height 8 --header "Pick model to chat with:" --no-show-help)
+    if [[ -z $model ]]; then
+      gum format "  :pensive:  cancelled, no model picked." -t emoji
+      return 1
+    fi
+    # first invocation starts a new conversation
+    mods --model "$model" --prompt-args $@ || return $?
+    # after that enter a loop until user quits
+    while mods --model "$model" --prompt-args $@ --continue-last; do :; done
+    return $?;
+  }
   alias howto=modsh
   alias todo=task_ai
   alias catsh='mods --api deepseek --model deepseek-chat --role cat'

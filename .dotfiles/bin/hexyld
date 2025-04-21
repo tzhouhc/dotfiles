@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+# get extended path
+source $HOME/.zsh/base.zsh
+
+if ! type hexyl &>/dev/null; then
+  echo "hexyl not found"
+  exit 1
+fi
+
+tmpa=$(mktemp /tmp/diff_temp.XXXXXX)
+tmpb=$(mktemp /tmp/diff_temp.XXXXXX)
+
+hexyl -p "$1" > "$tmpa"
+hexyl -p "$2" > "$tmpb"
+
+if type delta &>/dev/null; then
+  delta "$tmpa" "$tmpb"
+else
+  diff "$tmpa" "$tmpb"
+fi
+
+
+rm "$tmpa"
+rm "$tmpb"

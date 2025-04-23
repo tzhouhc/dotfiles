@@ -16,8 +16,11 @@ if ! type brew  >/dev/null 2>&1; then
 fi
 
 brew update
+# critical tools
 brew install wget git stow tmux zsh the_silver_searcher universal-ctags \
-  moreutils lazygit direnv jq gum tldr mods taskwarrior-tui \
+  moreutils lazygit direnv jq gum age tldr mods taskwarrior-tui \
+
 # less important ones
-brew install age cmus difftastic btop pnpm
+brew install hexyl numbat
+brew install cmus difftastic btop pnpm
 brew install timescam/homebrew-tap/pay-respects

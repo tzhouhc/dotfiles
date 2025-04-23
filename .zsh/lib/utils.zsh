@@ -298,6 +298,8 @@ function unsymlink() {
 }
 
 function history_replay() {
-  print -z $(atuin history list | tail -n 10 | fzf -m | cut -f 2 | awk '{printf("%s%s", sep, $0); sep=" ; "} END {print ""}')
+  print -z $(atuin history list | tail -n 50 | head -n 49 | \
+    fzf -m --bind 'result:pos(-4)' | cut -f 2 | \
+    awk '{printf("%s%s", sep, $0); sep=" ; "} END {print ""}')
 }
 alias replay=history_replay

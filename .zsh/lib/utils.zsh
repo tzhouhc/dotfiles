@@ -296,3 +296,8 @@ function unsymlink() {
         echo "$link is not a symlink, skipping"
     fi
 }
+
+function history_replay() {
+  print -z $(atuin history list | tail -n 30 | fzf -m | cut -f 2 | awk '{printf("%s%s", sep, $0); sep=" & "} END {print ""}')
+}
+alias replay=history_replay

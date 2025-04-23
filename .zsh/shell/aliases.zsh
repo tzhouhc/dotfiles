@@ -195,3 +195,7 @@ if type task &>/dev/null; then
   alias t="task"
 fi
 
+if type hexyl &>/dev/null; then
+  alias hex="hexyl"
+fi
+

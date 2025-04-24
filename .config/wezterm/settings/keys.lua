@@ -2,6 +2,8 @@ local wezterm = require("wezterm")
 
 local M = {}
 
+local home = os.getenv("HOME")
+
 function M.update_config(config)
   config.bypass_mouse_reporting_modifiers = "ALT"
 
@@ -17,6 +19,16 @@ function M.update_config(config)
       mods = 'CMD',
       action = wezterm.action.Multiple({
         wezterm.action.SpawnTab("DefaultDomain"),
+        wezterm.action.EmitEvent("modify-tabs"),
+      }),
+    },
+    {
+      key = 't',
+      mods = 'CMD|SHIFT',
+      action = wezterm.action.Multiple({
+        wezterm.action.SpawnCommandInNewTab(
+          { args = { home .. "/.dotfiles/bin/ssh_to" } }
+        ),
         wezterm.action.EmitEvent("modify-tabs"),
       }),
     },

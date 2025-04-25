@@ -2,4 +2,4 @@
 
 source $HOME/.zsh/env/path.zsh
 
-ssh $(cat ~/.ssh/config | grep '^Host' | cut -d' ' -f2 | fzf)
+ssh $(cat ~/.ssh/config | grep '^Host' | cut -d' ' -f2 | fzf --layout=reverse)

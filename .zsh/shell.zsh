@@ -34,3 +34,6 @@ source "$SHELL_SCRIPTS_DIR/tmux.zsh"
 
 # some items needs to run after tmux
 source "$SHELL_SCRIPTS_DIR/post_tmux.zsh"
+
+# update checking
+source "$SHELL_SCRIPTS_DIR/update.zsh"

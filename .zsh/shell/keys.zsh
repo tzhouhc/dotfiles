@@ -116,7 +116,7 @@ function my-csearch-fzf-widget() {
   zle -R
 }
 zle -N my-csearch-fzf-widget
-bindkey '^[f' my-csearch-fzf-widget
+# bindkey '^[f' my-csearch-fzf-widget
 
 
 # Ctrl-f to run fuzzy search and return file name

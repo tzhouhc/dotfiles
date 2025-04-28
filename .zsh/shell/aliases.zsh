@@ -160,7 +160,7 @@ if type mods &>/dev/null; then
   function task_ai() {
     to_next mods -q --role task_warrior $@ 2>/dev/null
   }
-  chat() {
+  function chat() {
     # pick a model alias from your config
     model=$(echo "4o\n4o-mini\nds-chat\nds-r1" \
       | gum choose --height 8 --header "Pick model to chat with:" --no-show-help)
@@ -173,6 +173,9 @@ if type mods &>/dev/null; then
     # after that enter a loop until user quits
     while mods --model "$model" --prompt-args $@ --continue-last; do :; done
     return $?;
+  }
+  function explain() {
+    mods --role shell_expln $@
   }
   alias howto=modsh
   alias todo=task_ai

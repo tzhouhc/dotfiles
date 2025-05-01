@@ -121,6 +121,8 @@ fi
 
 alias dfg='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 alias dflg='lazygit --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
+alias pfg='git --git-dir=$HOME/.private.git --work-tree=$HOME'
+alias pflg='lazygit --git-dir=$HOME/.private.git --work-tree=$HOME'
 alias dfe='$EDITOR $(dfg ls-files . | fzf)'
 
 if type tmux_notify &>/dev/null; then

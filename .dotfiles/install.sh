@@ -25,7 +25,7 @@ fi
 
 # make sure paths are set even if the corresponding binaries aren't installed
 # yet; should be compatible with bash
-source $cwd/zsh/env/path.zsh
+source $HOME/.zsh/env/path.zsh
 
 # install homebrew using just gcc and build-essentials
 source $cwd/install/brew.sh

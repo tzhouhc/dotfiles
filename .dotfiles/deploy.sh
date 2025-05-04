@@ -27,8 +27,8 @@ cwd="$(cd $cwd; pwd)"
 mkdir -p "$HOME/.data/zoxide"
 
 # tpm
-if ! [ -d "$xdg_dir/tmux/plugins/tpm" ]; then
-  git clone https://github.com/tmux-plugins/tpm $xdg_dir/tmux/plugins/tpm
+if ! [ -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm $XDG_CONFIG_HOME/tmux/plugins/tpm
   echo "Installing TPM"
 else
   echo "TPM already installed"

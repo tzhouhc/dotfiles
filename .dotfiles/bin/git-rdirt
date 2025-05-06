@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+# get list of dirty files, but *relative to current dir or provided dir*
+
+# get extended path
+source $HOME/.zsh/base.zsh
+
+root=$(git_repo_root)
+base_dir="${1:-.}"  # Use $1 if provided, otherwise use current directory
+
+abs_base_dir=$(readlink -f "$base_dir")
+
+git status --porcelain | choose 1 | sed "s:^:${root}/:" | while read file; do
+  abs_file=$(readlink -f "$file")
+  realpath --relative-to="$abs_base_dir" "$abs_file"
+done

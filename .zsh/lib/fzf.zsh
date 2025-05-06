@@ -34,7 +34,7 @@ function global_file_list() {
 
 # Recently edited files based on neovim
 function vim_mru_list() {
-  res=$(cat /tmp/oldfiles.txt | choose 1 | grep . | grep -v "\[Preview\]" | sort | uniq | fzf --preview="smart_preview {}" -m)
+  res=$(nvim --headless -c "lua for _,file in ipairs(vim.v.oldfiles) do print(file) end" -c "q" 2>&1 | grep -v "^$" | sed 's/.$//' | sort | uniq | fzf --preview="smart_preview {}" -m)
   print $res
 }
 

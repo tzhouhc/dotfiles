@@ -9,11 +9,18 @@ dfg checkout -f
 dfg submodule update --init --recursive
 dfg config --local status.showUntrackedFiles no
 
+
 ```
+
+## Submodule
+
+In the `config` file in the bare repo dir, ensure that the submodule
+has `ignore = all`. This makes it so that git does not care about the versioning
+of the submodule.
 
 ## Remote Branch Issue
 
-Possible check [this 
+Possible check [this
 link](https://stackoverflow.com/questions/22446446/cannot-setup-tracking-information-starting-point-origin-master-is-not-a-branc).
 
 ## Other hosts

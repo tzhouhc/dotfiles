@@ -33,6 +33,16 @@ function M.update_config(config)
       }),
     },
     {
+      key = 'o',
+      mods = 'CMD|SHIFT',
+      action = wezterm.action.Multiple({
+        wezterm.action.SpawnCommandInNewTab(
+          { args = { "/usr/local/bin/orb" } }
+        ),
+        wezterm.action.EmitEvent("modify-tabs"),
+      }),
+    },
+    {
       key = 'a',
       mods = 'CMD|CTRL',
       action = wezterm.action.Multiple({

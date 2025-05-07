@@ -1,0 +1,6 @@
+hererocks
+neovim-remote
+pynvim
+uv
+virtualenv
+pre_commit

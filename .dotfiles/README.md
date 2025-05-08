@@ -7,8 +7,7 @@ git clone --bare git@github.com:tzhouhc/dotfiles.git $HOME/.dotfiles.git
 alias dfg='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 dfg checkout -f
 dfg submodule update --init --recursive
-dfg config --local status.showUntrackedFiles no
-
+cp $HOME/.dotfiles/ref_git_config $HOME/.dotfiles.git/config
 
 ```
 
@@ -17,6 +16,8 @@ dfg config --local status.showUntrackedFiles no
 In the `config` file in the bare repo dir, ensure that the submodule
 has `ignore = all`. This makes it so that git does not care about the versioning
 of the submodule.
+
+This should be handled by default via the reference git config file.
 
 ## Remote Branch Issue
 

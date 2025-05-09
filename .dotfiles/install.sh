@@ -28,14 +28,27 @@ fi
 source $HOME/.zsh/env/path.zsh
 
 # install homebrew using just gcc and build-essentials
-source $cwd/install/brew.sh
-
-# install rust tools
-source $cwd/install/cargo.sh
+read -r -p "Install homebrew and related? [y/n]: " response
+if [[ $response == "y" || $response == "Y" ]]; then
+  source $cwd/install/brew.sh
+fi
 
 # with cargo installed, tools like bob should all become available for
 # subsequent use.
-source $cwd/install/nvim.sh
+read -r -p "Install neovim? [y/n]: " response
+if [[ $response == "y" || $response == "Y" ]]; then
+  source $cwd/install/core/nvim.sh
+fi
 
 # assumes python is already present and up-to-date
-source $cwd/install/pip.sh
+read -r -p "Install python packages? [y/n]: " response
+if [[ $response == "y" || $response == "Y" ]]; then
+  source $cwd/install/pip.sh
+fi
+
+# install rust tools
+read -r -p "Install rust tools? [y/n]: " response
+if [[ $response == "y" || $response == "Y" ]]; then
+  source $cwd/install/cargo.sh
+fi
+

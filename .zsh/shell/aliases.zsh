@@ -44,11 +44,6 @@ alias pause_virt="stop_virt"
 alias claer=clear
 alias cl=clear
 
-# use custom variant that also hides the terminal after opening
-if uname -a | grep -i darwin > /dev/null; then
-  alias open=open_and_switch
-fi
-
 # Aliasing some shiny new tools over classic ones
 # note: mainly the interactive ones -- the other ones might be used as part of
 # some tool chain

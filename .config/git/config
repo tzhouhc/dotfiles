@@ -89,9 +89,15 @@
 
 [merge]
   conflictstyle = diff3
+  tool = diffview
+[mergetool]
+  prompt = false
+  keepBackup = false
+[mergetool "diffview"]
+  cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [column]
-	ui = auto
+  ui = auto
 [branch]
-	sort = committerdate
+  sort = committerdate

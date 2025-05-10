@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/env/path.zsh
+
+dir="."
+gdir=$(git rev-parse --show-toplevel 2>/dev/null)
+if [[ -d $gdir ]]; then
+  dir=$gdir
+fi
+
+local output=$(rg --no-heading --no-context-separator . "$dir" 2>/dev/null | fzf --height=~100% -m --ansi -d':' -n3..)
+local file=$(echo "$output" | cut -d: -f1)
+local line=$(echo "$output" | cut -d: -f2)
+supervim "$file" "+$line"

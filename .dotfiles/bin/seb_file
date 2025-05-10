@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+# Seb, named as a reference to Alfred and the Black Butler series.
+# It's expected to eventually grow into a Alfred replacement that is more
+# OS agnostic.
+# ----
+# Currently it only serves as a file finder (by name) and opener, with some
+# preview capabilties.
+# TODO:
+# * reorder -- suggestions are sorted by order of input; make use of this
+# * fallback mode - search in browser?
+# * mode - open browser bookmarks
+# * mode - do math using kalker
+# * mode - open file from obsidian
+
+source $HOME/.zsh/base.zsh
+
+# get current TTY size and calculate space available for imgcatr
+read -r vert hori <<<$(stty size)
+(( vert = vert - 2 ))
+(( hori = (hori - 7) / 2 ))
+
+# default to return the selected file for subsequent processing.
+binding='ctrl-o:become(open -R {})'
+result=$( ( fd . "/Applications/" --extension app & fd . ~/ --hidden ) | fzf --height 100% --bind "$binding" --preview "smart_preview {} ${vert} ${hori}")
+
+print $result

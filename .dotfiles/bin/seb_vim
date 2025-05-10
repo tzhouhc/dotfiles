@@ -5,5 +5,5 @@ source $HOME/.zsh/base.zsh
 result=$(seb_file)
 
 if [[ "$result" != '' ]]; then
-  open $result
+  supervim $result
 fi

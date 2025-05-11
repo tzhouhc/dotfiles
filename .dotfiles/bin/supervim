@@ -14,7 +14,7 @@ function find_related_files() {
     local dir=$(dirname "$base")
     local name=$(basename "$base")
     basef=$(readlink -f "$base")
-    
+
     find "$dir" -maxdepth 1 -type f -name "${name}*" | while read -r file; do
         filef=$(readlink -f "$file")
         if [[ "$filef" != "$basef" ]] && ! is_binary "$file"; then
@@ -26,9 +26,9 @@ function find_related_files() {
 # Main function that returns the selected filename
 function smart_select() {
     local file="$1"
-    
+
     [[ -z "$file" ]] && return 1
-    
+
     # Initialize choices array with the original file
     local -a choices=()
     local should_prompt=false
@@ -39,14 +39,14 @@ function smart_select() {
     elif [[ ! -f "$file" ]]; then
         choices+=("$file (new)")
     fi
-    
+
     # Find related text files
     local related_files=($(find_related_files "$file"))
     choices=("${related_files[@]}" "${choices[@]}")
     if (( ${#choices} > 1 )); then
         should_prompt=true
     fi
-    
+
     # If we should prompt, let user choose
     if $should_prompt; then
         local choice
@@ -84,16 +84,19 @@ function gotovim() {
 
 function smart_edit() {
   if type nvr >/dev/null 2>&1; then
-    # vim internal-terminal mode
+    # vim internal-terminal mode (e.g. Yazi, Seb)
     if [[ $NVIM != '' ]]; then
       # reusing current (parent) nvim instance
       nvr $@
       return
     fi
-    # determine tmux mode
+    # determine tmux mode; uses tmux window id to remain consistent even
+    # after switching.
     if [[ $TMUX != '' ]]; then
-      window=$(tmux display-message -p '#I')
-      expect_name="/tmp/nvimsocket_$window"
+      window_id=$(tmux display-message -p '#{window_id}')
+      # Remove the '@' character from the window ID to make it a valid filename
+      window_id=${window_id//@/}
+      expect_name="/tmp/nvimsocket_$window_id"
     else
       expect_name="/tmp/nvimsocket"
     fi

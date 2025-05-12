@@ -1,0 +1,108 @@
+#!/bin/bash
+
+# Directories to manage
+DIRS=(
+  "$HOME/.config/nvim"
+  "$HOME/.local/share/nvim"
+  "$HOME/.local/state/nvim"
+  "$HOME/.cache/nvim"
+)
+
+# Function to check if at least one Neovim directory exists
+check_nvim_exists() {
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir" ]; then
+      return 0  # At least one directory exists
+    fi
+  done
+  return 1  # No directories exist
+}
+
+# Function to backup Neovim directories with a suffix
+backup_nvim() {
+  local suffix="$1"
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir" ]; then
+      echo "Moving $dir to $dir.$suffix"
+      mv "$dir" "$dir.$suffix"
+    else
+      echo "Directory $dir doesn't exist, skipping"
+    fi
+  done
+}
+
+# Function to swap two Neovim configurations
+swap_nvim() {
+  local suffix1="$1"
+  local suffix2="$2"
+  local temp_suffix="temp_swap_$$"  # Using PID to create unique temp suffix
+  
+  # Check if at least one directory with suffix1 exists
+  local exists1=false
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir.$suffix1" ]; then
+      exists1=true
+      break
+    fi
+  done
+  
+  # Check if at least one directory with suffix2 exists
+  local exists2=false
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir.$suffix2" ]; then
+      exists2=true
+      break
+    fi
+  done
+  
+  if ! $exists1 && ! $exists2; then
+    echo "Neither $suffix1 nor $suffix2 configurations exist. Nothing to swap."
+    return 1
+  fi
+  
+  # Move suffix1 to temp
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir.$suffix1" ]; then
+      echo "Moving $dir.$suffix1 to $dir.$temp_suffix"
+      mv "$dir.$suffix1" "$dir.$temp_suffix"
+    fi
+  done
+  
+  # Move suffix2 to suffix1
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir.$suffix2" ]; then
+      echo "Moving $dir.$suffix2 to $dir.$suffix1"
+      mv "$dir.$suffix2" "$dir.$suffix1"
+    fi
+  done
+  
+  # Move temp to suffix2
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir.$temp_suffix" ]; then
+      echo "Moving $dir.$temp_suffix to $dir.$suffix2"
+      mv "$dir.$temp_suffix" "$dir.$suffix2"
+    fi
+  done
+  
+  echo "Successfully swapped $suffix1 and $suffix2 configurations"
+}
+
+# Main script logic
+if [ "$#" -eq 1 ]; then
+  # Single argument case: backup current nvim to nvim.$1
+  if check_nvim_exists; then
+    backup_nvim "$1"
+    echo "Backed up Neovim configuration with suffix: $1"
+  else
+    echo "No Neovim configuration directories found. Nothing to backup."
+  fi
+elif [ "$#" -eq 2 ]; then
+  # Two arguments case: swap nvim.$1 and nvim.$2
+  swap_nvim "$1" "$2"
+else
+  echo "Usage: $0 [suffix] - Backup current Neovim config with suffix"
+  echo "       $0 [suffix1] [suffix2] - Swap between two Neovim configs"
+  exit 1
+fi
+
+exit 0

@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Directories to manage
+DIRS=(
+  "$HOME/.config/nvim"
+  "$HOME/.local/share/nvim"
+  "$HOME/.local/share/nvim"
+  "$HOME/.cache/nvim"
+)
+
+# Function to check if at least one Neovim backup directory exists with the given suffix
+check_backup_exists() {
+  local suffix="$1"
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir.$suffix" ]; then
+      return 0  # At least one backup directory exists
+    fi
+  done
+  return 1  # No backup directories exist
+}
+
+# Function to restore Neovim directories from a backup with the given suffix
+restore_nvim() {
+  local suffix="$1"
+  local restored=false
+  
+  # First, check for any existing nvim directories and warn about overwriting
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir" ]; then
+      echo "Warning: $dir already exists and will be overwritten."
+    fi
+  done
+  
+  # Restore each directory if backup exists
+  for dir in "${DIRS[@]}"; do
+    if [ -d "$dir.$suffix" ]; then
+      # If the target directory exists, remove it first
+      if [ -d "$dir" ]; then
+        echo "Removing existing $dir"
+        rm -rf "$dir"
+      fi
+      
+      echo "Restoring $dir.$suffix to $dir"
+      mv "$dir.$suffix" "$dir"
+      restored=true
+    else
+      echo "No backup found for $dir.$suffix, skipping"
+    fi
+  done
+  
+  if $restored; then
+    echo "Successfully restored Neovim configuration from suffix: $suffix"
+    return 0
+  else
+    echo "No backups were found to restore from suffix: $suffix"
+    return 1
+  fi
+}
+
+# Main script logic
+if [ "$#" -eq 1 ]; then
+  suffix="$1"
+  
+  if check_backup_exists "$suffix"; then
+    restore_nvim "$suffix"
+  else
+    echo "No Neovim backup found with suffix: $suffix"
+    echo "Available backups:"
+    
+    # List available backups by checking for .config/nvim.[suffix] directories
+    config_dir="$HOME/.config"
+    if [ -d "$config_dir" ]; then
+      for backup in "$config_dir"/nvim.*; do
+        if [ -d "$backup" ]; then
+          echo "  ${backup#$config_dir/nvim.}"
+        fi
+      done
+    else
+      echo "  None found"
+    fi
+    
+    exit 1
+  fi
+else
+  echo "Usage: $0 [suffix] - Restore Neovim config from backup with suffix"
+  exit 1
+fi
+
+exit 0

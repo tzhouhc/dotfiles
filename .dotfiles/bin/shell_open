@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/env/path.zsh
+
+# Given an arbitrary filepath, open it depending on what it is *in the current
+# shell*.
+
+if [[ -d $1 ]]; then
+  cd $1
+  exec zsh
+elif [[ -f $1 ]]; then
+  if file "$1" --mime-type | grep -Eq 'text'; then
+    nvim "$1"
+  fi
+fi

@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+result=$(seb_file)
+
+if [[ "$result" != '' ]]; then
+  shell_open $result
+fi

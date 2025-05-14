@@ -53,16 +53,6 @@ function M.update_config(config)
       }),
     },
     {
-      key = 's',
-      mods = 'CMD|CTRL',
-      action = wezterm.action.Multiple({
-        wezterm.action.SpawnCommandInNewTab(
-          { args = { home .. "/.dotfiles/bin/seb_shell" } }
-        ),
-        wezterm.action.EmitEvent("modify-tabs"),
-      }),
-    },
-    {
       key = 'w',
       mods = 'CMD',
       action = wezterm.action.Multiple({

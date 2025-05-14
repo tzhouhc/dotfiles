@@ -303,3 +303,13 @@ function history_replay() {
     awk '{printf("%s%s", sep, $0); sep=" ; "} END {print ""}')
 }
 alias replay=history_replay
+
+function shell_open() {
+  if [[ -d $1 ]]; then
+    cd $1
+  elif [[ -f $1 ]]; then
+    if file "$1" --mime-type | grep -Eq 'text'; then
+      nvim "$1"
+    fi
+  fi
+}

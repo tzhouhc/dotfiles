@@ -77,3 +77,6 @@ fi
 if [[ -d '/Applications/Sublime Text.app/' ]]; then
   export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 fi
+
+# export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+# export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"

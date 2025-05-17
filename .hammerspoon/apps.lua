@@ -45,9 +45,6 @@ function M.toggle_wizterm()
     -- flickering of the window. I can only assume that the `isFrontmost`
     -- call actually has some time-related side effect.
     wez:hide()
-    -- after hiding wezterm, avoid osx defaulting back to Finder as the focus
-    -- since it's hecking useless.
-    pop_app_stack(default_exclude)
   else
     wez:hide()
     -- we want to bring forth wezterm. Either it's on current space and hidden,

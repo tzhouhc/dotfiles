@@ -33,6 +33,16 @@ function M.update_config(config)
       }),
     },
     {
+      key = 'y',
+      mods = 'CMD',
+      action = wezterm.action.Multiple({
+        wezterm.action.SpawnCommandInNewTab(
+          { args = { home .. "/.cargo/bin/zellij", "attach", "--create", "main" } }
+        ),
+        wezterm.action.EmitEvent("modify-tabs"),
+      }),
+    },
+    {
       key = 'o',
       mods = 'CMD|SHIFT',
       action = wezterm.action.Multiple({

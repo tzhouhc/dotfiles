@@ -32,6 +32,10 @@ fi
 # optionally start up TMUX unless NOTMUX is set
 source "$SHELL_SCRIPTS_DIR/tmux.zsh"
 
+if type zellij &>/dev/null; then
+  source "$SHELL_SCRIPTS_DIR/zellij.zsh"
+fi
+
 # some items needs to run after tmux
 source "$SHELL_SCRIPTS_DIR/post_tmux.zsh"
 

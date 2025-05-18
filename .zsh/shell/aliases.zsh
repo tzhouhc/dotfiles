@@ -199,3 +199,6 @@ if type hexyl &>/dev/null; then
   alias hex="hexyl"
 fi
 
+if type zellij &>/dev/null; then
+  alias zel="zellij attach --create main"
+fi

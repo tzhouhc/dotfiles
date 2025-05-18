@@ -52,3 +52,8 @@ if [[ $response == "y" || $response == "Y" ]]; then
   source $cwd/install/cargo.sh
 fi
 
+# install zellij tools
+read -r -p "Install zellij tools? (does not require zellij installed) [y/n]: " response
+if [[ $response == "y" || $response == "Y" ]]; then
+  source $cwd/install/zellij.sh
+fi

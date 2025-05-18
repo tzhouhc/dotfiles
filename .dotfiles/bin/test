@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+
+zparseopts -D -E -F -- a=arg b=arg2 c:=chan v+=verbose d+:=dog
+
+if [[ -n "${arg}" ]]; then
+  echo a = $arg
+fi
+
+if [[ -n "${arg2}" ]]; then
+  echo b = $arg2
+fi
+
+if [[ -n "${chan}" ]]; then
+  echo c2 is $chan[2]
+  echo c is $chan
+fi
+
+if [[ -n "${verbose}" ]]; then
+  echo v = $#verbose
+fi
+
+if [[ -n "${dog}" ]]; then
+  echo d is $dog
+fi
+
+echo $@

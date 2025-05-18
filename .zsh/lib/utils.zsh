@@ -72,6 +72,22 @@ function push() {
   echo $@ | xargs realpath >> ~/.send.temp
 }
 
+# Copy file from some specified location to cwd
+function copy() {
+  if [[ -z "$@" ]]; then
+    return
+  fi
+  cp $@ ./
+}
+
+# Move file from some specified location to cwd
+function grab() {
+  if [[ -z "$@" ]]; then
+    return
+  fi
+  mv $@ ./
+}
+
 # show what's in the file pasteboard
 function peek() {
   cat ~/.send.temp

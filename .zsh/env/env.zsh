@@ -33,7 +33,6 @@ export TERM=xterm-256color
 export XDG_CONFIG_HOME="$HOME/.config"
 export VIM_HOME="$XDG_CONFIG_HOME/nvim"
 export MYVIMRC="$VIM_HOME/init.lua"
-export COPY_FILE="$HOME/.copy"
 export EDITOR=nvim
 # for when the editor can be called from within nvim itself
 export CSCOPE_EDITOR=floatvim

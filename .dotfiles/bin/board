@@ -1,15 +1,23 @@
 #!/usr/bin/env zsh
 
+set -e
+
 source $HOME/.zsh/env/path.zsh
 
-# specify a specific board name instead of using the default
-zparseopts -D -E - n=board_name
+GRAY='\033[0;90m'
+NC='\033[0m'
+
+# use zparseopts to parse commandline option '-n'
+zparseopts -D -E -F -- n:=board_names p=pick -p=pick
+board_name="${board_names[2]}"
+
+board_dir="$HOME/.local/share"
 
 if [[ -z "$board_name" ]]; then
-  BOARD_FILE="$HOME/.local/share/send.temp"
+  BOARD_FILE="${board_dir}/send.temp"
 else
-  echo "Using board '${board_name}'"
-  BOARD_FILE="$HOME/.local/share/send.temp.${board_name}"
+  echo "${GRAY}Using board '${board_name}'${NC}"
+  BOARD_FILE="${board_dir}/send.temp.${board_name}"
 fi
 
 if [[ ! -f 'file' ]]; then
@@ -21,12 +29,20 @@ function find() {
 }
 
 function peek() {
-  cat $BOARD_FILE
+  if [[ -n "${pick}" ]]; then
+    cat $BOARD_FILE | fzf -m --preview 'smart_preview {}'
+  else
+    cat $BOARD_FILE
+  fi
 }
 
 function pop() {
-  cat $BOARD_FILE
+  peek
   echo '' > $BOARD_FILE
+}
+
+function lsb() {
+  ls $board_dir | grep 'send.temp'
 }
 
 function paste() {
@@ -41,7 +57,7 @@ function drop() {
 function help() {
   echo "Available commands:"
   echo "  push : add files to pastboard."
-  echo "  ls   : show stored items on pasteboard."
+  echo "  ls   : show boards."
   echo "  pop  : remove entries from the board, printing to stdout."
   echo "  paste: paste all files from the board to current dir."
   echo "  drop : pop and remove specified board file."
@@ -71,9 +87,12 @@ if [[ "$1" == "push" ]]; then
     echo ${@:2} | xargs realpath >> $BOARD_FILE
   fi
 elif [[ "$1" == "ls" ]]; then
-  peek
+  lsb
 elif [[ "$1" == "pop" ]]; then
   pop
+elif [[ "$1" == "drop" ]]; then
+  drop
+  exit 0
 elif [[ "$1" == "paste" ]]; then
   paste
 elif [[ "$1" == "help" ]]; then
@@ -85,4 +104,3 @@ fi
 
 clean
 exit 0
-

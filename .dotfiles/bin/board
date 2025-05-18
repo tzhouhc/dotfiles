@@ -1,0 +1,88 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/env/path.zsh
+
+# specify a specific board name instead of using the default
+zparseopts -D -E - n=board_name
+
+if [[ -z "$board_name" ]]; then
+  BOARD_FILE="$HOME/.local/share/send.temp"
+else
+  echo "Using board '${board_name}'"
+  BOARD_FILE="$HOME/.local/share/send.temp.${board_name}"
+fi
+
+if [[ ! -f 'file' ]]; then
+  touch $BOARD_FILE
+fi
+
+function find() {
+  fd . --type f --type l | sort | fzf -m --preview 'smart_preview {}' | sed 's/^/"/' | sed 's/$/"/' | paste -sd ' '
+}
+
+function peek() {
+  cat $BOARD_FILE
+}
+
+function pop() {
+  cat $BOARD_FILE
+  echo '' > $BOARD_FILE
+}
+
+function paste() {
+  cp -r $(pop) ./
+}
+
+function drop() {
+  pop
+  rm $BOARD_FILE
+}
+
+function help() {
+  echo "Available commands:"
+  echo "  push : add files to pastboard."
+  echo "  ls   : show stored items on pasteboard."
+  echo "  pop  : remove entries from the board, printing to stdout."
+  echo "  paste: paste all files from the board to current dir."
+  echo "  drop : pop and remove specified board file."
+  echo "  help : show help."
+  echo ""
+  echo "  -n   : specify name of a specific board to use."
+}
+
+function clean() {
+  # Dedup and sort lines in $BOARD_FILE, removing any empty lines.
+  cat $BOARD_FILE | grep -v '^$' | sort -u > /tmp/board_temp.txt
+  mv /tmp/board_temp.txt $BOARD_FILE
+}
+
+# with no args -- just return
+if [[ -z "$@" ]]; then
+  peek
+  clean
+  exit 0
+fi
+
+if [[ "$1" == "push" ]]; then
+  if [[ -z "$2" ]]
+  then
+    echo $(find) | xargs realpath >> $BOARD_FILE
+  else
+    echo ${@:2} | xargs realpath >> $BOARD_FILE
+  fi
+elif [[ "$1" == "ls" ]]; then
+  peek
+elif [[ "$1" == "pop" ]]; then
+  pop
+elif [[ "$1" == "paste" ]]; then
+  paste
+elif [[ "$1" == "help" ]]; then
+  help
+else
+  echo "Unknown command {$1}."
+  help
+fi
+
+clean
+exit 0
+

@@ -1,5 +1,4 @@
 local wezterm = require 'wezterm'
-local act = wezterm.action
 
 local M = {}
 
@@ -23,7 +22,9 @@ end
 local function tab_icon(title)
 	if title:find("tmux") then
 		return ""
-	else
+  elseif title:find("ellij") then  -- hack since z could be cap or small
+		return ""
+  else
 		return ""
 	end
 end

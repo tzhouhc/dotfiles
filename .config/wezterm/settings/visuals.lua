@@ -16,7 +16,7 @@ function M.update_config(config)
 
 	-- visual appearance
 	config.color_scheme = "nord"
-	config.window_background_opacity = 0.95
+	config.window_background_opacity = 1
 
 	if is_osx() then
 		config.window_padding = {

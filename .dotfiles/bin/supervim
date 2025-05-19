@@ -2,6 +2,8 @@
 
 source $HOME/.zsh/env/path.zsh
 
+ZELLIJ_SOCK="/tmp/nvimsocket_zellij"
+
 # Function to check if a file is binary
 function is_binary() {
     local file="$1"
@@ -58,10 +60,16 @@ function smart_select() {
     fi
 }
 
-# Find the pane containing vim instance in current tmux window
+# Find the pane containing vim instance in current tmux window; in zellij's
+# case, just check that socket is active
 function vimpane() {
   if [[ $TMUX != '' ]]; then
     tmux list-panes -F '#I:#P #{pane_current_command}' | grep nvim | cut -d' ' -f1  | cut -d':' -f2
+  elif [[ $ZELLIJ != '' ]]; then
+    # -S checks for socket
+    if [[ -S $ZELLIJ_SOCK ]]; then
+      echo "zellij"
+    fi
   fi
 }
 
@@ -79,10 +87,15 @@ function gotovim() {
       echo "Vim is not running in the current window."
       return 1
     fi
+  elif [[ $ZELLIJ != '' ]]; then
+    # zellij is kinda bad at this and exposes no way to find panes or tabs
+    # by command
+    return
   fi
 }
 
 function smart_edit() {
+  # all of this depends on nvr; if not available, then just use nvim normally.
   if type nvr >/dev/null 2>&1; then
     # vim internal-terminal mode (e.g. Yazi, Seb)
     if [[ $NVIM != '' ]]; then
@@ -90,6 +103,7 @@ function smart_edit() {
       nvr $@
       return
     fi
+
     # determine tmux mode; uses tmux window id to remain consistent even
     # after switching.
     if [[ $TMUX != '' ]]; then
@@ -97,9 +111,12 @@ function smart_edit() {
       # Remove the '@' character from the window ID to make it a valid filename
       window_id=${window_id//@/}
       expect_name="/tmp/nvimsocket_$window_id"
+    elif [[ $ZELLIJ != '' ]]; then
+      expect_name=$ZELLIJ_SOCK
     else
       expect_name="/tmp/nvimsocket"
     fi
+
     if [[ $(vimpane) != '' ]]; then
       # no exec needed -- reusing existing nvim instance
       NVIM_LISTEN_ADDRESS=$expect_name nvr $@ && gotovim

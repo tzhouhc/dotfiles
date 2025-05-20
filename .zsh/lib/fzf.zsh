@@ -17,18 +17,18 @@ function local_recent_dir_list() {
   then
     dirs "$@"
   else
-    print "$(dirs -v | cut -f2 | fzf | sed s:~:$HOME: | sed 's/(.*)/\"\1\"/g')"
+    print "$(dirs -v | cut -f2 | fzf | sed s:~:$HOME:)"
   fi
 }
 
 function global_dir_list() {
-  res=$(lolcate --db dirs | fzf -m --preview "smart_preview {} | sed 's/(.*)/\"\1\"/g' | paste -sd ' '")
+  res=$(lolcate --db dirs | fzf -m --preview "smart_preview {}")
   print "$res"
 }
 
 # This takes up wayyy too much time for a quick searching tool
 function global_file_list() {
-  res=$(lolcate | fzf -m --preview "smart_preview {}" | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')
+  res=$(lolcate | fzf -m --preview "smart_preview {}")
   print "$res"
 }
 
@@ -64,10 +64,16 @@ function p4_package_list() {
 # Files visible in the current directory
 function local_file_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . --type f --type l $1 | sort | fzf -m --preview 'smart_preview {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . --type f --type l $1 | sort | fzf -m --preview 'smart_preview {}')"
   else
-    print "$(fd . --type f --type l | sort | fzf -m --preview 'smart_preview {}' | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+    print "$(fd . --type f --type l | sort | fzf -m --preview 'smart_preview {}')"
   fi
+}
+
+# All files in dotfiles.git repo
+function dotfiles_list() {
+  print "$(git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME ls-files $HOME --full-name \
+    | fzf -m --preview 'smart_preview {}' | sed s:^:$HOME/:)"
 }
 
 function homebrew_formula_list() {
@@ -86,12 +92,12 @@ fzf_preview='ln={2}; bat {1} -H $ln -r $[$[$ln - 3] < 0 ? 0 : $[$ln - 3]]:'
 
 # Lines in files visible in the current directory
 function local_lines_list() {
-  print "$(rg --no-heading --no-context-separator . 2>/dev/null | fzf -m --ansi -d':' -n3.. --preview $fzf_preview | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+  print "$(rg --no-heading --no-context-separator . 2>/dev/null | fzf -m --ansi -d':' -n3.. --preview $fzf_preview | cut -d':' -f1)"
 }
 
 # Lines (matching exactly) in files visible in the current directory
 function local_lines_exact_list() {
-  print "$(rg --no-heading --no-context-separator . 2>/dev/null | fzf -m --ansi --exact -d':' -n3.. --preview $fzf_preview | cut -d':' -f1 | sed 's/(.*)/\"\1\"/g' | paste -sd ' ')"
+  print "$(rg --no-heading --no-context-separator . 2>/dev/null | fzf -m --ansi --exact -d':' -n3.. --preview $fzf_preview | cut -d':' -f1)"
 }
 
 # Lines (matching exactly) in files visible in the current directory with line numbers

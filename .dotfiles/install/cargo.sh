@@ -21,6 +21,7 @@ if type cargo >/dev/null 2>&1; then
   cargo install just   # make
   cargo install navi   # find
   cargo install --git https://github.com/lotabout/rargs.git  # xargs
+  cargo install petname  # random name generator
   cargo install ripgrep --features 'pcre2'  # grep
   cargo install rm-improved  # rm
   cargo install --locked yazi-fm yazi-cli  # file explorer

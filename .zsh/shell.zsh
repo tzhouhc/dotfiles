@@ -29,11 +29,15 @@ if [[ -n "$FALLBACK_MODE" ]]; then
   source "$SHELL_SCRIPTS_DIR/fallback.zsh"
 fi
 
-# optionally start up TMUX unless NOTMUX is set
-source "$SHELL_SCRIPTS_DIR/tmux.zsh"
-
+# session multiplexer -- we prefer zellij but can also use tmux
+# both scripts contain code to
+# 1. avoid recursion
+# 2. avoid each other
+# 3. skip creation if NOTMUX is set or ~/.notmux exists.
 if type zellij &>/dev/null; then
   source "$SHELL_SCRIPTS_DIR/zellij.zsh"
+elif type tmux &>/dev/null; then
+  source "$SHELL_SCRIPTS_DIR/tmux.zsh"
 fi
 
 # some items needs to run after tmux

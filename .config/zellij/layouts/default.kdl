@@ -20,4 +20,9 @@ layout {
             datetime_timezone "America/New_York"
         }
     }
+    swap_floating_layout{
+        floating_panes max_panes=1 {
+            pane x="5%" y="5%" width="90%" height="90%"
+        }
+    }
 }

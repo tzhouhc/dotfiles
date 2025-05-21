@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm'
 
 wezterm.on('decrease-window-opacity', function(window, _)
-  local cfg = window:get_config_overrides()
+  local cfg = window:get_config_overrides() or { window_background_opacity = 1 }
   local opc = cfg.window_background_opacity
   if not opc then opc = 1 end
   opc = opc - 0.05
@@ -12,7 +12,7 @@ wezterm.on('decrease-window-opacity', function(window, _)
 end)
 
 wezterm.on('increase-window-opacity', function(window, _)
-  local cfg = window:get_config_overrides()
+  local cfg = window:get_config_overrides() or { window_background_opacity = 1 }
   local opc = cfg.window_background_opacity
   if not opc then opc = 1 end
   opc = opc + 0.05

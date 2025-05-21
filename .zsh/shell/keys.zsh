@@ -155,6 +155,16 @@ bindkey '^p' my_fzf_folder_widget
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^z' edit-command-line
 
+function open_cmus_widget() {
+  if [[ $TMUX != '' ]]; then
+    # no actions required actually -- this is a tmux keybind
+  elif [[ $ZELLIJ != '' ]]; then
+    zellij run -f -c -- screen -q -r -D cmus || screen -S cmus "$actual"
+  fi
+}
+zle     -N    open_cmus_widget
+bindkey '^[m' open_cmus_widget
+
 # Opt-v to list pasteboard content
 function get_pasteboard() {
   content=$(pbpaste | fzf)

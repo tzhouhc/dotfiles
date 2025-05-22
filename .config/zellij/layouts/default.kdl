@@ -1,6 +1,16 @@
 layout {
-    pane focus=true borderless=true
-    pane size=1 borderless=true {
+    swap_floating_layout {
+        floating_panes max_panes=1 name="Popterm" {
+            pane x="5%" y="5%" width="90%" height="90%"
+        }
+        floating_panes max_panes=2 name="Popterm" {
+            pane x="5%" y="5%" width="45%" height="90%"
+            pane x="50%" y="5%" width="45%" height="90%"
+        }
+    }
+    // size=1 for some reason cannot be added to pane_template, but _can_
+    // be added to
+    pane_template borderless=true name="zjstatus" {
         plugin location="file:~/.local/bin/zjstatus.wasm" {
             format_left  "{mode}#[fg=black,bg=blue,bold]{session}  #[fg=blue,bg=#181825]{tabs}"
             format_right "#[fg=#181825,bg=#b1bbfa]{datetime}"
@@ -20,9 +30,19 @@ layout {
             datetime_timezone "America/New_York"
         }
     }
-    swap_floating_layout{
-        floating_panes max_panes=1 {
-            pane x="5%" y="5%" width="90%" height="90%"
-        }
+    tab_template name="vim_tab" {
+        pane focus=true borderless=true command="~/.dotfiles/bin/supervim" name="vim"
+        zjstatus size=1
     }
+
+    default_tab_template {
+        pane split_direction="vertical" {
+            pane focus=true
+            pane
+        }
+        zjstatus size=1
+    }
+
+    vim_tab
+    tab
 }

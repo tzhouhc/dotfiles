@@ -1,3 +1,15 @@
+if [[ "$NOTMUX" == 'true' ]]; then
+  return
+fi
+
+if [[ -e ~/.notmux ]]; then
+  return
+fi
+
+if [[ $TMUX != '' ]]; then
+  return
+fi
+
 if [[ $ZELLIJ != '' ]]; then
   # only do it the first time in a zellij tab (?)
 
@@ -22,18 +34,6 @@ if [[ $ZELLIJ != '' ]]; then
   zellij_tab_name_update
   chpwd_functions+=(zellij_tab_name_update)
 else
-  if [[ "$NOTMUX" == 'true' ]]; then
-    return
-  fi
-
-  if [[ -e ~/.notmux ]]; then
-    return
-  fi
-
-  if [[ $TMUX != '' ]]; then
-    return
-  fi
-
   if ! [[ -v ZELLIJ ]]; then
     zellij attach --create main
   fi

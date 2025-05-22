@@ -162,6 +162,14 @@ keybinds clear-defaults=true{
         bind "Alt 7" { GoToTab 7; SwitchToMode "Normal"; }
         bind "Alt 8" { GoToTab 8; SwitchToMode "Normal"; }
         bind "Alt 9" { GoToTab 9; SwitchToMode "Normal"; }
+
+        bind "Alt m" {
+            Run "cmus_wrapper" {
+                close_on_exit true
+                floating true
+                name "CMUS"
+            }
+        }
     }
     // Mode switching
     shared_except "normal" "locked" {

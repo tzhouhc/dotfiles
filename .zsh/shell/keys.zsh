@@ -159,11 +159,14 @@ function open_cmus_widget() {
   if [[ $TMUX != '' ]]; then
     # no actions required actually -- this is a tmux keybind
   elif [[ $ZELLIJ != '' ]]; then
+    if [[ -n "$(ps | grep screen | grep -v grep)" ]]; then
+      return
+    fi
     zellij run -f -c -- screen -q -r -D cmus || screen -S cmus "$actual"
   fi
 }
-zle     -N    open_cmus_widget
-bindkey '^[m' open_cmus_widget
+# zle     -N    open_cmus_widget
+# bindkey '^[m' open_cmus_widget
 
 # Opt-v to list pasteboard content
 function get_pasteboard() {

@@ -43,5 +43,5 @@ layout {
         zjstatus size=1
     }
 
-    vim_tab
+    vim_tab name="Vim"
 }

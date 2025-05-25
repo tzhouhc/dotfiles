@@ -21,18 +21,6 @@ if [[ $ZELLIJ != '' ]]; then
       export ZELLIJ_TAB=$(shuf -n 1 /usr/share/dict/words)
     fi
   fi
-  zellij_tab_name_update() {
-    local current_dir=$PWD
-    if [[ $current_dir == $HOME ]]; then
-        current_dir="~"
-    else
-        current_dir=${current_dir##*/}
-    fi
-    command nohup zellij action rename-tab $current_dir >/dev/null 2>&1
-  }
-
-  zellij_tab_name_update
-  chpwd_functions+=(zellij_tab_name_update)
 else
   if ! [[ -v ZELLIJ ]]; then
     zellij attach --create main

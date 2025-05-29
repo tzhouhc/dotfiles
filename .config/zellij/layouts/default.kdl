@@ -45,5 +45,5 @@ layout {
 
     // vim_tab
     // No longer needed with workaround for getting current zellij tab name
-    tab
+    tab name="Main"
 }

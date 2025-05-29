@@ -30,8 +30,9 @@ export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.go/bin:$PATH
 # custom scripts
 export PATH=$HOME/.local/bin:$PATH
-# portable scripts
-export PATH=$HOME/.dotfiles/bin:$PATH
+# binaries -- but with the expectation that they would be built alongside
+# the dotfiles repo, and only replaced by the sbins if not available.
+export PATH=$HOME/.dotfiles/bin:$HOME/.dotfiles/sbin:$PATH
 # floaterm
 export PATH=$HOME/.local/share/nvim/lazy/vim-floaterm/bin:$PATH
 

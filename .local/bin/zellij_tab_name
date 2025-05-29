@@ -29,13 +29,11 @@ for i in "${!new_array[@]}"; do
         break
     fi
 done
-
 if [[ $temp_index -eq -1 ]]; then
     exit 1
 fi
 
 original_name="${original_array[temp_index]}"
-
 zellij action rename-tab "$original_name"
 
 echo $original_name

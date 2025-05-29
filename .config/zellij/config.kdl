@@ -151,6 +151,7 @@ keybinds clear-defaults=true{
         // bind "Alt -" { Resize "Decrease"; }
         // bind "Alt [" { PreviousSwapLayout; }
         // bind "Alt ]" { NextSwapLayout; }
+        bind "Alt Tab" { FocusNextPane; }
         bind "Alt t" { NewTab; SwitchToMode "Normal"; }
         bind "Alt w" { ToggleFloatingPanes; SwitchToMode "Normal"; }
         bind "Alt 1" { GoToTab 1; SwitchToMode "Normal"; }

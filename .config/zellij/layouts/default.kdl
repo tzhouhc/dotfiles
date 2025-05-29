@@ -43,5 +43,7 @@ layout {
         zjstatus size=1
     }
 
-    vim_tab name="Vim"
+    // vim_tab
+    // No longer needed with workaround for getting current zellij tab name
+    tab
 }

@@ -15,28 +15,26 @@ done
 while true; do
     # Use gum to get multiline input with a prompt
     USER_INPUT=$(gum write --char-limit 16384 --placeholder "Enter your message (Ctrl+D to send, Ctrl+C to exit)")
-    
+
     # Check if input is empty (user pressed Ctrl+D without input)
     if [ -z "$USER_INPUT" ]; then
       exit 0
     fi
-    
+
     # Print response with formatting
     # Show the user input with a marker
     echo -e "${GREEN}You:${NC} ${USER_INPUT}"
-    
+
     # Send to mods, capturing only stdout
     if [ -z "$FIRST_MESSAGE" ]; then
         # First message in session
-        RESPONSE=$(mods $@ "$USER_INPUT" 2>/dev/null)
-        echo -e "${GREEN}LLM:${NC} $RESPONSE"
+        mods $@ "$USER_INPUT"
         FIRST_MESSAGE=1
     else
         # Continuing session
-        RESPONSE=$(mods --continue-last $@ "$USER_INPUT" 2>/dev/null)
-        echo -e "${GREEN}LLM:${NC} $RESPONSE"
+        mods --continue-last $@ "$USER_INPUT"
     fi
-    
+
     # Print prompt for next input
     echo ""
 done

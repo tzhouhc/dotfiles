@@ -11,4 +11,10 @@ fi
 local output=$(rg --no-heading --no-context-separator . "$dir" 2>/dev/null | fzf --height=~100% -m --ansi -d':' -n3..)
 local file=$(echo "$output" | cut -d: -f1)
 local line=$(echo "$output" | cut -d: -f2)
-supervim "$file" "+$line"
+if [[ $(echo "$file" | wc -l) -gt 1 ]]; then
+  for f in ${(f)file}; do
+    supervim "$f"
+  done
+else
+  supervim "$file" "+$line"
+fi

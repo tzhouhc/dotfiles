@@ -2,3 +2,6 @@
 	path = .config/nvim
 	url = git@github.com:tzhouhc/vim.git
         branch = main
+[submodule "shell-tools"]
+	path = .dotfiles/src
+	url = git@github.com:tzhouhc/shell-tools.git

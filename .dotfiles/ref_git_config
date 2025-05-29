@@ -6,10 +6,16 @@
 	precomposeunicode = true
 [status]
 	showUntrackedFiles = no
+
 [submodule "vim"]
 	url = git@github.com:tzhouhc/vim.git
 	active = true
 	ignore = all
+[submodule ".dotfiles/src"]
+	url = git@github.com:tzhouhc/shell-tools.git
+	active = true
+	ignore = all
+
 [remote "origin"]
 	url = git@github.com:tzhouhc/dotfiles.git
 	fetch = +refs/heads/*:refs/remotes/origin/*

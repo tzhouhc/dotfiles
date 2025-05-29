@@ -5,3 +5,13 @@ build:
 # Automatically adopt rustc recommendations
 fix:
   cargo fix
+
+release:
+  cargo build --release
+
+run:
+  cargo run
+
+deploy:
+  just release
+  ln -sf `pwd`/target/release/`basename $(pwd)` $HOME/.dotfiles/bin/

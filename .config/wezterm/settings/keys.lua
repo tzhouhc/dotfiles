@@ -27,7 +27,7 @@ function M.update_config(config)
       mods = 'CMD|SHIFT',
       action = wezterm.action.Multiple({
         wezterm.action.SpawnCommandInNewTab(
-          { args = { home .. "/.dotfiles/bin/ssh_to" } }
+          { args = { home .. "/.dotfiles/sbin/ssh_to" } }
         ),
         wezterm.action.EmitEvent("modify-tabs"),
       }),
@@ -57,7 +57,7 @@ function M.update_config(config)
       mods = 'CMD|CTRL',
       action = wezterm.action.Multiple({
         wezterm.action.SpawnCommandInNewTab(
-          { args = { home .. "/.dotfiles/bin/seb" } }
+          { args = { home .. "/.dotfiles/sbin/seb" } }
         ),
         wezterm.action.EmitEvent("modify-tabs"),
       }),

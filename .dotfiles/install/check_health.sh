@@ -21,7 +21,7 @@ print_status() {
 
 # -------------
 
-main_bins=(tmux git wget brew stow ag fzf fd lazygit gum tldr mods bat atuin eza choose delta just navi rg yazi zoxide nvim git-auto)
+main_bins=(tmux zellij git wget brew fzf fd lazygit gum tldr mods bat atuin eza choose delta just navi rg yazi zoxide nvim git-auto)
 
 echo "Running crucial binary presence check:"
 
@@ -30,6 +30,14 @@ do
   type ${bin} &>/dev/null
   print_status ${bin} 10 $?
 done
+
+# -------------
+
+if [[ -z "$(rg --version | grep "PCRE" | grep "is available")" ]]; then
+  printf "Ripgrep ${RED} doesn't have PCRE2 support${NC}."
+else
+  printf "Ripgrep ${GREEN} has PCRE2 support${NC}."
+fi
 
 # -------------
 

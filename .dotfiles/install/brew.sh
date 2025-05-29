@@ -17,7 +17,7 @@ fi
 
 brew update
 # critical tools
-brew install wget git stow tmux zsh the_silver_searcher universal-ctags \
+brew install wget git tmux zsh the_silver_searcher universal-ctags \
   moreutils lazygit direnv jq gum age tldr mods taskwarrior-tui cargo-binstall
 
 # less important ones

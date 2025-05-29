@@ -80,16 +80,15 @@ function gotovim() {
   if [[ $TMUX != '' ]]; then
     vim_pane=$(vimpane)
     if [[ $vim_pane != '' ]]; then
-      tmux select-pane -t $vim_pane && tmux send-keys Enter
-      # the extra step is needed to avoid the hit-enter events due to low
-      # cmdheight in nvim.
+      tmux select-pane -t $vim_pane
     else
       echo "Vim is not running in the current window."
       return 1
     fi
   elif [[ $ZELLIJ != '' ]]; then
     # zellij is kinda bad at this and exposes no way to find panes or tabs
-    # by command
+    # by command. We have a hack for the tab, but nothing we can do for the
+    # pane right now.
     return
   fi
 }
@@ -112,18 +111,16 @@ function smart_edit() {
       window_id=${window_id//@/}
       expect_name="/tmp/nvimsocket_$window_id"
     elif [[ $ZELLIJ != '' ]]; then
-      expect_name=$ZELLIJ_SOCK
+      window_id=$(zellij_tab_name | tr '[:upper:]' '[:lower:]' | tr -d ' ' | tr -cd 'a-z0-9._-')
+      expect_name="/tmp/nvimsocket_$window_id"
     else
       expect_name="/tmp/nvimsocket"
     fi
 
-    if [[ $(vimpane) != '' ]]; then
+    if [[ -S "$expect_name" ]]; then
       # no exec needed -- reusing existing nvim instance
       NVIM_LISTEN_ADDRESS=$expect_name nvr $@ && gotovim
     else
-      # if we are creating a new server, make sure there's no leftover sockets
-      # that might lock us out
-      rm -f $expect_name
       # using exec because this creates a new neovim instance and it must replace
       # the zsh script for tmux to recognize it
       NVIM_LISTEN_ADDRESS=$expect_name exec nvim $@

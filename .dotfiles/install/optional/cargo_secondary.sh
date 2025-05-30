@@ -6,3 +6,5 @@ cargo install bottom --locked  # top
 cargo install du-dust  # better disk usage display
 cargo install lolcate-rs  # locate indexer database
 cargo install pipr  # pipeline crafter
+cargo binstall -y diskonaut
+cargo binstall -y bandwhich

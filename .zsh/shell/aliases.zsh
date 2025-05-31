@@ -139,7 +139,7 @@ fi
 if type cmus &>/dev/null; then
   actual=$(which cmus)
   # alias cmus="tmux new-session -s cmus -d "$actual" 2> /dev/null; tmux switch-client -t cmus"
-  alias cmus='screen -q -r -D cmus || screen -S cmus "$actual"'
+  alias cmus="screen -q -r -D cmus || screen -S cmus $actual"
 fi
 
 if type glow &>/dev/null; then

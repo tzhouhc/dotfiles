@@ -1,5 +1,10 @@
 local wezterm = require 'wezterm'
 
+local function is_osx()
+	local f = io.popen("uname -a")
+	return (f:read("*a") or ""):match("Darwin") == "Darwin"
+end
+
 wezterm.on('decrease-window-opacity', function(window, _)
   local cfg = window:get_config_overrides() or { window_background_opacity = 1 }
   local opc = cfg.window_background_opacity
@@ -25,6 +30,9 @@ end)
 -- check number of tabs, then modify window paddnig accordingly
 -- (this is for avoiding the macos on-screen 'notch')
 wezterm.on('modify-tabs', function(window, _)
+  if not is_osx() then
+    return
+  end
   if #window:mux_window():tabs() > 1 then
     local cfg = {
       left = "0.3cell",

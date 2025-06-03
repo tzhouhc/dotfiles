@@ -3,14 +3,8 @@ set -e
 
 PATH=$PATH:$HOME/.cargo/bin
 
-if type bob &>/dev/null; then
-  bob install latest
-  bob use latest
-  exit 0
-fi
-
 # Neovim version to download
-NVIM_VERSION="v0.11.1"
+NVIM_VERSION="v0.11.2"
 BASE_URL="https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}"
 
 # Determine OS and architecture

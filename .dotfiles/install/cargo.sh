@@ -19,7 +19,6 @@ fi
 if type cargo >/dev/null 2>&1; then
   cargo binstall -y atuin  # shell history
   cargo binstall -y bat   # less
-  cargo binstall -y bob-nvim  # nvim manager
   cargo binstall -y choose   # cut
   cargo binstall -y eza   # ls
   cargo binstall -y fd-find   # find

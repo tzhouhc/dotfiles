@@ -19,17 +19,26 @@ bindkey '^[f' end-of-line
 
 # ---- some fzf functions with keyboard shortcuts
 
+# TODO: currently widgets support completing based on partial path, but will
+# not try to complete partial, *imcomplete* path, which I believe is fine --
+# most of the time we will be using tab completed dir names anyway, if at all.
+
 function my_fzf_global_dir_widget() {
   # clear redundant space
   # allow multiple selection
-  # TODO: allow spaces in paths
   maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev)
   cleaned=$(echo $maybedir | sed "s:~:$HOME:")
   if [[ -d "$cleaned" ]]; then
     insert=$(global_dir_list "$cleaned")
+    if [[ -n "$insert" ]]; then
+      insert=\"$insert\"
+    fi
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
     insert=$(global_dir_list)
+    if [[ -n "$insert" ]]; then
+      insert=\"$insert\"
+    fi
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   fi
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
@@ -44,14 +53,19 @@ bindkey '^[p' my_fzf_global_dir_widget
 function my_fzf_file_widget() {
   # clear redundant space
   # allow multiple selection
-  # TODO: allow spaces in paths
   maybedir=$(echo $LBUFFER | rev | cut -d' ' -f1 | rev)
   cleaned=$(echo $maybedir | sed "s:~:$HOME:")
   if [[ -d "$cleaned" ]]; then
     insert=$(local_file_list "$cleaned")
+    if [[ -n "$insert" ]]; then
+      insert=\"$insert\"
+    fi
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
     insert=$(local_file_list)
+    if [[ -n "$insert" ]]; then
+      insert=\"$insert\"
+    fi
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   fi
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
@@ -66,8 +80,10 @@ bindkey '^o' my_fzf_file_widget
 function my_fzf_mru_file_widget() {
   # clear redundant space
   # allow multiple selection
-  # TODO: allow spaces in paths
   insert=$(vim_mru_list)
+  if [[ -n "$insert" ]]; then
+    insert=\"$insert\"
+  fi
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
@@ -78,8 +94,10 @@ function my_fzf_mru_file_widget() {
 function my_fzf_global_file_widget() {
   # clear redundant space
   # allow multiple selection
-  # TODO: allow spaces in paths
   insert=$(global_file_list)
+  if [[ -n "$insert" ]]; then
+    insert=\"$insert\"
+  fi
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
@@ -89,7 +107,6 @@ function my_fzf_global_file_widget() {
 zle     -N   my_fzf_global_file_widget
 bindkey '^[o' my_fzf_global_file_widget
 
-# Define the widget function
 function my-csearch-fzf-widget() {
   # Save the current buffer
   local buffer=$BUFFER
@@ -122,6 +139,9 @@ zle -N my-csearch-fzf-widget
 # Ctrl-f to run fuzzy search and return file name
 function my_fzf_rg_widget() {
   insert=$(local_lines_list)
+  if [[ -n "$insert" ]]; then
+    insert=\"$insert\"
+  fi
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
@@ -139,9 +159,15 @@ function my_fzf_folder_widget() {
   cleaned=$(echo $maybedir | sed "s:~:$HOME:")
   if [[ -d "$cleaned" ]]; then
     insert=$(local_dir_list "$cleaned")
+    if [[ -n "$insert" ]]; then
+      insert=\"$insert\"
+    fi
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
     insert=$(local_dir_list)
+    if [[ -n "$insert" ]]; then
+      insert=\"$insert\"
+    fi
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   fi
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
@@ -165,6 +191,8 @@ function open_cmus_widget() {
     zellij run -f -c -- screen -q -r -D cmus || screen -S cmus "$actual"
   fi
 }
+# -- This feature is now done inside of zellij directly; we leave it here
+# as a record.
 # zle     -N    open_cmus_widget
 # bindkey '^[m' open_cmus_widget
 

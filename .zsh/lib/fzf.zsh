@@ -108,9 +108,9 @@ function local_lines_list_with_num() {
 # Directories visible in the current directory
 function local_dir_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . -L --type d $1 | fzf -m --preview 'smart_preview {}' | sed 's/(.*)/\"\1\"/g')"
+    print "$(fd . -L --type d $1 | fzf -m --preview 'smart_preview {}')"
   else
-    print "$(fd . -L --type d | fzf -m --preview 'smart_preview {}' | sed 's/(.*)/\"\1\"/g')"
+    print "$(fd . -L --type d | fzf -m --preview 'smart_preview {}')"
   fi
 }
 
@@ -128,7 +128,7 @@ function english_word_list() {
 # DEPRECATED: decided to move from shell impl to zoxide, which now makes this
 # not quite work
 function z_mru_dir_list() {
-  print "$(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf | sed 's/(.*)/\"\1\"/g')"
+  print "$(cat $HOME/.z | sort -n -t'|' -k 2 -r | cut -d'|' -f1 | fzf)"
 }
 
 # Current processes; return the PID

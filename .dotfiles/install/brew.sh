@@ -19,7 +19,7 @@ brew update
 # critical tools
 brew install wget git tmux zsh the_silver_searcher universal-ctags \
   moreutils lazygit direnv jq gum age tldr mods taskwarrior-tui cargo-binstall \
-  coreutils nodejs oh-my-posh
+  coreutils nodejs oh-my-posh python@3.13
 
 # less important ones
 brew install hexyl numbat

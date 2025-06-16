@@ -1,13 +1,13 @@
+# `load` causes reporting; `light` does not.
+
 zinit ice blockf
 zinit light zsh-users/zsh-completions
 
-zinit load zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-syntax-highlighting
 
 zinit ice wait lucid atload'_zsh_autosuggest_start; unalias zi'
-zinit load zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-autosuggestions
 
-zinit ice wait'!0'
-zinit load ael-code/zsh-colored-man-pages
+zinit light ael-code/zsh-colored-man-pages
 
-zinit ice wait'!0'
-zinit load Aloxaf/fzf-tab
+zinit light Aloxaf/fzf-tab

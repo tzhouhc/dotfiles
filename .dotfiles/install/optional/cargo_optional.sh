@@ -1,12 +1,11 @@
 #!/bin/bash
 set -e
 
-cargo install --locked bacon  # rust compiling and testing
-cargo install --locked typst-cli  # latex replacement
+cargo binstall -y bacon  # rust compiling and testing
+cargo binstall -y typst-cli  # latex replacement
 
-cargo install atac  # requests
-cargo install nu  # shell for data
-cargo install procs  # ps
-cargo install tv  # csv viewer
-cargo install cargo-cache  # clear cargo cache
+cargo binstall -y atac  # requests
+cargo binstall -y nu  # shell for data
+cargo binstall -y procs  # ps
+cargo binstall -y cargo-cache  # clear cargo cache
 cargo install --git https://github.com/lotabout/rargs.git  # xargs

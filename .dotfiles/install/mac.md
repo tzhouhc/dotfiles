@@ -12,24 +12,16 @@
 ## Commandline
 
 - Xcode
-    `xcode-select --install`
+    `xcode-select --install` -- without this we cannot even run git properly.
 
 - Generate SSH Keys
 - Perform Dotfiles setup
-    - `install/install.sh`, which handles homebrew and nvim
-    - `install/deploy.sh`, which handles fzf and some other tools.
+    - Clone repo and setup submodules as the repo README says
+    - `install/install.sh`, which handles most of the core items
 
 - Fonts
     - Cascadia Code NF
     - Victor Mono
-
-- Rust
-    - `install/cargo.sh`
-    - `install/optional/cargo_optional.sh`
-    - `install/optional/cargo_secondary.sh`
-- Zellij
-    - `install/zellij.sh` for zellij status bar wasm files.
-
 
 ## Apps
 

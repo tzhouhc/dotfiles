@@ -21,7 +21,31 @@ print_status() {
 
 # -------------
 
-main_bins=(tmux zellij git wget brew fzf fd lazygit gum tldr mods bat atuin eza choose delta just navi rg yazi zoxide nvim git-auto)
+main_bins=(
+  tmux
+  zellij
+  git
+  wget
+  brew
+  fzf
+  fd
+  lazygit
+  gum
+  tldr
+  mods
+  bat
+  atuin
+  eza
+  choose
+  delta
+  just
+  navi
+  rg
+  yazi
+  zoxide
+  nvim
+  git-auto
+)
 
 echo "Running crucial binary presence check:"
 
@@ -62,8 +86,21 @@ fi
 
 # -------------
 
-echo "Rerunning deployment script:"
+if [[ -n "$(stat --help | grep GNU)" ]]; then
+  printf "Using ${GREEN}GNU${NC} core utils.\n"
+else
+  printf "Using ${RED}BSD${NC} core utils.\n"
+fi
 
-pushd ..
-./deploy.sh
-popd
+# -------------
+
+if uname -a | grep -i darwin &>/dev/null; then
+  echo "Checking MacOS items:"
+
+  if [[ -d "$HOME/Library/Rime" ]]; then
+    printf "Rime is ${GREEN}configured${NC}.\n"
+  else
+    printf "Rime is ${RED}not configured${NC}.\n"
+  fi
+fi
+

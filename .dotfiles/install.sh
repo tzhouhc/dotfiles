@@ -55,9 +55,9 @@ if uname -a | grep -i linux > /dev/null; then
   if type apt-get >/dev/null 2>&1; then
     sudo $cwd/install/apt.sh
   elif type yum >/dev/null 2>&1; then
-    sudo $cwd/install/yum.sh
+    sudo $cwd/install/other/yum.sh
   elif type pacman >/dev/null 2>&1; then
-    sudo $cwd/install/pacman.sh
+    sudo $cwd/install/other/pacman.sh
   else
     echo "Unknown OS, remainder of software installation incomplete."
     exit 1
@@ -87,10 +87,18 @@ fi
 read -r -p "Install rust tools? [y/n]: " response
 if [[ $response == "y" || $response == "Y" ]]; then
   $cwd/install/cargo.sh
+  $cwd/install/optional/cargo_optional.sh
+  $cwd/install/optional/cargo_secondary.sh
 fi
 
 # install zellij tools
 read -r -p "Install zellij tools? (does not require zellij installed) [y/n]: " response
 if [[ $response == "y" || $response == "Y" ]]; then
   $cwd/install/zellij.sh
+fi
+
+# setup LLM service credentials
+read -r -p "Setup LLM credentials? [y/n]: " response
+if [[ $response == "y" || $response == "Y" ]]; then
+  $cwd/install/creds.sh
 fi

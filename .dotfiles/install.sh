@@ -3,7 +3,11 @@ set -e
 
 if [[ $TMUX == '' ]]; then
   echo "Not running in tmux. This is not ideal for running the installation."
-  exit 1
+  read -r -p "Proceed anyway?" response
+  if [[ $response == "y" || $response == "Y" ]]; then
+  else
+    exit 1
+  fi
 fi
 
 cwd="$(dirname "$0")"

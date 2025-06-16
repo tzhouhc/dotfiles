@@ -1,0 +1,29 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+CONF_DIR="$(realpath $(dirname "$0"))"
+RIME_DIR="${HOME}/Library/Rime"
+mkdir -p $RIME_DIR
+cd $RIME_DIR
+
+# 部署雾凇拼音
+if [[ -z "$(ls)" ]]; then
+  git clone git@github.com:iDvel/rime-ice.git $RIME_DIR --depth 1
+else
+  echo "Rime config dir already present."
+fi
+
+# idempotent setup -- always remove existing config and overwrite with
+# symlink
+rm -f custom_phrase.txt
+rm -f rime_ice.dict.custom.yaml
+rm -f rime_ice.schema.custom.yaml
+rm -f squirrel.custom.yaml
+rm -f default.custom.yaml
+
+ln -s $CONF_DIR/custom_phrase.txt $RIME_DIR/custom_phrase.txt
+ln -s $CONF_DIR/rime_ice.dict.custom.yaml $RIME_DIR/rime_ice.dict.custom.yaml
+ln -s $CONF_DIR/rime_ice.schema.custom.yaml $RIME_DIR/rime_ice.schema.custom.yaml
+ln -s $CONF_DIR/squirrel.custom.yaml $RIME_DIR/squirrel.custom.yaml
+ln -s $CONF_DIR/default.custom.yaml $RIME_DIR/default.custom.yaml

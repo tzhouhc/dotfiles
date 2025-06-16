@@ -25,3 +25,8 @@ brew install wget git tmux zsh the_silver_searcher universal-ctags \
 brew install hexyl numbat
 brew install cmus difftastic btop pnpm
 brew install timescam/homebrew-tap/pay-respects
+
+if uname -a | grep -i darwin &>/dev/null; then
+  # chinese input method
+  brew install --cask squirrel
+fi

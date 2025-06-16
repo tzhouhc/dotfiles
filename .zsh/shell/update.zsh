@@ -32,10 +32,21 @@ if check_timestamp; then
   if [[ "$answer" =~ ^[Yy]$ ]]; then
     echo "Running system updates..."
 
+    # zsh stuff
     zinit update
     omp upgrade
+
+    # homebrew
     brew upgrade
     ulimit -n 10240; brew update
+
+    # macos
+    # input method
+    if [[ -d "$HOME/Library/Rime/" ]]; then
+      pushd "$HOME/Library/Rime/";
+      git pull
+      popd
+    fi
   else
     echo "Updates skipped. Will check again in two weeks."
   fi

@@ -202,3 +202,7 @@ fi
 if type zellij &>/dev/null; then
   alias zel="zellij attach --create main"
 fi
+
+if type rsync &>/dev/null; then
+  alias rsyncs="rsync -avh --progress --delete --stats"
+fi

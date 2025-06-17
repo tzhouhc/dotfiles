@@ -1,5 +1,3 @@
-cd /Users/tingzhou/Music/Music/Media.localized/Music
-
 set aaa_mode=album
 set altformat_current= %F
 set altformat_playlist= %f%= %d %{?X!=0?%3X ?    }

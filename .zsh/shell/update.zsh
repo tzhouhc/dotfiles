@@ -40,6 +40,11 @@ if check_timestamp; then
     brew upgrade
     ulimit -n 10240; brew update
 
+    # bat cache
+    if type bat &>/dev/null; then
+      bat cache --build
+    fi
+
     # macos
     # input method
     if [[ -d "$HOME/Library/Rime/" ]]; then

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+screen -q -r -D cmus || screen -S cmus $(whereis cmus | cut -d " " -f2)

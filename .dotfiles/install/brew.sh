@@ -23,7 +23,7 @@ brew install wget git tmux zsh the_silver_searcher universal-ctags \
 
 # less important ones
 brew install hexyl numbat
-brew install cmus difftastic btop pnpm
+brew install cmus difftastic btop pnpm gh
 brew install timescam/homebrew-tap/pay-respects
 
 if uname -a | grep -i darwin &>/dev/null; then

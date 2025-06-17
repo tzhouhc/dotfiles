@@ -29,6 +29,8 @@
 
 ### Alfred
 
+[Theme](https://github.com/AlexMartinFR/mojave-alfred-accented-themes?tab=readme-ov-file)
+
 ### AltTab
 
 ### Finder

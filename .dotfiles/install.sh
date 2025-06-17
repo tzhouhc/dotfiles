@@ -102,3 +102,11 @@ read -r -p "Setup LLM credentials? [y/n]: " response
 if [[ $response == "y" || $response == "Y" ]]; then
   $cwd/install/creds.sh
 fi
+
+# setup squirrel config
+if uname -a | grep -i darwin &>/dev/null; then
+  read -r -p "Setup Rime input? [y/n]: " response
+  if [[ $response == "y" || $response == "Y" ]]; then
+    $cwd/lib/rime/setup
+  fi
+fi

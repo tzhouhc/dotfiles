@@ -2,16 +2,6 @@
 #
 # Can be sourced as a standalone file for effect.
 
-# Base paths
-export PATH=''
-export PATH=/bin:$PATH
-export PATH=/sbin:$PATH
-export PATH=/usr/bin:$PATH
-export PATH=/usr/games:$PATH
-export PATH=/usr/local/sbin:/usr/local/bin:$PATH
-export PATH=/usr/local/go/bin:$PATH
-export PATH=/usr/sbin:$PATH
-
 # os-dependent brew home
 if uname -a | grep -i darwin > /dev/null; then
   export BREW_HOME=/opt/homebrew
@@ -19,48 +9,69 @@ else
   export BREW_HOME=/home/linuxbrew/.linuxbrew
 fi
 
-export PATH=/snap/bin:$PATH
+# PATH components in priority order (highest to lowest)
+# Earlier entries in the array have higher priority.
+#
+# Script will automatically remove nonexistent dirs.
+path_components=(
+  # GNU tools (highest priority)
+  "$BREW_HOME/opt/coreutils/libexec/gnubin"
+  # Java
+  "$BREW_HOME/opt/openjdk/bin"
+  # Ruby
+  "$BREW_HOME/opt/ruby/bin"
+  # Latex
+  "/Library/TeX/texbin"
 
-export PATH=$BREW_HOME/bin:$PATH
+  # FZF
+  "$HOME/.fzf/bin"
 
-# ---- HOME paths ----
-# rust based tools
-export PATH=$HOME/.cargo/bin:$PATH
-# go based tools
-export PATH=$HOME/.go/bin:$PATH
-# custom scripts
-export PATH=$HOME/.local/bin:$PATH
-# binaries -- but with the expectation that they would be built alongside
-# the dotfiles repo, and only replaced by the sbins if not available.
-export PATH=$HOME/.dotfiles/bin:$HOME/.dotfiles/sbin:$PATH
-# floaterm
-export PATH=$HOME/.local/share/nvim/lazy/vim-floaterm/bin:$PATH
+  # NEOVIM (bob-nvim takes precedence over binary release)
+  "$HOME/.local/share/bob/nvim-bin"
+  "$HOME/.local/nvim/bin"
 
-# NEOVIM via binary release
-export PATH=$HOME/.local/nvim/bin:$PATH
-# NEOVIM via bob-nvim
-export PATH=$HOME/.local/share/bob/nvim-bin:$PATH
+  # HOME paths - custom tools and scripts
+  "$HOME/.dotfiles/bin"
+  "$HOME/.dotfiles/sbin"
+  "$HOME/.local/bin"
+  "$HOME/.go/bin"
+  "$HOME/.cargo/bin"
 
-# fzf
-export PATH=$HOME/.fzf/bin:$PATH
-# gnubin -- ls without color AND with stupid ass quotes
-export PATH=/$BREW_HOME/opt/grep/libexec/gnubin:$PATH
-export PATH=/$BREW_HOME/opt/coreutils/libexec/gnubin:$PATH
-export PATH=/$BREW_HOME/opt/openjdk/bin:$PATH
-export PATH=$BREW_HOME/opt/make/libexec/gnubin:$PATH
+  # Brew
+  "$BREW_HOME/bin"
 
-# dotnet
-export PATH=/usr/local/share/dotnet/x64/:$PATH
-if uname -a | grep -i darwin > /dev/null; then
-  # ruby
-  export PATH=/$BREW_HOME/opt/ruby/bin:$PATH
-  # latex
-  export PATH=/Library/TeX/texbin/:$PATH
+  # Snap
+  "/snap/bin"
+
   # wezterm
-  export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+  "/Applications/WezTerm.app/Contents/MacOS"
   # hammerspoon
-  export PATH="$PATH:$HOME/.hammerspoon/bin"
-fi
+  "$HOME/.hammerspoon/bin"
+  # dotnet
+  "/usr/local/share/dotnet/x64"
+  # lm-studio
+  "$HOME/.cache/lm-studio/bin"
+  # sublime
+  "/Applications/Sublime Text.app/Contents/SharedSupport/bin"
+
+  # System paths
+  "/usr/sbin"
+  "/usr/local/go/bin"
+  "/usr/local/sbin"
+  "/usr/local/bin"
+  "/usr/games"
+  "/usr/bin"
+  "/sbin"
+  "/bin"
+)
+
+# Build PATH from the array
+export PATH=""
+for path_dir in "${path_components[@]}"; do
+  if [[ -d "$path_dir" ]]; then
+    export PATH="$PATH:$path_dir"
+  fi
+done
 
 export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl@3/lib/
 export LDFLAGS="-L/$BREW_HOME/opt/ruby/lib"
@@ -68,16 +79,6 @@ export CPPFLAGS="-I/$BREW_HOME/opt/ruby/include"
 export CPPFLAGS="-I/$BREW_HOME/opt/openjdk/include"
 export PKG_CONFIG_PATH="/$BREW_HOME/opt/ruby/lib/pkgconfig"
 export DYLD_LIBRARY_PATH="$BREW_HOME/lib:$DYLD_LIBRARY_PATH"
-
-if [[ -d "$HOME/.cache/lm-studio/bin" ]]; then
-  export PATH=$PATH:$HOME/.cache/lm-studio/bin
-fi
-if [[ -d "$HOME/.nvim" ]]; then
-  export PATH=$HOME/.nvim/bin:$PATH
-fi
-if [[ -d '/Applications/Sublime Text.app/' ]]; then
-  export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
-fi
 
 # export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 # export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"

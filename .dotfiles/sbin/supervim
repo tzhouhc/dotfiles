@@ -132,7 +132,7 @@ function smart_edit() {
 }
 
 if [ $# -eq 1 ]; then
-  smart_edit $(smart_select $@)
+  smart_edit "$(smart_select $@)"
 else
-  smart_edit $@
+  smart_edit "$@"
 fi

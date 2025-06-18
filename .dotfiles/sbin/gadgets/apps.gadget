@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+binding='ctrl-o:become(open -R {})'
+
+data=$(fd . --type d --type f --extension app /Applications | grep -v '\.app/.*\.app' | awk -F'/' '{name=$(NF-1); printf "%s\t%s\n", name, $0}')
+
+result=$( echo $data | fzf -d"\t" --with-nth=1 --height 100% --bind "$binding" | awk -F'\t' '{print $2}' )
+
+if [[ -n "${result}" ]]; then
+  open "${result}"
+fi

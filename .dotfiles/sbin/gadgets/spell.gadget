@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+result=$(cat /usr/share/dict/web2 | fzf --height 100%)
+
+if [[ -n "${result}" ]]; then
+  echo -n "${result}" | pbcopy
+fi

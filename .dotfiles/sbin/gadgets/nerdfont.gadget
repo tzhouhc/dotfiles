@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+result=$(cat $HOME/.dotfiles/lib/nerdfont/nerdfont.csv | fzf -d "," --with-nth="{1}    {3}" --accept-nth=3 --height 100%)
+
+if [[ -n "${result}" ]]; then
+  echo -n "${result}" | pbcopy
+fi
+

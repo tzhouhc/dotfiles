@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+CHROME_PATH="$HOME/Library/Application Support/Google/Chrome/Default/"
+CHROME_HIST=/tmp/chrome_history.db
+cp "${CHROME_PATH}/History" $CHROME_HIST
+
+hist=$(
+  sqlite3 -noheader -tabs $CHROME_HIST "SELECT urls.title, urls.url
+    FROM urls, visits
+    WHERE urls.id = visits.url
+    GROUP BY urls.title, urls.url
+    ORDER BY visits.visit_time DESC"
+)
+data=$(jq -r '.. | objects | select(has("name") and has("url") and .type == "url") | [.name, .url] | @tsv' ${CHROME_PATH}/Bookmarks)
+result=$(echo $data $hist | fzf -d"\t" --with-nth=1 --height 100% --preview='echo {} | cut -f2' | awk -F'\t' '{print $2}' )
+
+if [[ -n "${result}" ]]; then
+  open "${result}"
+fi

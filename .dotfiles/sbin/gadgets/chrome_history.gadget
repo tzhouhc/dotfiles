@@ -12,7 +12,6 @@ sqlite3 -noheader -tabs $CHROME_HIST "SELECT urls.title, urls.url
   GROUP BY urls.title, urls.url
   ORDER BY visits.visit_time DESC"
 )
-# data=$(jq -r '.. | objects | select(has("name") and has("url") and .type == "url") | [.name, .url] | @tsv' ~/Library/Application\ Support/Google/Chrome/Default/Bookmarks)
 result=$(echo $hist | fzf -d"\t" --with-nth=1 --height 100% --preview='echo {} | cut -f2' | awk -F'\t' '{print $2}' )
 
 if [[ -n "${result}" ]]; then

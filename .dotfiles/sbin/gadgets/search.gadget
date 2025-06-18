@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+query=$(gum input --placeholder="Search for..." --prompt="󰍉 ")
+
+if [[ -n "${query}" ]]; then
+  open "https://www.google.com/search?q=${query}"
+fi

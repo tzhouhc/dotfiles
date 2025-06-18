@@ -6,13 +6,14 @@ CHROME_HIST=/tmp/chrome_history.db
 cp "$HOME/Library/Application Support/Google/Chrome/Default/History" $CHROME_HIST
 
 hist=$(
-sqlite3 -header -csv $CHROME_HIST "SELECT urls.url
+sqlite3 -noheader -tabs $CHROME_HIST "SELECT urls.title, urls.url
   FROM urls, visits
   WHERE urls.id = visits.url
   GROUP BY urls.title, urls.url
   ORDER BY visits.visit_time DESC"
 )
-result=$(echo $hist | fzf --height 100%)
+# data=$(jq -r '.. | objects | select(has("name") and has("url") and .type == "url") | [.name, .url] | @tsv' ~/Library/Application\ Support/Google/Chrome/Default/Bookmarks)
+result=$(echo $hist | fzf -d"\t" --with-nth=1 --height 100% --preview='echo {} | cut -f2' | awk -F'\t' '{print $2}' )
 
 if [[ -n "${result}" ]]; then
   open "${result}"

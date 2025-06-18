@@ -19,3 +19,8 @@ coc
 NuGet
 Wondershare
 *.library
+
+.local/share
+.local/share/**
+.local/state
+.local/state/**

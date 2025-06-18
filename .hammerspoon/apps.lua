@@ -82,7 +82,7 @@ end
 function M.summon_quick_open()
   -- pipe to null and send to background to prevent blocking hs
   os.execute(
-    "/Applications/WezTerm.app/Contents/MacOS/wezterm --config-file $HOME/.config/wezterm/popup_wezterm.lua start -- $HOME/.dotfiles/bin/seb >& /dev/null &")
+    "/Applications/WezTerm.app/Contents/MacOS/wezterm --config-file $HOME/.config/wezterm/popup_wezterm.lua start -- $HOME/.dotfiles/sbin/gadget >& /dev/null &")
   hs.timer.waitUntil(
     unhidden_wez_app_present,
     focus_unhidden_wez_window,

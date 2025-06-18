@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-source $HOME/.zsh/base.zsh
-
 data=$(jq -r '.. | objects | select(has("name") and has("url") and .type == "url") | [.name, .url] | @tsv' ~/Library/Application\ Support/Google/Chrome/Default/Bookmarks)
 result=$(echo $data | fzf -d"\t" --with-nth=1 --height 100% --preview='echo {} | cut -f2' | awk -F'\t' '{print $2}' )
 

@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/env/path.zsh
+
+cd "$(dirname "$0")"
+export FZF_DEFAULT_OPTS="\
+  --style=full \
+  --layout=reverse \
+  --input-label ' Input ' \
+  --bind 'result:transform-list-label:
+    if [[ -z \$FZF_QUERY ]]; then
+      echo \" \$FZF_MATCH_COUNT items \"
+    else
+      echo \" \$FZF_MATCH_COUNT matches for [\$FZF_QUERY] \"
+    fi
+    ' \
+  --color 'border:#aaaaaa,label:#cccccc' \
+  --color 'preview-border:#9999cc,preview-label:#ccccff' \
+  --color 'list-border:#669966,list-label:#99cc99' \
+  --color 'input-border:#996666,input-label:#ffcccc'\
+"
+data=$(jq -r '.[] | "\(.name)\t\(.display)\t\(.desc)"' ./gadgets/gadgets.json)
+chosen=$(echo $data | fzf --height=100% --style=full --with-nth=2 --accept-nth=1 \
+  --preview='echo {} | cut -f3'
+)
+
+./gadgets/${chosen}.gadget

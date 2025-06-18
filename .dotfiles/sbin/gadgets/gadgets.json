@@ -1,0 +1,42 @@
+[
+  {
+    "name": "apps",
+    "display": "Applications",
+    "desc": "MacOS Applications."
+  },
+  {
+    "name": "files",
+    "display": "Files",
+    "desc": "All local files and directories under Home."
+  },
+  {
+    "name": "nerdfont",
+    "display": "Nerdfont",
+    "desc": "Picker for Nerdfont symbols."
+  },
+  {
+    "name": "search",
+    "display": "Search",
+    "desc": "Perform Google Search."
+  },
+  {
+    "name": "spell",
+    "display": "Spelling",
+    "desc": "Search for words and their spelling."
+  },
+  {
+    "name": "calculator",
+    "display": "Calculator",
+    "desc": "Perform math computations."
+  },
+  {
+    "name": "python",
+    "display": "Python",
+    "desc": "Run python3 in REPL mode."
+  },
+  {
+    "name": "chrome",
+    "display": "Chrome",
+    "desc": "Chrome history and bookmarks"
+  }
+]

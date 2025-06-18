@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-source $HOME/.zsh/base.zsh
-
 binding='ctrl-o:become(open -R {})'
 
 data=$(fd . --type d --type f --extension app /Applications | grep -v '\.app/.*\.app' | awk -F'/' '{name=$(NF-1); printf "%s\t%s\n", name, $0}')

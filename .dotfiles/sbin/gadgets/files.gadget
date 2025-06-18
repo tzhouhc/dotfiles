@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+# get current TTY size and calculate space available for imgcatr
+read -r vert hori <<<$(stty size)
+(( vert = vert - 2 ))
+(( hori = (hori - 7) / 2 ))
+
+# default to return the selected file for subsequent processing.
+binding='ctrl-o:become(open -R {})'
+result=$( ( fd . "/Applications/" --extension app & fd . ~/ --hidden ) | fzf --height 100% --bind "$binding" --preview "smart_preview {} ${vert} ${hori}")
+
+if [[ "$result" != '' ]]; then
+  open $result
+fi
+

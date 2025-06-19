@@ -1,0 +1,79 @@
+#!/usr/bin/env zsh
+
+read -r vert hori <<<$(stty size)
+(( vert = vert - 2 ))
+(( hori = (hori - 7) / 2 ))
+
+export FZF_DEFAULT_OPTS="\
+  --style=full \
+  --layout=reverse \
+  --input-label ' Input ' \
+  --bind 'result:transform-list-label:
+    if [[ -z \$FZF_QUERY ]]; then
+      echo \" \$FZF_MATCH_COUNT items \"
+    else
+      echo \" \$FZF_MATCH_COUNT matches for [\$FZF_QUERY] \"
+    fi
+    ' \
+  --color 'border:#aaaaaa,label:#cccccc' \
+  --color 'preview-border:#9999cc,preview-label:#ccccff' \
+  --color 'list-border:#669966,list-label:#99cc99' \
+  --color 'input-border:#996666,input-label:#ffcccc'\
+"
+
+# All apps
+apps=$(fd . --type d --type f --extension app /Applications | grep -v '\.app/.*\.app' | awk -F'/' '{name=$(NF-1); printf "open\t%s\t%s\n", name, $0}')
+
+CHROME_PATH="$HOME/Library/Application Support/Google/Chrome/Default/"
+CHROME_HIST=/tmp/chrome_history.db
+cp "${CHROME_PATH}/History" $CHROME_HIST
+# Chrome history
+hist=$(
+  sqlite3 -noheader -tabs $CHROME_HIST "SELECT \"open\", urls.title, urls.url
+    FROM urls, visits
+    WHERE urls.id = visits.url
+    GROUP BY urls.title, urls.url
+    ORDER BY visits.visit_time DESC"
+)
+# Chrome bookmarks
+bookmarks=$(jq -r '.. | objects | select(has("name") and has("url") and .type == "url") | ["open", .name, .url] | @tsv' ${CHROME_PATH}/Bookmarks)
+
+# Files
+# very, very slow
+# files=$(fd . ~/ --hidden | while read -r line; do
+#   echo "open\t${line}\t${line}"
+# done)
+
+item=$(echo $apps $hist $bookmarks $files | fzf -d"\t" --with-nth=2 --accept-nth=1,3 --preview "smart_preview {} ${vert} ${hori}" --print-query)
+
+if [ $? -eq 1 ]; then
+  # I failed to find anything at all -- let Google try.
+  action="search"
+  target="$item"
+else
+  item=$(echo $item | tail -n 1)  # drop the query line
+  action=$(echo -n $item | cut -f1 | xargs)
+  target=$(echo -n $item | cut -f2 | xargs)
+fi
+
+case "$action" in
+  "exec")
+    # directly become target command
+    exec "$target"
+  ;;
+  "open")
+    # use OS-native open, useful for typical files/dirs/urls
+    open "$target"
+  ;;
+  "copy")
+    echo "$target" | pbcopy
+  ;;
+  "search")
+    # ensure url-safe
+    item=$(echo "\"$item\"" | jq -r '@uri')
+    open "https://www.google.com/search?q=${item}"
+  ;;
+  *)
+    echo "action is $action and target is $target"
+  ;;
+esac

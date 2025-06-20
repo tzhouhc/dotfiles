@@ -29,4 +29,6 @@ brew install timescam/homebrew-tap/pay-respects
 if uname -a | grep -i darwin &>/dev/null; then
   # chinese input method
   brew install --cask squirrel
+  brew tap laishulu/homebrew
+  brew install macism
 fi

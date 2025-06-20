@@ -17,6 +17,13 @@ bindkey '^[[1;3C' forward-word
 bindkey '^[b' beginning-of-line
 bindkey '^[f' end-of-line
 
+function linewise_wrap_in_quotes() {
+  # newline-wise split, then echo each individually
+  for line in ${(f)1}; do
+    echo -n "\"$line\" "
+  done
+}
+
 # ---- some fzf functions with keyboard shortcuts
 
 # TODO: currently widgets support completing based on partial path, but will
@@ -31,13 +38,13 @@ function my_fzf_global_dir_widget() {
   if [[ -d "$cleaned" ]]; then
     insert=$(global_dir_list "$cleaned")
     if [[ -n "$insert" ]]; then
-      insert=\"$insert\"
+      insert=$(linewise_wrap_in_quotes "$insert")
     fi
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
     insert=$(global_dir_list)
     if [[ -n "$insert" ]]; then
-      insert=\"$insert\"
+      insert=$(linewise_wrap_in_quotes "$insert")
     fi
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   fi
@@ -58,13 +65,13 @@ function my_fzf_file_widget() {
   if [[ -d "$cleaned" ]]; then
     insert=$(local_file_list "$cleaned")
     if [[ -n "$insert" ]]; then
-      insert=\"$insert\"
+      insert=$(linewise_wrap_in_quotes "$insert")
     fi
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
     insert=$(local_file_list)
     if [[ -n "$insert" ]]; then
-      insert=\"$insert\"
+      insert=$(linewise_wrap_in_quotes "$insert")
     fi
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   fi
@@ -82,7 +89,7 @@ function my_fzf_mru_file_widget() {
   # allow multiple selection
   insert=$(vim_mru_list)
   if [[ -n "$insert" ]]; then
-    insert=\"$insert\"
+    insert=$(linewise_wrap_in_quotes "$insert")
   fi
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
@@ -96,7 +103,7 @@ function my_fzf_global_file_widget() {
   # allow multiple selection
   insert=$(global_file_list)
   if [[ -n "$insert" ]]; then
-    insert=\"$insert\"
+    insert=$(linewise_wrap_in_quotes "$insert")
   fi
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
@@ -140,7 +147,7 @@ zle -N my-csearch-fzf-widget
 function my_fzf_rg_widget() {
   insert=$(local_lines_list)
   if [[ -n "$insert" ]]; then
-    insert=\"$insert\"
+    insert=$(linewise_wrap_in_quotes "$insert")
   fi
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
@@ -160,13 +167,13 @@ function my_fzf_folder_widget() {
   if [[ -d "$cleaned" ]]; then
     insert=$(local_dir_list "$cleaned")
     if [[ -n "$insert" ]]; then
-      insert=\"$insert\"
+      insert=$(linewise_wrap_in_quotes "$insert")
     fi
     LBUFFER="$(echo $LBUFFER | sed s:$maybedir:$insert:)"
   else
     insert=$(local_dir_list)
     if [[ -n "$insert" ]]; then
-      insert=\"$insert\"
+      insert=$(linewise_wrap_in_quotes "$insert")
     fi
     LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $insert"
   fi

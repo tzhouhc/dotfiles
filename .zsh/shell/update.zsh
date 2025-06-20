@@ -32,6 +32,11 @@ if check_timestamp; then
   if [[ "$answer" =~ ^[Yy]$ ]]; then
     echo "Running system updates..."
 
+    # fzf
+    pushd "$HOME/.fzf"
+    ./install --bin
+    popd
+
     # zsh stuff
     zinit update
     omp upgrade

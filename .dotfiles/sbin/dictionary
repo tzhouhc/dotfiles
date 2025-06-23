@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+if [[ -n "$1" ]]; then
+  res=$(curl "https://api.dictionaryapi.dev/api/v2/entries/en/${1}" 2>/dev/null)
+fi
+
+if [[ -z "$res" ]]; then
+  exit 1
+fi
+
+# Colors
+BOLD=$'\033[1m'
+RESET=$'\033[0m'
+RED=$'\033[91m'
+
+# Print word in bold
+word=$(echo "$res" | jq -r '.[0].word')
+echo "${BOLD}${word}${RESET}"
+
+# Thick colored separator
+sep="${RED}$(printf '=%.0s' {1..20})${RESET}"
+echo $sep
+
+# Print all meanings and definitions
+echo "$res" | jq -r '
+  .[].meanings
+  | sort_by(.partOfSpeech)
+  | group_by(.partOfSpeech)
+  | .[]
+  | (.[0].partOfSpeech + ":\n")
+    + (map(.definitions[]?.definition) | map("- " + .) | join("\n"))
+    + "\n"
+'

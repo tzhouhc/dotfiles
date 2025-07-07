@@ -30,7 +30,7 @@ local function tab_icon(title)
 end
 
 local trp = "rgba(0, 0, 0, 0)"
-local darkest = "#2e3440"
+local darker = "#38404f"
 local dark = "#434c5e"
 local gray = "#4c566a"
 
@@ -59,7 +59,7 @@ wezterm.on(
 		else
 			edge_foreground = trp
 			edge_background = gray
-			background = darkest
+			background = darker
 			foreground = bright
 		end
 

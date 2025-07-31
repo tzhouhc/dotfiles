@@ -22,42 +22,46 @@ function check_timestamp() {
   [[ $time_diff -ge $two_weeks ]]
 }
 
-if check_timestamp; then
-  touch "$TIMESTAMP_FILE"
+function update() {
+    touch "$TIMESTAMP_FILE"
 
-  echo "It's been two weeks since the last update check."
-  echo -n "Would you like to run updates now? (y/n): "
-  read answer
+    echo "It's been two weeks since the last update check."
+    echo -n "Would you like to run updates now? (y/n): "
+    read answer
 
-  if [[ "$answer" =~ ^[Yy]$ ]]; then
-    echo "Running system updates..."
+    if [[ "$answer" =~ ^[Yy]$ ]]; then
+      echo "Running system updates..."
 
-    # fzf
-    pushd "$HOME/.fzf"
-    ./install --bin
-    popd
-
-    # zsh stuff
-    zinit update
-    omp upgrade
-
-    # homebrew
-    brew upgrade
-    ulimit -n 10240; brew update
-
-    # bat cache
-    if type bat &>/dev/null; then
-      bat cache --build
-    fi
-
-    # macos
-    # input method
-    if [[ -d "$HOME/Library/Rime/" ]]; then
-      pushd "$HOME/Library/Rime/";
-      git pull
+      # fzf
+      pushd "$HOME/.fzf"
+      ./install --bin
       popd
+
+      # zsh stuff
+      zinit update
+      omp upgrade
+
+      # homebrew
+      brew upgrade
+      ulimit -n 10240; brew update
+
+      # bat cache
+      if type bat &>/dev/null; then
+        bat cache --build
+      fi
+
+      # macos
+      # input method
+      if [[ -d "$HOME/Library/Rime/" ]]; then
+        pushd "$HOME/Library/Rime/";
+        git pull
+        popd
+      fi
+    else
+      echo "Updates skipped. Will check again in two weeks."
     fi
-  else
-    echo "Updates skipped. Will check again in two weeks."
-  fi
+}
+
+if check_timestamp; then
+  update
 fi

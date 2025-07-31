@@ -22,7 +22,7 @@ brew install wget git tmux zsh the_silver_searcher universal-ctags \
   coreutils nodejs oh-my-posh python@3.13 grep
 
 # less important ones
-brew install hexyl numbat pastel
+brew install hexyl numbat pastel wtfutil
 brew install cmus difftastic btop pnpm gh
 brew install timescam/homebrew-tap/pay-respects
 

@@ -71,3 +71,7 @@ fi
 if type pay-respects &>/dev/null; then
   eval "$(pay-respects zsh --alias)"
 fi
+
+if type rbenv &>/dev/null; then
+  eval "$(rbenv init - --no-rehash zsh)"
+fi

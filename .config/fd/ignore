@@ -8,6 +8,7 @@ Icon?
 
 .DS_Store
 .mypy_cache
+.Trash
 
 !.config
 !.config/**

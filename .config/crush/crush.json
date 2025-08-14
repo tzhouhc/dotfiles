@@ -21,8 +21,21 @@
       "type": "openai",
       "models": [
         {
+          "name": "Smollm2",
+          "id": "smollm2:latest",
+          "context_window": 256000,
+          "default_max_tokens": 20000
+        },
+        {
           "name": "Llama3.1",
           "id": "llama3.1:latest",
+          "context_window": 256000,
+          "default_max_tokens": 20000,
+          "supports_tools": true
+        },
+        {
+          "name": "GPT-OSS",
+          "id": "gpt-oss:latest",
           "context_window": 256000,
           "default_max_tokens": 20000,
           "supports_tools": true
@@ -31,11 +44,6 @@
     }
   },
   "permissions": {
-    "allowed_tools": [
-      "view",
-      "ls",
-      "grep",
-      "edit",
-    ]
+    "allowed_tools": ["view", "ls", "grep", "edit"]
   }
 }

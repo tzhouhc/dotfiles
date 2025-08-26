@@ -23,7 +23,7 @@ brew install wget git tmux zsh the_silver_searcher universal-ctags \
 
 # less important ones
 brew install hexyl numbat pastel wtfutil
-brew install cmus difftastic btop pnpm gh
+brew install difftastic btop pnpm gh
 brew install timescam/homebrew-tap/pay-respects
 brew install charmbracelet/tap/crush
 
@@ -32,4 +32,6 @@ if uname -a | grep -i darwin &>/dev/null; then
   brew install --cask squirrel
   brew tap laishulu/homebrew
   brew install macism
+  # music player
+  brew install cmus
 fi

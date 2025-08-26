@@ -33,6 +33,13 @@ sudo su -
 passwd ubuntu
 ```
 
+Then change the default shell:
+
+```sh
+sudo apt-get install -y zsh
+chsh
+```
+
 Then proceed with installation (recommend doing so inside of `tmux`):
 
 ```sh

@@ -20,6 +20,7 @@ if type cargo >/dev/null 2>&1; then
   cargo binstall -y atuin  # shell history
   cargo binstall -y bat   # less
   cargo binstall -y choose   # cut
+  cargo binstall -y du-dust  # better disk usage display
   cargo binstall -y eza   # ls
   cargo binstall -y fd-find   # find
   cargo binstall -y git-delta   # diff

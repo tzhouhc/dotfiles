@@ -9,6 +9,11 @@ cd $cwd
 # yet; should be compatible with bash
 source $HOME/.zsh/env/path.zsh
 
+if [[ $XDG_CONFIG_HOME == '' ]]; then
+  echo "No XDG_CONFIG_HOME set. Please verify you are running zsh."
+  exit 1
+fi
+
 # check resumable context
 if [[ $TMUX == '' ]]; then
   echo "Not running in tmux. This is not ideal for running the installation."
@@ -64,17 +69,28 @@ if uname -a | grep -i linux > /dev/null; then
   fi
 fi
 
-# install homebrew using just gcc and build-essentials
-read -r -p "Install homebrew and related? [y/n]: " response
-if [[ $response == "y" || $response == "Y" ]]; then
-  $cwd/install/brew.sh
+if ! type brew &>/dev/null; then
+  # install homebrew using just gcc and build-essentials
+  read -r -p "Install homebrew and related? [y/n]: " response
+  if [[ $response == "y" || $response == "Y" ]]; then
+    $cwd/install/brew.sh
+  fi
 fi
 
 # with cargo installed, tools like bob should all become available for
 # subsequent use.
-read -r -p "Install neovim? [y/n]: " response
-if [[ $response == "y" || $response == "Y" ]]; then
-  $cwd/install/core/nvim.sh
+if ! type nvim &>/dev/null; then
+  read -r -p "Install neovim? [y/n]: " response
+  if [[ $response == "y" || $response == "Y" ]]; then
+    $cwd/install/core/nvim.sh
+  fi
+fi
+
+if ! type uv &>/dev/null; then
+  read -r -p "Install uv? [y/n]: " response
+  if [[ $response == "y" || $response == "Y" ]]; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  fi
 fi
 
 # assumes python is already present and up-to-date
@@ -87,8 +103,6 @@ fi
 read -r -p "Install rust tools? [y/n]: " response
 if [[ $response == "y" || $response == "Y" ]]; then
   $cwd/install/cargo.sh
-  $cwd/install/optional/cargo_optional.sh
-  $cwd/install/optional/cargo_secondary.sh
 fi
 
 # install zellij tools

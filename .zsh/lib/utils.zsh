@@ -329,3 +329,7 @@ function shell_open() {
     fi
   fi
 }
+
+function refresh_ssh_agent() {
+  eval "$(ssh-agent -s)"
+}

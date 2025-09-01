@@ -84,6 +84,9 @@ if ! type nvim &>/dev/null; then
   if [[ $response == "y" || $response == "Y" ]]; then
     $cwd/install/core/nvim.sh
   fi
+
+  cd $HOME/.config/nvim
+  git checkout main
 fi
 
 if ! type uv &>/dev/null; then
@@ -92,6 +95,9 @@ if ! type uv &>/dev/null; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
   fi
 fi
+
+# try to acquire latest binaries after installations
+rehash
 
 # assumes python is already present and up-to-date
 read -r -p "Install python packages? [y/n]: " response

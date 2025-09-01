@@ -39,6 +39,7 @@ path_components=(
 
   # Brew
   "$BREW_HOME/bin"
+  "$BREW_HOME/sbin"
 
   # Snap
   "/snap/bin"

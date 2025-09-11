@@ -11,18 +11,24 @@ cp $HOME/.dotfiles/ref_git_config $HOME/.dotfiles.git/config
 
 ```
 
+Single command:
+
+```sh
+curl https://raw.githubusercontent.com/tzhouhc/dotfiles/refs/heads/main/.dotfiles/fetch.sh | bash
+```
+
 ## Submodule
 
-In the `config` file in the bare repo dir, ensure that the submodule
-has `ignore = all`. This makes it so that git does not care about the versioning
-of the submodule.
+In the `config` file in the bare repo dir, ensure that the submodule has
+`ignore = all`. This makes it so that git does not care about the versioning of
+the submodule.
 
 This should be handled by default via the reference git config file.
 
 ## Remote Branch Issue
 
-Possible check [this
-link](https://stackoverflow.com/questions/22446446/cannot-setup-tracking-information-starting-point-origin-master-is-not-a-branc).
+Possible check
+[this link](https://stackoverflow.com/questions/22446446/cannot-setup-tracking-information-starting-point-origin-master-is-not-a-branc).
 
 ## Other hosts
 
@@ -61,10 +67,9 @@ not.
 If additional tooling is required, run the `install.sh` script. It should call
 the other installation scripts automatically.
 
-> [!NOTE]:
-> `cargo_optional.sh` is not invoked as part of the standard installation
-> process, as none of the tools within are used in the other scripts in this
-> setup.
+> [!NOTE]: `cargo_optional.sh` is not invoked as part of the standard
+> installation process, as none of the tools within are used in the other
+> scripts in this setup.
 
 ## Neovim
 

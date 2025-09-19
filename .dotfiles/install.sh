@@ -97,7 +97,7 @@ if ! type uv &>/dev/null; then
 fi
 
 # try to acquire latest binaries after installations
-rehash
+hash -r
 
 # assumes python is already present and up-to-date
 read -r -p "Install python packages? [y/n]: " response

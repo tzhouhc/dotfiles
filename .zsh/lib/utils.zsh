@@ -333,3 +333,22 @@ function shell_open() {
 function refresh_ssh_agent() {
   eval "$(ssh-agent -s)"
 }
+
+function vm() {
+  if [[ ! -d "$HOME/Virtual Machines.localized" ]]; then
+    echo "No VM path found."
+    return
+  fi
+  vmxs=$(find "$HOME/Virtual Machines.localized" -type f -name '*.vmx')
+  if [[ -n "$1" ]]; then
+    action="$1"
+  else
+    action=$(echo "start\nsuspend\nstop" | gum choose)
+  fi
+  if [[ -n "$vmxs" ]]; then
+    vmxs=$(echo "$vmxs" | gum choose)
+    /Applications/VMware\ Fusion.app/Contents/Library/vmrun "$action" "$vmxs"
+  else
+    echo "No VM found."
+  fi
+}

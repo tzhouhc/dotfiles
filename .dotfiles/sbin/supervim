@@ -36,8 +36,12 @@ function smart_select() {
     local should_prompt=false
 
     # Check if file exists and is binary, or doesn't exist
-    if [[ -f "$file" ]] && is_binary "$file"; then
+    if [[ -f "$file" ]]; then
+      if is_binary "$file"; then
         choices+=("$file (binary)")
+      else
+        echo $file; return
+      fi
     elif [[ ! -f "$file" ]]; then
         choices+=("$file (new)")
     fi

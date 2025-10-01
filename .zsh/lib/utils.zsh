@@ -343,11 +343,15 @@ function vm() {
   if [[ -n "$1" ]]; then
     action="$1"
   else
-    action=$(echo "start\nsuspend\nstop" | gum choose)
+    action=$(echo "start\nsuspend\nstop\nreset\npause\nunpause" | gum filter)
+  fi
+  if [[ ! -n "$action" ]]; then
+    return
   fi
   if [[ -n "$vmxs" ]]; then
-    vmxs=$(echo "$vmxs" | gum choose)
-    /Applications/VMware\ Fusion.app/Contents/Library/vmrun "$action" "$vmxs"
+    vmxs="$(echo "$vmxs" | gum filter)"
+    /Applications/VMware\ Fusion.app/Contents/Library/vmrun "${action}" "${vmxs}" "${2}"
+    # optionally accept "nogui"
   else
     echo "No VM found."
   fi

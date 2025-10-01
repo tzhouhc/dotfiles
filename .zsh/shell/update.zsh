@@ -54,7 +54,7 @@ function update() {
       # input method
       if [[ -d "$HOME/Library/Rime/" ]]; then
         pushd "$HOME/Library/Rime/";
-        git pull
+        git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
         popd
       fi
     else

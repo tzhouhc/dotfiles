@@ -3,10 +3,6 @@
 
 patch:
 
-  # 要比共享目录的同名文件的 config_version 大才可以生效
-  config_version: '2024-07-23'
-
-
   # 方案列表
   schema_list:
     # 可以直接删除或注释不需要的方案，对应的 *.schema.yaml 方案文件也可以直接删除

@@ -16,14 +16,14 @@ fi
 
 # idempotent setup -- always remove existing config and overwrite with
 # symlink
-rm -f custom_phrase.txt
+rm -f my_custom_phrase.txt
 rm -f rime_ice.dict.custom.yaml
 rm -f rime_ice.schema.custom.yaml
 rm -f squirrel.custom.yaml
 rm -f default.custom.yaml
 
-ln -s $CONF_DIR/custom_phrase.txt $RIME_DIR/custom_phrase.txt
+ln -s $CONF_DIR/custom_phrase.txt $RIME_DIR/my_custom_phrase.txt
 ln -s $CONF_DIR/rime_ice.dict.custom.yaml $RIME_DIR/rime_ice.dict.custom.yaml
-ln -s $CONF_DIR/rime_ice.schema.custom.yaml $RIME_DIR/rime_ice.schema.custom.yaml
+ln -s $CONF_DIR/rime_ice.custom.yaml $RIME_DIR/rime_ice.custom.yaml
 ln -s $CONF_DIR/squirrel.custom.yaml $RIME_DIR/squirrel.custom.yaml
 ln -s $CONF_DIR/default.custom.yaml $RIME_DIR/default.custom.yaml

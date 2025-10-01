@@ -15,7 +15,7 @@ patch:
       reset: 0
       states: [ 简, 繁 ]
     - name: emoji
-      states: [ 💀, 😄 ]
+      states: [ 无, 😄 ]
       reset: 1
     - name: full_shape
       reset: 1
@@ -23,3 +23,5 @@ patch:
     - name: search_single_char  # search.lua 的功能开关，辅码查词时是否单字优先
       abbrev: [词, 单]
       states: [正常, 单字]
+
+  custom_phrase/user_dict: my_custom_phrase  # 可以修改这里，改成自己的 txt 文件

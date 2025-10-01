@@ -10,9 +10,6 @@
 
 patch:
 
-  # 要比共享目录的同名文件的 config_version 大才可以生效
-  config_version: '2024-07-23'
-
 
   # options: last | default | _custom_
   # last: the last used latin keyboard layout

@@ -18,7 +18,7 @@ patch:
       states: [ 无, 😄 ]
       reset: 1
     - name: full_shape
-      reset: 1
+      reset: 0
       states: [ 半角, 全角 ]
     - name: search_single_char  # search.lua 的功能开关，辅码查词时是否单字优先
       abbrev: [词, 单]

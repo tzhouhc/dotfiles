@@ -3,7 +3,13 @@
 source $HOME/.zsh/base.zsh
 
 CONF_DIR="$(realpath $(dirname "$0"))"
-RIME_DIR="${HOME}/Library/Rime"
+
+if uname -a | grep -i darwin &>/dev/null; then
+  RIME_DIR="${HOME}/Library/Rime"
+else
+  RIME_DIR="${HOME}/.config/fcitx/rime"
+fi
+
 mkdir -p $RIME_DIR
 cd $RIME_DIR
 

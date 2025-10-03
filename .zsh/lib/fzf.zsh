@@ -22,13 +22,13 @@ function local_recent_dir_list() {
 }
 
 function global_dir_list() {
-  res=$(lolcate --db dirs | fzf -m --preview "smart_preview {}")
+  res=$(fd -t d . / | fzf -m --preview "smart_preview {}")
   print "$res"
 }
 
 # This takes up wayyy too much time for a quick searching tool
 function global_file_list() {
-  res=$(lolcate | fzf -m --preview "smart_preview {}")
+  res=$(fd -t f . / | fzf -m --preview "smart_preview {}")
   print "$res"
 }
 

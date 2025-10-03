@@ -49,10 +49,6 @@ alias cl=clear
 # some tool chain
 if type zoxide &>/dev/null; then
   alias cd=smart_cd
-  if type lolcate &>/dev/null; then
-    alias cdd=smart_cd_no_z
-    alias zz=smart_cd_no_z
-  fi
 fi
 
 if type delta >/dev/null 2>&1; then
@@ -130,10 +126,6 @@ fi
 
 if type evcxr &>/dev/null; then
   alias rust=evcxr
-fi
-
-if type lolcate &>/dev/null; then
-  alias locate=lolcate
 fi
 
 if type cmus &>/dev/null; then

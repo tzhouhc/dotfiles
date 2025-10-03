@@ -6,7 +6,7 @@
 #   - jumps to the containing dir if given a file
 #   - jumps to a dir if it _is_ a dir
 #   - jumps to zoxide query if none of the above
-#   - checks lolcate for unknown target to zoxide
+#   - checks with fd for unknown target to zoxide
 function smart_cd() {
   if [ $# -eq 0 ] || [ -z "$1" ] ; then
     # no arguments, go home by default
@@ -20,12 +20,12 @@ function smart_cd() {
   else
     # argument is some zoxide moniker or something unknown
     # first try to invoke zoxide;
-    # if zoxide fails, then ask lolcate to try and find the dir.
+    # if zoxide fails, then ask fd to try and find the dir.
     # then use fzf to choose from possible results.
     if ! z "$1" &>/dev/null ; then
-      if type lolcate &>/dev/null; then
+      if type fd &>/dev/null; then
         # argument is not known to zoxide
-        target=$(lolcate --db dirs "$1" | fzf --preview="smart_preview {}")
+        target=$(fd -t d "$1" / | fzf --preview="smart_preview {}")
         if [ -z "$target" ] ; then
           # fzf cancel
           return
@@ -48,7 +48,7 @@ function smart_cd_no_z() {
     # argument is a file; go to containing dir
     cd "$(dirname $1)"
   else
-    locs=$(lolcate --db dirs "$1")
+    locs=$(fd -t d "$1" /)
     count=$(echo $locs | wc -l)
     if [ $count -eq 0 ] ; then
       return

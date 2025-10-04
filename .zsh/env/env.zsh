@@ -73,6 +73,8 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export _ZO_DATA_DIR="$HOME/.data/zoxide"
 export GOPATH="$HOME/.go"
 
+export GH_USER="tzhouhc"
+
 # run if 'navi' exists on path
 if type navi >/dev/null 2>&1; then
   export NAVI_PATH=$HOME/.dotfiles/lib/navi:$HOME/.local/share/navi
@@ -90,28 +92,25 @@ export FZF_DEFAULT_COMMAND='fd --type f --type l --hidden'
 export FZF_CTRL_T_COMMAND=
 export FZF_ALT_C_COMMAND=
 
-# ChatGPT
+# Various env-var based credentials
 if type age &>/dev/null; then
-  if [[ -f "$HOME/.ssh/id_rsa" ]]; then
-    if [[ -f "$HOME/.credentials/openai_key" ]]; then
-      export OPENAI_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openai_key)"
-    fi
-    if [[ -f "$HOME/.credentials/openrouter_key" ]]; then
-      export OPENROUTER_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/openrouter_key)"
-    fi
-    if [[ -f "$HOME/.credentials/deepseek_key" ]]; then
-      export DEEPSEEK_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_rsa $HOME/.credentials/deepseek_key)"
-    fi
-  elif [[ -f "$HOME/.ssh/id_ed25519" ]]; then
-    if [[ -f "$HOME/.credentials/openai_key" ]]; then
-      export OPENAI_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_ed25519 $HOME/.credentials/openai_key)"
-    fi
-    if [[ -f "$HOME/.credentials/openrouter_key" ]]; then
-      export OPENROUTER_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_ed25519 $HOME/.credentials/openrouter_key)"
-    fi
-    if [[ -f "$HOME/.credentials/deepseek_key" ]]; then
-      export DEEPSEEK_API_KEY="$(/usr/bin/env age -d -i $HOME/.ssh/id_ed25519 $HOME/.credentials/deepseek_key)"
-    fi
+  if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
+    ENC_KEY="$HOME/.ssh/id_ed25519"
+  elif [[ -f "$HOME/.ssh/id_rsa" ]]; then
+    ENC_KEY="$HOME/.ssh/id_rsa"
+  fi
+
+  if [[ -f "$HOME/.credentials/openai_key" ]]; then
+    export OPENAI_API_KEY="$(/usr/bin/env age -d -i $ENC_KEY $HOME/.credentials/openai_key)"
+  fi
+  if [[ -f "$HOME/.credentials/openrouter_key" ]]; then
+    export OPENROUTER_API_KEY="$(/usr/bin/env age -d -i $ENC_KEY $HOME/.credentials/openrouter_key)"
+  fi
+  if [[ -f "$HOME/.credentials/deepseek_key" ]]; then
+    export DEEPSEEK_API_KEY="$(/usr/bin/env age -d -i $ENC_KEY $HOME/.credentials/deepseek_key)"
+  fi
+  if [[ -f "$HOME/.credentials/github_key" ]]; then
+    export GH_TOKEN="$(/usr/bin/env age -d -i $ENC_KEY $HOME/.credentials/github_key)"
   fi
 fi
 # pay-respect

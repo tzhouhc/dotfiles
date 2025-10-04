@@ -77,6 +77,14 @@ if ! type brew &>/dev/null; then
   fi
 fi
 
+# Update path to enable pip.sh?
+if uname -a | grep -i darwin > /dev/null; then
+  export BREW_HOME=/opt/homebrew
+else
+  export BREW_HOME=/home/linuxbrew/.linuxbrew
+fi
+export PATH=$BREW_HOME/bin:$PATH
+
 # with cargo installed, tools like bob should all become available for
 # subsequent use.
 if ! type nvim &>/dev/null; then

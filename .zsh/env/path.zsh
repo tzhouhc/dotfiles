@@ -74,12 +74,17 @@ for path_dir in "${path_components[@]}"; do
   fi
 done
 
-export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl@3/lib/
-export LDFLAGS="-L/$BREW_HOME/opt/ruby/lib"
-export CPPFLAGS="-I/$BREW_HOME/opt/ruby/include"
-export CPPFLAGS="-I/$BREW_HOME/opt/openjdk/include"
-export PKG_CONFIG_PATH="/$BREW_HOME/opt/ruby/lib/pkgconfig"
+# Prevent corruption
+export CPPFLAGS=""
+export LDFLAGS=""
+
 export DYLD_LIBRARY_PATH="$BREW_HOME/lib:$DYLD_LIBRARY_PATH"
 
-# export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
-# export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+if [[ -d "/opt/homebrew/opt/llvm" ]]; then
+  export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+fi
+
+# TODO: delete if no reactions after a while
+# export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl@3/lib/
+# export PKG_CONFIG_PATH="/$BREW_HOME/opt/ruby/lib/pkgconfig"

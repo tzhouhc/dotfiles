@@ -14,15 +14,6 @@ if [[ $XDG_CONFIG_HOME == '' ]]; then
   exit 1
 fi
 
-# check resumable context
-if [[ $TMUX == '' ]]; then
-  echo "Not running in tmux. This is not ideal for running the installation."
-  read -r -p "Proceed anyway? [y/n]: " response
-  if ! [[ $response == "y" || $response == "Y" ]]; then
-    exit 1
-  fi
-fi
-
 # fzf
 if ! [ -d "$HOME/.fzf" ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
@@ -50,11 +41,6 @@ else
   echo "TPM already installed"
 fi
 
-# setting up variation software
-if type fdfind 2>/dev/null; then
-  ln -sf $(which fdfind) "$HOME/.local/bin/fd"
-fi
-
 # install OS-dependent specific items
 if uname -a | grep -i linux > /dev/null; then
   if type apt-get >/dev/null 2>&1; then
@@ -64,8 +50,7 @@ if uname -a | grep -i linux > /dev/null; then
   elif type pacman >/dev/null 2>&1; then
     sudo $cwd/install/other/pacman.sh
   else
-    echo "Unknown OS, remainder of software installation incomplete."
-    exit 1
+    echo "Unknown OS, some software installation incomplete."
   fi
 fi
 
@@ -114,15 +99,19 @@ if [[ $response == "y" || $response == "Y" ]]; then
 fi
 
 # install rust tools
-read -r -p "Install rust tools? [y/n]: " response
-if [[ $response == "y" || $response == "Y" ]]; then
-  $cwd/install/cargo.sh
+if ! type cargo &>/dev/null; then
+  read -r -p "Install rust tools? [y/n]: " response
+  if [[ $response == "y" || $response == "Y" ]]; then
+    $cwd/install/cargo.sh
+  fi
 fi
 
 # install zellij tools
-read -r -p "Install zellij tools? (does not require zellij installed) [y/n]: " response
-if [[ $response == "y" || $response == "Y" ]]; then
-  $cwd/install/zellij.sh
+if ! type zjframes.wasm &>/dev/null; then
+  read -r -p "Install zellij tools? (does not require zellij installed) [y/n]: " response
+  if [[ $response == "y" || $response == "Y" ]]; then
+    $cwd/install/zellij.sh
+  fi
 fi
 
 # setup LLM service credentials

@@ -1,163 +1,104 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "palette": {
-    "pink": "#F5C2E7",
-    "lavender": "#B4BEFE",
     "blue": "#89B4FA",
-    "lime": "#d2ff5e",
-    "navy": "#193549",
-    "yellow": "#fed766",
-    "red": "#BF616A",
-    "orange": "#ff9248",
-    "reddish-orange": "#f26d50",
-    "teal": "#89d1dc",
-    "yellowish-orange": "#f17c37",
+    "darkerGray": "#434C5E",
+    "darkestGray": "#3B4252",
     "g-blue": "#4285F4",
+    "g-green": "#0F9D58",
     "g-red": "#DB4437",
     "g-yellow": "#F4B400",
-    "g-green": "#0F9D58",
-    "darkerGray": "#434C5E",
-    "darkestGray": "#3B4252"
+    "lavender": "#B4BEFE",
+    "lime": "#d2ff5e",
+    "navy": "#193549",
+    "orange": "#ff9248",
+    "pink": "#F5C2E7",
+    "red": "#BF616A",
+    "reddish-orange": "#f26d50",
+    "teal": "#89d1dc",
+    "yellow": "#fed766",
+    "yellowish-orange": "#f17c37"
+  },
+  "secondary_prompt": {
+    "template": "\u2022 ",
+    "foreground": "darkGray",
+    "background": "transparent"
   },
   "blocks": [
     {
+      "type": "prompt",
       "alignment": "left",
       "segments": [
         {
+          "properties": {
+            "cache_duration": "none",
+            "folder_icon": "\uf141",
+            "folder_separator_icon": " \ueab6 ",
+            "home_icon": "\uf015",
+            "mapped_locations": {
+              "~/.config": "\ue615",
+              "~/.config/nvim": "\ue62b",
+              "~/.dotfiles": "\ue615",
+              "~/.dotfiles/vim": "\ue62b",
+              "~/Documents": "\udb80\ude19",
+              "~/Documents/GitHub": "\uf09b",
+              "~/Downloads": "\uf019"
+            },
+            "style": "agnoster_short"
+          },
+          "template": " {{ .Path }} ",
           "foreground": "p:blue",
           "background": "p:darkerGray",
+          "type": "path",
+          "style": "plain"
+        },
+        {
           "properties": {
-            "folder_icon": "",
-            "folder_separator_icon": "  ",
-            "home_icon": "",
-            "style": "agnoster_short",
-            "mapped_locations": {
-              "~/Documents/GitHub": "",
-              "~/Downloads": "",
-              "~/Documents": "󰈙",
-              "~/.dotfiles": "",
-              "~/.config": "",
-              "~/.config/nvim": "",
-              "~/.dotfiles/vim": ""
-            }
+            "cache_duration": "none"
           },
-          "style": "plain",
-          "template": " {{ .Path }} ",
-          "type": "path"
-        },
-        {
-          "type": "python",
-          "background": "p:yellow",
+          "template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Full }}{{ .Full }} {{ end }}{{ end }}",
           "foreground": "p:navy",
-          "template": "  {{ if .Error }}{{ .Error }}{{ else }}{{ if .Full }}{{ .Full }} {{ end }}{{ end }}"
+          "background": "p:yellow",
+          "type": "python"
         },
         {
+          "properties": {
+            "branch_icon": "\uf418 ",
+            "cache_duration": "none",
+            "fetch_stash_count": true,
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
+          "foreground": "p:navy",
           "background": "p:lime",
+          "type": "git",
           "background_templates": [
             "{{ if or (.Working.Changed) (.Staging.Changed) }}p:orange{{ end }}",
             "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:reddish-orange{{ end }}",
             "{{ if gt .Ahead 0 }}p:teal{{ end }}",
             "{{ if gt .Behind 0 }}p:yellowish-orange{{ end }}"
-          ],
-          "foreground": "p:navy",
-          "properties": {
-            "branch_icon": " ",
-            "fetch_stash_count": true,
-            "fetch_status": true,
-            "fetch_upstream_icon": true
-          },
-          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} ",
-          "type": "git"
-        }
-      ],
-      "type": "prompt"
-    },
-    {
-      "alignment": "right",
-      "segments": [
-        {
-          "foreground": "p:pink",
-          "type": "session",
-          "template": "{{ if .SSHSession }} {{ .HostName}}{{ end }}"
-        },
-        {
-          "type": "battery",
-          "style": "plain",
-          "foreground_templates": [
-            "{{if eq \"Charging\" .State.String}}p:lime{{end}}",
-            "{{if gt .Percentage 80}}p:g-green{{end}}",
-            "{{if gt .Percentage 50}}p:g-blue{{end}}",
-            "{{if gt .Percentage 30}}p:g-yellow{{end}}",
-            "{{if gt .Percentage 0}}p:g-red{{end}}"
-          ],
-          "templates_logic": "first_match",
-          "templates": [
-            "{{ if eq \"Charging\" .State.String }}[󱟦] {{end}}",
-            "{{ if gt .Percentage 95 }}[󰁹] {{end}}",
-            "{{ if gt .Percentage 90 }}[󰂂] {{end}}",
-            "{{ if gt .Percentage 80 }}[󰂁] {{end}}",
-            "{{ if gt .Percentage 70 }}[󰂀] {{end}}",
-            "{{ if gt .Percentage 60 }}[󰁿] {{end}}",
-            "{{ if gt .Percentage 50 }}[󰁾] {{end}}",
-            "{{ if gt .Percentage 40 }}[󰁽] {{end}}",
-            "{{ if gt .Percentage 30 }}[󰁼] {{end}}",
-            "{{ if gt .Percentage 20 }}[󰁻] {{end}}",
-            "{{ if gt .Percentage 10 }}[󰁺] {{end}}"
           ]
         }
-      ],
-      "type": "prompt"
+      ]
     },
     {
+      "type": "prompt",
       "alignment": "left",
       "segments": [
         {
-          "style": "plain",
+          "properties": {
+            "cache_duration": "none"
+          },
           "alias": "Closer",
-          "foreground": "green",
           "template": "\n➜",
-          "type": "text"
+          "foreground": "green",
+          "type": "text",
+          "style": "plain"
         }
-      ],
-      "type": "prompt"
-    },
-    {
-      "alignment": "right",
-      "segments": [
-        {
-          "background": "p:yellow",
-          "foreground": "p:navy",
-          "type": "executiontime",
-          "template": "  {{ .FormattedMs }} ",
-          "properties": {
-            "threshold": 500,
-            "style": "austin"
-          }
-        },
-        {
-          "type": "time",
-          "style": "plain",
-          "foreground": "p:yellow",
-          "background": "p:darkerGray",
-          "template": " {{ .CurrentDate | date .Format }} ",
-          "properties": {
-            "time_format": "15:04:05"
-          }
-        }
-      ],
-      "type": "rprompt"
+      ]
     }
   ],
-  "secondary_prompt": {
-    "background": "transparent",
-    "foreground": "darkGray",
-    "template": "• "
-  },
-  "transient_prompt": {
-    "background": "transparent",
-    "foreground": "darkGray",
-    "template": "{{ .Segments.Time.CurrentDate | date .Segments.Time.Format }} {{ if gt .Segments.Executiontime.Ms 500 }}+$(tput setaf 3){{ .Segments.Executiontime.FormattedMs }} {{end}}{{ if gt .Code 0 }}$(tput setaf 1){{ .Code }}  {{ else }}$(tput setaf 2) {{ end }}"
-  },
-  "final_space": true,
-  "version": 2
+  "version": 3,
+  "final_space": true
 }

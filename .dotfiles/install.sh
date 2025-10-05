@@ -2,7 +2,7 @@
 set -e
 
 # setup installation environment to be consistent
-cwd="$(dirname "$0")"
+cwd="$(dirname $(realpath "$0"))"
 cd $cwd
 
 # make sure paths are set even if the corresponding binaries aren't installed
@@ -17,7 +17,7 @@ fi
 # fzf
 if ! [ -d "$HOME/.fzf" ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-  ~/.fzf/install
+  yes 'n' | ~/.fzf/install  # download only
   echo "Installed FZF"
 else
   echo "FZF already present"

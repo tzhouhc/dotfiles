@@ -350,7 +350,11 @@ function vm() {
   fi
   if [[ -n "$vmxs" ]]; then
     vmxs="$(echo "$vmxs" | gum filter)"
-    /Applications/VMware\ Fusion.app/Contents/Library/vmrun "${action}" "${vmxs}" "${2}"
+    if [[ -n "${2}" ]]; then
+      /Applications/VMware\ Fusion.app/Contents/Library/vmrun "${action}" "${vmxs}" "${2}"
+    else
+      /Applications/VMware\ Fusion.app/Contents/Library/vmrun "${action}" "${vmxs}"
+    fi
     # optionally accept "nogui"
   else
     echo "No VM found."

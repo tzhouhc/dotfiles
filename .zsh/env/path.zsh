@@ -20,6 +20,8 @@ path_components=(
   "$BREW_HOME/opt/openjdk/bin"
   # Ruby
   "$BREW_HOME/opt/ruby/bin"
+  # LLVM
+  "$BREW_HOME/opt/llvm/bin"
   # Latex
   "/Library/TeX/texbin"
 
@@ -83,6 +85,8 @@ export DYLD_LIBRARY_PATH="$BREW_HOME/lib:$DYLD_LIBRARY_PATH"
 if [[ -d "/opt/homebrew/opt/llvm" ]]; then
   export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
   export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+  # LDFLAGS="-L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
+  # LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
 fi
 
 # TODO: delete if no reactions after a while

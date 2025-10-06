@@ -127,3 +127,8 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# Macos Malloc and Libasan issue
+if uname -a | grep -i darwin &>/dev/null; then
+  export MallocNanoZone=0
+fi

@@ -171,6 +171,14 @@ keybinds clear-defaults=true{
                 name "CMUS"
             }
         }
+
+        bind "Alt c" {
+            Run "chat_wrapper" {
+                close_on_exit true
+                floating true
+                name "Chat"
+            }
+        }
     }
     // Mode switching
     shared_except "normal" "locked" {

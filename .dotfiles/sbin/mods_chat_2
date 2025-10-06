@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+model=$(echo "4o\n4o-mini\nds-chat\nds-r1" \
+  | gum choose --height 8 --header "Pick model to chat with:" --no-show-help)
+if [[ -z $model ]]
+then
+        gum format "  :pensive:  cancelled, no model picked." -t emoji
+        return 1
+fi
+mods --model "$model" --prompt-args $@ || return $?
+while mods --model "$model" --prompt-args $@ --continue-last
+do
+        :
+done
+return $?

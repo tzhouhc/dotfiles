@@ -1,0 +1,3 @@
+#!/bin/bash
+
+screen -q -r -D chat || screen -S chat $(whereis mods_chat_2 | cut -d " " -f2)

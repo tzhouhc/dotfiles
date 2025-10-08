@@ -4,3 +4,4 @@ pynvim
 uv
 virtualenv
 pre_commit
+git-fame

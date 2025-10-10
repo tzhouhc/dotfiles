@@ -1,3 +1,29 @@
 #!/bin/bash
 
-screen -q -r -D chat || screen -S chat $(whereis mods_chat_2 | cut -d " " -f2)
+set +e
+
+SESSION_NAME="chat"
+WINDOW_NAME="chat"
+PROGRAM="crush"  # your program here
+CONFIG="$XDG_CONFIG_HOME/tmux/tmux.mini.conf"
+
+# Check if tmux session exists
+if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    # Create detached tmux session
+    tmux -f "$CONFIG" new-session -d -s "$SESSION_NAME" -n "$WINDOW_NAME" "$PROGRAM"
+fi
+
+# Check if window exists in session
+if ! tmux list-windows -t "$SESSION_NAME" | grep -q "^[0-9]*: $WINDOW_NAME"; then
+    # Create window if it doesn't exist
+    tmux new-window -t "$SESSION_NAME" -n "$WINDOW_NAME" "$PROGRAM"
+fi
+
+# Attach to the tmux session (this will open in the current zellij pane) or
+# close if already open.
+if tmux list-clients -t "$SESSION_NAME" | grep "/dev" ; then
+  tmux detach-client -s "$SESSION_NAME"
+else
+  tmux attach-session -t "$SESSION_NAME:$WINDOW_NAME"
+fi
+

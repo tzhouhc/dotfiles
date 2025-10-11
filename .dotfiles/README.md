@@ -1,5 +1,13 @@
 # Dotfiles
 
+Bootstrap:
+
+Ubuntu:
+
+```sh
+sudo apt install -y zsh git curl
+```
+
 Normal initialization:
 
 ```sh
@@ -32,7 +40,7 @@ Possible check
 
 ## Other hosts
 
-If running on AWS EC2, first set password for the default user:
+If running on AWS/GCP, first set password for the default user:
 
 ```sh
 sudo su -
@@ -42,7 +50,6 @@ passwd ubuntu
 Then change the default shell:
 
 ```sh
-sudo apt-get install -y zsh
 chsh
 ```
 

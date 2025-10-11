@@ -2,12 +2,13 @@
 set -e
 
 # setup installation environment to be consistent
-cwd="$(dirname $(realpath "$0"))"
-cd $cwd
+this_path="$(realpath "$0")"
+cwd=$(dirname "${this_path}")
+cd "$cwd"
 
 # make sure paths are set even if the corresponding binaries aren't installed
 # yet; should be compatible with bash
-source $HOME/.zsh/env/path.zsh
+source "$HOME/.zsh/env/path.zsh"
 
 if [[ $XDG_CONFIG_HOME == '' ]]; then
   echo "No XDG_CONFIG_HOME set. Please verify you are running zsh."
@@ -16,7 +17,7 @@ fi
 
 # fzf
 if ! [ -d "$HOME/.fzf" ]; then
-  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+  git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
   yes 'n' | ~/.fzf/install  # download only
   echo "Installed FZF"
 else
@@ -35,7 +36,7 @@ mkdir -p "$HOME/.data/zoxide"
 
 # tpm
 if ! [ -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ]; then
-  git clone https://github.com/tmux-plugins/tpm $XDG_CONFIG_HOME/tmux/plugins/tpm
+  git clone https://github.com/tmux-plugins/tpm "$XDG_CONFIG_HOME/tmux/plugins/tpm"
   echo "Installing TPM"
 else
   echo "TPM already installed"
@@ -44,11 +45,11 @@ fi
 # install OS-dependent specific items
 if uname -a | grep -i linux > /dev/null; then
   if type apt-get >/dev/null 2>&1; then
-    sudo $cwd/install/apt.sh
+    sudo "$cwd"/install/apt.sh
   elif type yum >/dev/null 2>&1; then
-    sudo $cwd/install/other/yum.sh
+    sudo "$cwd"/install/other/yum.sh
   elif type pacman >/dev/null 2>&1; then
-    sudo $cwd/install/other/pacman.sh
+    sudo "$cwd"/install/other/pacman.sh
   else
     echo "Unknown OS, some software installation incomplete."
   fi
@@ -58,7 +59,7 @@ if ! type brew &>/dev/null; then
   # install homebrew using just gcc and build-essentials
   read -r -p "Install homebrew and related? [y/n]: " response
   if [[ $response == "y" || $response == "Y" ]]; then
-    $cwd/install/brew.sh
+    "$cwd"/install/brew.sh
   fi
 fi
 
@@ -75,11 +76,12 @@ export PATH=$BREW_HOME/bin:$PATH
 if ! type nvim &>/dev/null; then
   read -r -p "Install neovim? [y/n]: " response
   if [[ $response == "y" || $response == "Y" ]]; then
-    $cwd/install/core/nvim.sh
+    "$cwd"/install/core/nvim.sh
   fi
 
-  cd $HOME/.config/nvim
+  pushd "$HOME/.config/nvim"
   git checkout main
+  popd
 fi
 
 if ! type uv &>/dev/null; then
@@ -95,14 +97,14 @@ hash -r
 # assumes python is already present and up-to-date
 read -r -p "Install python packages? [y/n]: " response
 if [[ $response == "y" || $response == "Y" ]]; then
-  $cwd/install/pip.sh
+  "$cwd"/install/pip.sh
 fi
 
 # install rust tools
 if ! type cargo &>/dev/null; then
   read -r -p "Install rust tools? [y/n]: " response
   if [[ $response == "y" || $response == "Y" ]]; then
-    $cwd/install/cargo.sh
+    "$cwd"/install/cargo.sh
   fi
 fi
 
@@ -110,20 +112,20 @@ fi
 if ! type zjframes.wasm &>/dev/null; then
   read -r -p "Install zellij tools? (does not require zellij installed) [y/n]: " response
   if [[ $response == "y" || $response == "Y" ]]; then
-    $cwd/install/zellij.sh
+    "$cwd"/install/zellij.sh
   fi
 fi
 
 # setup LLM service credentials
 read -r -p "Setup LLM credentials? [y/n]: " response
 if [[ $response == "y" || $response == "Y" ]]; then
-  $cwd/install/creds.sh
+  "$cwd"/install/creds.sh
 fi
 
 # setup squirrel config
 if uname -a | grep -i darwin &>/dev/null; then
   read -r -p "Setup Rime input? [y/n]: " response
   if [[ $response == "y" || $response == "Y" ]]; then
-    $cwd/lib/rime/setup
+    "$cwd"/lib/rime/setup
   fi
 fi

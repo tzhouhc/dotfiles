@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# ---
+# A script to interactively start or stop GCP compute instances in us-east zones.
+#
+# Dependencies:
+# - gcloud CLI (authenticated)
+# - gum CLI (https://github.com/charmbracelet/gum)
+# ---
+
+# Style definitions for gum
+GUM_CHOOSE_HEADER_STYLE="--header.foreground='15' --header.background='24' --header.padding='1 2' --header.bold"
+GUM_FILTER_HEADER_STYLE="--header.foreground='15' --header.background='5' --header.padding='1 2' --header.bold"
+GUM_SPIN_STYLE="--spinner.foreground='212' --title.foreground='212'"
+
+TMP_FILE="/tmp/gcp_instances.txt"
+
+# 1. Fetch all instances from us-east zones
+gum spin ${GUM_SPIN_STYLE} --title "Fetching instances from all us-east zones..." -- \
+gcloud compute instances list --filter="zone:(us-east1-b, us-east1-c, us-east1-d, us-east4-a, us-east4-b, us-east4-c, us-east5-a, us-east5-b, us-east5-c)" --format="table(name,zone,status)" > $TMP_FILE
+
+# Check if any instances were found
+# The header line will always be there, so check for more than 1 line
+if [[ $(wc -l < $TMP_FILE) -le 1 ]]; then
+    echo "No instances found in any us-east zones. Exiting."
+    exit 0
+fi
+
+# 2. Let the user select instances using gum filter
+# We use `tail -n +2` to skip the header line from the gcloud output
+SELECTED_INSTANCES=$(tail -n +2 $TMP_FILE | gum filter --no-limit --placeholder "Pick instances to manage (space to select, enter to confirm)..." \
+  "${GUM_FILTER_HEADER_STYLE}" --header="Select GCP Instances")
+
+# Exit if no instances were selected
+if [ -z "$SELECTED_INSTANCES" ]; then
+    echo "No instances selected. Exiting."
+    exit 1
+fi
+
+# 3. Ask the user for the desired action (start or stop)
+ACTION=$(gum choose "start" "stop" "${GUM_CHOOSE_HEADER_STYLE}" --header "Choose an action to perform on the selected instances:")
+
+# Exit if no action was chosen
+if [ -z "$ACTION" ]; then
+    echo "No action selected. Exiting."
+    exit 1
+fi
+
+# 4. Echo the command for each selected instance (Dry Run)
+
+# Use a while loop to process each line of the multi-line selection
+while IFS= read -r line; do
+    # awk is used to extract the first and second columns (NAME and ZONE)
+    INSTANCE_NAME=$(echo "$line" | awk '{print $1}')
+    ZONE=$(echo "$line" | awk '{print $2}')
+
+    if [ -n "$INSTANCE_NAME" ] && [ -n "$ZONE" ]; then
+      cmd="gcloud compute instances \"$ACTION\" \"$INSTANCE_NAME\" --zone=\"$ZONE\""
+      gum confirm "Approve? ${cmd}" && gcloud compute instances "$ACTION" "$INSTANCE_NAME" --zone="$ZONE"
+    fi
+done <<< "$SELECTED_INSTANCES"
+
+rm $TMP_FILE

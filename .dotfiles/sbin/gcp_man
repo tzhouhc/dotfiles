@@ -28,11 +28,11 @@ fi
 
 # 2. Let the user select instances using gum filter
 # We use `tail -n +2` to skip the header line from the gcloud output
-SELECTED_INSTANCES=$(tail -n +2 $TMP_FILE | gum filter --no-limit --placeholder "Pick instances to manage (space to select, enter to confirm)..." \
+SELECTED_INSTANCE=$(tail -n +2 $TMP_FILE | gum filter --placeholder "Pick instances to manage (space to select, enter to confirm)..." \
   "${GUM_FILTER_HEADER_STYLE}" --header="Select GCP Instances")
 
 # Exit if no instances were selected
-if [ -z "$SELECTED_INSTANCES" ]; then
+if [ -z "$SELECTED_INSTANCE" ]; then
     echo "No instances selected. Exiting."
     exit 1
 fi
@@ -49,15 +49,13 @@ fi
 # 4. Echo the command for each selected instance (Dry Run)
 
 # Use a while loop to process each line of the multi-line selection
-while IFS= read -r line; do
     # awk is used to extract the first and second columns (NAME and ZONE)
-    INSTANCE_NAME=$(echo "$line" | awk '{print $1}')
-    ZONE=$(echo "$line" | awk '{print $2}')
+INSTANCE_NAME=$(echo "$SELECTED_INSTANCE" | awk '{print $1}')
+ZONE=$(echo "$SELECTED_INSTANCE" | awk '{print $2}')
 
-    if [ -n "$INSTANCE_NAME" ] && [ -n "$ZONE" ]; then
-      cmd="gcloud compute instances \"$ACTION\" \"$INSTANCE_NAME\" --zone=\"$ZONE\""
-      gum confirm "Approve? ${cmd}" && gcloud compute instances "$ACTION" "$INSTANCE_NAME" --zone="$ZONE"
-    fi
-done <<< "$SELECTED_INSTANCES"
+if [ -n "$INSTANCE_NAME" ] && [ -n "$ZONE" ]; then
+  to_confirm="gcloud compute instances \"$ACTION\" \"$INSTANCE_NAME\" --zone=\"$ZONE\""
+  gum confirm "Approve? ${to_confirm}" && gcloud compute instances "$ACTION" "$INSTANCE_NAME" --zone="$ZONE" --async
+fi
 
 rm $TMP_FILE

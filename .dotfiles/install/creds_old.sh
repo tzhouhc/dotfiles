@@ -4,9 +4,9 @@ source $HOME/.zsh/base.zsh
 
 mkdir -p ~/.credentials
 
-openai_clear=$(fetch-secret bece5e4b282e2832880f2a87bf4329f1)
-deepseek_clear=$(877f672099afd3e354d63cadea5c14b1)
-github_clear=$(fetch-secret 9b9e18cebd82a343bb12d4911bc1653c)
+openai_clear=$(gum input --prompt="Paste the OpenAI API key here: ")
+deepseek_clear=$(gum input --prompt="Paste the DeepSeek API key here: ")
+github_clear=$(gum input --prompt="Paste the Github token here: ")
 
 if [[ ! -f "$HOME/.ssh/id_ed25519" ]]; then
   ssh-keygen
@@ -23,3 +23,4 @@ fi
 if [[ -n "${github_clear}" ]]; then
   echo $github_clear | age -R $HOME/.ssh/id_ed25519.pub -o $HOME/.credentials/github_key
 fi
+

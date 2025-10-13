@@ -4,6 +4,8 @@
 # outside shell contexts.
 
 export MANPATH="/usr/local/man:$MANPATH"
+ZSH_HOME="$HOME/.zsh"
+ZSH_ENV_DIR="$ZSH_HOME/env/"
 
 if type brew &>/dev/null; then
   # Homebrew
@@ -132,3 +134,5 @@ esac
 if uname -a | grep -i darwin &>/dev/null; then
   export MallocNanoZone=0
 fi
+
+source "$ZSH_ENV_DIR/gum.zsh"

@@ -14,6 +14,11 @@ fi
 #
 # Script will automatically remove nonexistent dirs.
 path_components=(
+  # HOME paths - custom tools and scripts
+  "$HOME/.dotfiles/bin"
+  "$HOME/.dotfiles/sbin"
+  "$HOME/.local/bin"
+
   # GNU tools (highest priority)
   "$BREW_HOME/opt/coreutils/libexec/gnubin"
   # Java
@@ -32,10 +37,6 @@ path_components=(
   "$HOME/.local/share/bob/nvim-bin"
   "$HOME/.local/nvim/bin"
 
-  # HOME paths - custom tools and scripts
-  "$HOME/.dotfiles/bin"
-  "$HOME/.dotfiles/sbin"
-  "$HOME/.local/bin"
   "$HOME/.go/bin"
   "$HOME/.cargo/bin"
 

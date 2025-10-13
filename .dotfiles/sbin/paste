@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SEND_FILE="$HOME/.send.temp"
+
+if [[ -f "$SEND_FILE" ]]; then
+  CHOSEN=$(cat "$SEND_FILE" | gum filter --no-limit)
+  if [[ -n "$CHOSEN" ]]; then
+    echo "$CHOSEN" | xargs -I _ cp _ ./
+  fi
+fi
+

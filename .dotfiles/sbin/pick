@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  gum filter --no-limit | xargs -I _ realpath "_" >> ~/.send.temp
+else
+  echo "$@" | xargs -I _ realpath "_" >> ~/.send.temp
+fi

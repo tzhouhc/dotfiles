@@ -66,28 +66,6 @@ function zsh_reload() {
   exec zsh
 }
 
-# record absolute paths of files/folders.
-# will not overwrite existing sending targets.
-function push() {
-  echo $@ | xargs realpath >> ~/.send.temp
-}
-
-# Copy file from some specified location to cwd
-function copy() {
-  if [[ -z "$@" ]]; then
-    return
-  fi
-  cp $@ ./
-}
-
-# Move file from some specified location to cwd
-function grab() {
-  if [[ -z "$@" ]]; then
-    return
-  fi
-  mv $@ ./
-}
-
 # show what's in the file pasteboard
 function peek() {
   cat ~/.send.temp
@@ -98,21 +76,6 @@ function pop() {
   cat ~/.send.temp
   rm ~/.send.temp
   touch ~/.send.temp
-}
-
-# copy the files over to current directory
-function paste_files() {
-  cp -r $(pop) ./
-}
-
-# same as above, but keeps temp as is
-function paste_files_no_flush() {
-  cp -r $(peek) ./
-}
-
-# move the files over to current directory
-function move_files() {
-  mv $(pop) ./
 }
 
 # display a colored band to test for true color support in the terminal

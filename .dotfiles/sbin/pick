@@ -1,7 +1,20 @@
 #!/bin/bash
 
 if [ $# -eq 0 ]; then
-  gum filter --no-limit | xargs -I _ realpath "_" >> ~/.send.temp
+  fd -t f . | gum filter --no-limit | xargs -I _ realpath "_" >> ~/.send.temp
 else
-  echo "$@" | xargs -I _ realpath "_" >> ~/.send.temp
+  if [ $# -eq 1 ]; then
+    if [ -f "$1" ]; then
+      realpath "$1" >> ~/.send.temp
+    else
+      fd -t f . | gum filter --no-limit --value "$1" | xargs -I _ realpath "_" >> ~/.send.temp
+    fi
+  else
+    for arg in "$@"; do
+      if [ -f "$arg" ]; then
+        realpath "$arg" >> ~/.send.temp
+      fi
+    done
+  fi
 fi
+

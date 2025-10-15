@@ -172,6 +172,7 @@ function everything_list() {
 }
 
 # Function that collect all above method names and help messages for fzf
+# WARN: NOT PRACTICAL
 function all_fzf_list() {
   funcs=("${(f)$(cat ~/.zsh/lib/fzf.zsh | grep 'function' -B 1 | head -n -7 | grep -v '^--' | paste -d'#' - -)}")
   res=("Method                           Details")

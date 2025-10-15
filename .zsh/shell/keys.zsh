@@ -218,14 +218,16 @@ bindkey '^[v' get_pasteboard
 # Ctrl-k to list ALL available fzf handlers.
 # One function that provides all available fzf lists
 function superfzf() {
-  choice=$(all_fzf_list)
+  choice=$()
   LBUFFER="$(echo $LBUFFER | sed 's/ *$//') $choice"
   LBUFFER=$(echo $LBUFFER | sed 's/^ *//')
   local ret=$?
   zle reset-prompt
   return $ret
 }
-zle     -N   superfzf
-bindkey '^k' superfzf
+# DISABLED
+
+zle     -N   _navi_widget
+bindkey '^k' _navi_widget
 
 bindkey -s '^y' "yazi^M"

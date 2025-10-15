@@ -65,6 +65,45 @@ _fzf_complete_br() {
   )
 }
 
+# Helper function that assigns function as an autocomplete provider for the
+# given command.
+assign_completer() {
+    local cmd="$1"
+    local func="$2"
+
+    if [[ -z "$cmd" || -z "$func" ]]; then
+        echo "Usage: assign_completer <command> <function_name>" >&2
+        return 1
+    fi
+
+    # Check if the function exists
+    if ! typeset -f "$func" > /dev/null; then
+        echo "Error: Function '$func' does not exist" >&2
+        return 1
+    fi
+
+    # Create a wrapper completion function
+    local wrapper_name="_complete_${cmd}_wrapper"
+
+    eval "
+    $wrapper_name() {
+        local -a completions
+        local line
+
+        # Call the user's function and capture output
+        while IFS= read -r line; do
+            completions+=(\"\$line\")
+        done < <($func \"\$words[@]\")
+
+        # Provide completions to zsh
+        _describe 'completions' completions
+    }
+    "
+
+    # Register the completion
+    compdef "$wrapper_name" "$cmd"
+}
+
 # NOTE: Completion files in the completion dir should start with an underscore.
 # Once the files are in, run `rm ~/.zcompdump*` to remove cached completions.
 
@@ -82,3 +121,23 @@ else
   compinit
   compdump ~/.zsh_completions_dump
 fi
+
+# Custom completers
+ls_completer() {
+  fd -t f .
+}
+
+ssh_host_completer() {
+  cat ~/.ssh/config | grep '^Host' | cut -d' ' -f2
+}
+
+send_completer() {
+  cat ~/.send.temp 2>/dev/null
+}
+
+# Simple custom completions
+assign_completer pick ls_completer
+assign_completer ssh ssh_host_completer
+assign_completer scp ssh_host_completer
+assign_completer drop send_completer
+assign_completer paste send_completer

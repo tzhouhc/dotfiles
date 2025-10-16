@@ -22,19 +22,19 @@ function local_recent_dir_list() {
 }
 
 function global_dir_list() {
-  res=$(fd -t d . / | fzf -m --preview "smart_preview {}")
+  res=$(fd -t d . / | fzfp -m)
   print "$res"
 }
 
 # This takes up wayyy too much time for a quick searching tool
 function global_file_list() {
-  res=$(fd -t f . / | fzf -m --preview "smart_preview {}")
+  res=$(fd -t f . / | fzfp -m)
   print "$res"
 }
 
 # Recently edited files based on neovim
 function vim_mru_list() {
-  res=$(nvim --headless -c "lua for _,file in ipairs(vim.v.oldfiles) do print(file) end" -c "q" 2>&1 | grep -v "^$" | sed 's/.$//' | sort | uniq | fzf --preview="smart_preview {}" -m)
+  res=$(nvim --headless -c "lua for _,file in ipairs(vim.v.oldfiles) do print(file) end" -c "q" 2>&1 | grep -v "^$" | sed 's/.$//' | sort | uniq | fzfp -m)
   print $res
 }
 
@@ -64,16 +64,16 @@ function p4_package_list() {
 # Files visible in the current directory
 function local_file_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . --type f --type l $1 | sort | fzf -m --preview 'smart_preview {}')"
+    print "$(fd . --type f --type l $1 | sort | fzfp -m)"
   else
-    print "$(fd . --type f --type l | sort | fzf -m --preview 'smart_preview {}')"
+    print "$(fd . --type f --type l | sort | fzfp -m)"
   fi
 }
 
 # All files in dotfiles.git repo
 function dotfiles_list() {
   print "$(git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME ls-files $HOME --full-name \
-    | fzf -m --preview 'smart_preview {}' | sed s:^:$HOME/:)"
+    | fzfp -m | sed s:^:$HOME/:)"
 }
 
 function homebrew_formula_list() {
@@ -108,9 +108,9 @@ function local_lines_list_with_num() {
 # Directories visible in the current directory
 function local_dir_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . -L --type d $1 | fzf -m --preview 'smart_preview {}')"
+    print "$(fd . -L --type d $1 | fzfp -m)"
   else
-    print "$(fd . -L --type d | fzf -m --preview 'smart_preview {}')"
+    print "$(fd . -L --type d | fzfp -m)"
   fi
 }
 

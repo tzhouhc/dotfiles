@@ -25,7 +25,7 @@ function smart_cd() {
     if ! z "$1" &>/dev/null ; then
       if type fd &>/dev/null; then
         # argument is not known to zoxide
-        target=$(fd -t d "$1" / | fzf --preview="smart_preview {}")
+        target=$(fd -t d "$1" / | fzfp)
         if [ -z "$target" ] ; then
           # fzf cancel
           return
@@ -55,7 +55,7 @@ function smart_cd_no_z() {
     elif [ $count -eq 1 ] ; then
       cd $locs
     else
-      target=$(echo $locs | fzf --preview="smart_preview {}")
+      target=$(echo $locs | fzfp)
       cd "$target"
     fi
   fi

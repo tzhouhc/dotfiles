@@ -3,7 +3,7 @@
 SEND_FILE="$HOME/.send.temp"
 
 if [[ -f "$SEND_FILE" ]]; then
-  CHOSEN=$(cat "$SEND_FILE" | fzf -m --preview "smart_preview {}")
+  CHOSEN=$(cat "$SEND_FILE" | fzfp -m)
   if [[ -n "$CHOSEN" ]]; then
     echo "$CHOSEN" | xargs -I _ cp _ ./
   fi

@@ -25,7 +25,7 @@ function e() {
     supervim "$1"
     return
   fi
-  if res=$(cat "$hist_file" | fzf --preview='smart_preview {}'); then
+  if res=$(cat "$hist_file" | fzfp); then
     if ! [[ -f "$res" ]]; then
       echo "File '$res' not found."
       grep -v "$res" "$hist_file" | sponge "$hist_file"

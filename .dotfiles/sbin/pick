@@ -1,13 +1,13 @@
 #!/bin/bash
 
 if [ $# -eq 0 ]; then
-  fd -t f . | fzf -m --preview "smart_preview {}" | xargs -I _ realpath "_" >> ~/.send.temp
+  fd -t f . | fzfp -m | xargs -I _ realpath "_" >> ~/.send.temp
 else
   if [ $# -eq 1 ]; then
     if [ -f "$1" ]; then
       realpath "$1" >> ~/.send.temp
     else
-      fd -t f . | fzf -m --preview "smart_preview {}" --query "$1" | xargs -I _ realpath "_" >> ~/.send.temp
+      fd -t f . | fzfp -m --query "$1" | xargs -I _ realpath "_" >> ~/.send.temp
     fi
   else
     for arg in "$@"; do

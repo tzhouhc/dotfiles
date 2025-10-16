@@ -6,7 +6,7 @@ TMP_SWAP="$SEND_FILE.bk"
 cat "$SEND_FILE" | sort | uniq > "$TMP_SWAP"
 
 if [[ -f "$TMP_SWAP" ]]; then
-  CHOSEN=$(cat "$TMP_SWAP" | fzf -m --preview "smart_preview {}")
+  CHOSEN=$(cat "$TMP_SWAP" | fzfp -m)
   if [[ -n "$CHOSEN" ]]; then
     grep -vxF "$CHOSEN" "$TMP_SWAP" > "$SEND_FILE"
     echo "$CHOSEN" | xargs -I _ mv _ ./

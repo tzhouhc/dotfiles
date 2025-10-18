@@ -17,18 +17,24 @@ if [[ -f "$HOME/.credentials/openai_key" ]]; then
   if gum confirm "Overwrite existing Openai key?"; then
     openai_clear=$(fetch-secret bece5e4b282e2832880f2a87bf4329f1)
   fi
+else
+  openai_clear=$(fetch-secret bece5e4b282e2832880f2a87bf4329f1)
 fi
 
 if [[ -f "$HOME/.credentials/deepseek_key" ]]; then
   if gum confirm "Overwrite existing Deepseek key?"; then
     deepseek_clear=$(fetch-secret 877f672099afd3e354d63cadea5c14b1)
   fi
+else
+  deepseek_clear=$(fetch-secret 877f672099afd3e354d63cadea5c14b1)
 fi
 
 if [[ -f "$HOME/.credentials/github_key" ]]; then
   if gum confirm "Overwrite existing Github token?"; then
     github_clear=$(fetch-secret 9b9e18cebd82a343bb12d4911bc1653c)
   fi
+else
+  github_clear=$(fetch-secret 9b9e18cebd82a343bb12d4911bc1653c)
 fi
 
 if [[ ! -f "$HOME/.ssh/id_ed25519" ]]; then

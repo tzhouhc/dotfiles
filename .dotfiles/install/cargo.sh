@@ -25,6 +25,7 @@ if type cargo >/dev/null 2>&1; then
   cargo binstall -y fd-find   # find
   cargo binstall -y git-delta   # diff
   cargo binstall -y imgcatr  # show images
+  cargo binstall -y jnv   # interactive jq
   cargo binstall -y just   # make
   cargo binstall -y navi   # find
   cargo binstall -y petname  # random name generator

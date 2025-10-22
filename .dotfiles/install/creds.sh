@@ -31,10 +31,10 @@ fi
 
 if [[ -f "$HOME/.credentials/github_key" ]]; then
   if gum confirm "Overwrite existing Github token?"; then
-    github_clear=$(fetch-secret 9b9e18cebd82a343bb12d4911bc1653c)
+    github_clear=$(fetch-secret be6cf99ebd7feb8c285bead7b31e6719)
   fi
 else
-  github_clear=$(fetch-secret 9b9e18cebd82a343bb12d4911bc1653c)
+  github_clear=$(fetch-secret be6cf99ebd7feb8c285bead7b31e6719)
 fi
 
 if [[ ! -f "$HOME/.ssh/id_ed25519" ]]; then

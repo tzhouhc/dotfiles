@@ -24,6 +24,14 @@ local function tab_icon(title)
 		return ""
   elseif title:find("ellij") then  -- hack since z could be cap or small
 		return ""
+  elseif title:find("mbp") then  -- hack since z could be cap or small
+    return ""
+  elseif title:find("gcp") then  -- hack since z could be cap or small
+    return "󱇶"
+  elseif title:find("aws") then  -- hack since z could be cap or small
+    return ""
+  elseif title:find("steam") then  -- hack since z could be cap or small
+    return "󰓓"
   else
 		return ""
 	end

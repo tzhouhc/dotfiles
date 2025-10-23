@@ -1,5 +1,12 @@
 #!/usr/bin/env zsh
+# This is expected to mainly be called from wezterm via a shortcut, but could
+# also possibly run by itself.
 
 source $HOME/.zsh/env/path.zsh
 
-ssh $(cat ~/.ssh/config | grep '^Host' | cut -d' ' -f2 | fzf --layout=reverse)
+dest=$(cat ~/.ssh/config | grep '^Host' | cut -d' ' -f2 | fzf --layout=reverse)
+if type wezterm &>/dev/null; then
+  wezterm cli set-tab-title "$dest"
+fi
+
+ssh "$dest"

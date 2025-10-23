@@ -43,5 +43,8 @@ fi
 # some items needs to run after tmux
 source "$SHELL_SCRIPTS_DIR/post_tmux.zsh"
 
+# health checkup
+source "$SHELL_SCRIPTS_DIR/checkup.zsh"
+
 # update checking
 source "$SHELL_SCRIPTS_DIR/update.zsh"

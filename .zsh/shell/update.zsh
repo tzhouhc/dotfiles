@@ -3,9 +3,19 @@
 # Script to prompt for system updates every two weeks
 STATE_DIR="$HOME/.local/state"
 TIMESTAMP_FILE="$STATE_DIR/update_check_timestamp"
+LOCKFILE="$STATE_DIR/update.lock"
+
+if ! ln "$0" "$LOCKFILE" 2>/dev/null; then
+  # Lock exists; another process is running the update
+  return 0
+fi
 
 if [[ ! -d "$STATE_DIR" ]]; then
   mkdir -p "$STATE_DIR"
+fi
+
+if [[ -z "$ZELLIJ" ]]; then
+  return 0
 fi
 
 function check_timestamp() {
@@ -15,6 +25,7 @@ function check_timestamp() {
   fi
   current_time=$(date +%s)
   file_time=$(stat -c %Y "$TIMESTAMP_FILE")
+  touch "$TIMESTAMP_FILE"
   time_diff=$((current_time - file_time))
   two_weeks=$((14 * 24 * 60 * 60))
 
@@ -65,3 +76,5 @@ function update() {
 if check_timestamp; then
   update
 fi
+
+/bin/rm -f "$LOCKFILE"

@@ -1,8 +1,12 @@
 #!/usr/bin/env zsh
 
-source $HOME/.zsh/base.zsh
+CREDS_DIR="$HOME/.credentials"
+mkdir -p "$CREDS_DIR"
+cd "$CREDS_DIR"
 
-mkdir -p ~/.credentials
+if [[ ! -f "$HOME/.ssh/id_ed25519" ]]; then
+  ssh-keygen
+fi
 
 if ! gh auth status >/dev/null 2>&1; then
   echo "Logging into Github."
@@ -13,45 +17,34 @@ if ! gh auth status >/dev/null 2>&1; then
   gh auth login -p ssh -h github.com -w
 fi
 
-if [[ -f "$HOME/.credentials/openai_key" ]]; then
-  if gum confirm "Overwrite existing Openai key?"; then
-    openai_clear=$(fetch-secret bece5e4b282e2832880f2a87bf4329f1)
+spec_file="./spec.csv"
+
+if [[ ! -f "$spec_file" ]]; then
+  echo "Missing spec.csv at $spec_file"
+  exit 1
+fi
+
+echo "Parsed spec.csv for credential fetching."
+
+while IFS=',' read -r display_name secret_id cred_filename; do
+  skip=0
+  if [[ -f "$cred_filename" ]]; then
+    echo "$display_name exists!"
+    overwrite=$(echo "yes,no" | gum choose --input-delimiter=',' --header="Overwrite existing $display_name?")
+    if [[ "$overwrite" =~ "no" ]]; then
+      skip=1
+    fi
+  else
+    echo "$display_name does not exist yet."
   fi
-else
-  openai_clear=$(fetch-secret bece5e4b282e2832880f2a87bf4329f1)
-fi
 
-if [[ -f "$HOME/.credentials/deepseek_key" ]]; then
-  if gum confirm "Overwrite existing Deepseek key?"; then
-    deepseek_clear=$(fetch-secret 877f672099afd3e354d63cadea5c14b1)
+  if [[ $skip -eq 0 ]]; then
+    echo "Fetching $display_name."
+    clear_val="$(fetch-secret "$secret_id")"
+
+    if [[ -n "$clear_val" ]]; then
+      echo "$clear_val" | age -R "$HOME/.ssh/id_ed25519.pub" -o "$cred_filename"
+    fi
+    echo "Acquired $display_name"
   fi
-else
-  deepseek_clear=$(fetch-secret 877f672099afd3e354d63cadea5c14b1)
-fi
-
-if [[ -f "$HOME/.credentials/github_key" ]]; then
-  if gum confirm "Overwrite existing Github token?"; then
-    github_clear=$(fetch-secret be6cf99ebd7feb8c285bead7b31e6719)
-  fi
-else
-  github_clear=$(fetch-secret be6cf99ebd7feb8c285bead7b31e6719)
-fi
-
-if [[ ! -f "$HOME/.ssh/id_ed25519" ]]; then
-  ssh-keygen
-fi
-
-if [[ -n "${openai_clear}" ]]; then
-  echo $openai_clear | age -R $HOME/.ssh/id_ed25519.pub \
-    -o $HOME/.credentials/openai_key
-fi
-
-if [[ -n "${deepseek_clear}" ]]; then
-  echo $deepseek_clear | age -R $HOME/.ssh/id_ed25519.pub \
-    -o $HOME/.credentials/deepseek_key
-fi
-
-if [[ -n "${github_clear}" ]]; then
-  echo $github_clear | age -R $HOME/.ssh/id_ed25519.pub -o \
-    $HOME/.credentials/github_key
-fi
+done < "$spec_file"

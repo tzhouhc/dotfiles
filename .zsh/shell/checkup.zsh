@@ -37,7 +37,7 @@ function check_timestamp() {
 function update() {
     touch "$TIMESTAMP_FILE"
 
-    dfg pull
+    dfg pull >/dev/null
 }
 
 if check_timestamp; then

@@ -20,10 +20,11 @@ function M.update_config(config)
 	config.window_background_opacity = 1
 
 	if is_osx() then
+    config.macos_fullscreen_extend_behind_notch = false
 		config.window_padding = {
-			left = "0.3cell",
+			left = "0cell",
 			right = "0cell",
-			top = "1cell",
+			top = "0cell",
 			bottom = "0cell",
 		}
 	end

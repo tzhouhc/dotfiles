@@ -26,28 +26,3 @@ wezterm.on('increase-window-opacity', function(window, _)
   end
   window:set_config_overrides({ window_background_opacity = opc })
 end)
-
--- check number of tabs, then modify window paddnig accordingly
--- (this is for avoiding the macos on-screen 'notch')
-wezterm.on('modify-tabs', function(window, _)
-  if not is_osx() then
-    return
-  end
-  if #window:mux_window():tabs() > 1 then
-    local cfg = {
-      left = "0.3cell",
-      right = "0cell",
-      top = "0cell",
-      bottom = "0cell",
-    }
-    window:set_config_overrides({ window_padding = cfg })
-  else
-    local cfg = {
-      left = "0.3cell",
-      right = "0cell",
-      top = "1cell",
-      bottom = "0cell",
-    }
-    window:set_config_overrides({ window_padding = cfg })
-  end
-end)

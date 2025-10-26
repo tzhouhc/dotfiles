@@ -74,6 +74,7 @@ export LESS='--ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --t
 export HOMEBREW_NO_AUTO_UPDATE=1
 export _ZO_DATA_DIR="$HOME/.data/zoxide"
 export GOPATH="$HOME/.go"
+export ERDTREE_TOML_PATH="$XDG_CONFIG_HOME/.erdtree.toml"
 
 export GH_USER="tzhouhc"
 

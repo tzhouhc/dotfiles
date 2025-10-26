@@ -102,6 +102,10 @@ if type rip >/dev/null 2>&1; then
   alias rm=rip
 fi
 
+if type erd >/dev/null 2>&1; then
+  alias tree=erd
+fi
+
 if type lazygit >/dev/null 2>&1; then
   if [[ $NERDFONT == '2' ]]; then
     alias lg='lazygit -ucf=$XDG_CONFIG_HOME/lazygit/config_backup.yml'

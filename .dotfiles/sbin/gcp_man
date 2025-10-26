@@ -17,7 +17,7 @@ TMP_FILE="/tmp/gcp_instances.txt"
 
 # 1. Fetch all instances from us-east zones
 gum spin ${GUM_SPIN_STYLE} --title "Fetching instances from all relevant zones..." -- \
-gcloud compute instances list --filter="zone:(us-east1-d, us-east4-c, us-west1-c)" --format="table(name,zone,status)" > $TMP_FILE
+gcloud compute instances list --filter="zone:(us-east1-d, us-east4-c, us-west1-c, us-west4-a)" --format="table(name,zone,status)" > $TMP_FILE
 
 # Check if any instances were found
 # The header line will always be there, so check for more than 1 line

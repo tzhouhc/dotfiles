@@ -72,3 +72,8 @@ set -o magicequalsubst
 set -o autopushd
 
 setopt RE_MATCH_PCRE
+
+# explicitly set TMPDIR on macos; workaround for wezterm issue?
+if uname -a | grep -i darwin &>/dev/null; then
+  export TMPDIR=$(getconf DARWIN_USER_TEMP_DIR)
+fi

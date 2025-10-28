@@ -30,8 +30,7 @@ while IFS=',' read -r display_name secret_id cred_filename; do
   skip=0
   if [[ -f "$cred_filename" ]]; then
     echo "$display_name exists!"
-    overwrite=$(echo "yes,no" | gum choose --input-delimiter=',' --header="Overwrite existing $display_name?")
-    if [[ "$overwrite" =~ "no" ]]; then
+    if ! gum confirm "Overwrite existing ${display_name}?" < /dev/tty; then
       skip=1
     fi
   else

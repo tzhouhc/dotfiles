@@ -18,3 +18,9 @@ find . -name 'Icon*' | rargs /bin/rm {0}$'\r'
 
 # Shallow clone linux repo.
 git clone --depth 1 --branch v<ver> https://github.com/torvalds/linux.git
+
+% zsh
+
+# Show all zsh keybindings
+bindkey -L
+

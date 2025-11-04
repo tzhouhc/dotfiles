@@ -1,0 +1,17 @@
+#!/bin/bash
+
+SEND_FILE="$HOME/.send.temp"
+TMP_SWAP="$SEND_FILE.bk"
+
+cat "$SEND_FILE" | sort | uniq > "$TMP_SWAP"
+
+if [[ -f "$TMP_SWAP" ]]; then
+  CHOSEN=$(cat "$TMP_SWAP")
+  if [[ -n "$CHOSEN" ]]; then
+    grep -vxF "$CHOSEN" "$TMP_SWAP" > "$SEND_FILE"
+    echo "$CHOSEN" | xargs -I _ mv _ ./
+  fi
+fi
+
+rm "$TMP_SWAP"
+

@@ -1,0 +1,11 @@
+---
+version: 1.4.2
+commands:
+  - name: start-qemu-for-arm
+    namespace: kernel
+    tags:
+      - linux
+      - qemu
+      - debug
+    command: "qemu-system-aarch64 -M virt -cpu cortex-a57 -m 2G -kernel arch/arm64/boot/Image -initrd ../custom.img -append \"console=ttyAMA0 nokaslr\" -nographic -s -S"
+    description: Starts QEMU for ARM vmlinux with custom image

@@ -1,0 +1,10 @@
+% git
+
+# Clone a repo without history.
+git clone --depth 1 <repo>
+
+# Recursively initialize repo submodules
+git submodule update --init --recursive
+
+# Add submodules
+git submodule add <repo>

@@ -13,3 +13,8 @@ echo "tmux_notify <msg>" | at <time>
 % macos, cleanup, fold_icons
 # Recursively clean up folder icons
 find . -name 'Icon*' | rargs /bin/rm {0}$'\r'
+
+% linux, kernel, dev
+
+# Shallow clone linux repo.
+git clone --depth 1 --branch v<ver> https://github.com/torvalds/linux.git

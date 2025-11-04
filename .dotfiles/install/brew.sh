@@ -29,10 +29,13 @@ else
 fi
 
 # less important ones
-brew install hexyl numbat pastel wtfutil
+brew install hexyl numbat pastel wtfutil clipboard
 brew install difftastic btop pnpm gh
 brew install timescam/homebrew-tap/pay-respects
 brew install charmbracelet/tap/crush
+
+# gh extension
+gh extension install dlvhdr/gh-dash
 
 if uname -a | grep -i darwin &>/dev/null; then
   # chinese input method

@@ -185,6 +185,8 @@ if type bazel &>/dev/null; then
   alias bb="bazel build"
   alias br="bazel run"
   alias bt="bazel test"
+  alias bc="bazel clean"
+  alias blaze="bazel"
 fi
 
 if type task &>/dev/null; then

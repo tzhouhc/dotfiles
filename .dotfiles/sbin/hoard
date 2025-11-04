@@ -30,10 +30,14 @@ fi
 files=$(fd . -t f "$CUSTOM_NAVI_LIB" | grep ".cheat" | xargs readlink -f)
 files="${files}\n[Create New]"
 dest=$(echo ${files} | fzf)
-if [[ ! -f "file" ]]; then
+if [[ ! -f "$dest" ]]; then
   name=$(gum input --prompt="What should the file be called? ")
-  filename="${CUSTOM_NAVI_LIB}/${name}.cheat"
+  dest="${CUSTOM_NAVI_LIB}/${name}.cheat"
   echo "$result" > "$filename"
 else
   echo "\n$result" >> "${dest}"
+fi
+
+if gum confirm "Do you want to revise further?" --default=no; then
+  $EDITOR "$dest"
 fi

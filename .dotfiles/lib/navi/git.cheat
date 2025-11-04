@@ -1,10 +1,16 @@
 % git
 
 # Clone a repo without history.
-git clone --depth 1 <repo>
+git clone --depth 1 git@github.com:<repo>
 
 # Recursively initialize repo submodules
 git submodule update --init --recursive
 
 # Add submodules
-git submodule add <repo>
+git submodule add git@github.com:<repo>
+
+% git
+
+# Add remote for local git repo
+git remote add origin git@github.com:<repo>
+

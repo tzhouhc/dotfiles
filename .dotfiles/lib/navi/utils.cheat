@@ -32,3 +32,16 @@ rm ./.venv && python3 -m venv ./.venv && python3 -m pip install -r requirements.
 % zsh
 # Run command for each file in dir
 for file in *(N); do echo "$file"; done
+
+% path
+
+# Get file absolute path
+readlink -f <file>
+
+$ file: ls
+
+% rip
+
+# Unlink rip graveyard files
+rm --decompose
+

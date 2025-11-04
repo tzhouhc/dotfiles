@@ -3,11 +3,12 @@
 # Start a QEMU arm-based virtual machine using specifiedd kernel and initrd image
 qemu-system-aarch64 -M virt -cpu cortex-a57 -m 2G -kernel <kernel> -initrd <image> -append \"console=ttyAMA0 nokaslr\" -nographic -s -S
 
-$ input: ls
+$ kernel: ls
+$ image: ls
 
 % gdb, debug
 
 # Start gdb and connect to default debugging port
 gdb <binary> -ex 'target remote :1234'
 
-$ input: ls
+$ binary: ls

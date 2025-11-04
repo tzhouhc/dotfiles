@@ -80,7 +80,8 @@ export GH_USER="tzhouhc"
 
 # run if 'navi' exists on path
 if type navi >/dev/null 2>&1; then
-  export NAVI_PATH=$HOME/.dotfiles/lib/navi:$HOME/.local/share/navi
+  export CUSTOM_NAVI_LIB="$HOME/.dotfiles/lib/navi"
+  export NAVI_PATH="${CUSTOM_NAVI_LIB}:$HOME/.local/share/navi"
 fi
 
 if [[ -a $HOME/.dotfiles/visuals/lscolors ]]; then

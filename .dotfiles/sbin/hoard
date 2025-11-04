@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+prompt_text=$(gum style "Provide the command. Use ")
+prompt_text="${prompt_text}$(gum style "<VAR>" --bold --foreground=#7ea)"
+prompt_text="${prompt_text}$(gum style " to indicate placeholders. ")"
+
+cmd=$(gum input --prompt=${prompt_text})
+desc=$(gum input --prompt="Provide a short description of the command. ")
+tags=$(gum input --prompt="Provide a comma-separated list of tags. ")
+
+result="% ${tags}\n\n# ${desc}\n${cmd}\n"
+echo "${result}" | bat --paging=never -l=conf
+if ! gum confirm "Is this ok?"; then
+  exit 0
+fi
+
+if [[ -n "$NAVI_PATH" ]]; then
+  IFS=":" read -A navi_dirs <<< "$NAVI_PATH"
+  for dir in "${navi_dirs[@]}"; do
+    if [[ -d "$dir" ]]; then
+      files=$(fd . -t f "$dir" | grep ".cheat" | xargs readlink -f)
+      files="${files}\nCreate New"
+      dest=$(echo ${files} | fzf)
+      if [[ "${dest}" == "Create New" ]]; then
+        name=$(gum input --prompt="What should the file be called? ")
+        filename="${CUSTOM_NAVI_LIB}/${name}.cheat"
+        echo "$result" > "$filename"
+      else
+        echo "\n$result" >> "${dest}"
+      fi
+    fi
+  done
+fi

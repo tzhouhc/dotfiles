@@ -25,11 +25,10 @@ if type cargo >/dev/null 2>&1; then
   cargo binstall -y erdtree   # tree
   cargo binstall -y fd-find   # find
   cargo binstall -y git-delta   # diff
-  cargo binstall -y hoard-rs   # hoard commands
   cargo binstall -y imgcatr  # show images
   cargo binstall -y jnv   # interactive jq
   cargo binstall -y just   # make
-  cargo binstall -y navi   # hoard commands too -- ?
+  cargo binstall -y navi   # save commands for later reuse
   cargo binstall -y petname  # random name generator
   cargo binstall -y zellij  # tmux
   cargo install ripgrep --features 'pcre2'  # grep

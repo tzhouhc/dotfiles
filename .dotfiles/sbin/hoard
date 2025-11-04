@@ -1,10 +1,23 @@
 #!/usr/bin/env zsh
 
-prompt_text=$(gum style "Provide the command. Use ")
-prompt_text="${prompt_text}$(gum style "<VAR>" --bold --foreground=#7ea)"
-prompt_text="${prompt_text}$(gum style " to indicate placeholders. ")"
+set -e
 
-cmd=$(gum input --prompt=${prompt_text})
+if gum confirm "Use history to pick command?"; then
+  # DAMN, NOICE!
+  cmd=$(ATUIN_SHELL=zsh ATUIN_LOG=error ATUIN_QUERY=$BUFFER atuin search $* -i 3>&1 1>&2 2>&3)
+else
+  prompt_text=$(gum style "Provide the command. Use ")
+  prompt_text="${prompt_text}$(gum style "<VAR>" --bold --foreground=#7ea)"
+  prompt_text="${prompt_text}$(gum style " to indicate placeholders. ")"
+  cmd=$(gum input --prompt=${prompt_text})
+fi
+
+if [[ -z "${cmd}" ]]; then
+  exit 0
+fi
+echo -n "Command: "
+echo "${cmd}" | bat --paging=never -l=zsh  # for reference
+
 desc=$(gum input --prompt="Provide a short description of the command. ")
 tags=$(gum input --prompt="Provide a comma-separated list of tags. ")
 
@@ -14,20 +27,13 @@ if ! gum confirm "Is this ok?"; then
   exit 0
 fi
 
-if [[ -n "$NAVI_PATH" ]]; then
-  IFS=":" read -A navi_dirs <<< "$NAVI_PATH"
-  for dir in "${navi_dirs[@]}"; do
-    if [[ -d "$dir" ]]; then
-      files=$(fd . -t f "$dir" | grep ".cheat" | xargs readlink -f)
-      files="${files}\nCreate New"
-      dest=$(echo ${files} | fzf)
-      if [[ "${dest}" == "Create New" ]]; then
-        name=$(gum input --prompt="What should the file be called? ")
-        filename="${CUSTOM_NAVI_LIB}/${name}.cheat"
-        echo "$result" > "$filename"
-      else
-        echo "\n$result" >> "${dest}"
-      fi
-    fi
-  done
+files=$(fd . -t f "$CUSTOM_NAVI_LIB" | grep ".cheat" | xargs readlink -f)
+files="${files}\n[Create New]"
+dest=$(echo ${files} | fzf)
+if [[ ! -f "file" ]]; then
+  name=$(gum input --prompt="What should the file be called? ")
+  filename="${CUSTOM_NAVI_LIB}/${name}.cheat"
+  echo "$result" > "$filename"
+else
+  echo "\n$result" >> "${dest}"
 fi

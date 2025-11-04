@@ -231,3 +231,26 @@ zle     -N   _navi_widget
 bindkey '^k' _navi_widget
 
 bindkey -s '^y' "yazi^M"
+
+function also_copy_atuin() {
+  emulate -L zsh
+  zle -I
+  output=$(ATUIN_SHELL=zsh ATUIN_LOG=error ATUIN_QUERY=$BUFFER atuin search $* -i 3>&1 1>&2 2>&3)
+  zle reset-prompt
+  # re-enable bracketed paste
+  # shellcheck disable=SC2154
+  echo -n ${zle_bracketed_paste[1]} >/dev/tty
+  if [[ -n $output ]]; then
+    RBUFFER=""
+    LBUFFER=$output
+    cb copy "$output"
+
+    if [[ $LBUFFER == __atuin_accept__:* ]]
+    then
+        LBUFFER=${LBUFFER#__atuin_accept__:}
+        zle accept-line
+    fi
+fi
+}
+zle     -N   also_copy_atuin
+bindkey '^[r' also_copy_atuin

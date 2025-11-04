@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+files=$(fd . -t f "$CUSTOM_NAVI_LIB" | grep ".cheat" | xargs readlink -f)
+dest=$(echo ${files} | fzf)
+$EDITOR "${dest}"
+

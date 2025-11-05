@@ -19,12 +19,12 @@ brew update
 # critical tools
 if [[ $(uname -m) == "aarch64" && $(uname -s) == "Linux" ]]; then
   brew install wget git tmux zsh the_silver_searcher universal-ctags \
-    moreutils lazygit direnv jq tldr taskwarrior-tui cargo-binstall \
+    moreutils lazygit direnv jq tldr cargo-binstall \
     coreutils nodejs python@3.13 grep
   brew install --build-from-source gum age mods oh-my-posh
 else
   brew install wget git tmux zsh the_silver_searcher universal-ctags \
-    moreutils lazygit direnv jq gum age tldr mods taskwarrior-tui cargo-binstall \
+    moreutils lazygit direnv jq gum age tldr mods cargo-binstall \
     coreutils nodejs oh-my-posh python@3.13 grep
 fi
 

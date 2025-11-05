@@ -3,6 +3,7 @@
 source $HOME/.zsh/base.zsh
 
 CONF_DIR="$(realpath $(dirname "$0"))"
+PRIV_DIR="${HOME}/.private/data/rime"
 
 if uname -a | grep -i darwin &>/dev/null; then
   RIME_DIR="${HOME}/Library/Rime"
@@ -24,11 +25,16 @@ fi
 # symlink
 rm -f my_custom_phrase.txt
 rm -f rime_ice.dict.custom.yaml
-rm -f rime_ice.schema.custom.yaml
+rm -f rime_ice.custom.yaml
 rm -f squirrel.custom.yaml
 rm -f default.custom.yaml
 
-ln -s $CONF_DIR/custom_phrase.txt $RIME_DIR/my_custom_phrase.txt
+# Optionally use the custom phrases from the private data repo
+if [[ -d "$PRIV_DIR" ]]; then
+  ln -s $PRIV_DIR/custom_phrase.txt $RIME_DIR/my_custom_phrase.txt
+else
+  ln -s $CONF_DIR/custom_phrase.txt $RIME_DIR/my_custom_phrase.txt
+fi
 ln -s $CONF_DIR/rime_ice.dict.custom.yaml $RIME_DIR/rime_ice.dict.custom.yaml
 ln -s $CONF_DIR/rime_ice.custom.yaml $RIME_DIR/rime_ice.custom.yaml
 ln -s $CONF_DIR/squirrel.custom.yaml $RIME_DIR/squirrel.custom.yaml

@@ -34,7 +34,7 @@ function global_file_list() {
 
 # Recently edited files based on neovim
 function vim_mru_list() {
-  res=$(nvim --headless -c "lua for _,file in ipairs(vim.v.oldfiles) do print(file) end" -c "q" 2>&1 | grep -v "^$" | sed 's/.$//' | sort | uniq | fzfp -m)
+  res=$(nvim --headless -c "lua for _,file in ipairs(vim.v.oldfiles) do print(file) end" -c "q" 2>&1 | grep -v "^$" | sed 's/.$//' | uniq | fzfp -m)
   print $res
 }
 
@@ -64,9 +64,11 @@ function p4_package_list() {
 # Files visible in the current directory
 function local_file_list() {
   if [[ $1 != '' ]]; then
-    print "$(fd . --type f --type l $1 | sort | fzfp -m)"
+    # note: used to do `sort` in the middle as well -- apparently it doesn't
+    # work with with filenames that have spaces
+    print "$(fd . --type f --type l $1 | fzfp -m)"
   else
-    print "$(fd . --type f --type l | sort | fzfp -m)"
+    print "$(fd . --type f --type l | fzfp -m)"
   fi
 }
 

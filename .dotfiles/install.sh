@@ -15,6 +15,13 @@ if [[ $XDG_CONFIG_HOME == '' ]]; then
   exit 1
 fi
 
+confirm() {
+  # Usage: confirm "Question?"
+  local response
+  read -r -p "${1} [y/n]: " response
+  [[ $response == "y" || $response == "Y" ]]
+}
+
 # fzf
 if ! [ -d "$HOME/.fzf" ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
@@ -55,10 +62,10 @@ if uname -a | grep -i linux > /dev/null; then
   fi
 fi
 
+# homebrew
 if ! type brew &>/dev/null; then
   # install homebrew using just gcc and build-essentials
-  read -r -p "Install homebrew and related? [y/n]: " response
-  if [[ $response == "y" || $response == "Y" ]]; then
+  if confirm "Install homebrew and related?"; then
     "$cwd"/install/brew.sh
   fi
 fi
@@ -74,58 +81,71 @@ export PATH=$BREW_HOME/bin:$PATH
 # with cargo installed, tools like bob should all become available for
 # subsequent use.
 if ! type nvim &>/dev/null; then
-  read -r -p "Install neovim? [y/n]: " response
-  if [[ $response == "y" || $response == "Y" ]]; then
+  if confirm "Install neovim?"; then
     "$cwd"/install/core/nvim.sh
   fi
 
   pushd "$HOME/.config/nvim"
   git checkout main
   popd
+else
+  echo "Neovim already setup"
 fi
 
+# python package management
 if ! type uv &>/dev/null; then
-  read -r -p "Install uv? [y/n]: " response
-  if [[ $response == "y" || $response == "Y" ]]; then
+  if confirm "Install uv?"; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
   fi
+else
+  echo "uv already present"
 fi
 
 # try to acquire latest binaries after installations
 hash -r
 
 # assumes python is already present and up-to-date
-read -r -p "Install python packages? [y/n]: " response
-if [[ $response == "y" || $response == "Y" ]]; then
+  if confirm "Install python packages?"; then
   "$cwd"/install/pip.sh
 fi
 
 # install rust tools
 if ! type cargo &>/dev/null; then
-  read -r -p "Install rust tools? [y/n]: " response
-  if [[ $response == "y" || $response == "Y" ]]; then
+  if confirm "Install rust tools?"; then
     "$cwd"/install/cargo.sh
   fi
+else
+  echo "rust already present"
 fi
 
 # install zellij tools
 if ! type zjframes.wasm &>/dev/null; then
-  read -r -p "Install zellij tools? (does not require zellij installed) [y/n]: " response
-  if [[ $response == "y" || $response == "Y" ]]; then
+  if confirm "Install zellij tools? (does not require zellij installed)"; then
     "$cwd"/install/zellij.sh
   fi
+else
+  echo "zellij tools already present"
 fi
 
 # setup LLM service credentials
-read -r -p "Setup LLM credentials? [y/n]: " response
-if [[ $response == "y" || $response == "Y" ]]; then
+if confirm "Setup Credentials?"; then
   "$cwd"/install/creds.sh
+fi
+
+# setup private data repo
+if [[ -d "$HOME/.private.git" ]]; then
+  echo "Private repo already setup."
+else
+  if confirm "Setup Private files repo?"; then
+    git clone --bare git@github.com:tzhouhc/private.git "$HOME/.private.git"
+    git --git-dir="$HOME/.private.git" --work-tree="$HOME" checkout -f
+    "$HOME/.private/setup.sh"
+  fi
 fi
 
 # setup squirrel config
 if uname -a | grep -i darwin &>/dev/null; then
-  read -r -p "Setup Rime input? [y/n]: " response
-  if [[ $response == "y" || $response == "Y" ]]; then
+  if confirm "Setup Rime input?"; then
     "$cwd"/lib/rime/setup
   fi
 fi

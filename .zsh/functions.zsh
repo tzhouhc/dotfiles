@@ -6,3 +6,4 @@
 source $HOME/.zsh/lib/utils.zsh
 source $HOME/.zsh/lib/shorthands.zsh
 source $HOME/.zsh/lib/fzf.zsh
+source $HOME/.zsh/lib/gum.zsh

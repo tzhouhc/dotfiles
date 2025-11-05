@@ -1,0 +1,19 @@
+#!/bin/bash
+
+SEND_FILE="$HOME/.send.temp"
+TMP_SWAP="$SEND_FILE.bk"
+
+cat "$SEND_FILE" | sort | uniq > "$TMP_SWAP"
+
+if [[ -f "$TMP_SWAP" ]]; then
+  CHOSEN=$(cat "$TMP_SWAP" | fzfp -m)
+  if [[ -n "$CHOSEN" ]]; then
+    grep -vxF "$CHOSEN" "$TMP_SWAP" > "$SEND_FILE"
+    # Create symlinks for each selected file
+    while IFS= read -r file; do
+      [ -n "$file" ] && ln -s "$file" "./$(basename "$file")"
+    done <<< "$CHOSEN"
+  fi
+fi
+
+rm "$TMP_SWAP"

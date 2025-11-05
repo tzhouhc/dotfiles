@@ -13,12 +13,6 @@ require 'effects/no_tabs'.update_config(config)
 -- non-fullscreen window setup
 config.initial_rows = 48
 config.initial_cols = 140
-config.window_padding = {
-  left = "0cell",
-  right = "0cell",
-  top = "0.3cell",
-  bottom = "0cell",
-}
 
 -- additional interactions
 require 'effects/nvim_zen_integ'

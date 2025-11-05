@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 set +e
+source $HOME/.zsh/env/path.zsh
 
 SESSION_NAME="chat"
 WINDOW_NAME="chat"

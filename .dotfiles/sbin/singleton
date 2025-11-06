@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+
+set +e
+source $HOME/.zsh/env/path.zsh
+
+# Check if at least one argument is provided
+if [ $# -lt 1 ]; then
+    echo "Usage: $(basename $0) <session-name> [program args...]"
+    exit 1
+fi
+
+SESSION_NAME="$1"
+WINDOW_NAME="$1"
+shift  # Remove first argument, leaving the rest as the program + args
+PROGRAM=("$@")  # All remaining arguments as the program to run
+CONFIG="$XDG_CONFIG_HOME/tmux/tmux.mini.conf"
+
+# Check if tmux session exists
+if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    # Create detached tmux session
+    tmux -f "$CONFIG" new-session -d -s "$SESSION_NAME" -n "$WINDOW_NAME" "$PROGRAM[@]" > /dev/null 2>&1
+fi
+
+# Check if window exists in session
+if ! tmux list-windows -t "$SESSION_NAME" > /dev/null 2>&1 | grep -q "^[0-9]*: $WINDOW_NAME"; then
+    # Create window if it doesn't exist
+    tmux new-window -t "$SESSION_NAME" -n "$WINDOW_NAME" "$PROGRAM[@]" > /dev/null 2>&1
+fi
+
+# Attach to the tmux session or detach if already attached
+if tmux list-clients -t "$SESSION_NAME" > /dev/null 2>&1 | grep "/dev" ; then
+    tmux detach-client -s "$SESSION_NAME" > /dev/null 2>&1
+else
+    tmux attach-session -t "$SESSION_NAME:$WINDOW_NAME" > /dev/null 2>&1
+fi

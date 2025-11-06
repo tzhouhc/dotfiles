@@ -14,6 +14,9 @@ source "$SHELL_SCRIPTS_DIR/styles.zsh"
 # various basic zsh settings
 source "$SHELL_SCRIPTS_DIR/settings.zsh"
 
+# some special zsh settings -- special handlers, etc
+source "$SHELL_SCRIPTS_DIR/special.zsh"
+
 # key mappings in zsh
 source "$SHELL_SCRIPTS_DIR/keys.zsh"
 

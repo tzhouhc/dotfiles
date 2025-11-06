@@ -145,7 +145,7 @@ function env_var_list() {
 
 # Executable binaries
 function bin_list() {
-  echo "Bin\tPath\n$(whence -pm '*' | sed "s/([a-zA-Z0-9_.-]*)$/\1 \1/" | awk '{ print $2 " " $1}')" | column -t | fzf --header-lines=1 | grep -o '[^ ]*$'
+  echo "Bin\tPath\n$(whence -pm '*' | sed "s/([a-zA-Z0-9_.-]*)$/\1 \1/" | awk '{ print $2 " " $1}')" | column -t | fzf --header-lines=1 "$@" | grep -o '[^ ]*$'
 }
 
 # Directory-context-aware command history (enable by setting DIR_AWARE_HISTFILE)

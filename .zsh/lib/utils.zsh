@@ -323,3 +323,14 @@ function vm() {
     echo "No VM found."
   fi
 }
+
+function confirm() {
+  # Usage: confirm "Question?"
+  if type gum &>/dev/null; then
+    gum confirm "${1}"
+  else
+    local response
+    read -r -p "${1} [y/n]: " response
+    [[ $response == "y" || $response == "Y" ]]
+  fi
+}

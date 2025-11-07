@@ -1,3 +1,30 @@
+light_green="#42f590"
+
+# ---- filter ----
 export GUM_FILTER_UNSELECTED_PREFIX=" 󰄱 "
 export GUM_FILTER_SELECTED_PREFIX=" 󰄲 "
 export GUM_FILTER_PROMPT="󰅂 "
+export GUM_FILTER_INDICATOR=""
+export GUM_FILTER_INDICATOR_FOREGROUND="$light_green"
+export GUM_FILTER_SELECTED_PREFIX_FOREGROUND="$light_green"
+
+# ---- confirm ----
+# export GUM_CONFIRM_PROMPT_FOREGROUND=
+# export GUM_CONFIRM_PROMPT_BACKGROUND=
+export GUM_CONFIRM_SELECTED_FOREGROUND="0"
+export GUM_CONFIRM_SELECTED_BACKGROUND="$light_green"
+# export GUM_CONFIRM_UNSELECTED_FOREGROUND=
+# export GUM_CONFIRM_UNSELECTED_BACKGROUND=
+
+# ---- choose ----
+export GUM_CHOOSE_CURSOR_FOREGROUND="$light_green"
+export GUM_CHOOSE_SELECTED_FOREGROUND="$light_green"
+export GUM_CHOOSE_CURSOR=" "
+export GUM_CHOOSE_CURSOR_PREFIX=" 󰄱 "
+export GUM_CHOOSE_SELECTED_PREFIX=" 󰄲 "
+export GUM_CHOOSE_UNSELECTED_PREFIX=" 󰄱 "
+
+# ---- input ----
+export GUM_INPUT_PROMPT=" "
+export GUM_INPUT_PROMPT_FOREGROUND="$light_green"
+export GUM_INPUT_CURSOR_FOREGROUND="$light_green"

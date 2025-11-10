@@ -2,6 +2,10 @@
 
 source $HOME/.zsh/env/path.zsh
 
+if type macism &>/dev/null; then
+  macism com.apple.keylayout.US
+fi
+
 cd "$(dirname "$0")"
 export FZF_DEFAULT_OPTS="\
   --style=full \

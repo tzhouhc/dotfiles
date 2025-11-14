@@ -204,3 +204,7 @@ fi
 if type rsync &>/dev/null; then
   alias rsyncs="rsync -avh --progress --delete --stats"
 fi
+
+if type magika &>/dev/null; then
+  alias whatis="magika"
+fi

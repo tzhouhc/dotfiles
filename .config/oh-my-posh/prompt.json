@@ -108,9 +108,9 @@
           "style": "plain",
           "foreground_templates": [
             "{{if eq \"Charging\" .State.String}}p:lime{{end}}",
-            "{{if gt .Percentage 80}}p:g-green{{end}}",
-            "{{if gt .Percentage 50}}p:g-blue{{end}}",
-            "{{if gt .Percentage 30}}p:g-yellow{{end}}",
+            "{{if gt .Percentage 70}}p:g-green{{end}}",
+            "{{if gt .Percentage 40}}p:g-lime{{end}}",
+            "{{if gt .Percentage 10}}p:g-yellow{{end}}",
             "{{if gt .Percentage 0}}p:g-red{{end}}"
           ],
           "templates": [

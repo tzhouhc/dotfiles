@@ -24,15 +24,15 @@ local function tab_icon(title)
 		return ""
   elseif title:find("ellij") then  -- hack since z could be cap or small
 		return ""
-  elseif title:find("vmware") then  -- hack since z could be cap or small
+  elseif title:find("vmware") then
     return "󰒔"
-  elseif title:find("mbp") then  -- hack since z could be cap or small
+  elseif title:find("mbp") then
     return ""
-  elseif title:find("gcp") then  -- hack since z could be cap or small
+  elseif title:find("gcp") then
     return "󱇶"
-  elseif title:find("aws") then  -- hack since z could be cap or small
+  elseif title:find("aws") then
     return ""
-  elseif title:find("steam") then  -- hack since z could be cap or small
+  elseif title:find("steam") then
     return "󰓓"
   else
 		return ""
@@ -47,6 +47,29 @@ local gray = "#4c566a"
 local bright = "#e5e9f0"
 local cyan = "#88c0d0"
 local green = "#a3be8c"
+local red = "#e63333"
+local yellow = "#e6cc33"
+local lime = "#99e633"
+
+local function tab_color(title)
+	if title:find("tmux") then
+		return green
+  elseif title:find("ellij") then  -- hack since z could be cap or small
+		return green
+  elseif title:find("vmware") then
+    return cyan
+  elseif title:find("mbp") then
+    return lime
+  elseif title:find("gcp") then
+    return red
+  elseif title:find("aws") then
+    return yellow
+  elseif title:find("steam") then
+    return red
+  else
+		return green
+	end
+end
 
 wezterm.on(
 	'format-tab-title',
@@ -55,15 +78,16 @@ wezterm.on(
 		local index = tab.tab_index + 1
 		local icon = tab_icon(title)
 		local edge_foreground, edge_background, background, foreground
+    local main_color = tab_color(title)
 
 		if tab.is_active then
 			edge_foreground = trp
-			edge_background = green
+			edge_background = main_color
 			background = dark
 			foreground = bright
 		elseif hover then
 			edge_foreground = trp
-			edge_background = cyan
+			edge_background = bright
 			background = dark
 			foreground = bright
 		else

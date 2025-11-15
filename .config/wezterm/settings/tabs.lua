@@ -122,9 +122,11 @@ wezterm.on("update-status", function(gui_window, pane)
 	local tabs = gui_window:mux_window():tabs()
 	local mid_width = 0
 	for idx, tab in ipairs(tabs) do
-		local title = tab:get_title()
-		mid_width = mid_width + math.floor(math.log(idx, 10)) + 1
-		mid_width = mid_width + 10 + #title + 1  -- pill size adjustment
+    -- this was *so* annoying to figure out
+		local title = tab:active_pane():get_title()
+		local idx_len = math.floor(math.log(idx, 10)) + 1
+    local pill_len = 9 + idx_len + #title
+		mid_width = mid_width + pill_len + 1
 	end
 	local tab_width = gui_window:active_tab():get_size().cols
 	local max_left = tab_width / 2 - mid_width / 2

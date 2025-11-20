@@ -46,6 +46,7 @@ local gray = "#4c566a"
 
 local bright = "#e5e9f0"
 local cyan = "#88c0d0"
+local steam = "#66c0f4"
 local green = "#a3be8c"
 local red = "#e63333"
 local yellow = "#e6cc33"
@@ -65,7 +66,7 @@ local function tab_color(title)
 	elseif title:find("aws") then
 		return yellow
 	elseif title:find("steam") then
-		return red
+		return steam
 	else
 		return green
 	end

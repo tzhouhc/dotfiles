@@ -1,0 +1,36 @@
+{
+  "log": {
+    "level": "info"
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "127.0.0.1",
+      "listen_port": 1080
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "vless",
+      "tag": "proxy",
+      "server": "YOUR-SERVER-IP",
+      "server_port": 443,
+      "uuid": "7a5e9769-3142-4a5d-a6f0-fa2a3c987ad2",
+      "flow": "xtls-rprx-vision",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.apple.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "YOUR-PUBLIC-KEY",
+          "short_id": "YOUR-SHORT-ID"
+        }
+      }
+    }
+  ]
+}

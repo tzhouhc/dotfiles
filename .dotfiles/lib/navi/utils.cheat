@@ -45,3 +45,9 @@ $ file: ls
 # Unlink rip graveyard files
 rm --decompose
 
+
+% schedule
+
+# Run the command at a specific time
+echo "<cmd>" | at <time>
+

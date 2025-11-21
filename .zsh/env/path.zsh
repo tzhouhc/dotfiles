@@ -57,6 +57,8 @@ path_components=(
   "$HOME/.cache/lm-studio/bin"
   # sublime
   "/Applications/Sublime Text.app/Contents/SharedSupport/bin"
+  # hammerspoon
+  "/Applications/Hammerspoon.app/Contents/Frameworks/hs"
 
   # System paths
   "/usr/sbin"

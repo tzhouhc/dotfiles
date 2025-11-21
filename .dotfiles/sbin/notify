@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if ! type hs &>/dev/null; then
+  exit 1
+fi
+
+hs -c "hs.notify.show('${1}', '', '${2}')" >/dev/null 2>&1

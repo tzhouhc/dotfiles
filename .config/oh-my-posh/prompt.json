@@ -109,7 +109,7 @@
           "foreground_templates": [
             "{{if eq \"Charging\" .State.String}}p:lime{{end}}",
             "{{if gt .Percentage 70}}p:g-green{{end}}",
-            "{{if gt .Percentage 40}}p:g-lime{{end}}",
+            "{{if gt .Percentage 40}}p:lime{{end}}",
             "{{if gt .Percentage 10}}p:g-yellow{{end}}",
             "{{if gt .Percentage 0}}p:g-red{{end}}"
           ],

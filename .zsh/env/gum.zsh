@@ -7,6 +7,7 @@ export GUM_FILTER_PROMPT="󰅂 "
 export GUM_FILTER_INDICATOR=""
 export GUM_FILTER_INDICATOR_FOREGROUND="$light_green"
 export GUM_FILTER_SELECTED_PREFIX_FOREGROUND="$light_green"
+export GUM_FILTER_MATCH_FOREGROUND="$light_green"
 
 # ---- confirm ----
 # export GUM_CONFIRM_PROMPT_FOREGROUND=

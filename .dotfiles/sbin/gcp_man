@@ -15,9 +15,21 @@ GUM_SPIN_STYLE="--spinner.foreground='212' --title.foreground='212'"
 
 TMP_FILE="/tmp/gcp_instances.txt"
 
+if ! type gcloud &>/dev/null; then
+  echo "This tool relies on the gcloud CLI."
+fi
+
+if ! type gum &>/dev/null; then
+  echo "This tool relies on gum CLI (https://github.com/charmbracelet/gum)."
+fi
+
+if [[ -z "$GCP_ZONES" ]]; then
+  GCP_ZONES="us-east1-d, us-east4-c, us-west1-c, us-west4-a"
+fi
+
 # 1. Fetch all instances from us-east zones
-gum spin ${GUM_SPIN_STYLE} --title "Fetching instances from all relevant zones..." -- \
-gcloud compute instances list --filter="zone:(us-east1-d, us-east4-c, us-west1-c, us-west4-a)" --format="table(name,zone,status)" > $TMP_FILE
+gum spin "${GUM_SPIN_STYLE}" --title "Fetching instances from all relevant zones..." -- \
+gcloud compute instances list --filter="zone:($GCP_ZONES)" --format="table(name,zone,status)" > $TMP_FILE
 
 # Check if any instances were found
 # The header line will always be there, so check for more than 1 line

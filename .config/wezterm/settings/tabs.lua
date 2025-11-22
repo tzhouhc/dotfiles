@@ -51,6 +51,7 @@ local green = "#a3be8c"
 local red = "#e63333"
 local yellow = "#e6cc33"
 local lime = "#99e633"
+local aws = "#ff9900"
 
 local function tab_color(title)
 	if title:find("tmux") then
@@ -64,7 +65,7 @@ local function tab_color(title)
 	elseif title:find("gcp") then
 		return red
 	elseif title:find("aws") then
-		return yellow
+		return aws
 	elseif title:find("steam") then
 		return steam
 	else

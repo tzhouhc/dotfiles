@@ -5,6 +5,11 @@
 source $HOME/.zsh/env/path.zsh
 
 dest=$(cat ~/.ssh/config | grep '^Host' | cut -d' ' -f2 | fzf --layout=reverse)
+
+if [[ -z "${dest}" ]]; then
+  exit 0
+fi
+
 if type wezterm &>/dev/null; then
   wezterm cli set-tab-title "$dest"
 fi

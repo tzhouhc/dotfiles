@@ -116,6 +116,9 @@ if type age &>/dev/null; then
   if [[ -f "$HOME/.credentials/github_key" ]]; then
     export GH_TOKEN="$(/usr/bin/env age -d -i $ENC_KEY $HOME/.credentials/github_key)"
   fi
+  if [[ -f "$HOME/.credentials/pushbullet_key" ]]; then
+    export PUSHBULLET_KEY="$(/usr/bin/env age -d -i $ENC_KEY $HOME/.credentials/pushbullet_key)"
+  fi
 fi
 # pay-respect
 if [[ $OPENAI_API_KEY != '' ]]; then

@@ -36,11 +36,11 @@ import argparse
 import json
 import logging
 import netrc
-from mimetypes import MimeTypes
 import os
 import pprint
 import re
 import sys
+from mimetypes import MimeTypes
 
 try:
     import requests
@@ -49,45 +49,47 @@ except ImportError:
     sys.exit(1)
 
 # Pushbullet API URLs
-CHANNELS_URL = 'https://api.pushbullet.com/v2/subscriptions'
-DEVICES_URL = 'https://api.pushbullet.com/v2/devices'
-PUSH_URL = 'https://api.pushbullet.com/v2/pushes'
-UPLOAD_URL = 'https://api.pushbullet.com/v2/upload-request'
+CHANNELS_URL = "https://api.pushbullet.com/v2/subscriptions"
+DEVICES_URL = "https://api.pushbullet.com/v2/devices"
+PUSH_URL = "https://api.pushbullet.com/v2/pushes"
+UPLOAD_URL = "https://api.pushbullet.com/v2/upload-request"
 
 # Quick check for an IP address
-EMAIL_RE = re.compile(r'^[^@]+@[^@]+\.[^@]+$')
+EMAIL_RE = re.compile(r"^[^@]+@[^@]+\.[^@]+$")
 
 
 class PushBullet:
-    """ Class to talk to PushBullet """
+    """Class to talk to PushBullet"""
 
     def __init__(self, parser, options):
-        """ Start """
+        """Start"""
 
         self._parser = parser
         self._options = options
         self._api_key = options.api_key
-        self._dest = options.dest if 'dest' in options else None
+        self._dest = options.dest if "dest" in options else None
 
         if not self._api_key or not self._dest:
             self._read_netrc()
 
         if not self._api_key:
             parser.error(
-                "Specify an API KEY on the command line or in your .netrc")
+                "Specify an API KEY on the command line, in env var PUSHBULLET_KEY or in your .netrc"
+            )
 
         self.devices = self._get_devices()
         self.channels = self._get_channels()
 
     def _read_netrc(self):
-        """ Get API Key or Dest from .netrc """
+        """Get API Key or Dest from .netrc"""
 
         try:
             authenticators = netrc.netrc().authenticators("pushbullet.com")
         except IOError:
             self._parser.error(
                 "Please ensure that you have a .netrc file and an entry for %s with your username and password"
-                % "pushpullet.com")
+                % "pushpullet.com"
+            )
 
         if authenticators:
             (user, account, api_key) = authenticators
@@ -99,7 +101,7 @@ class PushBullet:
             logging.debug("Using default dest %s from .netrc", self._dest)
 
     def _get(self, url, params=None):
-        """ Get a URL """
+        """Get a URL"""
 
         resp = requests.get(url, auth=(self._api_key, None), params=params)
         if not resp.ok:
@@ -111,7 +113,7 @@ class PushBullet:
         return content
 
     def _post(self, url, **args):
-        """ Get a URL """
+        """Get a URL"""
 
         if self._options.noop:
             return
@@ -126,13 +128,13 @@ class PushBullet:
         """Get a list of devices on the account"""
         dev_list = dict()
 
-        params = {'active': 'true'}
+        params = {"active": "true"}
         devices = self._get(DEVICES_URL, params=params)
-        for device in devices['devices']:
-            if 'nickname' in device:
-                name = device['nickname']
+        for device in devices["devices"]:
+            if "nickname" in device:
+                name = device["nickname"]
             else:
-                name = device['model']
+                name = device["model"]
             dev_list[name] = device
 
         for name, device in dev_list.items():
@@ -144,11 +146,11 @@ class PushBullet:
         """Get a list of channels we are subscribed to"""
         channel_list = dict()
 
-        params = {'active': 'true'}
+        params = {"active": "true"}
         subs = self._get(CHANNELS_URL, params=params)
-        for sub in subs['subscriptions']:
-            channel = sub['channel']
-            name = channel['tag']
+        for sub in subs["subscriptions"]:
+            channel = sub["channel"]
+            name = channel["tag"]
             channel_list[name] = channel
 
         for name, channel in channel_list.items():
@@ -157,7 +159,7 @@ class PushBullet:
         return channel_list
 
     def _push(self, targets, payload):
-        """ Main push routine"""
+        """Main push routine"""
 
         logging.debug("Push: %s", pprint.pformat(payload))
 
@@ -173,30 +175,30 @@ class PushBullet:
             payload.pop(target[0])
 
     def note(self, targets, body, title):
-        """ Push a note"""
+        """Push a note"""
 
-        payload = {'type': 'note', 'body': body}
+        payload = {"type": "note", "body": body}
         if title:
-            payload['title'] = title
+            payload["title"] = title
 
         self._push(targets, payload)
 
     def link(self, targets, url, title=None):
         """Push a URL"""
 
-        payload = {'type': 'link', 'url': url}
+        payload = {"type": "link", "url": url}
         if title:
-            payload['title'] = title
+            payload["title"] = title
 
         self._push(targets, payload)
 
     def file(self, targets, filep, title):
-        """ Push a file"""
+        """Push a file"""
 
         payload = {}
-        payload['file_name'] = os.path.basename(filep.name)
+        payload["file_name"] = os.path.basename(filep.name)
         mime = MimeTypes()
-        payload['file_type'] = mime.guess_type(filep.name)
+        payload["file_type"] = mime.guess_type(filep.name)
 
         logging.debug("Push: %s", pprint.pformat(payload))
 
@@ -206,15 +208,15 @@ class PushBullet:
 
         # Upload the file
         data = resp.json()
-        resp = self._post(data["upload_url"], files={'file': filep})
+        resp = self._post(data["upload_url"], files={"file": filep})
 
         # Push the file
-        payload['type'] = 'file'
-        payload['file_url'] = data['file_url']
+        payload["type"] = "file"
+        payload["file_url"] = data["file_url"]
         if title:
-            payload['body'] = title
+            payload["body"] = title
         else:
-            payload['body'] = payload['file_name']
+            payload["body"] = payload["file_name"]
         self._push(targets, payload)
 
     def get_dests(self):
@@ -230,27 +232,27 @@ class PushBullet:
         # Make a list of destinations
         for dest in self._options.dest:
             if EMAIL_RE.search(dest):
-                dests.append(['email', dest])
+                dests.append(["email", dest])
                 continue
 
             # Accept device name or nickname
             if dest in self.devices:
-                dests.append(['device_iden', self.devices[dest]['iden']])
+                dests.append(["device_iden", self.devices[dest]["iden"]])
                 continue
 
             # Accept the device identifier
             for device in self.devices.values():
-                if dest == device['iden']:
-                    dests.append(['device_iden', dest])
+                if dest == device["iden"]:
+                    dests.append(["device_iden", dest])
                     continue
 
             if dest in self.channels:
-                dests.append(['channel_tag', self.channels[dest]['iden']])
+                dests.append(["channel_tag", self.channels[dest]["iden"]])
                 continue
 
             for channel in self.channels.values():
-                if dest == channel['iden']:
-                    dests.append(['channel_iden', dest])
+                if dest == channel["iden"]:
+                    dests.append(["channel_iden", dest])
                     continue
 
             self._parser.error("Unrecognized destination: %s" % dest)
@@ -259,137 +261,143 @@ class PushBullet:
 
 
 def push_note(options, pushbullet):
-    """ Push a message """
+    """Push a message"""
 
     dests = pushbullet.get_dests()
     pushbullet.note(dests, " ".join(options.note), options.title)
 
 
 def push_link(options, pushbullet):
-    """ Push a message """
+    """Push a message"""
 
     dests = pushbullet.get_dests()
     pushbullet.link(dests, options.link, options.title)
 
 
 def push_file(options, pushbullet):
-    """ Push a message """
+    """Push a message"""
 
     dests = pushbullet.get_dests()
     pushbullet.link(dests, options.file, options.title)
 
 
 def list_objects(options, pushbullet):
-    """ Push a message """
+    """Push a message"""
 
     if options.list == "devices":
         logging.warning("Devices:")
         for name, device in pushbullet.devices.items():
-            logging.warning("\t%s: %s", name, device['iden'])
+            logging.warning("\t%s: %s", name, device["iden"])
         return
 
     if options.list == "channels":
         logging.warning("Channels:")
         for name, channel in pushbullet.channels.items():
-            logging.warning("\t%s: %s", name, channel['iden'])
+            logging.warning("\t%s: %s", name, channel["iden"])
         return
 
 
 def parse_args():
-    """ What do we need to do """
+    """What do we need to do"""
 
     parser = argparse.ArgumentParser(description="Send pushbullet messages")
 
-    #	Debugging
+    # 	Debugging
     group = parser.add_argument_group("Debugging options")
-    group.add_argument("-d",
-                       "--debug",
-                       dest="debug",
-                       default=False,
-                       action='store_true',
-                       help="print debugging messages")
-    group.add_argument("--nodebug",
-                       dest="debug",
-                       action='store_false',
-                       help="print debugging messages")
-    group.add_argument("-v",
-                       "--verbose",
-                       dest="verbose",
-                       default=False,
-                       action='store_true',
-                       help="print verbose messages")
+    group.add_argument(
+        "-d",
+        "--debug",
+        dest="debug",
+        default=False,
+        action="store_true",
+        help="print debugging messages",
+    )
+    group.add_argument(
+        "--nodebug",
+        dest="debug",
+        action="store_false",
+        help="print debugging messages",
+    )
+    group.add_argument(
+        "-v",
+        "--verbose",
+        dest="verbose",
+        default=False,
+        action="store_true",
+        help="print verbose messages",
+    )
     group.add_argument(
         "-n",
         "--noop",
         dest="noop",
         default=False,
-        action='store_true',
-        help="Don't send notifications, just list what we are going to do")
+        action="store_true",
+        help="Don't send notifications, just list what we are going to do",
+    )
 
     group = parser.add_argument_group("Destination parameters")
-    group.add_argument("--api-key",
-                       dest="api_key",
-                       default=os.environ.get("PUSHBULLET_KEY"),
-                       help="Specify the Pushbullet API key")
+    group.add_argument(
+        "--api-key",
+        dest="api_key",
+        default=os.environ.get("PUSHBULLET_KEY"),
+        help="Specify the Pushbullet API key",
+    )
 
     # Mode
     subparsers = parser.add_subparsers(help="commands")
 
     # Note
     sub_parser = subparsers.add_parser("note", help="Send a message")
-    sub_parser.add_argument("note",
-                            nargs="+",
-                            help="Strings that form the message")
+    sub_parser.add_argument(
+        "note", nargs="+", help="Strings that form the message"
+    )
     sub_parser.set_defaults(func=push_note)
-    sub_parser.add_argument("--title",
-                            dest="title",
-                            default=None,
-                            help="Specify the title")
+    sub_parser.add_argument(
+        "--title", dest="title", default=None, help="Specify the title"
+    )
     sub_parser.add_argument(
         "--dest",
         dest="dest",
         action="append",
-        help="Destination, one of 'all', e-mail, device name, nickname or iden"
+        help="Destination, one of 'all', e-mail, device name, nickname or iden",
     )
 
     # Link
     sub_parser = subparsers.add_parser("link", help="Send a URL")
     sub_parser.add_argument("link", nargs=1, help="URL")
     sub_parser.set_defaults(func=push_link)
-    sub_parser.add_argument("--title",
-                            dest="title",
-                            default=None,
-                            help="Specify the title")
+    sub_parser.add_argument(
+        "--title", dest="title", default=None, help="Specify the title"
+    )
     sub_parser.add_argument(
         "--dest",
         dest="dest",
         action="append",
-        help="Destination, one of 'all', e-mail, device name, nickname or iden"
+        help="Destination, one of 'all', e-mail, device name, nickname or iden",
     )
 
     # File
     sub_parser = subparsers.add_parser("file", help="Send a file")
     sub_parser.set_defaults(func=push_file)
-    sub_parser.add_argument("file",
-                            type=argparse.FileType('rb'),
-                            help="File to send")
-    sub_parser.add_argument("--title",
-                            dest="title",
-                            default=None,
-                            help="Specify the title")
+    sub_parser.add_argument(
+        "file", type=argparse.FileType("rb"), help="File to send"
+    )
+    sub_parser.add_argument(
+        "--title", dest="title", default=None, help="Specify the title"
+    )
     sub_parser.add_argument(
         "--dest",
         dest="dest",
         action="append",
-        help="Destination, one of 'all', e-mail, device name, nickname or iden"
+        help="Destination, one of 'all', e-mail, device name, nickname or iden",
     )
 
     # List
     sub_parser = subparsers.add_parser("list", help="List objects")
     sub_parser.set_defaults(func=list_objects)
-    sub_parser.add_argument("list",
-                            choices=["channels", "devices"],
-                            help="Objects to list")
+    sub_parser.add_argument(
+        "list", choices=["channels", "devices"], help="Objects to list"
+    )
 
     # Parse args
     options = parser.parse_args()
@@ -411,17 +419,17 @@ def parse_args():
 
 
 def init_logging(options):
-    """ Set up logging """
+    """Set up logging"""
 
     logger = logging.getLogger()
     logger.handlers = []
     logger.addHandler(logging.StreamHandler())
     if options.debug:
-        logger.setLevel('DEBUG')
+        logger.setLevel("DEBUG")
     elif options.verbose:
-        logger.setLevel('INFO')
+        logger.setLevel("INFO")
     else:
-        logger.setLevel('WARNING')
+        logger.setLevel("WARNING")
 
 
 def main():

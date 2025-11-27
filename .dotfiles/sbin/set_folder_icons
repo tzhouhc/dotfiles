@@ -10,7 +10,7 @@ for dir in $(echo ".\n"; fd . -t d); do
   if ls "$dir" | grep Icon >/dev/null; then
     continue
   fi
-  image=$(fd . --type f -e jpg -e png $dir | head -n 1)
+  image=$(fd . --type f -e jpg -e png -e webp $dir | head -n 1)
   if [[ $image != '' ]]; then
     suffix=$(echo $image | grep -o '[^.]*$')
     tmpimg="/tmp/tempimg.$suffix"

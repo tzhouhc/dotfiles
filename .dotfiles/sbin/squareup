@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Usage: ./thumbnail.sh input_image.jpg output_thumb.jpg
+
+# Check if the number of params is 2
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 <input_image> <output_image>"
+  exit 1
+fi
+
+INPUT="$1"
+OUTPUT="$2"
+
+# Check for imagemagick's convert
+if ! command -v magick &>/dev/null; then
+  echo "Error: ImageMagick 'convert' is not installed."
+  exit 2
+fi
+
+# Check if input file exists
+if [ ! -f "$INPUT" ]; then
+  echo "Error: Input file '$INPUT' does not exist."
+  exit 3
+fi
+
+# Resize image to a thumbnail (e.g., 200x200 pixels, preserving aspect ratio)
+convert "$INPUT" -resize 200x200 -background black -gravity center -extent 200x200 "$OUTPUT"
+
+# Check for success
+if [ $? -eq 0 ]; then
+  echo "Thumbnail created: $OUTPUT"
+else
+  echo "Error: Failed to create thumbnail."
+  exit 4
+fi

@@ -90,4 +90,12 @@ function M.update_config(config)
   end
 end
 
+wezterm.on('window-config-reloaded', function(window)
+  if wezterm.gui.screens().active.name == "ASM-160QC" then
+    window:set_config_overrides({
+      font_size = 11,
+    })
+  end
+end)
+
 return M

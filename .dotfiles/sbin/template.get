@@ -1,0 +1,55 @@
+#!/bin/bash
+#
+# Executable Getter Template
+# 
+# USAGE: Copy this file to <desired_filename>.get
+#        Update the URL below to point to the file you want to download
+#        Run the script: bash <desired_filename>.get
+#        The script will download the file, save it as <desired_filename>, and delete itself
+#
+
+# ============================================================================
+# CONFIGURATION - CHANGE THIS URL FOR YOUR USE CASE
+# ============================================================================
+URL="https://example.com/path/to/file"
+
+# ============================================================================
+# CONTEXT-AGNOSTIC CODE - DO NOT MODIFY BELOW THIS LINE
+# ============================================================================
+
+# Get the full path to this script
+SCRIPT_PATH="$(readlink -f "$0")"
+
+# Get just the filename
+SCRIPT_NAME="$(basename "$SCRIPT_PATH")"
+
+# Strip the .get extension to get the target filename
+TARGET_NAME="${SCRIPT_NAME%.get}"
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+
+# Full path to the target file
+TARGET_PATH="$SCRIPT_DIR/$TARGET_NAME"
+
+# Check if URL is still the default
+if [ "$URL" = "https://example.com/path/to/file" ]; then
+    echo "ERROR: Please configure the URL in this script before running."
+    exit 1
+fi
+
+# Download the file
+echo "Downloading from: $URL"
+echo "Target file: $TARGET_PATH"
+
+if wget -O "$TARGET_PATH" "$URL"; then
+    echo "Download successful!"
+    echo "Removing getter script: $SCRIPT_PATH"
+    rm "$SCRIPT_PATH"
+    echo "Done. File saved as: $TARGET_PATH"
+else
+    echo "ERROR: Download failed. Keeping getter script."
+    # Clean up partial download if it exists
+    [ -f "$TARGET_PATH" ] && rm "$TARGET_PATH"
+    exit 1
+fi

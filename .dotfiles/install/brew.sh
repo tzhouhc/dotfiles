@@ -17,22 +17,20 @@ fi
 
 brew update
 # critical tools
-if [[ $(uname -m) == "aarch64" && $(uname -s) == "Linux" ]]; then
-  brew install wget git tmux zsh the_silver_searcher universal-ctags \
-    moreutils lazygit direnv jq tldr cargo-binstall \
-    coreutils nodejs python@3.13 grep
-  brew install --build-from-source gum age mods oh-my-posh
-else
-  brew install wget git tmux zsh the_silver_searcher universal-ctags \
-    moreutils lazygit direnv jq gum age tldr mods cargo-binstall \
-    coreutils nodejs oh-my-posh python@3.13 grep
-fi
-
+brew install wget git tmux zsh the_silver_searcher universal-ctags \
+  moreutils lazygit direnv jq tldr cargo-binstall \
+  coreutils nodejs python@3.13 grep pre-commit
+brew install charmbracelet/tap/crush
 # less important ones
 brew install hexyl numbat pastel wtfutil clipboard
 brew install difftastic btop pnpm gh
-brew install timescam/homebrew-tap/pay-respects
-brew install charmbracelet/tap/crush
+
+# linux sometimes don't have prebuilt binaries in arm64
+if [[ $(uname -m) == "aarch64" && $(uname -s) == "Linux" ]]; then
+  brew install --build-from-source gum age mods oh-my-posh
+else
+  brew install gum age mods oh-my-posh
+fi
 
 # gh extension
 gh extension install dlvhdr/gh-dash

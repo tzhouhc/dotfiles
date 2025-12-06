@@ -2,6 +2,8 @@
 
 set +e
 source $HOME/.zsh/env/path.zsh
+# ensures the OPENAI_API_KEY is available
+source $HOME/.zsh/env/env.zsh
 
 # Check if at least one argument is provided
 if [ $# -lt 1 ]; then
@@ -13,6 +15,9 @@ SESSION_NAME="$1"
 WINDOW_NAME="$1"
 shift  # Remove first argument, leaving the rest as the program + args
 PROGRAM=("$@")  # All remaining arguments as the program to run
+if [[ $XDG_CONFIG_HOME == '' ]]; then
+  XDG_CONFIG_HOME="${HOME}/.config"
+fi
 CONFIG="$XDG_CONFIG_HOME/tmux/tmux.mini.conf"
 
 # Check if tmux session exists

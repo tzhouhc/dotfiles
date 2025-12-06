@@ -140,4 +140,7 @@ if uname -a | grep -i darwin &>/dev/null; then
   export MallocNanoZone=0
 fi
 
+# Global config
+export FD_IGNORE_GIT=
+
 source "$ZSH_ENV_DIR/gum.zsh"

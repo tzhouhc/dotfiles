@@ -1,6 +1,11 @@
 # Source FZF if available
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
+FD_IGNORE_FLAG="-I"
+if [[ $FD_IGNORE_GIT != '' ]]; then
+  FD_IGNORE_FLAG=""
+fi
+
 # this makes it so fzf won't go searching for files in gitignore paths
 if type fd > /dev/null; then
   _fzf_compgen_path() {
@@ -66,9 +71,9 @@ function local_file_list() {
   if [[ $1 != '' ]]; then
     # note: used to do `sort` in the middle as well -- apparently it doesn't
     # work with with filenames that have spaces
-    print "$(fd . --type f --type l $1 | fzfp -m)"
+    print "$(fd . --type f --type l ${FD_IGNORE_FLAG} $1 | fzfp -m)"
   else
-    print "$(fd . --type f --type l | fzfp -m)"
+    print "$(fd . --type f --type l ${FD_IGNORE_FLAG} | fzfp -m)"
   fi
 }
 

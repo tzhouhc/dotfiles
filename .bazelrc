@@ -1,1 +1,5 @@
 test --test_output=errors
+
+# macos clang required for more advanced c++ features
+build --action_env=CC=/opt/homebrew/Cellar/llvm/21.1.6/bin/clang
+build --action_env=CXX/opt/homebrew/Cellar/llvm/21.1.6/bin/clang++

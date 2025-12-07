@@ -44,7 +44,6 @@ main_bins=(
   yazi
   zoxide
   nvim
-  git-auto
 )
 
 echo "Running crucial binary presence check:"

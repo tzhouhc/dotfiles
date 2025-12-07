@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 
+AUTO_YES=0
+for arg in "$@"; do
+  if [[ "$arg" == "-y" ]]; then
+    AUTO_YES=1
+    break
+  fi
+done
+
 # setup installation environment to be consistent
 this_path="$(realpath "$0")"
 cwd=$(dirname "${this_path}")
@@ -17,6 +25,9 @@ fi
 
 confirm() {
   # Usage: confirm "Question?"
+  if [[ "$AUTO_YES" -eq 1 ]]; then
+    return 0  # Always "yes" if -y was passed
+  fi
   local response
   read -r -p "${1} [y/n]: " response
   [[ $response == "y" || $response == "Y" ]]
@@ -31,7 +42,8 @@ else
   echo "FZF already present"
 fi
 
-# zinit
+# zinit -- this should actually be automatic once zsh and dotfiles are setup
+# pre
 if ! [[ -d "$HOME/.local/share/zinit" ]]; then
   bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 else
@@ -92,20 +104,12 @@ else
   echo "Neovim already setup"
 fi
 
-# python package management
-if ! type uv &>/dev/null; then
-  if confirm "Install uv?"; then
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-  fi
-else
-  echo "uv already present"
-fi
 
 # try to acquire latest binaries after installations
 hash -r
 
 # assumes python is already present and up-to-date
-  if confirm "Install python packages?"; then
+if confirm "Install python packages?"; then
   "$cwd"/install/pip.sh
 fi
 
@@ -147,5 +151,19 @@ fi
 if uname -a | grep -i darwin &>/dev/null; then
   if confirm "Setup Rime input?"; then
     "$cwd"/lib/rime/setup
+  fi
+fi
+
+# setup for development in addition to just regular usage
+if confirm "Setup for development?"; then
+  "$cwd"/install/dev/brew_dev.sh
+
+  # python package management
+  if ! type uv &>/dev/null; then
+    if confirm "Install uv?"; then
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+    fi
+  else
+    echo "uv already present"
   fi
 fi

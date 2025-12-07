@@ -17,13 +17,9 @@ fi
 
 brew update
 # critical tools
-brew install wget git tmux zsh the_silver_searcher universal-ctags \
-  moreutils lazygit direnv jq tldr cargo-binstall \
-  coreutils nodejs python@3.13 grep pre-commit pandoc
-brew install charmbracelet/tap/crush
-# less important ones
-brew install hexyl numbat pastel wtfutil clipboard
-brew install difftastic btop pnpm gh
+brew install wget git tmux zsh moreutils lazygit jq tldr \
+  coreutils nodejs python@3.13 grep clipboard btop gh \
+  charmbracelet/tap/crush
 
 # linux sometimes don't have prebuilt binaries in arm64
 if [[ $(uname -m) == "aarch64" && $(uname -s) == "Linux" ]]; then
@@ -31,9 +27,6 @@ if [[ $(uname -m) == "aarch64" && $(uname -s) == "Linux" ]]; then
 else
   brew install gum age mods oh-my-posh
 fi
-
-# gh extension
-gh extension install dlvhdr/gh-dash
 
 if uname -a | grep -i darwin &>/dev/null; then
   # chinese input method
@@ -45,8 +38,6 @@ if uname -a | grep -i darwin &>/dev/null; then
   brew install --cask sfm
   # localsend
   brew install --cask localsend
-  # music player
-  brew install cmus
   # fonts
   brew install font-victor-mono font-cascadia-code
 fi

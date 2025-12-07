@@ -10,11 +10,11 @@ fi
 export PATH=$BREW_HOME/bin:$PATH
 
 brew update
-# critical tools
-brew install cloc bazel hyperfine gperftools graphviz llvm luarocks
-brew install --cask gcloud-cli
-brew install --cask basictex
+brew install pastel numbat
 
 if uname -a | grep -i darwin &>/dev/null; then
-  echo "Installing macos packages."
+  # music player
+  brew install cmus
+  # multimedia stuff
+  brew install imagemagick ffmpeg
 fi

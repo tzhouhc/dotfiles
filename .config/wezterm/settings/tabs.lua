@@ -26,6 +26,8 @@ local function tab_icon(title)
 		return ""
 	elseif title:find("vmware") then
 		return "󰒔"
+	elseif title:find("orb") then
+		return ""
 	elseif title:find("mbp") then
 		return ""
 	elseif title:find("gcp") then
@@ -59,6 +61,8 @@ local function tab_color(title)
 	elseif title:find("ellij") then -- hack since z could be cap or small
 		return green
 	elseif title:find("vmware") then
+		return cyan
+	elseif title:find("orb") then
 		return cyan
 	elseif title:find("mbp") then
 		return lime

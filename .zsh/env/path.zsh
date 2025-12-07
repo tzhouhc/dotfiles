@@ -59,6 +59,8 @@ path_components=(
   "/Applications/Sublime Text.app/Contents/SharedSupport/bin"
   # hammerspoon
   "/Applications/Hammerspoon.app/Contents/Frameworks/hs"
+  # orbstack
+  "/Applications/OrbStack.app/Contents/MacOS/bin/"
 
   # System paths
   "/usr/sbin"

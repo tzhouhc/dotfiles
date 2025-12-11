@@ -98,6 +98,10 @@ if type ggrep >/dev/null 2>&1; then
   alias grep=ggrep
 fi
 
+if type fd &>/dev/null; then
+  alias fd="fd --hidden --exclude '.git'"
+fi
+
 if type rip >/dev/null 2>&1; then
   alias rm=rip
 fi

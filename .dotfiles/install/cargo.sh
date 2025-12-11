@@ -31,10 +31,11 @@ if type cargo >/dev/null 2>&1; then
   cargo binstall -y magika-cli   # file
   cargo binstall -y navi   # save commands for later reuse
   cargo binstall -y petname  # random name generator
-  cargo binstall -y zellij  # tmux
   cargo install ripgrep --features 'pcre2'  # grep
   cargo binstall -y rm-improved  # rm
+  cargo binstall -y sd   # sed
   cargo binstall -y yazi-fm yazi-cli  # file explorer
+  cargo binstall -y zellij  # tmux
   cargo binstall -y zoxide   # z
 else
   echo "cargo not found!"

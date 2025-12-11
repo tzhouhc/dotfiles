@@ -1,0 +1,34 @@
+#!/bin/bash
+
+source "$HOME/.zsh/env/path.zsh"
+
+CHECK_FILE="$HOME/.private/tasks.md"
+STAMP="$HOME/.local/state/task_check_timestamp"
+NOTIFY="notify"
+TITLE="Check Tasks Reminder"
+
+# Get today's date components
+MONTH=$(date +%-m)
+DAY=$(date +%-d)
+TODAY_PATTERN="$MONTH-$DAY"
+TODAY_PATTERN_PADDED="$(date +%m-%d)"
+
+# Check if already notified today
+if [ -f "$STAMP" ]; then
+    if [ "$(date -r "$STAMP" +%Y-%m-%d)" = "$(date +%Y-%m-%d)" ]; then
+        exit 0
+    fi
+fi
+
+# Find matching line (either matching m-d or mm-dd)
+PATTERN="review\(.*($TODAY_PATTERN|$TODAY_PATTERN_PADDED)\)"
+GREPPED=$(grep -E "${PATTERN}" "$CHECK_FILE")
+
+BODY=$(echo "$GREPPED" | sd '^\s*-\s+\[.\]\s+' '' | \
+  sd '@review\([^)]+\)' '' | head -n1)
+
+if [ -n "$BODY" ]; then
+    if "$NOTIFY" "$TITLE" "$BODY"; then
+        touch "$STAMP"
+    fi
+fi

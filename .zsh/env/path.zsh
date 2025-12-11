@@ -61,6 +61,8 @@ path_components=(
   "/Applications/Hammerspoon.app/Contents/Frameworks/hs"
   # orbstack
   "/Applications/OrbStack.app/Contents/MacOS/bin/"
+  # mason
+  "$HOME/.local/share/nvim/mason/bin"
 
   # System paths
   "/usr/sbin"

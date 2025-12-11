@@ -80,6 +80,16 @@ echo "Extraction complete."
 echo "Cleaning up temporary files..."
 rm -rf "${TMP_DIR}"
 
+# Run initial setup
+if type just &>/dev/null; then
+  if [[ $XDG_CONFIG_HOME == '' ]]; then
+    XDG_CONFIG_HOME="$HOME/.config"
+  fi
+  pushd "$XDG_CONFIG_HOME/nvim"
+  just init
+  popd
+fi
+
 echo "Neovim ${NVIM_VERSION} has been successfully installed to ${INSTALL_DIR}"
 echo "Ensure ${INSTALL_DIR}/bin is in your PATH."
 echo "For example, add 'export PATH=\"\$HOME/.local/nvim/bin:\$PATH\"' to your shell configuration file (e.g., .bashrc, .zshrc)."

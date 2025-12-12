@@ -51,13 +51,8 @@ if type zoxide &>/dev/null; then
   alias cd=smart_cd
 fi
 
-if type delta >/dev/null 2>&1; then
-  alias diff=delta
-fi
-
-if type bat >/dev/null 2>&1; then
-  alias less=bat
-fi
+alias diff=delta
+alias less=bat
 
 if type eza >/dev/null 2>&1; then
   alias ls='eza --icons=auto --no-quotes --group-directories-first --ignore-glob=".DS_Store|Icon?"'
@@ -77,45 +72,21 @@ if type procs >/dev/null 2>&1; then
   alias procs=smart_procs
 fi
 
-if type dust >/dev/null 2>&1; then
-  alias du='dust -d1 -r -B -z=1MB -w=80'
-fi
+alias du='dust -d1 -r -B -z=1MB -w=80'
 
-if type btm >/dev/null 2>&1; then
-  alias top=btm
-fi
-
-if type btop >/dev/null 2>&1; then
-  alias top=btop
-fi
-
-if type just >/dev/null 2>&1; then
-  alias j=just
-fi
+alias top=btop
+alias j=just
 
 # run if 'ggrep' exists on path
-if type ggrep >/dev/null 2>&1; then
-  alias grep=ggrep
-fi
+alias grep=ggrep
+alias fd="fd --hidden --exclude '.git'"
+alias rm=rip
+alias tree=erd
 
-if type fd &>/dev/null; then
-  alias fd="fd --hidden --exclude '.git'"
-fi
-
-if type rip >/dev/null 2>&1; then
-  alias rm=rip
-fi
-
-if type erd >/dev/null 2>&1; then
-  alias tree=erd
-fi
-
-if type lazygit >/dev/null 2>&1; then
-  if [[ $NERDFONT == '2' ]]; then
-    alias lg='lazygit -ucf=$XDG_CONFIG_HOME/lazygit/config_backup.yml'
-  else
-    alias lg=lazygit
-  fi
+if [[ $NERDFONT == '2' ]]; then
+  alias lg='lazygit -ucf=$XDG_CONFIG_HOME/lazygit/config_backup.yml'
+else
+  alias lg=lazygit
 fi
 
 alias dfg='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
@@ -124,13 +95,7 @@ alias pfg='git --git-dir=$HOME/.private.git --work-tree=$HOME'
 alias pflg='lazygit --git-dir=$HOME/.private.git --work-tree=$HOME'
 alias dfe='$EDITOR $(dfg ls-files . | fzf)'
 
-if type tmux_notify &>/dev/null; then
-  alias tin=tmux_notify
-fi
-
-if type oh-my-posh &>/dev/null; then
-  alias omp=oh-my-posh
-fi
+alias omp=oh-my-posh
 
 if type evcxr &>/dev/null; then
   alias rust=evcxr
@@ -142,13 +107,8 @@ if type cmus &>/dev/null; then
   alias cmus="screen -q -r -D cmus || screen -S cmus $actual"
 fi
 
-if type glow &>/dev/null; then
-  alias glow="glow -p"
-fi
-
-if type wezvim &>/dev/null; then
-  alias wv=wezvim
-fi
+alias glow="glow -p"
+alias wv=wezvim
 
 if type mods &>/dev/null; then
   function modsh() {
@@ -185,30 +145,14 @@ if ! type open &>/dev/null; then
   fi
 fi
 
-if type bazel &>/dev/null; then
-  alias bb="bazel build"
-  alias br="bazel run"
-  alias bt="bazel test"
-  alias bc="bazel clean"
-  alias blaze="bazel"
-fi
+alias bb="bazel build"
+alias br="bazel run"
+alias bt="bazel test"
+alias bc="bazel clean"
+alias blaze="bazel"
 
-if type task &>/dev/null; then
-  alias t="task"
-fi
-
-if type hexyl &>/dev/null; then
-  alias hex="hexyl"
-fi
-
-if type zellij &>/dev/null; then
-  alias zel="zellij attach --create main"
-fi
-
-if type rsync &>/dev/null; then
-  alias rsyncs="rsync -avh --progress --delete --stats"
-fi
-
-if type magika &>/dev/null; then
-  alias whatis="magika"
-fi
+alias t="task"
+alias hex="hexyl"
+alias zel="zellij attach --create main"
+alias rsyncs="rsync -avh --progress --delete --stats"
+alias whatis="magika"

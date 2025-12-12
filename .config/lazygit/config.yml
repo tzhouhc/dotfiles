@@ -15,3 +15,4 @@ customCommands:
     context: 'files'
     command: 'git auto -y'
     description: 'Generate commit message via LLM'
+notARepository: 'quit'

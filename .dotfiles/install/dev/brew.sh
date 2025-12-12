@@ -27,6 +27,9 @@ if ! gh auth status >/dev/null 2>&1; then
 fi
 gh extension install dlvhdr/gh-dash
 
+# regex tester
+go install github.com/samyakbardiya/trex@latest
+
 if uname -a | grep -i darwin &>/dev/null; then
   echo "Installing macos packages."
 fi

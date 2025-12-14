@@ -25,6 +25,10 @@ Single command:
 curl https://raw.githubusercontent.com/tzhouhc/dotfiles/refs/heads/main/.dotfiles/fetch.sh | bash
 ```
 
+On MacOS the script should install Chrome and Wezterm for you, so this
+can be done directly on the native terminal -- both zsh and git are available
+out of the box, or the system will prompt you to install them anyway.
+
 ## Submodule
 
 In the `config` file in the bare repo dir, ensure that the submodule has

@@ -29,6 +29,12 @@ else
 fi
 
 if uname -a | grep -i darwin &>/dev/null; then
+  # fonts
+  brew install font-victor-mono font-cascadia-code
+  # commonly used apps
+  brew install --cask google-chrome wezterm@nightly hammerspoon
+  brew install --cask raycast alt-tab topnotch bartender \
+    discord ticktick obsidian
   # chinese input method
   brew install --cask squirrel-app
   brew tap laishulu/homebrew
@@ -38,6 +44,4 @@ if uname -a | grep -i darwin &>/dev/null; then
   brew install --cask sfm
   # localsend
   brew install --cask localsend
-  # fonts
-  brew install font-victor-mono font-cascadia-code
 fi

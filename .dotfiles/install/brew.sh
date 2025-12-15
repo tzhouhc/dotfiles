@@ -30,7 +30,7 @@ fi
 
 if uname -a | grep -i darwin &>/dev/null; then
   # fonts
-  brew install font-victor-mono font-cascadia-code
+  brew install font-victor-mono font-cascadia-code font-scientifica
   # commonly used apps
   brew install --cask google-chrome wezterm@nightly hammerspoon
   brew install --cask raycast alt-tab topnotch bartender \

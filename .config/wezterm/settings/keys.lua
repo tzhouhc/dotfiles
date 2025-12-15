@@ -100,6 +100,11 @@ function M.update_config(config)
       mods = "CMD|SHIFT",
       action = wezterm.action.EmitEvent("decrease-window-opacity"),
     },
+    {
+      key = "F",
+      mods = "CMD|SHIFT",
+      action = wezterm.action.EmitEvent("switch-core-font"),
+    },
   }
 end
 

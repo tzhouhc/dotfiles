@@ -51,3 +51,9 @@ rm --decompose
 # Run the command at a specific time
 echo "<cmd>" | at <time>
 
+
+% go, clean
+
+# Clean up go compile caches
+go clean -cache -modcache
+

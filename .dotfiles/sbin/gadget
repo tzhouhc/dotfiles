@@ -24,7 +24,7 @@ export FZF_DEFAULT_OPTS="\
   --color 'input-border:#996666,input-label:#ffcccc'\
 "
 data=$(jq -r '.[] | "\(.name)\t\(.display)\t\(.desc)"' ./gadgets/gadgets.json)
-chosen=$(echo $data | fzf --height=100% --style=full --with-nth=2 --accept-nth=1 \
+chosen=$(echo $data | fzf --height=100% --style=full --bind '/:accept' --with-nth=2 --accept-nth=1 \
   --preview='echo {} | cut -f3'
 )
 

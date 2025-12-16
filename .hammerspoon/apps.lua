@@ -4,6 +4,8 @@ local default_exclude = {
 	Wezterm = true,
 }
 
+M.global_wez = -1
+
 ---find the first running app window that is not in excluded and is somewhat
 ---normal, then focus it
 ---@param excluded table
@@ -32,13 +34,24 @@ local function hidden_wez_window(wez)
 	return nil
 end
 
----use <cmd> + <tilde> to summon WezTerm or despawn.
+local function get_new_wez()
+	hs.application.launchOrFocus("WezTerm")
+	return hs.application.get("WezTerm")
+end
+
+---use <cmd> + <tilde> to summon WezTerm or despawn -- see mappings.lua.
 function M.toggle_wizterm()
-	local wez = hs.application.find("Wezterm")
-	if not wez or wez == nil then
-		hs.application.launchOrFocus("WezTerm")
+	local wez = hs.application.find(M.global_wez)
+
+	-- There is no existing wezterm global instance; make one and record it
+	if not wez or wez == nil or wez:name() ~= "WezTerm" then
+		local app = get_new_wez()
+		if app then
+			M.global_wez = app:pid()
+		end
 		return
 	end
+
 	-- always hide wez app: hidden apps are considered across spaces.
 	if wez:isFrontmost() then
 		-- extracting this `hide` to before the loop sometimes would cause

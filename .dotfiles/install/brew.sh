@@ -37,8 +37,6 @@ if uname -a | grep -i darwin &>/dev/null; then
     discord ticktick obsidian
   # chinese input method
   brew install --cask squirrel-app
-  brew tap laishulu/homebrew
-  brew install macism
   # proxy
   brew install sing-box
   brew install --cask sfm

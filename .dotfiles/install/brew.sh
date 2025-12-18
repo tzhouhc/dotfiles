@@ -12,7 +12,7 @@ export PATH=$BREW_HOME/bin:$PATH
 # install brew if none present
 if ! type brew  >/dev/null 2>&1; then
   echo "Installing homebrew:"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 brew update

@@ -36,4 +36,10 @@ export XDG_CONFIG_HOME="$HOME/.config"
 mkdir -p "$XDG_CONFIG_HOME"
 cd "$HOME/.dotfiles/"
 # source instead of run to keep some env consistency (?)
-source install.sh
+read -r -p "Choose install mode (base/dev/ask/full) [ask]: " INSTALL_MODE
+if [[ -z "$INSTALL_MODE" ]]; then
+  INSTALL_MODE="ask"
+fi
+
+source install.sh "$INSTALL_MODE"
+

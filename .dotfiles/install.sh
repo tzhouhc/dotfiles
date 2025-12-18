@@ -170,4 +170,6 @@ if confirm "Setup for development?"; then
 fi
 
 # ensure user shell for subsequent logins
+which zsh | sudo tee -a /etc/shells
+echo "Updating user login shell:"
 chsh -s "$(which zsh)"

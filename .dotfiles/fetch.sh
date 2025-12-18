@@ -3,6 +3,7 @@ set -e
 
 # ensure user has password
 if [[ $(passwd --status | cut -d' ' -f2) == "L" ]]; then
+  echo "You have not set a password yet. Setting up now."
   sudo passwd "$(whoami)"
 fi
 
@@ -23,6 +24,7 @@ dfg() {
   git --git-dir="$HOME/.dotfiles.git" --work-tree="$HOME" "$@"
 }
 
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 git clone --bare git@github.com:tzhouhc/dotfiles.git "$HOME/.dotfiles.git"
 
 dfg checkout -f

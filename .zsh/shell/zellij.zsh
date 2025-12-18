@@ -17,7 +17,7 @@ if [[ $ZELLIJ != '' ]]; then
   if [[ $ZELLIJ_TAB == '' ]]; then
     if type petname &>/dev/null; then
       export ZELLIJ_TAB=$(petname)
-    else
+    elif [[ -f "/usr/share/dict/words" ]]; then
       export ZELLIJ_TAB=$(shuf -n 1 /usr/share/dict/words)
     fi
   fi

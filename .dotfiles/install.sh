@@ -33,6 +33,19 @@ confirm() {
   [[ $response == "y" || $response == "Y" ]]
 }
 
+# install OS-dependent specific items
+if uname -a | grep -i linux > /dev/null; then
+  if type apt-get >/dev/null 2>&1; then
+    sudo "$cwd"/install/apt.sh
+  elif type yum >/dev/null 2>&1; then
+    sudo "$cwd"/install/other/yum.sh
+  elif type pacman >/dev/null 2>&1; then
+    sudo "$cwd"/install/other/pacman.sh
+  else
+    echo "Unknown OS, some software installation incomplete."
+  fi
+fi
+
 # fzf
 if ! [ -d "$HOME/.fzf" ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"

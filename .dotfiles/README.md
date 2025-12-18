@@ -1,14 +1,19 @@
 # Dotfiles
 
-Bootstrap:
-
-Ubuntu:
+Single command:
 
 ```sh
-sudo apt install -y zsh git curl
+curl -O https://raw.githubusercontent.com/tzhouhc/dotfiles/refs/heads/main/.dotfiles/fetch.sh && bash fetch.sh
 ```
 
-Normal initialization:
+This will handle all of:
+- Downloading bootstrap script
+- Check and set user password if unset
+- Install necessary software for the bootstrapping itself
+- Install all actual config files and tools
+- Setup user login shell
+
+## Manual initialization
 
 ```sh
 git clone --bare git@github.com:tzhouhc/dotfiles.git $HOME/.dotfiles.git
@@ -16,18 +21,11 @@ alias dfg='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 dfg checkout -f
 dfg submodule update --init --recursive
 cp $HOME/.dotfiles/ref_git_config $HOME/.dotfiles.git/config
-
 ```
 
-Single command:
-
-```sh
-curl https://raw.githubusercontent.com/tzhouhc/dotfiles/refs/heads/main/.dotfiles/fetch.sh | bash
-```
-
-On MacOS the script should install Chrome and Wezterm for you, so this
-can be done directly on the native terminal -- both zsh and git are available
-out of the box, or the system will prompt you to install them anyway.
+On MacOS the script should install Chrome and Wezterm for you, so this can be
+done directly on the native terminal -- both zsh and git are available out of
+the box, or the system will prompt you to install them anyway.
 
 ## Submodule
 

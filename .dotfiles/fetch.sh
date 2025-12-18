@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# ensure user has password
+if [[ $(passwd --status | cut -d' ' -f2) == "L" ]]; then
+  sudo passwd "$(whoami)"
+fi
+
 if uname -a | grep -i linux > /dev/null; then
   if type apt >/dev/null 2>&1; then
     sudo apt install -y zsh git curl
@@ -12,11 +17,6 @@ if uname -a | grep -i linux > /dev/null; then
     echo "Unable to setup bootstrap!"
     exit 1
   fi
-fi
-
-# ensure user has password
-if [[ $(passwd --status | cut -d' ' -f2) == "L" ]]; then
-  sudo passwd "$(whoami)"
 fi
 
 dfg() {

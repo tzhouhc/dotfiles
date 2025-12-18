@@ -42,6 +42,9 @@ Possible check
 
 ## Other hosts
 
+These steps are covered in the automatic fetching script. I leave them
+here purely for reference.
+
 If running on AWS/GCP, first set password for the default user:
 
 ```sh
@@ -67,28 +70,18 @@ Latest zsh configurations require [Nerd Fonts](https://www.nerdfonts.com/)
 support at major version 3. Powerline symbols is also required. Use of fonts
 like `Cascadia Code NF` or `JetBrains Nerd Font Mono` is recommended.
 
+> [!NOTE]
+> On platforms with homebrew, the main fonts are automatically installed.
+
 The main installation script requires `sudo` access to run the initial
 installation of tools; specific installations using `cargo` or `homebrew` do
 not.
-
-# Install tools
-
-If additional tooling is required, run the `install.sh` script. It should call
-the other installation scripts automatically.
-
-> [!NOTE]: `cargo_optional.sh` is not invoked as part of the standard
-> installation process, as none of the tools within are used in the other
-> scripts in this setup.
-
-## Neovim
-
-Downloaded using `bob-nvim` which is part of the rust installation.
 
 # Tools
 
 ## Scripts
 
-A number of custom scripts are available in `.dotfiles/bin`; this is
+A number of custom scripts are available in `.dotfiles/sbin`; this is
 automatically added to the `$PATH` env var as part of the `zshrc`.
 
 ## Just

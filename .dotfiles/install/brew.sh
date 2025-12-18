@@ -27,19 +27,3 @@ if [[ $(uname -m) == "aarch64" && $(uname -s) == "Linux" ]]; then
 else
   brew install gum age mods oh-my-posh
 fi
-
-if uname -a | grep -i darwin &>/dev/null; then
-  # fonts
-  brew install font-victor-mono font-cascadia-code font-scientifica
-  # commonly used apps
-  brew install --cask google-chrome wezterm@nightly hammerspoon
-  brew install --cask raycast alt-tab topnotch bartender \
-    discord ticktick obsidian
-  # chinese input method
-  brew install --cask squirrel-app
-  # proxy
-  brew install sing-box
-  brew install --cask sfm
-  # localsend
-  brew install --cask localsend
-fi

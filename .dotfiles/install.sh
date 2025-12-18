@@ -1,14 +1,6 @@
 #!/bin/bash
 set -e
 
-AUTO_YES=0
-for arg in "$@"; do
-  if [[ "$arg" == "-y" ]]; then
-    AUTO_YES=1
-    break
-  fi
-done
-
 # setup installation environment to be consistent
 this_path="$(realpath "$0")"
 cwd=$(dirname "${this_path}")
@@ -24,14 +16,21 @@ if [[ $XDG_CONFIG_HOME == '' ]]; then
 fi
 
 # --- Modes ---
+# base -- just common commandline tools and shell improvements
+# dev -- development tools
+# full -- GUI tools, private stuff
+#
 declare -A COMPONENT_MODES=(
   [homebrew]="base dev full"
   [neovim]="base dev full"
   [rust_tools]="base dev full"
   [zellij_tools]="base dev full"
+
   [python_pkgs]="dev full"
   [creds]="dev full"
   [dev_setup]="dev full"
+
+  [gui]="full"
   [private]="full"
   [rime]="full"
 )
@@ -40,9 +39,6 @@ MODE="${1:-ask}"
 
 confirm() {
   # Usage: confirm "Question?"
-  if [[ "$AUTO_YES" -eq 1 ]]; then
-    return 0  # Always "yes" if -y was passed
-  fi
   local response
   read -r -p "${1} [y/n]: " response
   [[ $response == "y" || $response == "Y" ]]
@@ -185,6 +181,10 @@ if should_install dev_setup "Setup for development?"; then
   "$cwd"/install/dev/cargo.sh
   # uv for python package management
   curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
+if should_install gui "Setup GUI applications and fonts?"; then
+  "$cwd"/install/gui/brew.sh
 fi
 
 # ensure user shell for subsequent logins

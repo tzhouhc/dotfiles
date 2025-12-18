@@ -3,3 +3,4 @@
 # - simplified shell
 
 touch "$HOME/.omp_fallback"
+omp disable notice

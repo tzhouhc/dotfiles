@@ -25,10 +25,10 @@ if type cargo >/dev/null 2>&1; then
   cargo binstall -y erdtree   # tree
   cargo binstall -y fd-find   # find
   cargo binstall -y git-delta   # diff
-  cargo binstall -y imgcatr  # show images
+  cargo binstall -y imgcatr  # show images; no binstall
   cargo binstall -y jnv   # interactive jq
   cargo binstall -y just   # make
-  cargo binstall -y magika-cli   # file
+  cargo binstall -y magika-cli   # file; no binstall
   cargo binstall -y navi   # save commands for later reuse
   cargo binstall -y petname  # random name generator
   cargo install ripgrep --features 'pcre2'  # grep

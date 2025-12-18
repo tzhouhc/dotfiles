@@ -45,7 +45,8 @@ fi
 # zinit -- this should actually be automatic once zsh and dotfiles are setup
 # pre
 if ! [[ -d "$HOME/.local/share/zinit" ]]; then
-  bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+  NO_INPUT=1 NO_ANNEXES=1 bash -c \
+    "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 else
   echo "Zinit already present"
 fi
@@ -59,19 +60,6 @@ if ! [ -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ]; then
   echo "Installing TPM"
 else
   echo "TPM already installed"
-fi
-
-# install OS-dependent specific items
-if uname -a | grep -i linux > /dev/null; then
-  if type apt-get >/dev/null 2>&1; then
-    sudo "$cwd"/install/apt.sh
-  elif type yum >/dev/null 2>&1; then
-    sudo "$cwd"/install/other/yum.sh
-  elif type pacman >/dev/null 2>&1; then
-    sudo "$cwd"/install/other/pacman.sh
-  else
-    echo "Unknown OS, some software installation incomplete."
-  fi
 fi
 
 # homebrew
@@ -167,3 +155,6 @@ if confirm "Setup for development?"; then
     echo "uv already present"
   fi
 fi
+
+# ensure user shell for subsequent logins
+chsh -s "$(which zsh)"

@@ -11,6 +11,10 @@ fi
 if uname -a | grep -i linux > /dev/null; then
   if type apt >/dev/null 2>&1; then
     sudo apt install -y git
+  elif type apk >/dev/null 2>&1; then
+    sudo apk add git
+  elif type dnf >/dev/null 2>&1; then
+    sudo dnf instal -y git-all
   elif type yum >/dev/null 2>&1; then
     sudo yum install -y git
   elif type pacman >/dev/null 2>&1; then

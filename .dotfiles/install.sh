@@ -57,6 +57,10 @@ should_install() {
 if uname -a | grep -i linux > /dev/null; then
   if type apt-get >/dev/null 2>&1; then
     sudo "$cwd"/install/apt.sh
+  elif type apk >/dev/null 2>&1; then
+    sudo "$cwd"/install/other/apk.sh
+  elif type dnf >/dev/null 2>&1; then
+    sudo "$cwd"/install/dnf.sh
   elif type yum >/dev/null 2>&1; then
     sudo "$cwd"/install/other/yum.sh
   elif type pacman >/dev/null 2>&1; then

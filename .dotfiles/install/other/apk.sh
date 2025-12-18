@@ -2,6 +2,7 @@
 set -e
 
 # only installs basic tools needed for installing homebrew and rust
-dnf install -y procps curl file pkg-config \
+apk update
+apk add --no-cache build-base procps curl file pkgconfig libssl-dev \
   cmake zsh
-dnf group install -y development-tools
+

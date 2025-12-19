@@ -38,7 +38,7 @@ dfg checkout -f
 dfg submodule update --init --recursive
 
 # ensure dotfiles git config
-cp "$HOME/.dotfiles/ref_git_config" "$HOME/.dotfiles.git/config"
+cp "$HOME/.dotfiles/lib/ref_git_config" "$HOME/.dotfiles.git/config"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 mkdir -p "$XDG_CONFIG_HOME"
@@ -56,3 +56,6 @@ popd
 
 # clean up current script
 rm "$0"
+
+# enter new shell
+exec zsh

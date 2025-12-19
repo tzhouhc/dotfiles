@@ -4,14 +4,20 @@ set -e
 # setup installation environment to be consistent
 this_path="$(realpath "$0")"
 cwd=$(dirname "${this_path}")
+green="\033[0;32m"
+reset="\033[0m"
 cd "$cwd"
 
 # make sure paths are set even if the corresponding binaries aren't installed
 # yet; should be compatible with bash
 source "$HOME/.zsh/env/path.zsh"
 
+setup_echo() {
+    printf "%b[SETUP]%b %s\n" "$green" "$reset" "$*"
+}
+
 if [[ $XDG_CONFIG_HOME == '' ]]; then
-  echo "No XDG_CONFIG_HOME set. Please verify you are running zsh."
+  setup_echo "No XDG_CONFIG_HOME set. Please verify you are running zsh."
   exit 1
 fi
 
@@ -29,6 +35,7 @@ declare -A COMPONENT_MODES=(
   [python_pkgs]="dev full"
   [creds]="dev full"
   [dev_setup]="dev full"
+  [init]="dev full"
 
   [gui]="full"
   [private]="full"
@@ -40,6 +47,7 @@ MODE="${1:-ask}"
 confirm() {
   # Usage: confirm "Question?"
   local response
+  printf "%b[SETUP]%b " "$green" "$reset"
   read -r -p "${1} [y/n]: " response
   [[ $response == "y" || $response == "Y" ]]
 }
@@ -66,7 +74,7 @@ if uname -a | grep -i linux > /dev/null; then
   elif type pacman >/dev/null 2>&1; then
     sudo "$cwd"/install/other/pacman.sh
   else
-    echo "Unknown OS, some software installation incomplete."
+    setup_echo "Unknown OS, some software installation incomplete."
   fi
 fi
 
@@ -74,9 +82,9 @@ fi
 if ! [ -d "$HOME/.fzf" ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
   yes 'n' | ~/.fzf/install  # download only
-  echo "Installed FZF"
+  setup_echo "Installed FZF"
 else
-  echo "FZF already present"
+  setup_echo "FZF already present."
 fi
 
 # zinit -- this should actually be automatic once zsh and dotfiles are setup
@@ -85,7 +93,7 @@ if ! [[ -d "$HOME/.local/share/zinit" ]]; then
   NO_INPUT=1 NO_ANNEXES=1 bash -c \
     "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 else
-  echo "Zinit already present"
+  setup_echo "Zinit already present."
 fi
 
 # make zoxide database dir
@@ -94,9 +102,9 @@ mkdir -p "$HOME/.data/zoxide"
 # tpm
 if ! [ -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm "$XDG_CONFIG_HOME/tmux/plugins/tpm"
-  echo "Installing TPM"
+  setup_echo "Installing TPM."
 else
-  echo "TPM already installed"
+  setup_echo "TPM already installed."
 fi
 
 # homebrew
@@ -126,7 +134,7 @@ if ! type nvim &>/dev/null; then
   git checkout main
   popd
 else
-  echo "Neovim already setup"
+  setup_echo "Neovim already setup."
 fi
 
 
@@ -144,7 +152,7 @@ if ! type cargo &>/dev/null; then
     "$cwd"/install/cargo.sh
   fi
 else
-  echo "rust already present"
+  setup_echo "rust already present."
 fi
 
 # install zellij tools
@@ -153,17 +161,12 @@ if ! type zjframes.wasm &>/dev/null; then
     "$cwd"/install/zellij.sh
   fi
 else
-  echo "zellij tools already present"
-fi
-
-# setup LLM service credentials
-if should_install creds "Setup Credentials?"; then
-  "$cwd"/install/creds.sh
+  setup_echo "zellij tools already present."
 fi
 
 # setup private data repo
 if [[ -d "$HOME/.private.git" ]]; then
-  echo "Private repo already setup."
+  setup_echo "Private repo already setup."
 else
   if should_install private "Setup Private files repo?"; then
     git clone --bare git@github.com:tzhouhc/private.git "$HOME/.private.git"
@@ -191,7 +194,25 @@ if should_install gui "Setup GUI applications and fonts?"; then
   "$cwd"/install/gui/brew.sh
 fi
 
+# ------ manual interaction ------
+# The following section requires some human interaction
+setup_echo "All automation completed -- Now onto manual configuration:"
+
+# setup LLM service credentials
+if should_install creds "Setup Credentials?"; then
+  "$cwd"/install/creds.sh
+fi
+
+# initialization for some tooling
+if should_install init "Perform tooling first-time setup."; then
+  setup_echo "Setting up other tools:"
+  "$cwd/install/init.sh"
+fi
+
 # ensure user shell for subsequent logins
-which zsh | sudo tee -a /etc/shells
-echo "Updating user login shell:"
-chsh -s "$(which zsh)"
+current_shell="${SHELL##*/}"
+if [[ "$current_shell" != zsh* ]]; then
+  which zsh | sudo tee -a /etc/shells
+  setup_echo "Updating user login shell:"
+  chsh -s "$(which zsh)"
+fi

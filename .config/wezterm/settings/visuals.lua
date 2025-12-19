@@ -30,7 +30,7 @@ function M.update_config(config)
 	config.hide_tab_bar_if_only_one_tab = true
 
 	-- visual appearance
-	config.color_scheme = "nord"
+	config.color_scheme = "Catppuccin Frappe"
 	config.window_background_opacity = 1
 
 	if is_osx() then

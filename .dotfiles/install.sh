@@ -28,11 +28,11 @@ fi
 #
 declare -A COMPONENT_MODES=(
   [homebrew]="base dev full"
+  [python]="base dev full"
   [neovim]="base dev full"
-  [rust_tools]="base dev full"
-  [zellij_tools]="base dev full"
+  [cargo]="base dev full"
+  [zellij]="base dev full"
 
-  [python_pkgs]="dev full"
   [creds]="dev full"
   [dev_setup]="dev full"
   [init]="dev full"
@@ -115,6 +115,14 @@ if ! type brew &>/dev/null; then
   fi
 fi
 
+# uv for python package management
+if should_install python "Install python packages?"; then
+  if ! type uv &>/dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  fi
+  "$cwd"/install/uv.sh
+fi
+
 # Update path to enable pip.sh?
 if uname -a | grep -i darwin > /dev/null; then
   export BREW_HOME=/opt/homebrew
@@ -141,18 +149,9 @@ fi
 # try to acquire latest binaries after installations
 hash -r
 
-# assumes python is already present and up-to-date
-if should_install python_pkgs "Install python packages?"; then
-  # uv for python package management
-  if ! type uv &>/dev/null; then
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-  fi
-  "$cwd"/install/uv.sh
-fi
-
 # install rust tools
 if ! type cargo &>/dev/null; then
-  if should_install rust_tools "Install rust tools?"; then
+  if should_install cargo "Install rust tools?"; then
     "$cwd"/install/cargo.sh
   fi
 else
@@ -161,7 +160,7 @@ fi
 
 # install zellij tools
 if ! type zjframes.wasm &>/dev/null; then
-  if should_install zellij_tools "Install zellij tools? (does not require zellij installed)"; then
+  if should_install zellij "Install zellij tools? (does not require zellij installed)"; then
     "$cwd"/install/zellij.sh
   fi
 else
@@ -190,10 +189,6 @@ fi
 if should_install dev_setup "Setup for development?"; then
   "$cwd"/install/dev/brew.sh
   "$cwd"/install/dev/cargo.sh
-  # uv for python package management
-  if ! type uv &>/dev/null; then
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-  fi
 fi
 
 if should_install gui "Setup GUI applications and fonts?"; then

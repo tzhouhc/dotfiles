@@ -5,8 +5,11 @@ uvi() {
   uv tool install --upgrade "$@"
 }
 
+# neovim provider
+uvi pynvim --with neovim
+
+# sbin tools
 uvi hererocks
-uvi pynvim
 uvi neovim-remote
 uvi git-fame
 uvi basedpyright

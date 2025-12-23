@@ -37,6 +37,7 @@ path_components=(
   "$HOME/.local/share/bob/nvim-bin"
   "$HOME/.local/nvim/bin"
 
+  "$HOME/.local/share/uv/tools"
   "$HOME/.go/bin"
   "$HOME/.cargo/bin"
 

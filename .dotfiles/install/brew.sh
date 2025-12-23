@@ -18,7 +18,7 @@ fi
 brew update
 # critical tools
 brew install wget git tmux zsh moreutils lazygit jq tldr \
-  coreutils nodejs python@3.13 grep clipboard btop gh \
+  coreutils nodejs python@3.13 grep ast-grep clipboard btop gh \
   charmbracelet/tap/crush
 
 # linux sometimes don't have prebuilt binaries in arm64

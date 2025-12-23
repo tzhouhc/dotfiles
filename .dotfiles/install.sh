@@ -143,7 +143,11 @@ hash -r
 
 # assumes python is already present and up-to-date
 if should_install python_pkgs "Install python packages?"; then
-  "$cwd"/install/pip.sh
+  # uv for python package management
+  if ! type uv &>/dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  fi
+  "$cwd"/install/uv.sh
 fi
 
 # install rust tools
@@ -187,7 +191,9 @@ if should_install dev_setup "Setup for development?"; then
   "$cwd"/install/dev/brew.sh
   "$cwd"/install/dev/cargo.sh
   # uv for python package management
-  curl -LsSf https://astral.sh/uv/install.sh | sh
+  if ! type uv &>/dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  fi
 fi
 
 if should_install gui "Setup GUI applications and fonts?"; then

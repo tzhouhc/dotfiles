@@ -57,3 +57,10 @@ echo "<cmd>" | at <time>
 # Clean up go compile caches
 go clean -cache -modcache
 
+
+% ffmpeg, audible, audiobook
+
+# Strip Audible encryption
+ffmpeg -activation_bytes <activate_bytes> -i "<input>" -vn "<oupput>"
+
+$ input: ls

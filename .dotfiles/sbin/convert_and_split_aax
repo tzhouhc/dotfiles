@@ -1,0 +1,64 @@
+#!/bin/bash
+
+set -e
+source $HOME/.zsh/env/path.zsh
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $0 input.aax"
+  exit 1
+fi
+
+if ! type eyed3 &>/dev/null; then
+  echo "No eyed3 found."
+  if ! gum confirm "Convert anyway? Output will not have cover art."; then
+    exit 1
+  fi
+fi
+
+INPUT=$(readlink -f "$1")
+BASENAME="$(basename "$INPUT" .aax)"
+MP3="${BASENAME}.mp3"
+
+echo "Please provide the activation bytes:"
+KEY=$(gum input)
+
+mkdir -p "$BASENAME"
+pushd "$BASENAME"
+
+yes | ffmpeg -i "$INPUT" -an -vcodec copy cover.jpg
+if ! [[ -f "./$MP3" ]]; then
+  ffmpeg -activation_bytes "${KEY}" -i "$INPUT" -vn "./$MP3"
+fi
+ffprobe -i "$INPUT" -print_format json -show_chapters > ./split.json
+
+CHAPTERS=$(jq -c '.chapters[]' ./split.json)
+INDEX=1
+
+echo "$CHAPTERS" | while read -r chapter; do
+  TITLE=$(echo "$chapter" | jq -r '.tags.title' | tr ' ' '_')
+  START=$(echo "$chapter" | jq -r '.start_time')
+  END=$(echo "$chapter" | jq -r '.end_time')
+
+  OUTFILE="${BASENAME}-${INDEX}-${TITLE}.mp3"
+
+  # Calculate duration
+  DURATION=$(awk "BEGIN {print $END - $START}")
+
+  if ! [[ -f "$OUTFILE" ]]; then
+    ffmpeg -nostdin -hide_banner -loglevel error -y \
+      -ss "$START" -i "$MP3" -t "$DURATION" \
+      -acodec copy "$OUTFILE"
+  fi
+  if type eyed3 &>/dev/null; then
+    eyed3 --add-image "cover.jpg:FRONT_COVER" "$OUTFILE"
+  fi
+  echo "Created $OUTFILE"
+  INDEX=$((INDEX + 1))
+done
+
+rm cover.jpg
+rm "$MP3"
+rm split.json
+
+
+popd

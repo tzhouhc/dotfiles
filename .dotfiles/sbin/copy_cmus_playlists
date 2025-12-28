@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+source $HOME/.zsh/env/path.zsh
+
+# Assumes cmus config dir is setup via pflg
+PL_DIR="${HOME}/.config/cmus/playlists"
+
+if ! [[ -d "${PL_DIR}" ]]; then
+  echo "${PL_DIR} does not exist."
+  exit 1
+fi
+
+for PL in "${PL_DIR}"/*; do
+
+  if ! gum confirm "About to use ${PL} to import music from mbp, proceed?"; then
+    exit 1
+  fi
+
+  while IFS= read -r line; do
+    dir=$(dirname "${line}")
+    mkdir -p "${dir}"
+    scp mbp:"${line}" "${line}"
+  done < "${PL}"
+done

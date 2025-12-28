@@ -14,12 +14,17 @@ fi
 for PL in "${PL_DIR}"/*; do
 
   if ! gum confirm "About to use ${PL} to import music from mbp, proceed?"; then
-    exit 1
+    continue
   fi
 
   while IFS= read -r line; do
-    dir=$(dirname "${line}")
-    mkdir -p "${dir}"
-    scp mbp:"${line}" "${line}"
+    if [[ -f "${line}" ]]; then
+      echo "Skipping ${line}"
+      continue
+    else
+      dir=$(dirname "${line}")
+      mkdir -p "${dir}"
+      scp mbp:"${line}" "${line}"
+    fi
   done < "${PL}"
 done

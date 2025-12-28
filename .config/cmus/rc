@@ -178,12 +178,16 @@ colorscheme dracula
 
 unbind common [
 unbind common ]
-unbind common z
 unbind common space
 unbind common R
+unbind playlist space
+unbind playlist enter
 
+# space in all contexts pauses or unpauses current song
 bind common space player-pause
-bind common z win-toggle
+# in playlists
+bind playlist enter win-toggle
+bind playlist space win-activate
 
 bind common ] player-next
 bind common [ player-prev

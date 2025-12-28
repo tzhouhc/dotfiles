@@ -1,3 +1,6 @@
 #!/bin/bash
 
-screen -q -r -D cmus || screen -S cmus $(whereis cmus | cut -d " " -f2)
+set +e
+source $HOME/.zsh/env/path.zsh
+
+exec singleton cmus cmus

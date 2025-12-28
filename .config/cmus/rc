@@ -11,47 +11,6 @@ set auto_reshuffle=true
 set block_key_paste=true
 set buffer_seconds=10
 
-set color_cmdline_attr=default
-set color_cmdline_bg=default
-set color_cmdline_fg=default
-set color_cur_sel_attr=default
-set color_error=lightred
-set color_info=lightyellow
-set color_separator=blue
-set color_statusline_attr=default
-set color_statusline_bg=gray
-set color_statusline_fg=black
-set color_statusline_progress_attr=default
-set color_statusline_progress_bg=blue
-set color_statusline_progress_fg=white
-set color_titleline_attr=default
-set color_titleline_bg=blue
-set color_titleline_fg=white
-set color_trackwin_album_attr=bold
-set color_trackwin_album_bg=default
-set color_trackwin_album_fg=default
-set color_win_attr=default
-set color_win_bg=default
-set color_win_cur=lightyellow
-set color_win_cur_attr=default
-set color_win_cur_sel_attr=default
-set color_win_cur_sel_bg=blue
-set color_win_cur_sel_fg=lightyellow
-set color_win_dir=lightblue
-set color_win_fg=default
-set color_win_inactive_cur_sel_attr=default
-set color_win_inactive_cur_sel_bg=black
-set color_win_inactive_cur_sel_fg=lightyellow
-set color_win_inactive_sel_attr=default
-set color_win_inactive_sel_bg=black
-set color_win_inactive_sel_fg=white
-set color_win_sel_attr=default
-set color_win_sel_bg=blue
-set color_win_sel_fg=white
-set color_win_title_attr=default
-set color_win_title_bg=blue
-set color_win_title_fg=white
-
 
 set confirm_run=true
 set continue=true
@@ -133,6 +92,7 @@ set time_show_leading_zero=true
 set tree_width_max=0
 set tree_width_percent=33
 set wrap_search=true
+colorscheme dracula
 
 # keybinds
 # bind browser backspace browser-up
@@ -233,7 +193,7 @@ bind common R toggle repeat_current
 # special
 unbind common q
 unbind common Q
-bind common q shell screen -d cmus
+bind common q shell tmux detach-client -s cmus
 bind common Q shell tmux detach-client -s cmus
 
 # fset 90s=date>=1990&date<2000

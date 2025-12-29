@@ -1,0 +1,3 @@
+keymap:
+  open-in-pager: ctrl+p
+  open-in-editor: ctrl+e

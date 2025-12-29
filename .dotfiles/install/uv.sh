@@ -15,3 +15,5 @@ uvi git-fame
 uvi basedpyright
 uvi ty
 uvi pre-commit --with pre-commit-uv
+uvi bagels
+uvi posting

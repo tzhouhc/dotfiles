@@ -33,6 +33,7 @@ rm -f rime_ice.dict.custom.yaml
 rm -f rime_ice.custom.yaml
 rm -f squirrel.custom.yaml
 rm -f default.custom.yaml
+rm -f wanxiang.custom.yaml
 
 # Optionally use the custom phrases from the private data repo
 if [[ -d "$PRIV_DIR" ]]; then
@@ -41,4 +42,5 @@ else
   ln -s $CONF_DIR/custom_phrase.txt $RIME_DIR/custom_phrase.txt
 fi
 ln -s $CONF_DIR/squirrel.custom.yaml $RIME_DIR/squirrel.custom.yaml
+ln -s $CONF_DIR/wanxiang.custom.yaml $RIME_DIR/wanxiang.custom.yaml
 ln -s $CONF_DIR/default_wanxiang.custom.yaml $RIME_DIR/default.custom.yaml

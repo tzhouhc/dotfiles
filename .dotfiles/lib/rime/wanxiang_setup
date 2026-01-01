@@ -1,0 +1,44 @@
+#!/usr/bin/env zsh
+
+source $HOME/.zsh/base.zsh
+
+CONF_DIR="$(realpath $(dirname "$0"))"
+PRIV_DIR="${HOME}/.private/data/rime"
+
+if uname -a | grep -i darwin &>/dev/null; then
+  RIME_DIR="${HOME}/Library/Rime"
+else
+  RIME_DIR="${HOME}/.config/fcitx/rime"
+fi
+
+mkdir -p $RIME_DIR
+cd $RIME_DIR
+
+# 部署雾凇拼音
+if [[ -z "$(ls)" ]]; then
+  git clone -b plum --depth 1 https://github.com/amzxyz/rime_wanxiang.git plum
+  pushd plum
+  export rime_frontend='rime/squirrel'
+  bash rime-install amzxyz/rime_wanxiang@wanxiang-base:plum/full
+  popd
+  wget https://github.com/amzxyz/RIME-LMDG/releases/download/LTS/wanxiang-lts-zh-hans.gram
+else
+  echo "Rime config dir already present."
+fi
+
+# idempotent setup -- always remove existing config and overwrite with
+# symlink
+rm -f custom_phrase.txt
+rm -f rime_ice.dict.custom.yaml
+rm -f rime_ice.custom.yaml
+rm -f squirrel.custom.yaml
+rm -f default.custom.yaml
+
+# Optionally use the custom phrases from the private data repo
+if [[ -d "$PRIV_DIR" ]]; then
+  ln -s $PRIV_DIR/custom_phrase.txt $RIME_DIR/custom_phrase.txt
+else
+  ln -s $CONF_DIR/custom_phrase.txt $RIME_DIR/custom_phrase.txt
+fi
+ln -s $CONF_DIR/squirrel.custom.yaml $RIME_DIR/squirrel.custom.yaml
+ln -s $CONF_DIR/default_wanxiang.custom.yaml $RIME_DIR/default.custom.yaml

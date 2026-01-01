@@ -64,8 +64,12 @@ function update() {
       # macos
       # input method
       if [[ -d "$HOME/Library/Rime/" ]]; then
-        pushd "$HOME/Library/Rime/";
-        git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+        pushd "$HOME/.dotfiles/lib/rime"
+        wget https://github.com/rimeinn/rime-wanxiang-update-tools/releases/latest/download/rime-wanxiang-update-macos.sh
+        chmod +x ./rime-wanxiang-update-macos.sh
+        env -i HOME="$HOME" bash -l -c 'yes "" | ./rime-wanxiang-update-macos.sh --engine squirrel --schema base --dict --fuzhu base'
+        # TODO: review if `--gram` has been fixed
+        rm ./rime-wanxiang-update-macos.sh
         popd
       fi
     else

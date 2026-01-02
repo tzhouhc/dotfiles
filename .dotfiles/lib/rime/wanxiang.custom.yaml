@@ -11,10 +11,39 @@ patch:
   #下面是候选数量
   menu/page_size: 5  #不要超过6，7890用于代表声调1234，6个管够你用了，如果你非要10个，不要问我😜。
   #下面是超级注释相关
-  super_comment:                  # 超级注释模块，子项配置 true 开启，false 关闭
-    candidate_length: 1           # 候选词辅助码提醒的生效长度，0为关闭  但同时清空其它，应当使用上面开关来处理
-    corrector_type: "〔comment〕"  # 错音措字，随意更换左右括号，比如"〔comment〕" 不加括号为无括号，comment占位不能动
-    chaifen: "〔chaifen〕"         # 拆分显示，随意更换左右括号，比如"〔chaifen〕" 不加括号为无括号，chaifen占位不能动
+  super_comment:  false                # 超级注释模块，子项配置 true 开启，false 关闭
+  switches:
+    - name: ascii_mode                    # 中英输入状态
+      states: [ 中文, 英文 ]
+    - name: ascii_punct                   # 中英标点，可以在中文输入状态输入英文符号
+      states: [ 中标, 英标 ]
+    - name: full_shape                    #全角、半角字符输出
+      states: [ 半角, 全角 ]
+    - name: emoji                         #候选出现emoji滤镜，会显示在相应的候选后面，万象侧重于tips提示，避免候选被占用，因此默认为reset: 0，归属opencc emoji滤镜
+      states: [表情关, 表情开]
+      reset: 1
+    - name: chinese_english               #候选进入翻译模式滤镜，会显示在相应的候选后面，万象侧重于tips提示，避免候选被占用，归属opencc 翻译滤镜
+      states: [ 翻译关, 翻译开 ]
+      reset: 0
+    - options: [ raw_input, tone_display, full_pinyin ]   #开启后在输入编码的位置实时转换为带声调全拼或者不带声调全拼，不开启则采用系统配置原始编码，影响的是preedit_format,归属：super_preedit.lua
+      states: [ 原编码, 有声调, 无声调 ]
+  #    reset: 2     #对于开关组从0开始数，第几个就reset几可设为默认
+    - options: [ s2s, s2t, s2hk, s2tw ]   # 简繁转换开关组，可以在一个空选项和多个实际“- simplifier@s2hk”引入的项目之前切换，这是一个开关组，你可以将其中任意一个s2s等设置为toggle快捷键，多次按下将轮询
+      states: [ 简体, 通繁, 港繁, 臺繁 ]
+    - name: tone_hint                     #开启后在候选的注释里面实时显示全拼声调，不开启则采用系统配置，影响的是comment_format，归属：super_comment.lua
+      states: [ 读音关, 读音开 ]
+      reset: 0
+    - name: super_tips                    #开启后在输入编码后面的提示区显示实时的提示数据，受tips数据库影响，表情、翻译、车牌、符号等对应关系数据，并可实现句号上屏，不开启则默认，影响的是segment.prompt参数，归属：super_tips.lua
+      states: [ 提示关, 提示开 ]
+      reset: 0
+    - name: charset_filter               #字符集过滤，默认开启8105通规显示，即小字集，可通过开关实时开启全字集，快捷键配套ctrl+g,归属：super_filter.lua
+      states: [ 小字集, 大字集 ]
+      reset: 1
+    - name: char_priority                #多体现在编码重合但候选有单字或者多字的情况`引导的辅码查词时是否单字优先，全拼常见，类似于特定编码情况下、反查状态下的调序能力。归属：super_lookup.lua
+      states: [词组先, 单字先]
+    - options: [ mixed, zh_only, en_only ]
+      states: [ 混合输入, 仅中文, 仅英文 ]
+      reset: 1
 
   #在8105基础上你可以通过黑白名单微调你自己的字符集过滤清单，主数据库位于lua/charset.bin不可编辑
   charsetlist: [你]

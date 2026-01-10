@@ -20,7 +20,11 @@ BASENAME="$(basename "$INPUT" .aax)"
 MP3="${BASENAME}.mp3"
 
 echo "Please provide the activation bytes:"
-KEY=$(gum input)
+if [[ $AUDIBLE_KEY == '' ]]; then
+  KEY=$(gum input)
+else
+  KEY="$AUDIBLE_KEY"
+fi
 
 mkdir -p "$BASENAME"
 pushd "$BASENAME"

@@ -55,7 +55,7 @@ path_components=(
   # dotnet
   "/usr/local/share/dotnet/x64"
   # lm-studio
-  "$HOME/.cache/lm-studio/bin"
+  "$HOME/.lmstudio/bin"
   # sublime
   "/Applications/Sublime Text.app/Contents/SharedSupport/bin"
   # hammerspoon

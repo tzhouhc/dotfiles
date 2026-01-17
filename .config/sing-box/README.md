@@ -18,9 +18,7 @@ You'll need both a **server** and **client** configuration. Here's how to set th
       "type": "vless",
       "tag": "vless-in",
       "listen": "::",
-      "listen_fields": {
-        "tcp_fast_open": true
-      },
+      "tcp_fast_open": true,
       "sniff": true,
       "sniff_override_destination": false,
       "domain_strategy": "prefer_ipv4",
@@ -32,11 +30,11 @@ You'll need both a **server** and **client** configuration. Here's how to set th
       ],
       "tls": {
         "enabled": true,
-        "server_name": "www.example.com",
+        "server_name": "www.apple.com",
         "reality": {
           "enabled": true,
           "handshake": {
-            "server": "www.example.com",
+            "server": "www.apple.com",
             "server_port": 443
           },
           "private_key": "YOUR-PRIVATE-KEY",
@@ -193,3 +191,16 @@ WantedBy=multi-user.target
 ```
 
 So yes, you can just place it in `~/.config/sing-box/config.json` and run without arguments!
+
+
+## Troubleshooting
+
+### JSON Formatting
+
+Verify that all the quotes are the right kind.
+
+### Port
+
+I think we don't currently specify a fixed port on the server (TODO?). As such,
+when editing the client profile, a port should be addressed in addition to the
+server address.

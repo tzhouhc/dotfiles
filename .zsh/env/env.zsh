@@ -26,6 +26,9 @@ if [[ $(date +%Z) == "CST" ]]; then
   # rust
   export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
   export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+  if type go &>/dev/null; then
+    export GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
+  fi
 fi
 
 
@@ -125,6 +128,10 @@ if [[ $OPENAI_API_KEY != '' ]]; then
   export _PR_AI_API_KEY=${OPENROUTER_API_KEY}
   export _PR_AI_URL="https://openrouter.ai/api/v1/chat/completions"
   export _PR_AI_MODEL="deepseek/deepseek-chat"
+fi
+
+if [[ $(date +%Z) == "CST" ]]; then
+  unset OPENAI_API_KEY
 fi
 
 # pnpm

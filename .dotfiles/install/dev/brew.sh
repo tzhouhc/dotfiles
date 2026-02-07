@@ -13,6 +13,7 @@ brew update
 # critical tools for development
 brew install cloc bazel hyperfine gperftools graphviz llvm luarocks \
   pre-commit pandoc difftastic pnpm hexyl direnv universal-ctags
+brew install anomalyco/tap/opencode
 brew install --cask gcloud-cli
 brew install --cask basictex
 

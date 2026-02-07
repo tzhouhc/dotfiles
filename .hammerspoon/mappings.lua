@@ -16,5 +16,5 @@ hotkey.bind({ "alt", "ctrl" }, "c", windows.bottom_right_quadrant)
 
 -- application shortcuts
 hotkey.bind({ "cmd" }, "`", apps.toggle_wizterm)
-hotkey.bind({ "alt", "ctrl" }, "space", apps.summon_quick_open)
+hotkey.bind({ "cmd", "ctrl" }, "space", apps.summon_quick_open)
 hotkey.bind({ "alt" }, "`", apps.summon_quick_chat)

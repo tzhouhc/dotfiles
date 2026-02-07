@@ -51,3 +51,8 @@ source "$SHELL_SCRIPTS_DIR/checkup.zsh"
 
 # update checking
 source "$SHELL_SCRIPTS_DIR/update.zsh"
+
+# try-rs integration
+if [[ -d "/Users/tingzhou/Library/Application Support/try-rs/" ]]; then
+  source '/Users/tingzhou/Library/Application Support/try-rs/try-rs.zsh'
+fi

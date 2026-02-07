@@ -25,7 +25,7 @@ fi
 
 WIDTH=400
 # Resize image to a thumbnail (e.g., 200x200 pixels, preserving aspect ratio)
-convert "$INPUT" -resize ${WIDTH}x${WIDTH} -background black -gravity center -extent ${WIDTH}x${WIDTH} "$OUTPUT"
+magick "$INPUT" -resize ${WIDTH}x${WIDTH} -background black -gravity center -extent ${WIDTH}x${WIDTH} "$OUTPUT"
 
 # Check for success
 if [ $? -eq 0 ]; then

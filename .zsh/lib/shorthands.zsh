@@ -9,7 +9,10 @@
 # Configs
 # Choose and Edit all config files
 function c() {
-  supervim "$(dotfiles_list)"
+  files=$(dotfiles_list)
+  if [[ -n "$files" ]]; then
+    supervim "${files}"
+  fi
 }
 
 # Edit

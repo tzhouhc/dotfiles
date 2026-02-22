@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+name="${1%.*}"
+
+realesrgan-ncnn-vulkan -m "$HOME/.local/bin/models" -i "$1" \
+  -n realesrgan-x4plus-anime -o "${name}_2x.png" >/dev/null 2>&1
+magick "${name}_2x.png" "${name}_2x.jpg"
+rm "${name}_2x.png"
+echo "Successfully upscaled ${1} to ${name}_2x.jpg."

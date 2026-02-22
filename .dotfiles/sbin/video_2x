@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+name="${1%.*}"
+
+mkdir tmp_input
+mkdir tmp_output
+tmp_input="tmp_input"
+tmp_output="tmp_output"
+# tmp_input=$(mktemp)
+# tmp_output=$(mktemp)
+
+ffmpeg -i "${1}" -qscale:v 1 -qmin 1 -qmax 1 -vsync 0 "${tmp_input}/frames%08d.jpg"
+realesrgan-ncnn-vulkan -m "$HOME/.local/bin/models" -i "${tmp_input}" \
+  -o "${tmp_output}" -n realesr-animevideov3 -s 4 -f jpg
+ffmpeg -i "${tmp_output}/frames%08d.jpg" -i "${1}" -map "0:v:0" -map "1:a:0?" -c:a copy \
+  -c:v libx264 -r 23.98 -pix_fmt yuv420p "${name}_2x.mp4"
+
+rm -rf {tmp_input}
+rm -rf ${tmp_output}
+
+echo "Successfully upscaled ${1} to ${name}_2x.mp4."

@@ -334,3 +334,11 @@ function confirm() {
     [[ $response == "y" || $response == "Y" ]]
   fi
 }
+
+function mkdir_cd() {
+  mkdir "${1}" && cd "${1}"
+}
+
+function mkdir_open() {
+  mkdir "${1}" && open "${1}"
+}

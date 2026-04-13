@@ -99,6 +99,9 @@ export FZF_DEFAULT_COMMAND='fd --type f --type l --hidden'
 export FZF_CTRL_T_COMMAND=
 export FZF_ALT_C_COMMAND=
 
+# try-rs
+export TRY_PATH="$HOME/.local/share/tries"
+
 # Various env-var based credentials
 if type age &>/dev/null; then
   if [[ -f "$HOME/.ssh/id_ed25519" ]]; then

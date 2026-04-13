@@ -38,7 +38,6 @@ path_components=(
   "$HOME/.local/nvim/bin"
 
   "$HOME/.local/share/uv/tools"
-  "$HOME/.go/bin"
   "$HOME/.cargo/bin"
 
   # Brew
@@ -95,6 +94,10 @@ if [[ -d "/opt/homebrew/opt/llvm" ]]; then
   export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
   # LDFLAGS="-L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
   # LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
+fi
+
+if type go &>/dev/null; then
+  export PATH="$PATH:$(go env GOPATH)/bin"
 fi
 
 # TODO: delete if no reactions after a while

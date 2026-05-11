@@ -24,3 +24,15 @@ git clone --depth 1 --branch v<ver> https://github.com/torvalds/linux.git
 # Show all zsh keybindings
 bindkey -L
 
+
+% macos, dock
+
+# Lock Dock
+defaults write com.apple.Dock contents-immutable -bool true; killall Dock
+
+
+% macos, dock
+
+# Unlock Dock
+defaults write com.apple.Dock contents-immutable -bool false; killall Dock
+

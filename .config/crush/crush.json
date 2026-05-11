@@ -1,6 +1,28 @@
 {
   "$schema": "https://charm.land/crush.json",
   "providers": {
+    "deepseek-custom": {
+      "name": "Deepseek (Custom)",
+      "base_url": "https://api.deepseek.com",
+      "api_key": "$DEEPSEEK_API_KEY",
+      "type": "openai",
+      "models": [
+        {
+          "name": "Flash",
+          "id": "deepseek-v4-flash",
+          "context_window": 256000,
+          "default_max_tokens": 20000,
+          "supports_tools": true
+        },
+        {
+          "name": "Pro",
+          "id": "deepseek-v4-pro",
+          "context_window": 256000,
+          "default_max_tokens": 20000,
+          "supports_tools": true
+        }
+      ]
+    },
     "lmstudio": {
       "name": "LM Studio",
       "base_url": "http://207.96.102.252:21234/v1/",

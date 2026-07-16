@@ -39,3 +39,6 @@ ln -s $CONF_DIR/rime_ice.dict.custom.yaml $RIME_DIR/rime_ice.dict.custom.yaml
 ln -s $CONF_DIR/rime_ice.custom.yaml $RIME_DIR/rime_ice.custom.yaml
 ln -s $CONF_DIR/squirrel.custom.yaml $RIME_DIR/squirrel.custom.yaml
 ln -s $CONF_DIR/default.custom.yaml $RIME_DIR/default.custom.yaml
+
+# Make rime ignore custom phrase file
+echo "my_custom_phrase.txt" > $RIME_DIR/.git/info/exclude

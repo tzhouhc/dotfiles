@@ -25,3 +25,4 @@ patch:
       states: [正常, 单字]
 
   custom_phrase/user_dict: my_custom_phrase  # 可以修改这里，改成自己的 txt 文件
+  custom_phrase/initial_quality: 70       # custom_phrase 的权重应该比 pinyin 和 melt_eng 大

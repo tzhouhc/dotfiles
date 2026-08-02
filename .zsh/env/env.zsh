@@ -72,7 +72,6 @@ fi
 
 export TEXMFHOME="$HOME/.texmf"
 export PYTHONSTARTUP="$HOME/.pythonrc"
-export UV_PYTHON="/opt/homebrew/opt/python@3.12/bin/python3.12"
 export RUBYLIB="$HOME/local/lib/ruby"
 export LESS='--ignore-case --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=2 --no-init --window=-4 -j.5'
 export HOMEBREW_NO_AUTO_UPDATE=1

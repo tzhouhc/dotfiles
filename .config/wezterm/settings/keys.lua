@@ -57,7 +57,7 @@ function M.update_config(config)
       mods = 'CMD|CTRL',
       action = wezterm.action.Multiple({
         wezterm.action.SpawnCommandInNewTab(
-          { args = { home .. "/.dotfiles/sbin/seb" } }
+          { args = { home .. "/.go/bin/seb" } }
         ),
         wezterm.action.EmitEvent("modify-tabs"),
       }),

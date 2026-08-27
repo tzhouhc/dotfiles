@@ -1,0 +1,35 @@
+search:
+  root: "$HOME"
+  extra_roots: [/Applications, /System/Applications]
+  live_roots: ["$HOME/Pictures"]
+  skip_paths: ["$HOME/Library"]
+  ignore_extra: ["*~", ".mypycache", "%*", "Icon*"]
+
+preview:
+  show_meta: false
+  image: ansi
+  preview_cmd: "smart_preview {} {h} {w}"
+  text_preview_cmd: "bat {} --color=always --paging=never -p"
+  folder_preview_cmd: "smart_preview {}"
+
+calc:
+  calc_cmd: "numbat -e {}"
+
+theme:
+  accent_color: "#7aa2f7"
+  dim_color: "#565f89"
+  prompt: "➜"
+  marker:
+    unselected: "○"
+    selected: "❯"
+    marked: "●"
+    selected_marked: "❯"
+
+keys:
+  keybinds:
+    toggle_hidden: [ctrl+t]
+    toggle_preview: [shift+tab]
+    toggle_mark: [tab]
+
+env:
+  path: [/opt/homebrew/bin, "$HOME/.cargo/bin", "$HOME/.dotfiles/sbin"]

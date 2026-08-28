@@ -36,3 +36,9 @@ defaults write com.apple.Dock contents-immutable -bool true; killall Dock
 # Unlock Dock
 defaults write com.apple.Dock contents-immutable -bool false; killall Dock
 
+
+% dropshelf
+
+# Open Dropshelves
+cd $HOME/Library/Containers/com.pilotmoon.Dropshelf/Data/Library/Caches/com.pilotmoon.Dropshelf/DroppedFiles/
+

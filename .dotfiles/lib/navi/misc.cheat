@@ -42,3 +42,9 @@ defaults write com.apple.Dock contents-immutable -bool false; killall Dock
 # Open Dropshelves
 cd $HOME/Library/Containers/com.pilotmoon.Dropshelf/Data/Library/Caches/com.pilotmoon.Dropshelf/DroppedFiles/
 
+
+% wait
+
+# Queue task after process ID
+while kill -0 <pid> 2>/dev/null; do sleep 1; done; <command>
+

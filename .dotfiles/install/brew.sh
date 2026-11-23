@@ -27,3 +27,8 @@ if [[ $(uname -m) == "aarch64" && $(uname -s) == "Linux" ]]; then
 else
   brew install gum age mods oh-my-posh
 fi
+
+# macos-specific cleanup tool
+if uname -a | grep -i darwin > /dev/null; then
+  brew install mole
+fi

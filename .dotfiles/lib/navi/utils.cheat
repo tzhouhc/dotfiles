@@ -68,3 +68,9 @@ $ input: ls
 
 # Bulk convert image format
 mogrify -format <to-format> *.<from-format>
+
+% macos, cleanup
+
+# Uninstall Mac app.
+mo uninstall <app>
+

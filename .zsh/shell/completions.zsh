@@ -113,6 +113,9 @@ if type brew >/dev/null 2>&1; then
   fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 fi
 
+# NOTE If matter arise again where shell completion fails with `compinit not
+# found`, check to see if $fpath is pointing to an old site (in terms of ver
+# number), and if so, try just rebooting/relogging.
 fpath=($HOME/.zsh/shell/completion $fpath)
 if [ -f ~/.zsh_completions_dump ]; then
   source ~/.zsh_completions_dump
